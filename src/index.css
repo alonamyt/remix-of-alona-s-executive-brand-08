@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 222 47% 11%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 168 80% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 86% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 168 80% 40%;
+
+    --radius: 0.5rem;
+
+    /* Custom brand tokens */
+    --aurora: 48 96% 53%;
+    --aurora-foreground: 222 47% 11%;
+    --nova: 0 86% 60%;
+    --nova-foreground: 0 0% 100%;
+    --turquoise: 168 80% 40%;
+    --turquoise-foreground: 0 0% 100%;
+    --navy: 222 47% 11%;
+    --navy-foreground: 0 0% 100%;
+
+    /* Gradients */
+    --gradient-aurora: linear-gradient(135deg, hsl(48 96% 53% / 0.08), hsl(48 96% 53% / 0.02));
+    --gradient-nova: linear-gradient(135deg, hsl(0 86% 60% / 0.06), hsl(0 86% 60% / 0.02));
+    --gradient-turquoise-glow: 0 0 60px hsl(168 80% 40% / 0.3);
+
+    /* Shadows */
+    --shadow-sharp: 0 1px 0 hsl(220 13% 91%);
+    --shadow-elevated: 0 4px 24px -4px hsl(222 47% 11% / 0.08);
+
+    /* Spacing */
+    --section-padding: 120px;
+
+    /* Fonts */
+    --font-display: 'Manrope', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply py-12 md:py-16 px-6 md:px-12 lg:px-20;
+  }
+
+  .editorial-split {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-0;
+  }
+
+  .big-number {
+    font-family: var(--font-display);
+    @apply text-6xl md:text-8xl font-extrabold tracking-tight;
+  }
+
+  .section-label {
+    font-family: var(--font-display);
+    @apply text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground;
+  }
+
+  .aurora-wash {
+    background: var(--gradient-aurora);
+  }
+
+  .nova-wash {
+    background: var(--gradient-nova);
+  }
+
+  .navy-section {
+    @apply bg-primary text-primary-foreground;
+  }
+
+  .turquoise-glow {
+    box-shadow: var(--gradient-turquoise-glow);
+  }
+
+  .image-editorial {
+    @apply object-cover w-full h-full;
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .image-hover {
+    @apply overflow-hidden;
+  }
+
+  .image-hover img {
+    @apply transition-transform duration-700 ease-out;
+  }
+
+  .image-hover:hover img {
+    @apply scale-105;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
