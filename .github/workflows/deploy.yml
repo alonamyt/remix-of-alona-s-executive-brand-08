@@ -13,6 +13,9 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: avrora-visitka-2
 
     steps:
       - name: Checkout
@@ -23,6 +26,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: avrora-visitka-2/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -40,9 +44,10 @@ jobs:
           ssh-keyscan -H 158.178.151.156 >> ~/.ssh/known_hosts
 
       - name: Upload build artifacts
+        working-directory: .
         run: |
           ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 'rm -rf /home/ubuntu/site-deploy && mkdir -p /home/ubuntu/site-deploy'
-          scp -i ~/.ssh/oracle_deploy_key -r dist ubuntu@158.178.151.156:/home/ubuntu/site-deploy
+          scp -i ~/.ssh/oracle_deploy_key -r avrora-visitka-2/dist ubuntu@158.178.151.156:/home/ubuntu/site-deploy
 
       - name: Deploy on server
         run: |
