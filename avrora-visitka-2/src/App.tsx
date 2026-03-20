@@ -236,6 +236,18 @@ const content: Record<Language, LocaleContent> = {
           href: "mailto:team@avrora.ua",
           hint: "Для командної взаємодії",
         },
+        {
+          label: "Телефон",
+          value: "+380 00 000 00 00",
+          href: "tel:+380000000000",
+          hint: "Оперативний контакт",
+        },
+        {
+          label: "Пошта",
+          value: "hello@avrora.ua",
+          href: "mailto:hello@avrora.ua",
+          hint: "Для партнерств і запитів",
+        },
       ],
     },
   },
@@ -401,6 +413,18 @@ const content: Record<Language, LocaleContent> = {
           href: "mailto:team@avrora.ua",
           hint: "For team interaction",
         },
+        {
+          label: "Phone",
+          value: "+380 00 000 00 00",
+          href: "tel:+380000000000",
+          hint: "Operational contact",
+        },
+        {
+          label: "Email",
+          value: "hello@avrora.ua",
+          href: "mailto:hello@avrora.ua",
+          hint: "For partnerships and requests",
+        },
       ],
     },
   },
@@ -439,7 +463,9 @@ function App() {
       <header className="topbar">
         <div className="brandmarks">
           <a href="#hero" className="brandmark brandmark-aurora" aria-label="Avrora">
-            <img src={auroraLogo} alt="Avrora" className="brandmark-aurora-image" />
+            <span className="brandmark-aurora-crop" aria-hidden="true">
+              <img src={auroraLogo} alt="Avrora" className="brandmark-aurora-image" />
+            </span>
           </a>
 
           <a href="#hero" className="brandmark">
