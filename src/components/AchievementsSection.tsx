@@ -64,13 +64,13 @@ const AchievementsSection = () => {
             {photos.map((photo, i) => (
               <FadeIn key={i} delay={500 + i * 100}>
                 <div
-                  className="image-hover rounded-lg overflow-hidden border border-accent/20 bg-white/5 cursor-pointer"
+                  className="image-hover overflow-hidden cursor-pointer"
                   onClick={() => setLightbox({ index: i })}
                 >
                   <img
                     src={photo.src}
                     alt={photo.alt}
-                    className="w-full h-56 sm:h-80 object-contain object-top p-2 hover:scale-105 transition-transform duration-500"
+                    className="block w-full h-auto sm:h-80 object-cover sm:object-top"
                   />
                 </div>
               </FadeIn>
