@@ -53,7 +53,7 @@ const HeroSection = () => {
             <img
               src={heroPhoto}
               alt="Альона Митрофанова"
-              className="image-editorial"
+              className="image-editorial object-top"
             />
           </div>
         </FadeIn>

@@ -14,6 +14,7 @@ const AchievementsSection = () => {
   const [lightbox, setLightbox] = useState<{ index: number } | null>(null);
 
   const photos = [
+    { src: achievementsMain, alt: t({ ua: "Команда Nova Poshta на DzWinner 2025", en: "Nova Poshta team at DzWinner 2025" }) },
     { src: awardGreenJacket, alt: t({ ua: "Альона з нагородою DzWinner", en: "Alona with DzWinner award" }) },
     { src: cxExcellence, alt: "Ukrainian CX Excellence" },
     { src: dzwinner2024, alt: "DzWinner 2024" },
@@ -22,7 +23,7 @@ const AchievementsSection = () => {
   return (
     <section id="achievements" className="navy-section relative overflow-hidden">
       <div className="absolute inset-0">
-        <img src={achievementsMain} alt="DzWinner 2025" className="image-editorial opacity-20" />
+        <img src={achievementsMain} alt="DzWinner 2025" className="image-editorial object-top opacity-20" />
         <div className="absolute inset-0 bg-primary/80" />
       </div>
 
@@ -59,7 +60,7 @@ const AchievementsSection = () => {
             </ul>
           </FadeIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {photos.map((photo, i) => (
               <FadeIn key={i} delay={500 + i * 100}>
                 <div
@@ -69,7 +70,7 @@ const AchievementsSection = () => {
                   <img
                     src={photo.src}
                     alt={photo.alt}
-                    className="w-full h-56 sm:h-80 object-cover hover:scale-105 transition-transform duration-500"
+                    className="w-full h-56 sm:h-80 object-cover object-top hover:scale-105 transition-transform duration-500"
                   />
                 </div>
               </FadeIn>
