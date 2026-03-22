@@ -7,53 +7,53 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    --foreground: 0 0% 6%;
 
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 0 0% 6%;
 
-    --primary: 222 47% 11%;
+    --primary: 0 0% 6%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 48 100% 95%;
+    --secondary-foreground: 0 0% 6%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 48 45% 96%;
+    --muted-foreground: 0 0% 35%;
 
-    --accent: 168 80% 40%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 48 96% 53%;
+    --accent-foreground: 0 0% 6%;
 
     --destructive: 0 86% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 168 80% 40%;
+    --border: 48 25% 84%;
+    --input: 48 25% 84%;
+    --ring: 48 96% 53%;
 
     --radius: 0.5rem;
 
     /* Custom brand tokens */
     --aurora: 48 96% 53%;
-    --aurora-foreground: 222 47% 11%;
-    --nova: 0 86% 60%;
+    --aurora-foreground: 0 0% 6%;
+    --nova: 0 0% 6%;
     --nova-foreground: 0 0% 100%;
-    --turquoise: 168 80% 40%;
-    --turquoise-foreground: 0 0% 100%;
-    --navy: 222 47% 11%;
+    --turquoise: 48 96% 53%;
+    --turquoise-foreground: 0 0% 6%;
+    --navy: 0 0% 6%;
     --navy-foreground: 0 0% 100%;
 
     /* Gradients */
-    --gradient-aurora: linear-gradient(135deg, hsl(48 96% 53% / 0.08), hsl(48 96% 53% / 0.02));
-    --gradient-nova: linear-gradient(135deg, hsl(0 86% 60% / 0.06), hsl(0 86% 60% / 0.02));
-    --gradient-turquoise-glow: 0 0 60px hsl(168 80% 40% / 0.3);
+    --gradient-aurora: linear-gradient(135deg, hsl(48 96% 53% / 0.22), hsl(48 96% 53% / 0.04));
+    --gradient-nova: linear-gradient(135deg, hsl(0 0% 6% / 0.08), hsl(0 0% 6% / 0.02));
+    --gradient-turquoise-glow: 0 0 60px hsl(48 96% 53% / 0.35);
 
     /* Shadows */
-    --shadow-sharp: 0 1px 0 hsl(220 13% 91%);
-    --shadow-elevated: 0 4px 24px -4px hsl(222 47% 11% / 0.08);
+    --shadow-sharp: 0 1px 0 hsl(48 25% 84%);
+    --shadow-elevated: 0 12px 40px -16px hsl(0 0% 6% / 0.22);
 
     /* Spacing */
     --section-padding: 120px;
@@ -81,6 +81,9 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    background-image:
+      radial-gradient(circle at top left, hsl(48 96% 53% / 0.12), transparent 28%),
+      linear-gradient(180deg, hsl(48 80% 98%), hsl(0 0% 100%));
   }
 
   h1, h2, h3, h4, h5, h6 {

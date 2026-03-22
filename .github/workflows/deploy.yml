@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: avrora-visitka-2
+        working-directory: sites/personal-visitka
 
     steps:
       - name: Checkout
@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: avrora-visitka-2/package-lock.json
+          cache-dependency-path: sites/personal-visitka/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -47,7 +47,7 @@ jobs:
         working-directory: .
         run: |
           ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 'rm -rf /home/ubuntu/site-deploy && mkdir -p /home/ubuntu/site-deploy'
-          scp -i ~/.ssh/oracle_deploy_key -r avrora-visitka-2/dist ubuntu@158.178.151.156:/home/ubuntu/site-deploy
+          scp -i ~/.ssh/oracle_deploy_key -r sites/personal-visitka/dist ubuntu@158.178.151.156:/home/ubuntu/site-deploy
 
       - name: Deploy on server
         run: |
