@@ -128,8 +128,18 @@ export const translations = {
     },
     careerLabel: { ua: "Кар'єрний шлях", en: "Career path" },
     previousExp: {
-      ua: { company: "ТОВ «Квант Пром»", role: "Менеджер зі збуту", period: "2012 — 2014", desc: "Керування торгівельно-виставковим салоном, розвиток дилерської мережі" },
-      en: { company: "Kvant Prom LLC", role: "Sales Manager", period: "2012 — 2014", desc: "Managing showroom, developing dealer network" },
+      ua: {
+        company: "ТОВ «Квант Пром»",
+        role: "Менеджер зі збуту",
+        period: "2012 — 2014",
+        desc: "Керування торгівельно-виставковим салоном, розвиток дилерської мережі",
+      },
+      en: {
+        company: "Kvant Prom LLC",
+        role: "Sales Manager",
+        period: "2012 — 2014",
+        desc: "Managing showroom, developing dealer network",
+      },
     },
     previousLabel: { ua: "Попередній досвід", en: "Previous experience" },
   },

@@ -7,21 +7,21 @@ const ContactSection = () => {
   const c = translations.contact;
 
   return (
-    <section id="contact" className="px-4 py-8 sm:px-6 md:px-12 md:py-10 lg:py-14 lg:px-20">
+    <section id="contact" className="px-4 py-6 sm:px-6 md:px-12 md:py-8 lg:py-10 lg:px-20">
       <div className="max-w-3xl mx-auto text-center">
         <FadeIn delay={100}>
-          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-5xl font-bold text-foreground mb-3 sm:mb-4 tracking-tight">
             {t(c.title)}
           </h2>
         </FadeIn>
         <FadeIn delay={200}>
-          <p className="font-body text-sm sm:text-lg text-muted-foreground mb-8 sm:mb-10 max-w-md mx-auto">
+          <p className="font-body text-sm sm:text-lg text-muted-foreground mb-5 sm:mb-6 max-w-md mx-auto">
             {t(c.text)}
           </p>
         </FadeIn>
 
         <FadeIn delay={300}>
-          <div className="flex items-center justify-center gap-4 sm:gap-6 flex-wrap mb-8 sm:mb-12">
+          <div className="flex items-center justify-center gap-4 sm:gap-6 flex-wrap mb-5 sm:mb-6">
             <a
               href="https://www.linkedin.com/in/%D0%B0%D0%BB%D1%8C%D0%BE%D0%BD%D0%B0-%D0%BC%D0%B8%D1%82%D1%80%D0%BE%D1%84%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0-85aa59321"
               target="_blank"

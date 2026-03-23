@@ -18,21 +18,21 @@ const EducationSection = () => {
   );
 
   return (
-    <section id="education" className="px-4 py-10 sm:px-6 md:px-12 md:py-14 lg:py-20 lg:px-20 bg-secondary/50">
+    <section id="education" className="px-4 py-6 sm:px-6 md:px-12 md:py-8 lg:py-10 lg:px-20 bg-secondary/50">
       <div className="max-w-4xl mx-auto">
         <FadeIn>
           <p className="section-label mb-3 sm:mb-4">{t(edu.label)}</p>
         </FadeIn>
         <FadeIn delay={100}>
-          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-6 sm:mb-8 tracking-tight">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-5 tracking-tight">
             {t(edu.title)}
           </h2>
         </FadeIn>
 
-        <div className="space-y-0 mb-6 sm:mb-8">
+        <div className="space-y-0 mb-4 sm:mb-5">
           {t(edu.items).map((item, i) => (
             <FadeIn key={i} delay={150 + i * 100}>
-              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between py-4 sm:py-6 border-b border-border gap-1">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between py-3 sm:py-4 border-b border-border gap-1">
                 <div className="flex-1">
                   <p className="font-display text-base sm:text-lg font-bold text-foreground">{item.degree}</p>
                   <p className="font-body text-xs sm:text-sm text-muted-foreground mt-1">{item.school}</p>
@@ -46,13 +46,13 @@ const EducationSection = () => {
 
         <FadeIn delay={350}>
           <div>
-            <p className="section-label mb-4 sm:mb-6">
+            <p className="section-label mb-3 sm:mb-4">
               {t({ ua: "Сертифікати", en: "Certifications" })}
             </p>
 
             {/* Corporate University group */}
             {corpCerts.length > 0 && (
-              <div className="flex items-start gap-4 sm:gap-6 mb-6 pb-6 border-b border-border/50">
+              <div className="flex items-start gap-4 sm:gap-5 mb-4 pb-4 border-b border-border/50">
                 <img
                   src={corpLogo}
                   alt="Corporate University Nova Poshta"

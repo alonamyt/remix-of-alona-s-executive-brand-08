@@ -8,22 +8,22 @@ const HeroSection = () => {
   const hero = translations.hero;
 
   return (
-    <section className="min-h-[70svh] flex items-center section-padding pt-24 pb-8">
-      <div className="max-w-6xl mx-auto w-full flex flex-col-reverse lg:flex-row items-center gap-8 md:gap-12 lg:gap-20">
+    <section className="min-h-[56svh] flex items-center section-padding pt-20 pb-4">
+      <div className="max-w-6xl mx-auto w-full flex flex-col-reverse lg:flex-row items-center gap-6 md:gap-8 lg:gap-12">
         {/* Content */}
         <div className="flex-1 text-center lg:text-left">
           <FadeIn>
-            <p className="section-label mb-4 md:mb-6">{t(hero.label)}</p>
+            <p className="section-label mb-3 md:mb-4">{t(hero.label)}</p>
           </FadeIn>
           <FadeIn delay={200}>
-            <h1 className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-foreground leading-[0.95] mb-6 md:mb-8">
+            <h1 className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-foreground leading-[0.95] mb-4 md:mb-6">
               {t(hero.firstName)}
               <br />
               {t(hero.lastName)}
             </h1>
           </FadeIn>
           <FadeIn delay={400}>
-            <p className="font-body text-base sm:text-lg md:text-xl text-muted-foreground max-w-md mx-auto lg:mx-0 leading-relaxed mb-8 md:mb-10 whitespace-pre-line">
+            <p className="font-body text-base sm:text-lg md:text-xl text-muted-foreground max-w-md mx-auto lg:mx-0 leading-relaxed mb-5 md:mb-6 whitespace-pre-line">
               {t(hero.subtitle)}
             </p>
           </FadeIn>
