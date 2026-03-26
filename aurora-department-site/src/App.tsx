@@ -1,6 +1,8 @@
-﻿import { useState } from "react";
+﻿import { useEffect, useState, type FormEvent } from "react";
 import logo from "./assets/ard-logo-white.png";
+import logoDay from "./assets/project/день/Group 23.png";
 import auroraLogo from "./assets/aurora-white-subtitle.png";
+import auroraLogoDay from "./assets/project/день/aurora.png";
 import voinalovychPhoto from "./assets/войналович.jpg";
 import communityForbesImage from "./assets/community-forbes-article.jpg";
 import communityStudentsImage from "./assets/community-students-rd.jpg";
@@ -8,19 +10,53 @@ import teamCollabImage from "./assets/team-collab.jpg";
 import conferenceNetworkingImage from "./assets/conference-networking.jpg";
 import auroraAiPlatformVisual from "./assets/project/Aurora AI Platform.png";
 import heroOrbitVisual from "./assets/project/golovna3.png";
+import heroOrbitVisualDay from "./assets/project/день/golovnad.png";
 import conversionTrackingVisual from "./assets/project/conversion tracking2.png";
+import conversionTrackingVisualNight from "./assets/project/conversion tracking3.png";
+import conversionTrackingVisualDay from "./assets/project/день/conversion tracking3d.png";
 import generatorControlVisual from "./assets/project/Generator control system2.png";
+import generatorControlVisualDay from "./assets/project/день/Generator control systemd.png";
 import marketConsultingIcon from "./assets/project/icon1.png";
 import marketBuildIcon from "./assets/project/icon2.png";
 import marketReadyIcon from "./assets/project/icon3.png";
+import marketConsultingIconDay from "./assets/project/день/icon1d.png";
+import marketBuildIconDay from "./assets/project/день/icon2d.png";
+import marketReadyIconDay from "./assets/project/день/icon3d.png";
 import consultingTrainingVisual from "./assets/project/навчання.png";
 import consultingStrategyVisual from "./assets/project/консалтінг.png";
 import consultingProcessVisual from "./assets/project/процеси.png";
 import turnkeyDevelopmentVisual from "./assets/project/розробка.png";
+import turnkeyDevelopmentVisualDay from "./assets/project/день/розробкаd.png";
 import smartWikiVisual from "./assets/project/Smart Wiki.png";
+import smartWikiVisualDay from "./assets/project/день/Smart Wikid.png";
 import vehicleDetectionVisual from "./assets/project/Vehicle detection system2.png";
+import vehicleDetectionVisualDay from "./assets/project/день/Vehicle detection systemd.png";
+import auroraAiPlatformVisualDay from "./assets/project/день/Aurora AI Platformd.png";
+import cherednykPhoto from "./assets/project/команда/керівник Чредник.jpg";
+import cherednykCutout from "./assets/project/team/cherednyk-cutout.png";
 
 type Language = "ua" | "en";
+type ThemeMode = "night" | "day";
+type ViewMode = "public" | "internal";
+type TeamMember = {
+  name: string;
+  role: string;
+  note?: string;
+};
+
+type TeamBranch = {
+  label: string;
+  members: TeamMember[];
+};
+
+type TeamRole = {
+  title: string;
+  direction: string;
+  text: string;
+  members?: TeamMember[];
+  branches?: TeamBranch[];
+  featured?: boolean;
+};
 
 type LocaleContent = {
     nav: {
@@ -31,7 +67,7 @@ type LocaleContent = {
       community: string;
       contact: string;
     };
-  header: { department: string; language: string };
+  header: { department: string; language: string; theme: string; day: string; night: string };
   hero: {
     eyebrow: string;
     title: string;
@@ -117,7 +153,7 @@ type LocaleContent = {
       focus: string;
       skills: string[];
     };
-    roles: Array<{ title: string; direction: string; text: string }>;
+    roles: TeamRole[];
   };
   impact: {
     eyebrow: string;
@@ -142,7 +178,15 @@ type LocaleContent = {
 
 type HeroExpoSceneProps = {
   hero: LocaleContent["hero"];
+  theme: ThemeMode;
 };
+
+const internalAccounts = [
+  {
+    login: "a.mytrofanova",
+    password: "Pasha2026",
+  },
+] as const;
 
 function HeroExpoScene({ hero }: HeroExpoSceneProps) {
   return (
@@ -528,16 +572,18 @@ function HeroValueVisual({ hero }: HeroExpoSceneProps) {
   );
 }
 
-function HeroSignatureVisual({ hero }: HeroExpoSceneProps) {
+function HeroSignatureVisual({ hero, theme }: HeroExpoSceneProps) {
+  const heroVisual = theme === "day" ? heroOrbitVisualDay : heroOrbitVisual;
+
   return (
     <div className="hero-live-shell">
       <div className="hero-live-stage">
         <div
           className="hero-live-backfill"
-          style={{ backgroundImage: `url(${heroOrbitVisual})` }}
+          style={{ backgroundImage: `url(${heroVisual})` }}
           aria-hidden="true"
         />
-        <img src={heroOrbitVisual} alt={hero.photoInsight.title} className="hero-live-image" />
+        <img src={heroVisual} alt={hero.photoInsight.title} className="hero-live-image" />
         <svg
           className="hero-live-overlay"
           viewBox="0 0 900 680"
@@ -626,8 +672,11 @@ function HeroSignatureVisual({ hero }: HeroExpoSceneProps) {
   );
 }
 
-function renderMarketIcon(index: number) {
-  const imageMap = [marketConsultingIcon, marketBuildIcon, marketReadyIcon];
+function renderMarketIcon(index: number, theme: ThemeMode) {
+  const imageMap =
+    theme === "day"
+      ? [marketConsultingIconDay, marketBuildIconDay, marketReadyIconDay]
+      : [marketConsultingIcon, marketBuildIcon, marketReadyIcon];
   const altMap = ["Консалтинг", "Розробка під ключ", "Готові рішення"];
 
   return (
@@ -647,7 +696,7 @@ const content: Record<Language, LocaleContent> = {
       community: "Спільнота",
       contact: "Контакти",
     },
-    header: { department: "Департамент", language: "Мова" },
+    header: { department: "Департамент", language: "Мова", theme: "Режим", day: "День", night: "Ніч" },
     hero: {
       eyebrow: "R&D департамент Aurora",
       title: "Створюємо середовище, у якому Aurora росте швидше й посилює свою перевагу",
@@ -960,26 +1009,71 @@ const content: Record<Language, LocaleContent> = {
           title: "Чередник Олександр",
           direction: "Керівник відділу досліджень і розробок",
           text: "",
+          members: [
+            { name: "Далюк Анна", role: "Проєктний менеджер" },
+            { name: "Попов Іван", role: "Розробник" },
+            { name: "Перехрест Людмила", role: "Аналітик" },
+            { name: "Бешляга Сергій", role: "Розробник" },
+            { name: "Чипенко Олена", role: "Product Owner" },
+          ],
         },
         {
           title: "Бородай Ірина",
           direction: "Керівниця відділу бізнес-аналізу",
           text: "",
+          members: [
+            { name: "Панов Дмитро", role: "Бізнес-аналітик" },
+            { name: "Магльована Марія", role: "Аналітик" },
+            { name: "Паламарчук Олександра", role: "Спеціалістка з ЕДО" },
+            { name: "Полюхович Ілона", role: "Бізнес-аналітик" },
+          ],
         },
         {
           title: "Кучеренко Євгенія",
           direction: "Керівниця офісу управління проєктами та процесами",
           text: "",
+          branches: [
+            {
+              label: "Офіс управління проєктами",
+              members: [
+                { name: "Ніконова Анастасія", role: "Адміністратор проєктного офісу" },
+                { name: "Горбунов Віктор", role: "Проєктний менеджер" },
+                { name: "Грінченко Віталій", role: "Проєктний менеджер" },
+                { name: "Кошелєв Ілля", role: "Проєктний менеджер" },
+                { name: "Кустреюк Олександр", role: "Керівник програми проєктів по діджиталізації документообігу" },
+                { name: "Кутняк Юлія", role: "Проєктна менеджерка" },
+                { name: "Адамов Володимир", role: "Проєктний менеджер" },
+              ],
+            },
+            {
+              label: "Офіс управління процесами",
+              members: [
+                { name: "Матійцов Ростислав", role: "Процесний аналітик" },
+                { name: "Дябіна Марина", role: "Процесний аналітик" },
+                { name: "Коваленко Олександра", role: "Процесний аналітик" },
+                { name: "Божко Ольга", role: "Архітекторка процесів" },
+                { name: "Підопригора Юлія", role: "Менеджер процесів" },
+                { name: "Воронін Станіслав", role: "Процесний аналітик" },
+              ],
+            },
+          ],
         },
         {
           title: "Сабанюк Олександр",
-          direction: "Керівник проєктів та програм у сфері матеріального й нематеріального виробництва",
+          direction: "Керівник AVRORA AI Lab",
           text: "",
+          members: [
+            { name: "Кракович Борислав", role: "Розробник AI-рішень" },
+            { name: "Смольнікова Ксенія", role: "Розробник AI-рішень" },
+            { name: "Медар Кирило", role: "AI Development Intern (Стажер з розробки AI-рішень)" },
+            { name: "Боженко Едуард", role: "Operations Manager" },
+          ],
         },
         {
           title: "Митрофанова Альона",
           direction: "Заступник директора департаменту по розвитку продуктів",
           text: "",
+          featured: true,
         },
       ],
     },
@@ -1033,16 +1127,9 @@ const content: Record<Language, LocaleContent> = {
           title: "Retail Expo 2025",
           text: `На RETAIL EXPO 2025 ми говорили про те, як «Аврора» змінює ритейл завдяки технологіям і людяності.
 
-🔷 Наш R&D директор Олександр Войналович презентував, як ми інтегруємо штучний інтелект у щоденну роботу:
-– асистенти для клієнтів допомагають швидко знаходити потрібне,
-– AI підтримує співробітників у складних ситуаціях,
-– аналітика трафіку дозволяє краще планувати персонал і покращувати досвід покупців.
+🔷 R&D директор Олександр Войналович презентував, як ми інтегруємо штучний інтелект у щоденну роботу (асистент для клієнтів та співробітників, аналітика трафіку)
 
-🔶 Паралельно директорка з персоналу Ольга Правда взяла участь у ключовій дискусії про відповідальний ритейл, де розповіла, як ми створюємо безпечне середовище, підтримуємо психологічну стійкість команд і адаптуємо HR-ініціативи до різних ролей у компанії.
-
-На фокусі - турбота про людей, емпатійна комунікація, збереження цілісної корпоративної культури навіть у кризові часи.
-
-Також обговорили інклюзивність у ритейлі: від доступних просторів до сервісності, що враховує потреби кожного.
+🔶 Директорка з персоналу Ольга Правда взяла участь у ключовій дискусії про відповідальний ритейл, де розповіла, як ми створюємо безпечне середовище, підтримуємо психологічну стійкість команд і адаптуємо HR-ініціативи до різних ролей у компанії. Турбота про людей, емпатійна комунікація, інклюзивність у ритейлі.
 
 Ми будуємо ритейл, де технології підсилюють людину, а цінності формують досвід - для команди, клієнтів і суспільства.`,
           meta: "Retail Expo 2025 / Олександр Войналович / AI + людяність у ритейлі",
@@ -1104,7 +1191,7 @@ const content: Record<Language, LocaleContent> = {
       community: "Community",
       contact: "Contacts",
     },
-    header: { department: "Department", language: "Language" },
+    header: { department: "Department", language: "Language", theme: "Mode", day: "Day", night: "Night" },
     hero: {
       eyebrow: "Aurora R&D Department",
       title: "We create an environment where Aurora grows faster and strengthens its advantage",
@@ -1417,26 +1504,71 @@ const content: Record<Language, LocaleContent> = {
           title: "Oleksandr Cherednyk",
           direction: "Head of Research and Development",
           text: "",
+          members: [
+            { name: "Daliuk Anna", role: "Project Manager" },
+            { name: "Popov Ivan", role: "Developer" },
+            { name: "Perekhrest Liudmyla", role: "Analyst" },
+            { name: "Beshliaha Serhii", role: "Developer" },
+            { name: "Chypenko Olena", role: "Product Owner" },
+          ],
         },
         {
           title: "Iryna Borodai",
           direction: "Head of Business Analysis",
           text: "",
+          members: [
+            { name: "Panov Dmytro", role: "Business Analyst" },
+            { name: "Mahlovana Mariia", role: "Analyst" },
+            { name: "Palamarchuk Oleksandra", role: "EDI Specialist" },
+            { name: "Poliukhovych Ilona", role: "Business Analyst" },
+          ],
         },
         {
           title: "Yevheniia Kucherenko",
           direction: "Head of Project and Process Management Office",
           text: "",
+          branches: [
+            {
+              label: "Project Management Office",
+              members: [
+                { name: "Nikonova Anastasiia", role: "Project Office Administrator" },
+                { name: "Horbunov Viktor", role: "Project Manager" },
+                { name: "Hrinchenko Vitalii", role: "Project Manager" },
+                { name: "Kosheliev Illia", role: "Project Manager" },
+                { name: "Kustreiuk Oleksandr", role: "Head of Digital Document Management Program" },
+                { name: "Kutniak Yuliia", role: "Project Manager" },
+                { name: "Adamov Volodymyr", role: "Project Manager" },
+              ],
+            },
+            {
+              label: "Process Management Office",
+              members: [
+                { name: "Matiitsov Rostyslav", role: "Process Analyst" },
+                { name: "Diabina Maryna", role: "Process Analyst" },
+                { name: "Kovalenko Oleksandra", role: "Process Analyst" },
+                { name: "Bozhko Olha", role: "Process Architect" },
+                { name: "Pidopryhora Yuliia", role: "Process Manager" },
+                { name: "Voronin Stanislav", role: "Process Analyst" },
+              ],
+            },
+          ],
         },
         {
           title: "Oleksandr Sabaniuk",
-          direction: "Head of Projects and Programs in Material and Non-Material Production",
+          direction: "Head of AVRORA AI Lab",
           text: "",
+          members: [
+            { name: "Krakovych Boryslav", role: "AI Solutions Developer" },
+            { name: "Smolnikova Kseniia", role: "AI Solutions Developer" },
+            { name: "Medar Kyrylo", role: "AI Development Intern" },
+            { name: "Bozhenko Eduard", role: "Operations Manager" },
+          ],
         },
         {
           title: "Alona Mytrofanova",
           direction: "Deputy Department Director for Product Development",
           text: "",
+          featured: true,
         },
       ],
     },
@@ -1579,6 +1711,17 @@ const getInitials = (name: string) =>
     .map((part) => part[0]?.toUpperCase() ?? "")
     .join("");
 
+const getTeamRolePortrait = (title: string) => {
+  if (title.includes("Чередник") || title.includes("Cherednyk")) {
+    return {
+      photo: cherednykPhoto,
+      cutout: cherednykCutout,
+    };
+  }
+
+  return null;
+};
+
 const getConsultingPanelVisual = (index: number) => {
   switch (index) {
     case 0:
@@ -1651,12 +1794,20 @@ const getProjectScene = (category: string) => {
 
 const renderProjectScene = (
   scene: ReturnType<typeof getProjectScene>,
-  project: LocaleContent["projects"]["items"][number]
+  project: LocaleContent["projects"]["items"][number],
+  theme: ThemeMode,
+  language: Language
 ) => {
+  const internalAccessLabel = language === "ua" ? "для співробітників департаменту" : "for department employees";
+
   if (project.category === "retail analytics") {
     return (
       <div className="project-scene-media project-scene-media-analytics">
-        <img src={conversionTrackingVisual} alt={project.title} className="project-scene-media-image" />
+        <img
+          src={theme === "day" ? conversionTrackingVisualDay : conversionTrackingVisualNight}
+          alt={project.title}
+          className="project-scene-media-image"
+        />
       </div>
     );
   }
@@ -1664,7 +1815,11 @@ const renderProjectScene = (
   if (project.category === "logistics access control") {
     return (
       <div className="project-scene-media project-scene-media-logistics">
-        <img src={vehicleDetectionVisual} alt={project.title} className="project-scene-media-image" />
+        <img
+          src={theme === "day" ? vehicleDetectionVisualDay : vehicleDetectionVisual}
+          alt={project.title}
+          className="project-scene-media-image"
+        />
       </div>
     );
   }
@@ -1672,7 +1827,11 @@ const renderProjectScene = (
   if (project.category === "energy resilience") {
     return (
       <div className="project-scene-media project-scene-media-energy">
-        <img src={generatorControlVisual} alt={project.title} className="project-scene-media-image" />
+        <img
+          src={theme === "day" ? generatorControlVisualDay : generatorControlVisual}
+          alt={project.title}
+          className="project-scene-media-image"
+        />
       </div>
     );
   }
@@ -1680,7 +1839,11 @@ const renderProjectScene = (
   if (project.category === "ai orchestration platform") {
     return (
       <div className="project-scene-media project-scene-media-platform">
-        <img src={auroraAiPlatformVisual} alt={project.title} className="project-scene-media-image" />
+        <img
+          src={theme === "day" ? auroraAiPlatformVisualDay : auroraAiPlatformVisual}
+          alt={project.title}
+          className="project-scene-media-image"
+        />
       </div>
     );
   }
@@ -1688,7 +1851,11 @@ const renderProjectScene = (
   if (project.category === "genai knowledge assistant") {
     return (
       <div className="project-scene-media project-scene-media-wiki">
-        <img src={smartWikiVisual} alt={project.title} className="project-scene-media-image" />
+        <img
+          src={theme === "day" ? smartWikiVisualDay : smartWikiVisual}
+          alt={project.title}
+          className="project-scene-media-image"
+        />
       </div>
     );
   }
@@ -1811,20 +1978,20 @@ const renderProjectScene = (
         </>
       );
     case "recruiting":
-      return (
-        <>
-          {shared}
-          <div className="project-illustration project-illustration-recruiting">
-            <div className="scene-talent-card scene-talent-card-one" />
-            <div className="scene-talent-card scene-talent-card-two" />
-            <div className="scene-talent-card scene-talent-card-three" />
-            <div className="scene-talent-score scene-talent-score-one">92</div>
-            <div className="scene-talent-score scene-talent-score-two">88</div>
-            <div className="scene-talent-score scene-talent-score-three">81</div>
-            <div className="scene-lock-chip">internal</div>
-          </div>
-        </>
-      );
+    return (
+      <>
+        {shared}
+        <div className="project-illustration project-illustration-recruiting">
+          <div className="scene-talent-card scene-talent-card-one" />
+          <div className="scene-talent-card scene-talent-card-two" />
+          <div className="scene-talent-card scene-talent-card-three" />
+          <div className="scene-talent-score scene-talent-score-one">92</div>
+          <div className="scene-talent-score scene-talent-score-two">88</div>
+          <div className="scene-talent-score scene-talent-score-three">81</div>
+          <div className="scene-lock-chip" title={internalAccessLabel} aria-label={internalAccessLabel}>🔒</div>
+        </div>
+      </>
+    );
     default:
       return shared;
   }
@@ -1832,10 +1999,120 @@ const renderProjectScene = (
 
 function App() {
   const [language, setLanguage] = useState<Language>("ua");
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    if (typeof window === "undefined") return "night";
+    const storedTheme = window.localStorage.getItem("aurora-department-theme");
+    return storedTheme === "day" || storedTheme === "night" ? storedTheme : "night";
+  });
+  const [currentView, setCurrentView] = useState<ViewMode>(() => {
+    if (typeof window === "undefined") return "public";
+    const storedUser = window.sessionStorage.getItem("aurora-internal-user");
+    const storedView = window.sessionStorage.getItem("aurora-department-view");
+    return storedUser && storedView === "internal" ? "internal" : "public";
+  });
+  const [internalUser, setInternalUser] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    return window.sessionStorage.getItem("aurora-internal-user");
+  });
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authLogin, setAuthLogin] = useState("");
+  const [authPassword, setAuthPassword] = useState("");
+  const [authError, setAuthError] = useState("");
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const [lightbox, setLightbox] = useState<{ title: string; images: string[]; index: number } | null>(null);
   const [communitySlides, setCommunitySlides] = useState<Record<string, number>>({});
   const t = content[language];
   const marketShowcaseOrder = [2, 0, 1];
+  const featuredTeamRole = t.team.roles.find((role) => role.featured);
+  const primaryTeamRoles = t.team.roles.filter((role) => !role.featured);
+  const isInternalAuthenticated = Boolean(internalUser);
+  const internalUi =
+    language === "ua"
+      ? {
+          history: "Історія департаменту",
+          internalEntry: "Внутрішній розділ",
+          internalHint: "Схований розділ департаменту",
+          loginTitle: "Вхід у внутрішній розділ",
+          loginText: "Тимчасовий локальний доступ для співробітників департаменту.",
+          loginField: "Логін",
+          passwordField: "Пароль",
+          cancel: "Скасувати",
+          enter: "Увійти",
+          wrongCredentials: "Невірний логін або пароль.",
+          backToSite: "Повернутись на сайт",
+          logout: "Вийти",
+          internalEyebrow: "Внутрішній простір AR&D",
+          internalTitle: "Команда та історія департаменту в окремому захищеному розділі",
+          internalText:
+            "Тут зібрано внутрішню структуру команди, фокус ролей і хронологію розвитку департаменту в одному закритому просторі.",
+          signedInAs: "Доступ відкрито для",
+          lockTooltip: "Відкрити внутрішній розділ",
+        }
+      : {
+          history: "Department history",
+          internalEntry: "Internal space",
+          internalHint: "Hidden department section",
+          loginTitle: "Internal access",
+          loginText: "Temporary local access for department members.",
+          loginField: "Login",
+          passwordField: "Password",
+          cancel: "Cancel",
+          enter: "Enter",
+          wrongCredentials: "Wrong login or password.",
+          backToSite: "Back to public site",
+          logout: "Log out",
+          internalEyebrow: "AR&D internal space",
+          internalTitle: "Team and department history in a dedicated protected view",
+          internalText:
+            "This space brings together the internal team structure, role ownership, and the department timeline in one restricted view.",
+          signedInAs: "Access granted for",
+          lockTooltip: "Open internal section",
+        };
+
+  useEffect(() => {
+    document.body.dataset.theme = theme;
+    document.documentElement.dataset.theme = theme;
+    window.localStorage.setItem("aurora-department-theme", theme);
+
+    return () => {
+      delete document.body.dataset.theme;
+      delete document.documentElement.dataset.theme;
+    };
+  }, [theme]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    if (internalUser) {
+      window.sessionStorage.setItem("aurora-internal-user", internalUser);
+    } else {
+      window.sessionStorage.removeItem("aurora-internal-user");
+    }
+
+    window.sessionStorage.setItem(
+      "aurora-department-view",
+      currentView === "internal" && internalUser ? "internal" : "public"
+    );
+  }, [currentView, internalUser]);
+
+  useEffect(() => {
+    if (!isInternalAuthenticated && currentView === "internal") {
+      setCurrentView("public");
+    }
+  }, [currentView, isInternalAuthenticated]);
+
+  useEffect(() => {
+    const syncBackToTopVisibility = () => {
+      setShowBackToTop(window.scrollY > 720);
+    };
+
+    syncBackToTopVisibility();
+    window.addEventListener("scroll", syncBackToTopVisibility, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", syncBackToTopVisibility);
+    };
+  }, []);
 
   const openGallery = (title: string, images: string[], index = 0) => {
     setLightbox({ title, images, index });
@@ -1857,32 +2134,290 @@ function App() {
     });
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const goToPublicView = () => {
+    setCurrentView("public");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const openInternalEntry = () => {
+    if (isInternalAuthenticated) {
+      setCurrentView("internal");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    setAuthError("");
+    setAuthPassword("");
+    setShowAuthModal(true);
+  };
+
+  const closeAuthModal = () => {
+    setShowAuthModal(false);
+    setAuthError("");
+    setAuthPassword("");
+  };
+
+  const submitInternalAccess = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const account = internalAccounts.find(
+      (entry) => entry.login === authLogin.trim() && entry.password === authPassword
+    );
+
+    if (!account) {
+      setAuthError(internalUi.wrongCredentials);
+      return;
+    }
+
+    setInternalUser(account.login);
+    setShowAuthModal(false);
+    setAuthError("");
+    setAuthPassword("");
+    setCurrentView("internal");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const logoutInternalAccess = () => {
+    setInternalUser(null);
+    setCurrentView("public");
+    setShowAuthModal(false);
+    setAuthPassword("");
+    setAuthLogin("");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const renderTeamSection = (sectionId: string) => (
+    <section className="section section-dark team-section" id={sectionId}>
+      <div className="section-heading section-heading-wide">
+        <p className="eyebrow">{t.team.eyebrow}</p>
+        <h2>{t.team.title}</h2>
+        <p>{t.team.text}</p>
+      </div>
+
+      <div className="team-layout">
+        <div className="team-topline">
+          <article className="leader-card">
+            <div className="leader-media">
+              <div className="leader-photo-frame">
+                <img src={voinalovychPhoto} alt={t.team.leader.name} className="leader-photo" />
+              </div>
+            </div>
+            <div className="leader-copy">
+              <h3>{t.team.leader.name}</h3>
+              <p className="team-role">{t.team.leader.role}</p>
+              <p className="team-focus">{t.team.leader.focus}</p>
+              <div className="leader-skills">
+                {t.team.leader.skills.map((skill) => (
+                  <span className="team-skills" key={skill}>{skill}</span>
+                ))}
+              </div>
+            </div>
+          </article>
+
+          {featuredTeamRole ? (
+            <article className="role-card role-card-featured role-card-solo">
+              <div className="role-card-head">
+                <div className={`role-avatar${getTeamRolePortrait(featuredTeamRole.title) ? " role-avatar-photo" : ""}`} aria-hidden="true">
+                  {getTeamRolePortrait(featuredTeamRole.title) ? (
+                    <>
+                      <img
+                        className="role-avatar-image role-avatar-image-blur"
+                        src={getTeamRolePortrait(featuredTeamRole.title)?.photo ?? ""}
+                        alt=""
+                      />
+                      <img
+                        className="role-avatar-image role-avatar-image-foreground"
+                        src={getTeamRolePortrait(featuredTeamRole.title)?.cutout ?? ""}
+                        alt=""
+                      />
+                    </>
+                  ) : (
+                    <span>{getInitials(featuredTeamRole.title)}</span>
+                  )}
+                </div>
+                <div className="role-copy">
+                  <h3>{featuredTeamRole.title}</h3>
+                  <p className="role-position">{featuredTeamRole.direction}</p>
+                  {featuredTeamRole.text ? <p>{featuredTeamRole.text}</p> : null}
+                </div>
+              </div>
+            </article>
+          ) : null}
+        </div>
+
+        <div className="role-grid">
+          {primaryTeamRoles.map((role) => (
+            <article
+              className={`role-card${role.members?.length || role.branches?.length ? " role-card-team" : " role-card-solo"}${role.branches?.length ? " role-card-branches role-card-wide" : ""}`}
+              key={role.title}
+            >
+              <div className="role-card-head">
+                <div className={`role-avatar${getTeamRolePortrait(role.title) ? " role-avatar-photo" : ""}`} aria-hidden="true">
+                  {getTeamRolePortrait(role.title) ? (
+                    <>
+                      <img
+                        className="role-avatar-image role-avatar-image-blur"
+                        src={getTeamRolePortrait(role.title)?.photo ?? ""}
+                        alt=""
+                      />
+                      <img
+                        className="role-avatar-image role-avatar-image-foreground"
+                        src={getTeamRolePortrait(role.title)?.cutout ?? ""}
+                        alt=""
+                      />
+                    </>
+                  ) : (
+                    <span>{getInitials(role.title)}</span>
+                  )}
+                </div>
+                <div className="role-copy">
+                  <h3>{role.title}</h3>
+                  <p className="role-position">{role.direction}</p>
+                  {role.text ? <p>{role.text}</p> : null}
+                </div>
+              </div>
+
+              {role.members?.length ? (
+                <div className="role-members">
+                  {role.members.map((member) => (
+                    <div className="role-member" key={`${role.title}-${member.name}`}>
+                      <div className="role-member-avatar" aria-hidden="true">
+                        <span>{getInitials(member.name)}</span>
+                      </div>
+                      <div className="role-member-copy">
+                        <strong>{member.name}</strong>
+                        <span>{member.role}</span>
+                        {member.note ? <em>{member.note}</em> : null}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : null}
+
+              {role.branches?.length ? (
+                <div className="role-branches">
+                  {role.branches.map((branch) => (
+                    <section className="role-branch" key={`${role.title}-${branch.label}`}>
+                      <h4>{branch.label}</h4>
+                      <div className="role-members">
+                        {branch.members.map((member) => (
+                          <div className="role-member" key={`${role.title}-${branch.label}-${member.name}`}>
+                            <div className="role-member-avatar" aria-hidden="true">
+                              <span>{getInitials(member.name)}</span>
+                            </div>
+                            <div className="role-member-copy">
+                              <strong>{member.name}</strong>
+                              <span>{member.role}</span>
+                              {member.note ? <em>{member.note}</em> : null}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </section>
+                  ))}
+                </div>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
+  const renderImpactSection = (sectionId: string) => (
+    <section className="section impact-section section-signal-shell" id={sectionId}>
+      <div className="section-heading section-heading-wide">
+        <p className="eyebrow eyebrow-dark">{t.impact.eyebrow}</p>
+        <h2 className="impact-heading-title">{t.impact.title}</h2>
+        <p>{t.impact.text}</p>
+      </div>
+
+      <div className="impact-grid">
+        <div className="impact-metrics">
+          {t.impact.metrics.map((metric) => (
+            <article className="numbers-card impact-metric-card" key={metric.label}>
+              <strong>{metric.value}</strong>
+              <span>{metric.label}</span>
+            </article>
+          ))}
+        </div>
+
+        <div className="timeline-editorial">
+          {t.impact.timeline.map((item) => (
+            <article className="timeline-card" key={`${item.year}-${item.title}`}>
+              <span>{item.year}</span>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+
   return (
-    <div className="page-shell">
+    <div className="page-shell" data-theme={theme}>
       <header className="topbar">
         <div className="brandmarks">
-          <a href="#hero" className="brandmark brandmark-aurora" aria-label="Aurora">
-            <img src={auroraLogo} alt="Aurora" className="brandmark-aurora-image" />
+          <a href={currentView === "internal" ? "#internal-top" : "#hero"} className="brandmark brandmark-aurora" aria-label="Aurora">
+            <img src={theme === "day" ? auroraLogoDay : auroraLogo} alt="Aurora" className="brandmark-aurora-image" />
           </a>
 
-          <a href="#hero" className="brandmark brandmark-department">
-            <img src={logo} alt="AR&D" className="brandmark-dept-logo" />
+          <a href={currentView === "internal" ? "#internal-top" : "#hero"} className="brandmark brandmark-department">
+            <img src={theme === "day" ? logoDay : logo} alt="AR&D" className="brandmark-dept-logo" />
           </a>
         </div>
 
         <div className="topbar-actions">
           <nav className="nav">
-            <a href="#projects">{t.nav.projects}</a>
-            <a href="#consulting">{t.nav.consulting}</a>
-            <a href="#build">{t.nav.build}</a>
-            <a href="#team">{t.nav.team}</a>
-            <a href="#community">{t.nav.community}</a>
-            <a href="#contact">{t.nav.contact}</a>
+            {currentView === "internal" ? (
+              <>
+                <a href="#internal-team">{t.nav.team}</a>
+                <a href="#internal-history">{internalUi.history}</a>
+              </>
+            ) : (
+              <>
+                <a href="#projects">{t.nav.projects}</a>
+                <a href="#consulting">{t.nav.consulting}</a>
+                <a href="#build">{t.nav.build}</a>
+                <a href="#community">{t.nav.community}</a>
+                <a href="#contact">{t.nav.contact}</a>
+              </>
+            )}
           </nav>
 
-          <a href="#contact" className="topbar-cta">
-            {t.hero.secondary}
-          </a>
+          {currentView === "internal" ? (
+            <button type="button" className="topbar-cta" onClick={goToPublicView}>
+              {internalUi.backToSite}
+            </button>
+          ) : (
+            <a href="#contact" className="topbar-cta">
+              {t.hero.secondary}
+            </a>
+          )}
+
+          <div className="theme-switch" aria-label={t.header.theme}>
+            <button
+              type="button"
+              aria-label={t.header.night}
+              className={theme === "night" ? "theme-chip theme-chip-night is-active" : "theme-chip theme-chip-night"}
+              onClick={() => setTheme("night")}
+            >
+              <span className="theme-chip-icon theme-chip-icon-moon" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              aria-label={t.header.day}
+              className={theme === "day" ? "theme-chip theme-chip-day is-active" : "theme-chip theme-chip-day"}
+              onClick={() => setTheme("day")}
+            >
+              <span className="theme-chip-icon theme-chip-icon-sun" aria-hidden="true" />
+            </button>
+          </div>
 
           <div className="language-switch" aria-label={t.header.language}>
             <button
@@ -1904,6 +2439,8 @@ function App() {
       </header>
 
       <main>
+        {currentView === "public" ? (
+          <>
         <section className="hero editorial-surface" id="hero">
           <div className="hero-grid">
             <div className="hero-copy">
@@ -1922,7 +2459,7 @@ function App() {
                 <div className="growth-engine expo-engine hero-live-engine" aria-hidden="true">
                   <div className="growth-engine-grid" />
                   <div className="growth-engine-aura" />
-                  <HeroSignatureVisual hero={t.hero} />
+                  <HeroSignatureVisual hero={t.hero} theme={theme} />
                 </div>
               </div>
             </div>
@@ -1971,7 +2508,7 @@ function App() {
               return (
                 <article className={`market-card market-card-visual market-card-theme-${offerIndex + 1}`} key={offer.title}>
                   <div className="market-card-head">
-                    {renderMarketIcon(offerIndex)}
+                    {renderMarketIcon(offerIndex, theme)}
                   </div>
                   <h3>{offer.title}</h3>
                   <p className="market-card-summary">{offer.text}</p>
@@ -2020,12 +2557,16 @@ function App() {
                             </div>
                           ) : null}
                           {project.availabilityLabel ? (
-                            <div className={`project-availability-chip is-${project.availabilityTone ?? "commercial"}`}>
-                              {project.availabilityLabel}
+                            <div
+                              className={`project-availability-chip is-${project.availabilityTone ?? "commercial"}${project.availabilityTone === "internal" ? " is-icon" : ""}`}
+                              title={project.availabilityTone === "internal" ? (language === "ua" ? "для співробітників департаменту" : "for department employees") : undefined}
+                              aria-label={project.availabilityTone === "internal" ? (language === "ua" ? "для співробітників департаменту" : "for department employees") : undefined}
+                            >
+                              {project.availabilityTone === "internal" ? "🔒" : project.availabilityLabel}
                             </div>
                           ) : null}
                           <div className={`project-scene is-${scene.theme}`}>
-                            {renderProjectScene(scene, project)}
+                          {renderProjectScene(scene, project, theme, language)}
                           </div>
                         </div>
 
@@ -2115,7 +2656,7 @@ function App() {
 
                     <div className="market-detail-hero-media">
                       <img
-                        src={turnkeyDevelopmentVisual}
+                        src={theme === "day" ? turnkeyDevelopmentVisualDay : turnkeyDevelopmentVisual}
                         alt={offer.detailTitle}
                         className="market-detail-hero-image"
                       />
@@ -2146,50 +2687,6 @@ function App() {
             )}
           </section>
         ))}
-
-        <section className="section section-dark team-section" id="team">
-          <div className="section-heading section-heading-wide">
-            <p className="eyebrow">{t.team.eyebrow}</p>
-            <h2>{t.team.title}</h2>
-            <p>{t.team.text}</p>
-          </div>
-
-          <div className="team-layout">
-            <article className="leader-card">
-              <div className="leader-media">
-                <div className="leader-photo-frame">
-                  <img src={voinalovychPhoto} alt={t.team.leader.name} className="leader-photo" />
-                </div>
-              </div>
-              <div className="leader-copy">
-                <h3>{t.team.leader.name}</h3>
-                <p className="team-role">{t.team.leader.role}</p>
-                <p className="team-focus">{t.team.leader.focus}</p>
-                <div className="leader-skills">
-                  {t.team.leader.skills.map((skill) => (
-                    <span className="team-skills" key={skill}>{skill}</span>
-                  ))}
-                </div>
-              </div>
-            </article>
-
-              <div className="role-grid">
-                {t.team.roles.map((role) => (
-                  <article
-                    className={role.title.includes("Сабанюк") || role.title.includes("Sabaniuk") ? "role-card role-card-wide" : "role-card"}
-                    key={role.title}
-                  >
-                    <div className="role-avatar" aria-hidden="true">
-                      <span>{getInitials(role.title)}</span>
-                    </div>
-                    <h3>{role.title}</h3>
-                    <p className="role-position">{role.direction}</p>
-                    {role.text ? <p>{role.text}</p> : null}
-                  </article>
-                ))}
-            </div>
-          </div>
-        </section>
 
         <section className="section community-section section-signal-shell" id="community">
           <div className="section-heading section-heading-wide">
@@ -2333,7 +2830,108 @@ function App() {
             ))}
           </div>
         </section>
+          </>
+        ) : (
+          <>
+            <section className="section internal-portal editorial-surface" id="internal-top">
+              <div className="section-heading section-heading-wide internal-portal-heading">
+                <p className="eyebrow">{internalUi.internalEyebrow}</p>
+                <h2>{internalUi.internalTitle}</h2>
+                <p>{internalUi.internalText}</p>
+              </div>
+
+              <div className="internal-portal-panel">
+                <div className="internal-portal-card">
+                  <span>{internalUi.signedInAs}</span>
+                  <strong>{internalUser}</strong>
+                  <p>{internalUi.internalHint}</p>
+                </div>
+
+                <div className="internal-portal-actions">
+                  <button type="button" className="button button-secondary" onClick={goToPublicView}>
+                    {internalUi.backToSite}
+                  </button>
+                  <button type="button" className="button button-primary" onClick={logoutInternalAccess}>
+                    {internalUi.logout}
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            {renderTeamSection("internal-team")}
+            {renderImpactSection("internal-history")}
+          </>
+        )}
       </main>
+
+      {currentView === "public" ? (
+        <button
+          type="button"
+          className={isInternalAuthenticated ? "internal-entry-button is-authorized" : "internal-entry-button"}
+          onClick={openInternalEntry}
+          aria-label={internalUi.lockTooltip}
+          title={internalUi.lockTooltip}
+        >
+          <span className="internal-entry-button-icon" aria-hidden="true">🔒</span>
+          <span className="internal-entry-button-copy">
+            <strong>{internalUi.internalEntry}</strong>
+            <span>{isInternalAuthenticated ? internalUser : internalUi.internalHint}</span>
+          </span>
+        </button>
+      ) : null}
+
+      <button
+        type="button"
+        className={showBackToTop ? "scroll-top-button is-visible" : "scroll-top-button"}
+        onClick={scrollToTop}
+        aria-label={language === "ua" ? "Повернутися на початок" : "Back to top"}
+      >
+        <span className="scroll-top-button-icon" aria-hidden="true">↑</span>
+      </button>
+
+      {showAuthModal ? (
+        <div className="auth-modal-backdrop" role="dialog" aria-modal="true" aria-label={internalUi.loginTitle}>
+          <form className="auth-modal-card" onSubmit={submitInternalAccess}>
+            <div className="auth-modal-copy">
+              <p className="eyebrow">{internalUi.internalEntry}</p>
+              <h3>{internalUi.loginTitle}</h3>
+              <p>{internalUi.loginText}</p>
+            </div>
+
+            <label className="auth-modal-field">
+              <span>{internalUi.loginField}</span>
+              <input
+                type="text"
+                value={authLogin}
+                onChange={(event) => setAuthLogin(event.target.value)}
+                autoComplete="username"
+                autoFocus
+              />
+            </label>
+
+            <label className="auth-modal-field">
+              <span>{internalUi.passwordField}</span>
+              <input
+                type="password"
+                value={authPassword}
+                onChange={(event) => setAuthPassword(event.target.value)}
+                autoComplete="current-password"
+              />
+            </label>
+
+            {authError ? <p className="auth-modal-error">{authError}</p> : null}
+
+            <div className="auth-modal-actions">
+              <button type="button" className="button button-secondary" onClick={closeAuthModal}>
+                {internalUi.cancel}
+              </button>
+              <button type="submit" className="button button-primary">
+                {internalUi.enter}
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : null}
 
       {lightbox ? (
         <div
