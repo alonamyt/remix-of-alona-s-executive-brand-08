@@ -23,8 +23,11 @@ import marketConsultingIconDay from "./assets/project/день/icon1d.png";
 import marketBuildIconDay from "./assets/project/день/icon2d.png";
 import marketReadyIconDay from "./assets/project/день/icon3d.png";
 import consultingTrainingVisual from "./assets/project/навчання.png";
-import consultingStrategyVisual from "./assets/project/консалтінг.png";
+import consultingTrainingVisualDay from "./assets/project/день/навчання.png";
+import consultingStrategyVisual from "./assets/project/консалтинг2.png";
+import consultingStrategyVisualDay from "./assets/project/день/консалтингd.png";
 import consultingProcessVisual from "./assets/project/процеси.png";
+import consultingProcessVisualDay from "./assets/project/день/процесиd.png";
 import turnkeyDevelopmentVisual from "./assets/project/розробка.png";
 import turnkeyDevelopmentVisualDay from "./assets/project/день/розробкаd.png";
 import smartWikiVisual from "./assets/project/Smart Wiki.png";
@@ -1722,23 +1725,23 @@ const getTeamRolePortrait = (title: string) => {
   return null;
 };
 
-const getConsultingPanelVisual = (index: number) => {
+const getConsultingPanelVisual = (index: number, theme: ThemeMode) => {
   switch (index) {
     case 0:
       return {
-        src: consultingTrainingVisual,
+        src: theme === "day" ? consultingTrainingVisualDay : consultingTrainingVisual,
         alt: "Навчання та розвиток компетенцій",
         position: "center 26%",
       };
     case 1:
       return {
-        src: consultingStrategyVisual,
+        src: theme === "day" ? consultingStrategyVisualDay : consultingStrategyVisual,
         alt: "Консалтинг, стратегія та тактика",
         position: "center 30%",
       };
     default:
       return {
-        src: consultingProcessVisual,
+        src: theme === "day" ? consultingProcessVisualDay : consultingProcessVisual,
         alt: "Оптимізація процесів та автоматизація",
         position: "center 28%",
       };
@@ -2611,7 +2614,7 @@ function App() {
 
                 <div className="market-panel-list">
                   {offer.panels.map((panel, panelIndex) => {
-                    const visual = getConsultingPanelVisual(panelIndex);
+                    const visual = getConsultingPanelVisual(panelIndex, theme);
 
                     return (
                       <article
