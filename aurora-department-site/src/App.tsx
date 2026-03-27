@@ -2666,18 +2666,17 @@ function App() {
                     </div>
                   </div>
 
-                  <div className="market-detail-grid">
-                    {offer.panels.map((panel, panelIndex) => (
-                      <article
-                        className={`market-detail-card market-card-theme-${index + 1}`}
-                        key={`${offer.title}-${panel.title}-${panelIndex}`}
-                      >
-                        <span className="market-card-label">{panel.eyebrow}</span>
-                        <h4>{panel.title}</h4>
-                        <ul className="market-card-list">
-                          {panel.items.map((item) => (
-                            <li key={`${panel.title}-${item.lead}`}>
-                              <strong>{item.lead}</strong>
+                    <div className="market-detail-grid">
+                      {offer.panels.map((panel, panelIndex) => (
+                        <article
+                          className={`market-detail-card market-card-theme-${index + 1}`}
+                          key={`${offer.title}-${panel.title}-${panelIndex}`}
+                        >
+                          <h4>{`${panel.eyebrow} ${panel.title}`}</h4>
+                          <ul className="market-card-list">
+                            {panel.items.map((item) => (
+                              <li key={`${panel.title}-${item.lead}`}>
+                                <strong>{item.lead}</strong>
                               <span>{item.text}</span>
                             </li>
                           ))}
