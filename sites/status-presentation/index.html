@@ -1321,7 +1321,7 @@ function renderModalScreenshot(src) {
   const safeSrc = resolveImageSrc(src);
   return `
     <div class="modal-screenshot-frame">
-      <img src="${safeSrc}" data-raw-src="${src}" alt="Скріншот" loading="lazy" onclick="openLightbox(event, this.dataset.rawSrc)" onerror="handleImageError(this)">
+      <img src="${safeSrc}" data-raw-src="${src}" alt="Скріншот" loading="lazy" onclick="openLightbox(this.dataset.rawSrc)" onerror="handleImageError(this)">
     </div>
   `;
 }
@@ -1520,8 +1520,7 @@ document.addEventListener('keydown', e => {
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
 
-function openLightbox(e, src) {
-  if (e) e.stopPropagation();
+function openLightbox(src) {
   lightboxImg.src = resolveImageSrc(src);
   lightbox.classList.add('open');
 }
