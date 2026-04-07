@@ -125,6 +125,16 @@ nav.visible{transform:translateY(0)}
 .modal-block-text{font-size:14px;color:var(--text2);line-height:1.65}
 .modal-block-text li{margin-bottom:6px}
 .modal-block-text ul{padding-left:16px}
+.modal-section-title{font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin:18px 0 12px;display:flex;align-items:center;gap:6px}
+.modal-section-title.tasks{color:var(--indigo)}
+.modal-section-title.risk{color:var(--red)}
+.modal-highlight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:16px}
+.modal-highlight-card{position:relative;background:linear-gradient(180deg,#ffe979 0%,#ffd84d 100%);border-radius:20px;padding:18px 18px 16px;border:1px solid rgba(186,146,0,0.28);box-shadow:0 10px 24px rgba(255,204,0,0.14);overflow:hidden}
+.modal-highlight-number{position:absolute;top:10px;right:14px;font-size:28px;font-weight:700;letter-spacing:-0.03em;color:rgba(28,28,30,0.35)}
+.modal-highlight-title{font-size:20px;font-weight:700;letter-spacing:-0.02em;color:var(--text);line-height:1.2;margin:18px 42px 12px 0}
+.modal-highlight-text{font-size:14px;color:var(--text2);line-height:1.65}
+.modal-highlight-text ul{padding-left:16px;margin:0}
+.modal-highlight-text li{margin-bottom:6px}
 .modal-screenshots{margin-top:16px}
 .modal-screenshots-title{font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);margin-bottom:12px}
 .modal-screenshots-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
@@ -832,16 +842,43 @@ const projects = [
     name: `AI Центр експертизи`,
     shortName: `AI Центр експертизи`,
     desc: `Прискорити створення та масштабування бізнес-цінності від ШІ у всіх підрозділах компанії через стандарти, сервісну модель та навчання.`,
-    product: `01`,
+    product: `Система навчання, стандартів, впроваджена технологія`,
     status: "live",
     statusLabel: `✔ Live`,
     deadline: `Q3 2026 (лип.)`,
     owner: `Далюк А.`,
     category: `AI & ML`,
-    req: ``,
-    tasks: `AI Університет`,
-    benefit: `Регулярна централізована комунікація, щотижневі публікації новин та кейсів для підвищення залученості.`,
+    req: `Підвищити рівень використання ШІ в компанії через навчання
+Запускати та масштабувати рішення з найбільшим бізнес-ефектом
+Забезпечувати фінансовий результат через оптимізацію процесів
+Скорочувати час на рутинні завдання
+Гарантувати безпечне й контрольоване впровадження технологій`,
+    tasks: ``,
+    focusCards: [
+      { num: "01", title: "Стандартизація AI-асистентів", text: `Впровадження єдиного процесу роботи з AI-агентами, запуск аналітичного дашборду та форми зворотного зв’язку.` },
+      { num: "02", title: "Enterprise GPT-чат", text: `Впровадження корпоративної версії з підвищеною безпекою, контролем доступу та інтеграцією в бізнес-процеси.` },
+      { num: "03", title: "Вітрина AI-інструментів", text: `Створення централізованого каталогу доступних AI-рішень з описом кейсів використання та бізнес-користі.` },
+      { num: "04", title: "AI Університет", text: `Завершення поточної сесії, підведення підсумків та затвердження оновленої стратегії розвитку навчальної програми.` },
+      { num: "05", title: "Комунікації про AI", text: `Регулярна централізована комунікація, щотижневі публікації новин та кейсів для підвищення залученості.` },
+      { num: "06", title: "Правила використання", text: `Розробка та впровадження єдиного корпоративного документу політик та обмежень щодо AI.` }
+    ],
+    benefit: `Єдина AI-стратегія - забезпечує узгодженість усіх ініціатив із бізнес-цілями та максимізує їх вплив
+Контроль і governance AI - мінімізує юридичні, етичні та репутаційні ризики
+Прискорення time-to-market для нових продуктів
+Концентрація експертизи - створення ядра AI-компетенцій у компанії
+Автоматизація рутинних процесів - прямий вплив на ефективність і швидкість роботи`,
     risk: ``,
+    riskCards: [
+      { num: "01", title: "Недостатня експертиза та кадрові ризики", text: `Поточна експертиза співробітника R&D є недостатньою для масштабування рішень
+Необхідне посилення команди через залучення більш компетентних фахівців
+Існує ризик втрати ключового співробітника найближчим часом` },
+      { num: "02", title: "Низька залученість персоналу", text: `Часткове несприйняття AI-інструментів
+В окремих процесах - прояви саботажу
+Опір змінам та новим підходам до роботи` },
+      { num: "03", title: "Ресурсне навантаження", text: `Швидке зростання кількості AI-інструментів і сервісів
+Необхідність управління підписками та витратами
+Постійна потреба в інвестиціях у нові технології` }
+    ],
     screenshots: []
   },
   {
@@ -1327,9 +1364,55 @@ function nl2li(text) {
   return '<ul>' + text.split('\n').filter(l=>l.trim()).map(l => `<li>${l.trim().replace(/^[•\-]\s*/,'')}</li>`).join('') + '</ul>';
 }
 
+function renderHighlightCards(cards) {
+  if (!cards || !cards.length) return '';
+  return `
+    <div class="modal-highlight-grid">
+      ${cards.map(card => `
+        <div class="modal-highlight-card">
+          <div class="modal-highlight-number">${card.num || ''}</div>
+          <div class="modal-highlight-title">${card.title}</div>
+          <div class="modal-highlight-text">${nl2li(card.text)}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
 function openModal(p) {
   const sm = statusMap[p.status];
   modalTitle.textContent = p.name;
+
+  if (p.id === 'ai-center') {
+    modalBody.innerHTML = `
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+        <span class="status-pill ${sm.cls}" style="font-size:13px;padding:6px 14px">${p.detailStatusLabel || p.statusLabel}</span>
+        <span style="font-size:14px;color:var(--text3);font-weight:500">${p.deadline}</span>
+        <span style="font-size:14px;color:var(--text4)">Керівник: ${p.owner}</span>
+        <span style="font-size:12px;color:var(--blue);background:rgba(0,122,255,0.08);padding:4px 10px;border-radius:100px">${p.category}</span>
+      </div>
+      <div class="modal-product">
+        <div class="modal-product-label">Продукт проєкту</div>
+        <div class="modal-product-text">${p.product}</div>
+      </div>
+      <div class="modal-block" style="margin-bottom:16px">
+        <div class="modal-block-title req">&#x1F3AF; Вимога бізнесу</div>
+        <div class="modal-block-text">${nl2li(p.req)}</div>
+      </div>
+      <div class="modal-section-title tasks">&#x1F527; Задачі в фокусі</div>
+      ${renderHighlightCards(p.focusCards)}
+      <div class="modal-block" style="margin-bottom:16px">
+        <div class="modal-block-title benefit">&#x2705; Вигода</div>
+        <div class="modal-block-text">${nl2li(p.benefit)}</div>
+      </div>
+      <div class="modal-section-title risk">&#x26A0;&#xFE0F; Ризики</div>
+      ${renderHighlightCards(p.riskCards)}
+    `;
+    modalOverlay.classList.add('open');
+    modalContainer.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    return;
+  }
 
   let html = `
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
