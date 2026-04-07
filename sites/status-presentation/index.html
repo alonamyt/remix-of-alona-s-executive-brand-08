@@ -141,6 +141,7 @@ nav.visible{transform:translateY(0)}
 .modal-screenshots-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .modal-screenshot-frame{display:flex;align-items:center;justify-content:center;height:260px;padding:12px;background:var(--gray6);border-radius:var(--radius);border:0.5px solid rgba(0,0,0,0.08);overflow:hidden}
 .modal-screenshots-grid img{width:100%;height:100%;object-fit:contain;cursor:pointer;transition:transform .2s}
+.modal-screenshots-grid video{width:100%;height:100%;object-fit:contain;background:#000;border-radius:12px}
 .modal-screenshots-grid img:hover{transform:scale(1.02)}
 .modal-timeline{display:flex;align-items:center;gap:12px;margin-top:16px;padding:16px 20px;background:var(--card);border-radius:var(--radius);border:0.5px solid rgba(0,0,0,0.06)}
 .modal-timeline-item{display:flex;flex-direction:column;align-items:center;gap:4px}
@@ -759,7 +760,8 @@ const projects = [
 Швидка реакція на зміну цін або ситуацій
 Контент можна оновити централізовано протягом хвилин.`,
     risk: `Вартість впровадження`,
-    screenshots: []
+    screenshots: [],
+    videos: ["media/retail-media-demo.mp4"]
   },
   {
     id: "geo",
@@ -1335,6 +1337,17 @@ function renderModalScreenshot(src) {
   `;
 }
 
+function renderModalVideo(src) {
+  const safeSrc = resolveImageSrc(src);
+  return `
+    <div class="modal-screenshot-frame">
+      <video controls playsinline preload="metadata">
+        <source src="${safeSrc}" type="video/mp4">
+      </video>
+    </div>
+  `;
+}
+
 function renderProjects() {
   grid.innerHTML = '';
   const filtered = projects.filter(p => {
@@ -1524,6 +1537,17 @@ function openModal(p) {
         <div class="modal-screenshots-title">&#x1F4F1; Інтерфейс системи</div>
         <div class="modal-screenshots-grid">
           ${p.screenshots.map(s => renderModalScreenshot(s)).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  if (p.videos && p.videos.length > 0) {
+    html += `
+      <div class="modal-screenshots">
+        <div class="modal-screenshots-title">&#x1F3A5; Відео системи</div>
+        <div class="modal-screenshots-grid">
+          ${p.videos.map(v => renderModalVideo(v)).join('')}
         </div>
       </div>
     `;
