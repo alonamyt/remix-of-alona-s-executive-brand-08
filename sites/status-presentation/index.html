@@ -1403,14 +1403,27 @@ function nl2li(text) {
   if (!text) return '';
   const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
   const cleaned = lines.map(l => l.replace(/^[•\-]\s*/, ''));
-  const first = cleaned[0];
-  const rest = cleaned.slice(1);
+  let html = '';
+  let items = [];
 
-  if (first && first.endsWith(':') && rest.length > 0) {
-    return `<div class="lead">${first}</div><ul>${rest.map(l => `<li>${l}</li>`).join('')}</ul>`;
+  function flushItems() {
+    if (!items.length) return;
+    html += `<ul>${items.map(l => `<li>${l}</li>`).join('')}</ul>`;
+    items = [];
   }
 
-  return '<ul>' + cleaned.map(l => `<li>${l}</li>`).join('') + '</ul>';
+  cleaned.forEach((line, index) => {
+    const isLead = line.endsWith(':') && index < cleaned.length - 1;
+    if (isLead) {
+      flushItems();
+      html += `<div class="lead">${line}</div>`;
+      return;
+    }
+    items.push(line);
+  });
+
+  flushItems();
+  return html;
 }
 
 function renderHighlightCards(cards) {
