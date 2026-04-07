@@ -1106,6 +1106,8 @@ const projects = [
     product: `Уніфікована модель управлінського обліку матеріальних цінностей в компанії, яка забезпечує SSOT, прозорість процесу, аналітичну звітність та контроль витрат і залишків`,
     status: "dev",
     statusLabel: `В роботі`,
+    cardStatusLabel: `В роботі (планування)`,
+    detailStatusLabel: `В роботі`,
     deadline: `Q4 2026 (груд.)`,
     owner: `Кутняк Ю.`,
     category: `Infrastructure`,
@@ -1134,7 +1136,9 @@ const projects = [
     desc: `Система, при якій співробітники ТТ можуть ініціювати зміну заробітної плати, якщо вона нижче ніж у конкурентів по регіону.`,
     product: `Розроблена та впроваджена система оцінки ЗП в розрізі посад «роздрібу», з подальшим прийняттям рішення про її зміну один раз на місяць. Рівень деталізації: регіон, область, місто, ПГТ, ТТ`,
     status: "dev",
-    statusLabel: `Розробка`,
+    statusLabel: `В розробці`,
+    cardStatusLabel: `Активна розробка`,
+    detailStatusLabel: `В розробці`,
     deadline: `Q4 2026 (груд.)`,
     owner: `Кутняк Ю.`,
     category: `HR & Operations`,
@@ -1162,6 +1166,8 @@ const projects = [
     product: `Побудована грейдингова модель посад із визначеними грейдами, оціночними балами та аналітикою зарплат, а також підготовлена внутрішня команда й інструменти для подальшого впровадження і підтримки цієї системи в компанії.`,
     status: "dev",
     statusLabel: `В роботі`,
+    cardStatusLabel: `В роботі (виконання)`,
+    detailStatusLabel: `В роботі`,
     deadline: `Q4 2026 (груд.)`,
     owner: `Кутняк Ю.`,
     category: `HR & Operations`,
@@ -1256,7 +1262,7 @@ function renderProjects() {
         </div>
         <div class="project-desc">${p.desc}</div>
         <div class="project-meta">
-          <span class="status-pill ${sm.cls}">${p.statusLabel}</span>
+          <span class="status-pill ${sm.cls}">${p.cardStatusLabel || p.statusLabel}</span>
           <span class="deadline-tag">${p.deadline}</span>
           <span class="owner-tag">${p.owner}</span>
         </div>
@@ -1305,7 +1311,7 @@ function openModal(p) {
 
   let html = `
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
-      <span class="status-pill ${sm.cls}" style="font-size:13px;padding:6px 14px">${p.statusLabel}</span>
+      <span class="status-pill ${sm.cls}" style="font-size:13px;padding:6px 14px">${p.detailStatusLabel || p.statusLabel}</span>
       <span style="font-size:14px;color:var(--text3);font-weight:500">${p.deadline}</span>
       <span style="font-size:14px;color:var(--text4)">Керівник: ${p.owner}</span>
       <span style="font-size:12px;color:var(--blue);background:rgba(0,122,255,0.08);padding:4px 10px;border-radius:100px">${p.category}</span>
