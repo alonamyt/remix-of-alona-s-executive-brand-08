@@ -1,0 +1,1528 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R&D Portfolio — Березень 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#007AFF;--green:#34C759;--indigo:#5856D6;--orange:#FF9500;
+  --pink:#FF2D55;--purple:#AF52DE;--teal:#5AC8FA;--red:#FF3B30;
+  --yellow:#FFCC00;--gray:#8E8E93;--gray2:#AEAEB2;--gray3:#C7C7CC;
+  --gray4:#D1D1D6;--gray5:#E5E5EA;--gray6:#F2F2F7;
+  --bg:#F2F2F7;--card:#FFFFFF;--text:#1C1C1E;--text2:#3A3A3C;
+  --text3:#636366;--text4:#8E8E93;
+  --radius:12px;--radius-lg:16px;--radius-xl:20px;
+  --shadow:0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg:0 8px 32px rgba(0,0,0,0.12);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",system-ui,sans-serif;
+}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{font-family:var(--font);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.5}
+
+/* ═══ SCROLL PROGRESS ═══ */
+#progress{position:fixed;top:0;left:0;height:3px;background:var(--blue);z-index:10001;width:0;transition:width .08s linear;border-radius:0 2px 2px 0}
+
+/* ═══ NAV ═══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:10000;padding:0 max(2rem,env(safe-area-inset-left));height:52px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);background:rgba(242,242,247,0.72);border-bottom:0.5px solid rgba(0,0,0,0.12);transform:translateY(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+nav.visible{transform:translateY(0)}
+.nav-logo{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-0.02em}
+.nav-logo span{color:var(--blue)}
+.nav-links{display:flex;gap:24px}
+.nav-links a{font-size:13px;color:var(--text3);text-decoration:none;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--blue)}
+.nav-links a.active{color:var(--blue)}
+@media(max-width:768px){.nav-links{display:none}}
+
+/* ═══ HERO ═══ */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:4rem max(3rem,5vw) 5rem;background:linear-gradient(160deg,#1C1C1E 0%,#2C2C2E 50%,#1C1C1E 100%);position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(0,122,255,0.12),transparent),radial-gradient(ellipse 50% 40% at 20% 80%,rgba(88,86,214,0.08),transparent)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:60px 60px}
+.hero-content{position:relative;z-index:1;max-width:900px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);padding:6px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:100px;margin-bottom:32px;backdrop-filter:blur(8px);background:rgba(255,255,255,0.04)}
+.hero-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.hero h1{font-size:clamp(40px,7vw,72px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin-bottom:16px}
+.hero h1 em{font-style:normal;color:var(--blue);font-weight:700}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:rgba(255,255,255,0.5);max-width:600px;line-height:1.6;font-weight:400;margin-bottom:48px}
+
+/* ═══ METRICS ROW ═══ */
+.metrics-row{display:flex;gap:1px;position:relative;z-index:1}
+.metric-card{background:rgba(255,255,255,0.06);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.08);padding:24px 32px;flex:1;transition:background .3s}
+.metric-card:first-child{border-radius:var(--radius-lg) 0 0 var(--radius-lg)}
+.metric-card:last-child{border-radius:0 var(--radius-lg) var(--radius-lg) 0}
+.metric-card:hover{background:rgba(255,255,255,0.1)}
+.metric-val{font-size:36px;font-weight:700;color:#fff;letter-spacing:-0.02em;line-height:1}
+.metric-label{font-size:13px;color:rgba(255,255,255,0.4);margin-top:6px;font-weight:500}
+.metric-detail{font-size:11px;color:rgba(255,255,255,0.25);margin-top:4px}
+@media(max-width:768px){.metrics-row{flex-direction:column;gap:8px}.metric-card,.metric-card:first-child,.metric-card:last-child{border-radius:var(--radius)}}
+
+/* ═══ SECTIONS ═══ */
+.section{padding:80px max(2rem,5vw)}
+.section-header{margin-bottom:40px}
+.section-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.section-title{font-size:clamp(28px,4vw,40px);font-weight:700;letter-spacing:-0.02em;color:var(--text)}
+.section-sub{font-size:15px;color:var(--text3);margin-top:8px;max-width:600px}
+
+/* ═══ FILTER BAR ═══ */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px;position:sticky;top:52px;z-index:100;padding:12px 0;background:var(--bg)}
+.filter-btn{padding:7px 16px;border-radius:100px;border:1px solid var(--gray5);background:var(--card);font-size:13px;font-weight:500;color:var(--text3);cursor:pointer;transition:all .2s;font-family:var(--font);white-space:nowrap}
+.filter-btn:hover{border-color:var(--blue);color:var(--blue)}
+.filter-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.filter-count{font-size:11px;color:var(--text4);margin-left:4px;font-weight:400}
+
+/* ═══ PROJECT GRID ═══ */
+.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:16px}
+@media(max-width:480px){.project-grid{grid-template-columns:1fr}}
+
+/* ═══ PROJECT CARD ═══ */
+.project-card{background:var(--card);border-radius:var(--radius-lg);border:1px solid rgba(0,0,0,0.06);overflow:hidden;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.project-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.project-card-inner{padding:20px 24px}
+.project-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+.project-name{font-size:17px;font-weight:600;letter-spacing:-0.01em;color:var(--text);line-height:1.3}
+.project-desc{font-size:13px;color:var(--text3);line-height:1.5;margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.project-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.status-pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;letter-spacing:0.01em;white-space:nowrap}
+.status-pill::before{content:"";width:5px;height:5px;border-radius:50%}
+.status-live{background:rgba(52,199,89,0.12);color:#248A3D}.status-live::before{background:#34C759}
+.status-dev{background:rgba(0,122,255,0.1);color:#0062CC}.status-dev::before{background:#007AFF}
+.status-test{background:rgba(255,149,0,0.12);color:#C77800}.status-test::before{background:#FF9500}
+.status-init{background:rgba(142,142,147,0.12);color:#636366}.status-init::before{background:#8E8E93}
+.status-paused{background:rgba(255,45,85,0.1);color:#D70035}.status-paused::before{background:#FF2D55}
+.status-closed{background:rgba(142,142,147,0.08);color:#8E8E93}.status-closed::before{background:#C7C7CC}
+.status-scale{background:rgba(88,86,214,0.1);color:#4B49B6}.status-scale::before{background:#5856D6}
+.deadline-tag{font-size:11px;color:var(--text4);font-weight:500}
+.owner-tag{font-size:11px;color:var(--text4);font-weight:500;margin-left:auto}
+.project-card-screenshots{display:flex;gap:2px;overflow:hidden;border-top:0.5px solid rgba(0,0,0,0.06)}
+.project-card-screenshots img{height:100px;flex:1;object-fit:cover;min-width:0;opacity:0.9;transition:opacity .3s}
+.project-card:hover .project-card-screenshots img{opacity:1}
+
+/* ═══ MODAL ═══ */
+.modal-overlay{position:fixed;inset:0;z-index:20000;background:rgba(0,0,0,0.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-container{position:fixed;inset:0;z-index:20001;background:var(--bg);overflow-y:auto;opacity:0;pointer-events:none;transform:translateY(40px);transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .3s ease;-webkit-overflow-scrolling:touch}
+.modal-container.open{transform:translateY(0);opacity:1;pointer-events:all}
+.modal-header{position:sticky;top:0;z-index:10;padding:16px max(24px,5vw);height:56px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);background:rgba(242,242,247,0.85);border-bottom:0.5px solid rgba(0,0,0,0.08)}
+.modal-close{width:36px;height:36px;border-radius:50%;border:none;background:rgba(0,0,0,0.06);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text3);transition:background .2s;font-family:var(--font)}
+.modal-close:hover{background:rgba(0,0,0,0.12)}
+.modal-title{font-size:17px;font-weight:600;letter-spacing:-0.01em}
+.modal-body{max-width:960px;margin:0 auto;padding:32px max(24px,5vw) 80px}
+.modal-product{background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:16px;border:0.5px solid rgba(0,0,0,0.06)}
+.modal-product-label{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.modal-product-text{font-size:15px;color:var(--text2);line-height:1.6}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:600px){.modal-grid{grid-template-columns:1fr}}
+.modal-block{background:var(--card);border-radius:var(--radius);padding:20px;border:0.5px solid rgba(0,0,0,0.06)}
+.modal-block-title{font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.modal-block-title.req{color:var(--blue)}
+.modal-block-title.tasks{color:var(--indigo)}
+.modal-block-title.benefit{color:var(--green)}
+.modal-block-title.risk{color:var(--red)}
+.modal-block-text{font-size:14px;color:var(--text2);line-height:1.65}
+.modal-block-text li{margin-bottom:6px}
+.modal-block-text ul{padding-left:16px}
+.modal-screenshots{margin-top:16px}
+.modal-screenshots-title{font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);margin-bottom:12px}
+.modal-screenshots-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.modal-screenshots-grid img{width:100%;border-radius:var(--radius);border:0.5px solid rgba(0,0,0,0.08);cursor:pointer;transition:transform .2s}
+.modal-screenshots-grid img:hover{transform:scale(1.02)}
+.modal-timeline{display:flex;align-items:center;gap:12px;margin-top:16px;padding:16px 20px;background:var(--card);border-radius:var(--radius);border:0.5px solid rgba(0,0,0,0.06)}
+.modal-timeline-item{display:flex;flex-direction:column;align-items:center;gap:4px}
+.modal-timeline-item .label{font-size:11px;color:var(--text4);font-weight:500}
+.modal-timeline-item .value{font-size:13px;font-weight:600;color:var(--text)}
+.modal-key-dates{margin-top:16px;padding:16px 20px;background:rgba(255,149,0,0.06);border-radius:var(--radius);border:0.5px solid rgba(255,149,0,0.15)}
+.modal-key-dates-title{font-size:12px;font-weight:600;color:var(--orange);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em}
+.modal-key-dates-text{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* ═══ IMAGE LIGHTBOX ═══ */
+.lightbox{position:fixed;inset:0;z-index:30000;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;cursor:zoom-out}
+.lightbox.open{opacity:1;pointer-events:all}
+.lightbox img{max-width:92vw;max-height:92vh;border-radius:8px;object-fit:contain}
+
+/* ═══ TEAM SECTION ═══ */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.team-card{background:var(--card);border-radius:var(--radius);padding:20px;border:0.5px solid rgba(0,0,0,0.06);text-align:center;transition:all .2s}
+.team-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.team-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--indigo));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:#fff;margin:0 auto 12px}
+.team-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
+.team-count{font-size:12px;color:var(--text4)}
+
+/* ═══ STATS SECTION ═══ */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.stat-card{background:var(--card);border-radius:var(--radius-lg);padding:24px;border:0.5px solid rgba(0,0,0,0.06)}
+.stat-card-title{font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text4);margin-bottom:16px}
+.stat-bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.stat-bar-label{font-size:13px;font-weight:500;color:var(--text2);width:130px;flex-shrink:0}
+.stat-bar-track{flex:1;height:8px;background:var(--gray6);border-radius:4px;overflow:hidden}
+.stat-bar-fill{height:100%;border-radius:4px;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.stat-bar-count{font-size:13px;font-weight:600;color:var(--text);width:30px;text-align:right}
+
+/* ═══ FOOTER ═══ */
+footer{padding:40px max(2rem,5vw);border-top:0.5px solid rgba(0,0,0,0.06);text-align:center}
+footer p{font-size:13px;color:var(--text4)}
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.animate-in{animation:fadeInUp .6s ease-out both}
+.delay-1{animation-delay:.1s}.delay-2{animation-delay:.2s}.delay-3{animation-delay:.3s}
+.delay-4{animation-delay:.4s}.delay-5{animation-delay:.5s}
+
+/* ═══ ANIMATIONS ═══ — no scroll-observer, just instant visibility */
+
+/* ═══ BACK TO TOP ═══ */
+.back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--card);border:0.5px solid rgba(0,0,0,0.08);box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transform:translateY(16px);transition:all .3s;z-index:9999;font-size:20px;color:var(--text3)}
+.back-top.visible{opacity:1;transform:translateY(0)}
+.back-top:hover{background:var(--blue);color:#fff}
+
+/* ═══ SEARCH ═══ */
+.search-wrap{position:relative;margin-bottom:16px}
+.search-input{width:100%;padding:12px 16px 12px 40px;border-radius:var(--radius);border:0.5px solid rgba(0,0,0,0.1);background:var(--card);font-size:15px;font-family:var(--font);color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s}
+.search-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,122,255,0.12)}
+.search-input::placeholder{color:var(--text4)}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text4);font-size:16px;pointer-events:none}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav id="nav">
+  <div class="nav-logo">Aurora <span>R&D</span></div>
+  <div class="nav-links">
+    <a href="#analytics">Аналітика</a>
+    <a href="#portfolio">Портфель</a>
+    <a href="#teams">Команди</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge animate-in">Березень 2026</div>
+    <h1 class="animate-in delay-1">Статуси проєктів<br>департаменту <em>R&D</em></h1>
+    <p class="hero-sub animate-in delay-2">Портфель інноваційних рішень для автоматизації бізнес-процесів та підвищення ефективності операцій</p>
+    <div class="metrics-row animate-in delay-3">
+      <div class="metric-card">
+        <div class="metric-val">37</div>
+        <div class="metric-label">Активних проєктів</div>
+        <div class="metric-detail">WFM, Кабінет орендодавця, Smart Parking...</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">6</div>
+        <div class="metric-label">Місяці розробки</div>
+        <div class="metric-detail">Середній термін виведення на ринок</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">+10%</div>
+        <div class="metric-label">Ефективність</div>
+        <div class="metric-detail">Приріст продуктивності від автоматизації</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="analytics" style="background:#fff">
+  <div class="section-header reveal">
+    <div class="section-tag">Аналітика</div>
+    <div class="section-title">Статистика портфелю</div>
+  </div>
+  <div class="stats-grid reveal" id="statsGrid"></div>
+</section>
+
+<section class="section" id="portfolio">
+  <div class="section-header reveal">
+    <div class="section-tag">Портфель проєктів</div>
+    <div class="section-title">Усі проєкти R&D</div>
+    <div class="section-sub">Натисніть на проєкт для перегляду повної інформації</div>
+  </div>
+  <div class="search-wrap reveal">
+    <span class="search-icon">&#x1F50D;</span>
+    <input type="text" class="search-input" id="searchInput" placeholder="Пошук проєктів...">
+  </div>
+  <div class="filter-bar reveal" id="filterBar"></div>
+  <div class="project-grid" id="projectGrid"></div>
+</section>
+
+<section class="section" id="teams">
+  <div class="section-header reveal">
+    <div class="section-tag">Команди</div>
+    <div class="section-title">Керівники проєктів</div>
+  </div>
+  <div class="team-grid reveal" id="teamGrid"></div>
+</section>
+
+<footer>
+  <p>Aurora R&D Department &middot; Портфель проєктів &middot; Березень 2026</p>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay"></div>
+<div class="modal-container" id="modalContainer">
+  <div class="modal-header">
+    <div class="modal-title" id="modalTitle"></div>
+    <button class="modal-close" id="modalClose">&times;</button>
+  </div>
+  <div class="modal-body" id="modalBody"></div>
+</div>
+
+<div class="lightbox" id="lightbox"><img id="lightboxImg" src=""></div>
+<div class="back-top" id="backTop">&#8593;</div>
+
+<script>
+// ═══ ALL PROJECTS DATA ═══
+const projects = [
+  {
+    id: "wfm",
+    name: `WFM (Work Force Management)`,
+    shortName: `WFM`,
+    desc: `Система для планування графіків виходу співробітників на ТТ в горизонті від години до двох місяців`,
+    product: `Система автоматизації процесів планування персоналу «Роздрібу»`,
+    status: "live",
+    statusLabel: `✔ Live`,
+    deadline: `Q2 2026 (квіт.)`,
+    owner: `Горбунов В.`,
+    category: `HR & Operations`,
+    req: `Відпрацювання КЗПП
+Приріст ефективності +10% години/СКЮ
+Якість проходження БО`,
+    tasks: `Інтеграція з 1С та з AD
+Підготовка до тесту на  «проникнення»
+Публікація сайту на зовні`,
+    benefit: `Час на формування графіків, затвердження ТМ
+Зняття піків навантаження /простою
+Персонал на ТТ в потрібний час
+Автоматизація табелю`,
+    risk: `Збільшення навантаження в розрізі години
+Втрата якості обслуговування
+Плинність кадрів
+Прогноз задач в розрізі дня (планування)`,
+    screenshots: ["images/slide6_Picture_166.png", "images/slide6_Рисунок_37.png"]
+  },
+  {
+    id: "landlord",
+    name: `Кабінет орендодавця`,
+    shortName: `Кабінет орендодавця`,
+    desc: `Призначений для скорочення витрат на обслуговування орендодавця, автоматизації покращення процесів (перехід на «Вчасно»)`,
+    product: `ПЗ для зручної комунікації МСО та орендодавців. Автоматизоване, має базову звітність та контроль за оплатою що прискорює документообіг.`,
+    status: "test",
+    statusLabel: `Test`,
+    deadline: `Q4 2026 (лип.)`,
+    owner: `Горбунов В.`,
+    category: `HR & Operations`,
+    req: `Робоче місце МСО, що покриває основні бізнес-процеси роботи з орендодавцями
+Синхронізація з системою ЕДО «Вчасно»`,
+    tasks: `Створення програми навчання МСО
+Навчання МСО
+Чистка даних в наших ІС
+Запуск пілоту`,
+    benefit: `Операційна ефективність
+Прозорість та контроль
+Підвищення мотивації персоналу
+Посилення корпоративної культури`,
+    risk: `Сприйняття «нав'язування» орендодавцями
+Не врахування вимог та специфіки у розробці продукту партнером
+Інтеграція з 1С`,
+    screenshots: ["images/slide7_Рисунок_47.png", "images/slide7_Рисунок_48.png", "images/slide7_Рисунок_49.png"]
+  },
+  {
+    id: "f1",
+    name: `Перехід на форму Ф1(Роздріб)`,
+    shortName: `Форма Ф1`,
+    desc: `Проєкт, направлений на «вибілення» компанії. Переведення всіх виплат «роздрібу» в офіційну форму`,
+    product: `Затверджені та реалізовані алгоритми функціоналу в 1С для нарахування ЗП (Роздріб) по формі Ф1`,
+    status: "dev",
+    statusLabel: `В розробці`,
+    deadline: `Q3 2026 (лип.)`,
+    owner: `Горбунов В.`,
+    category: `HR & Operations`,
+    req: `Перейти на нарахування ЗП (Роздріб) по формі Ф1`,
+    tasks: `Написання логіки преміювань в 1С (база Ф1)`,
+    benefit: `Прозорість нарахувань ЗП
+Зменшення ризиків КЗПП`,
+    risk: `Затримки в прийнятті рішень
+Завантаженість ІТ (1С)
+Вимоги законодавства`,
+    screenshots: []
+  },
+  {
+    id: "cluster",
+    name: `Кластерізація`,
+    shortName: `Кластерізація`,
+    desc: `Проєкт, спрямований на створення процесів управління асортиментом в ТТ різного формату`,
+    product: `Система пов'язаних бізнес-процесів та систем для управління асортиментом в ТТ компанії`,
+    status: "closed",
+    statusLabel: `Закритий`,
+    deadline: `Q1 2026 (січ.)`,
+    owner: `Горбунов В.`,
+    category: `Supply Chain`,
+    req: `Витримується баланс завантаженості ТТ
+Товар є на ТТ, де він потрібен та не вимивається
+Підтримання поточного рівня ротації асортименту 
+Збереження атмосфери TREASURE HUNT 
+Приріст виручки категорії >=1,10
+Покриття ядром >=97%`,
+    tasks: `Проєкт закрито для переходу на форматне управління ТТ (Проєкт маркетингу)
+Результат: Створено ядро асортименту, яке присуне на всіх ТТ (відсоток присутності 95%)
+Власники: Біленко Олена, Безрук Максим.`,
+    benefit: `Частка недовантажених ТТ
+Частка перевантажених ТТ
+Зберегти загальну оборотність категорії
+Зберегти ефективність використання`,
+    risk: `Затримки в прийнятті рішень 
+Високий рівень ротації 
+Похибки в визначеній мат.моделі`,
+    screenshots: []
+  },
+  {
+    id: "temp-chain",
+    name: `Температурний режим на ланцюжку товарів`,
+    shortName: `Температурний режим`,
+    desc: `Проєкт, спрямований на розвиток категорії товарів харчування та виконання всіх законодавчих вимог щодо торгівлі цією категорією`,
+    product: `Система пов'язаних бізнес-процесів та систем для підтримки температурного режиму на всьому ланцюгу руху товарів харчування`,
+    status: "paused",
+    statusLabel: `Призупинено`,
+    deadline: `Q2 2027`,
+    owner: `Горбунов В.`,
+    category: `Supply Chain`,
+    req: `Збереження якості товару 
+Виконання законодавчих вимог
+Додатковий прибуток за рахунок присутності товару цілий рік`,
+    tasks: `Проєкт призупинено .Причини зупинки:
+Не стабільна ситуація з енергопостачанням
+Не можливість управління системами кондиціювання в нічний час (особливо в ТЦ)
+Витрати на споживання електрики в після закриття ТТ`,
+    benefit: `Імідж компанії 
+Утримання клієнтів`,
+    risk: `Паралельні проекти в складі 
+Місце на складі під нову зону 
+Додаткова логістика 
+Програмне забезпечення супроводу 
+Побудова зон складу 
+Не стабільна система обслуговування кондиціонерів`,
+    screenshots: []
+  },
+  {
+    id: "outsource",
+    name: `Власний аутсорс (Роздріб)`,
+    shortName: `Власний аутсорс`,
+    desc: `Проєкт, спрямований на зниження витрат компанії на аутсорс в «Роздробі»`,
+    product: `Платформа, яка дасть можливість залучати «аутсорсний» персонал без використання проміжних організацій - напряму з виконавцями`,
+    status: "init",
+    statusLabel: `Ініціація`,
+    deadline: `Q4 2026 (груд.)`,
+    owner: `Горбунов В.`,
+    category: `HR & Operations`,
+    req: `Знизити загальну вартість аутсорсу на 20%    (до + 23 240 226,72 грн/рік чистого прибутку компанії. Втрати 8...12 млн грн/місяць)`,
+    tasks: `Визначити та пропрацювати законодавчі ризики
+Опрацювання запиту з GR
+Узгодження проєкту з фінансовим департаментом
+Підписання дод. угоди з підрядником`,
+    benefit: `Алгоритм підбору власного аутсорсу та рейтингування виконавців
+Система мотивації для власного аутсорсу
+Договір ЦПД для виконавців процесів
+ПЗ, яке дозволяє автоматизувати підбір аутсорсу - та документообіг
+Додаткові метрики:
+Вартість години аутсорсу, грн
+Загальна вартість аутсорсу, грн
+Оцінка якості процесів, що виконує аутсорс у компанії`,
+    risk: `Маленька популярність застосунку
+Складність доступу до ПП в деяких населених пунктах 
+Різниця в ЗП аутсорсу та ТТ`,
+    screenshots: []
+  },
+  {
+    id: "snack",
+    name: `Швидкий перекус`,
+    shortName: `Швидкий перекус`,
+    desc: `Налаштування автозамовлення та старт процесу поставки в GMS, до поставки товару в магазин`,
+    product: `Система автоматизації поставки товару в магазин`,
+    status: "live",
+    statusLabel: `✔ Live`,
+    deadline: `Q3 2026`,
+    owner: `Кустреюк О.`,
+    category: `Supply Chain`,
+    req: `Створення процесу замовлення і поставки товару в GMS, зняти відповідальність по замовленню товару з магазину та побудувати прозорий процес без втрат.`,
+    tasks: `Відладка автозамовлення (зміни в логіці прорахунку за необхідності)
+Відладка роботи документообігу на стороні постачальників (навчання і консультація)`,
+    benefit: `Зменшити кількість втрат товару (закінчення терміну придатності)
+Прозорий процес замовлення (фіксація потреба в ІС)
+Зменшення навантаження на співробітників магазинів
+Готовність до масштабування`,
+    risk: `Відсутнє доопрацювання в мобільному застосунку, що ускладнює приймання товару (ми не розуміємо чи приїхав товар, чи весь прийняли)`,
+    screenshots: ["images/slide12_Рисунок_28.png"]
+  },
+  {
+    id: "edi2",
+    name: `EDI-2`,
+    shortName: `EDI-2`,
+    desc: `Автоматичний обмін первинними бухгалтерськими документами в процесах поставки та повернення товару,  інтегровані з ІС (1С, GMS, WMS)`,
+    product: `Перша дійсно безпаперова мережа в Україні`,
+    status: "live",
+    statusLabel: `✔ Live`,
+    deadline: `Q4 2026 (груд.)`,
+    owner: `Кустреюк О.`,
+    category: `Documents & EDI`,
+    req: `Створення якісного процесу документообігу в процесах поставки і повернення товару, яке буде повністю інтегровано з ІС компанії
+Зменшити кількість паперу в співпраці до мінімуму
+Повністю відійти від шаблонів Excel
+Досягти максимальної точності в передачі даних (ціна, кількість та ін.)`,
+    tasks: `Залучено 150 контрагентів в продуктивному використанні (25%), необхідно мастабувати далі
+Налаштування Актів розбіжностей
+Проведення Вебінарів та інших активностей для донесення інформації про проєкт`,
+    benefit: `Єдиний стандарт для роботи з 600 партнерами
+Пришвидшення обміну первинними документами в 14 разів
+Прозорий процес по правилам компанії
+Скорочення часу співробітників на внесення однотипних даних 
+Відмова від використання документів в екселі та на папері
+Скорочення витрат на НП (100 000 грн в місяць)
+Досягти максимальної точності в передачі даних (ціна, кількість та ін.)`,
+    risk: `Багато часу витрачаємо на консультації, оскільки необхідно врахувати багато моментів для коректного обміну`,
+    screenshots: []
+  },
+  {
+    id: "ekadry",
+    name: `E-кадри`,
+    shortName: `E-кадри`,
+    desc: `Сервіс для обміну електронними документами між Авророю як роботодавцем та співробітниками`,
+    product: `Мобільний застосунок та веб-портал, в де співробітник може оперувати будь-якими документами з Авророю: заяви, накази, журнали, довідки`,
+    status: "live",
+    statusLabel: `✔ Live`,
+    deadline: `Q3 2026 (лип.)`,
+    owner: `Кустреюк О.`,
+    category: `Documents & EDI`,
+    req: `Індивідуальне рішення, яке повністю покриє взаємодію по документообігу між співробітниками компанії та Авророю, як роботодавцем.`,
+    tasks: `Масштабувати сервіс на Роздріб і Логістику
+Реалізація електронних перепусток /візиток
+Реалізація процесу відрядження
+Реалізація процесу переведення
+Реалізація обміну неструктурованими документами`,
+    benefit: `Відхід від паперових документів та пришвидшення логістики документів 
+Мінімізація ручних процесів як для співробітника, так і для відділу кадрів
+Суттєве скорочення витрат на поштові відправки по доставці оригіналів документів, видаткові матеріали (папір, оргтехніка тощо)
+Повністю усунемо ризик втрати документів в процесах
+Стандартизація процесів для співробітників ОП, Склад, Роздріб час`,
+    risk: `Велика кількість запитів на проєкти в рамках цього сервісу`,
+    screenshots: ["images/slide14_Рисунок_5.png", "images/slide14_Рисунок_30.png", "images/slide14_Рисунок_31.png", "images/slide14_Рисунок_33.png"]
+  },
+  {
+    id: "earchive",
+    name: `E-архів`,
+    shortName: `E-архів`,
+    desc: `Централізована платформа для зберігання всіх документів компанії`,
+    product: `Програмне забезпечення, інтегроване з різними системами документообігу (Вчасно, Медок, Єдін та ін.) та ІС компанії (1С, GMS, WMS тощо)`,
+    status: "test",
+    statusLabel: `Test`,
+    deadline: `Q4 2026 (груд.)`,
+    owner: `Кустреюк О.`,
+    category: `Documents & EDI`,
+    req: `Створення програмного забезпечення, яке дозволить консолідувати в собі всі документи компанії по визначеним правилам з інтеграцією в різні інформаційні системи компанії
+інформаційні борди для всіх департаментів в розрізі їхніх потреб (кадрові процеси, логістика, первинка, договори тощо)`,
+    tasks: `Перевірка бізнес-логіки
+Перенесення сервісу на продуктивне середовище і підтримка тестування
+Пошук рішення по ШІ для розпізнавання метаданих в документах`,
+    benefit: `Стандартизація документообігу
+Скорочення часу співробітників на пошук і надання даних контролюючим держорганам 
+Прозоре управління документами
+Безпека доступу до контенту документів
+Управління документами і побудова звітів по необхідним даним`,
+    risk: `Підключення штучного інтелекту для розпізнавання документів`,
+    screenshots: ["images/slide15_Рисунок_28.png"]
+  },
+  {
+    id: "growth",
+    name: `Точки зростання зі Стажування Лідерів 2026`,
+    shortName: `Точки зростання`,
+    desc: `Єдина цифрова система для централізованої подачі, опрацювання та контролю реалізації точок зростання, виявлених під час Стажування лідерів в магазинах,
+ із забезпеченням прозорого маршруту від фіксації ідеї через Forms до передачі відповідальним, супроводу виконання, комунікації між учасниками процесу, 
+накопичення статистики та подальшої аналітики в BI-дашбордах`,
+    product: `Єдина система управління точками зростання`,
+    status: "scale",
+    statusLabel: `Масштабування`,
+    deadline: `Q3 2026 (серп.)`,
+    owner: `Кошелєв І.`,
+    category: `HR & Operations`,
+    req: `Стандартизація подачі точок зростання. Єдиний механізм фіксації готових ідей через Microsoft Forms із автоматичним потраплянням у систему для опрацювання.
+Організувати прозорий процес опрацювання ідей.Налаштувати маршрут проходження точки зростання від моменту подачі до кінцевого статусу: передача відповідальному, контроль етапів виконання, фіксація коментарів і змін.
+Сформувати аналітику для управлінських рішень.Забезпечити накопичення статистики щодо точок зростання та відображення ключових показників у дашбордах для аналізу ефективності загального процесу.`,
+    tasks: `Опрацювання точок зростання: комунікація з відповідальними, проведення додаткового інструктажу, операційна робота.
+
+Створення аналітичних дашбордів для детального аналізу процесу.
+
+Покращення зручності користування системою для користувачів та адміністратора.`,
+    benefit: `Прозорість процесу - вся інформація доступна в режимі реального часу: статуси точок зростання, історичні дані, коментарі, відповідальні особи.
+Накопичення якісної статистики - для прийняття Data-Driven управлінських рішень. PowerBI дашборди для візуалізації даних.
+Швидкість опрацювання ідей - всі точки зростання зі стажування потрапляють у структурований процес в системі, переходять відповідальним у роботу, для адміністратора створено зручне робоче місце для швидкого опрацювання.`,
+    risk: `Неповнота інформації при подачі точок зростання, втрати часу на доуточнення даних.
+Затримки на етапі опрацювання через високу завантаженість працівників.
+Створення додаткового робочого місця (крім тих, хто веде проєкти в LEO PPM).
+Інтеграція з Teams - ризик через невизначеність серед працівників щодо зручності користування інструментом.`,
+    screenshots: ["images/slide17_Рисунок_30.png", "images/slide17_Рисунок_4.png"]
+  },
+  {
+    id: "storeloc",
+    name: `Автоматизація процесів Розвитку мережі (StoreLocation)`,
+    shortName: `StoreLocation`,
+    desc: `Автоматизація процесів в додатку StoreLocations (генерація презентації, система нотифікацій, передача файлів, погодження проєктів ТТ) 
+для покращення ефективності всього процесу відкриття нових ТТ.`,
+    product: `Єдина система управління точками зростання`,
+    status: "dev",
+    statusLabel: `В роботі`,
+    deadline: `Q3 2026 (серп.)`,
+    owner: `Кошелєв І.`,
+    category: `Retail & Analytics`,
+    req: `Автоматизація робочих процесів менеджерів з розвитку, зменшення ручної роботи
+Автоматизований інструмент генерування презентації ідей нових ТТ 2.0
+Інтеграція показників прорахунку трафіку (Геомаркетинг)
+Автоматизація бізнес-процесів (погодження, передача файлів між системами)
+Зменшення часу загального процесу за рахунок автоматизації погоджень, сповіщень та передачі файлів
+Покращення користувацького інтерфейсу для зручності та функціональності додатку.`,
+    tasks: `Налаштування API-інтеграції з сервісом прорахунку трафіку.
+Автоматизація створення презентації по ідеї для відкриття.`,
+    benefit: `Зменшення часу на ручні рутинні дії.
+Зниження кількості помилок і затримок у крос-функціональній взаємодії.
+Покращення користувацького інтерфейсу для зручності та ефективності роботи в додатку`,
+    risk: `Складність інтеграції між системами.
+Забезпечення безперебійності роботи технічних рішень.`,
+    screenshots: []
+  },
+  {
+    id: "doco",
+    name: `DOCO – модуль генерації шаблонних документів`,
+    shortName: `DOCO`,
+    desc: `Внутрішній інструмент генерації шаблонних документів і їх підписання,  а також розробити конструктор шаблонів, для створення нових шаблонів
+ та редагування існуючих через візуальний інтерфейс конструктора Low-Code/No-Code`,
+    product: `Інструмент формування шаблонних документів та їх підписання.`,
+    status: "dev",
+    statusLabel: `В роботі`,
+    deadline: `Q3 2026 (серп.)`,
+    owner: `Кошелєв І.`,
+    category: `Documents & EDI`,
+    req: `Скоротити час створення одного шаблону.
+
+Зменшити щорічні витрати на використання продукту щонайменше на 50% після завершення розробки.
+Покращення якості вихідних документів шляхом детального опрацювання шаблонів усіма стейкхолдерами. 
+Автоматизація бізнес-процесу підписання нового договору з мінімізацією залучення юристів.
+Делегування процесу створення первинної документації за нашим шаблоном безпосередньо контрагентам.`,
+    tasks: `Розгортання рішення на тестовому середовищі.
+Внесення шаблонів договорів (5 з 15)
+Наповнення внутрішньої бази даних інформацією про контрагентів.
+Розробка LowCode/NoCode конструктору шаблонів.`,
+    benefit: `ROI – 85%, окупність на 3 рік, зменшення витрат на підтримку продукту.
+Зменшення часу на заведення нового шаблону документу через конструктор шаблонів (з 14 роб. днів поточних до 2-5  роб. днів).
+Зниження робочого навантаження на представників юридичного департаменту завдяки автоматизації процесу.
+Зменшення залежності від підрядників для створення шаблонів документів завдяки Low-Code/No-Code конструктору шаблонів.`,
+    risk: `Труднощі розгортання серверів та розгортання рішення на власних серверах.
+Затримки на певних етапах реалізації з боку підрядника.
+Перевищення закладеного бюджету внаслідок збільшення обсягу проєкту (додатковий функціонал, інтеграції).`,
+    screenshots: []
+  },
+  {
+    id: "supplier",
+    name: `Додаток Менеджера постачання`,
+    shortName: `Додаток менеджера`,
+    desc: `Єдина система для управління задачами менеджера, внутрішніми проєктами, базою постачальників і професійним профілем працівника.`,
+    product: `Додаток Power Apps Робоче місце Менеджера Постачання.`,
+    status: "init",
+    statusLabel: `Ініціація`,
+    deadline: `Q4 2026 (груд.)`,
+    owner: `Кошелєв І.`,
+    category: `Supply Chain`,
+    req: `Підвищити ефективність планування роботи менеджера.
+Створити централізовану базу постачальників із даними про досвід робіт, оцінку, категорії та історію взаємодії.
+Забезпечити ведення професійного профілю менеджера.
+Автоматизація ручних процесів менеджера постачання.
+Налаштування аналітичних дашбордів.`,
+    tasks: `Проєкт на стадії Ініціації.`,
+    benefit: `Прозорість роботи з постачальниками:
+Кращий контроль завантаженості менеджерів, виконання робочих задач;
+Аналітика для прийняття Data-driven управлінських рішень;
+Підвищення ефективності роботи менеджера через централізований планер всіх робочих задач;
+Автоматизація ручних дій менеджера.`,
+    risk: `Аналізуємо`,
+    screenshots: []
+  },
+  {
+    id: "recruiting",
+    name: `Smart AI Recruiting`,
+    shortName: `Smart AI Recruiting`,
+    desc: `Цифровий HR-помічник -  платформа автоматизації масового рекрутингу, яка перетворює кандидатів у співбесіди та найм.
+
+.`,
+    product: `Єдина система для  збору кандидатів з усіх джерел (20+),  автоматизованої першої комунікації зкандидатами, запису на співбесіду, 
+прийняття рішення по кандидату.`,
+    status: "dev",
+    statusLabel: `В розробці`,
+    deadline: `Q3 2026`,
+    owner: `Чипенко О.`,
+    category: `HR & Operations`,
+    req: `Розробка та впровадження автоматизованої системи. Оптимізувати:
+Ручний пошук кандидатів на різних платформах, довга комунікація через адміністраторів, затримки у прийнятті рішень. Втрачаються «гарячі» відгуки → перший дзвінок запізнюється.
+Високе навантаження на HR: витрачають багато часу на рутинні завдання: пошук, первинний відбір, організація співбесід, обдзвони та нагадування
+Розпорошені дані: нформація про кандидатів зберігається в різних місцях: платформи, таблиці, месенджери. Важко аналізувати та приймати рішення. Складно бачити реальну картину: що відбувається з кожним кандидатом і де «вузькі місця».
+Низька конверсія. Відсутність системного підходу до підбору призводить до втрати якісних кандидатів та низької ефективності найму`,
+    tasks: `Стратегічні:
+Формування команди другого етапу (2.0)
+Погодження концепту
+Запуск MVP 2.0 (відеоспівбесіда)
+Операційні Q2 2026:
+Комунікація: Email як канал, Таргетинг
+Платформа: Єдиний профіль кандидата, Історія кандидата, Базова CRM
+Інтерв’ю: Відеоспівбесіди, Обробка відео, Стандартизовані питання
+Інфраструктура: Об’єднання кабінетів`,
+    benefit: `Операційна ефективність. 
+Скорочення часу обробки кандидата
+Прозорість воронки рекрутингу та контроль`,
+    risk: `Перерозподіл зон відповідальності внаслідок впровадження нових процесів
+Ймовірність зміни продуктової концепції`,
+    screenshots: ["images/slide22_Рисунок_32.png", "images/slide22_Рисунок_35.png"]
+  },
+  {
+    id: "charity",
+    name: `Благодійність`,
+    shortName: `Благодійність`,
+    desc: `Сприятиме ефективному управлінню благодійною діяльністю компанії, підвищенню прозорості та покращенню взаємодії`,
+    product: `Централізована цифрова система управління благодійними запитами яка включає користувацький інтерфейс на сайті компанії та адміністративну 
+Панель для консолідації, обробки та моніторингу заявок. Консолідацію всіх запитів на благодійність, відстеження статусу запитів у реальному часі 
+та аналітику у вигляді дашборду для ефективного адміністрування.`,
+    status: "dev",
+    statusLabel: `В розробці`,
+    deadline: `Q2 2026`,
+    owner: `Чередник О.`,
+    category: `Corporate`,
+    req: `Створити централізовану цифрову  систему управління благодійними запитами`,
+    tasks: `Виправлення помилок по тесту на вразливість
+Передача проєкту на обслуговування в МК консалт`,
+    benefit: `Прозорість процесів
+Оптимізація адміністрування
+Стандартизація роботи
+Підвищення довіри`,
+    risk: `Залежність від архітектури ІТ`,
+    screenshots: ["images/slide23_Рисунок_6.png", "images/slide23_Рисунок_32.png"]
+  },
+  {
+    id: "kaizen",
+    name: `KaizeN`,
+    shortName: `KaizeN`,
+    desc: `Сучасний сервіс взаємодії з працівниками компанії Аврора, спрямований на мотивацію, заохочення та створення комфортного робочого середовища`,
+    product: `Інноваційна екосистема, що поєднує мобільний застосунок та веб-портал, інтегрований у діючу LMS-систему. 
+У її межах співробітники отримують зручний інструмент для роботи з KaizeN ідеями`,
+    status: "dev",
+    statusLabel: `В розробці`,
+    deadline: `Q2 2026`,
+    owner: `Чередник О.`,
+    category: `Corporate`,
+    req: `Створити централізовану цифрову систему управління Kaizen-ідеями, що включає автоматизоване адміністрування, сценарії погодження, аналітику у вигляді дашборду та механізм нарахування винагород через Мультимаркет`,
+    tasks: `Тестування форми подачі ідеї
+Розробити логіку статусів
+Розробити реєстр ідеї (інтерфейс адміністратора)`,
+    benefit: `Операційна ефективність
+Прозорість та контроль
+Підвищення мотивації персоналу
+Посилення корпоративної культури`,
+    risk: `Обмежений ресурс на стороні партнера`,
+    screenshots: ["images/slide24_Рисунок_5.png"]
+  },
+  {
+    id: "retail-media",
+    name: `Retail Media`,
+    shortName: `Retail Media`,
+    desc: `Сучасний підхід у комунікації з клієнтами що приносить дохід`,
+    product: `Цифрова система візуальної комунікації на базі LED-екранів або телевізорів, інтегрована у торговельний простір мережі.`,
+    status: "dev",
+    statusLabel: `В роботі`,
+    deadline: `Q4 2026 (груд.)`,
+    owner: `Чередник О.`,
+    category: `Retail & Analytics`,
+    req: `Маштабованість
+Центарлізоване управління контентом
+Надійність та гнучкість форматів`,
+    tasks: `Організація та проведення зустрічей з партнерами`,
+    benefit: `Зростання продажів завдяки контекстній рекламі
+Оперативна подача релевантного промо без затрат на друк поліграфії.
+Економія на маркетингових носіях
+Зменшення витрат на банери, постери, POS-матеріали — особливо при частих оновленнях акцій.
+Швидка реакція на зміну цін або ситуацій
+Контент можна оновити централізовано протягом хвилин.`,
+    risk: `Вартість впровадження`,
+    screenshots: []
+  },
+  {
+    id: "geo",
+    name: `Геоаналітика для розвитку мережі`,
+    shortName: `Геоаналітика`,
+    desc: `Інноваційна геоаналітична платформа, що поєднує внутрішні бізнес-дані компанії з понад 100 геопросторовими факторами та сучасними 
+алгоритмами машинного навчання.`,
+    product: `Зручний інструмент для прогнозування ефективності нових торгових точок, автоматизації процесу оцінки локацій та мінімізації суб’єктивності`,
+    status: "dev",
+    statusLabel: `В розробці`,
+    deadline: `Q2 2026`,
+    owner: `Чередник О.`,
+    category: `Retail & Analytics`,
+    req: `Запровадити єдину аналітичну платформу для об’єктивного вибору та оцінки нових торгових локацій.
+Платформа інтегрується з ERP/CRM/BI-системами компанії, працює у безпечному IT-ландшафті замовника та забезпечує швидке й обґрунтоване ухвалення рішень щодо розвитку роздрібної мережі`,
+    tasks: `Погодження інтерфейсів для розвитку
+Тестування продукту`,
+    benefit: `Фінансові:
+ Підвищити ROI нових локацій.
+ Зниження капітальних витрат завдяки оптимізації локації. 
+Операційні:
+ Скорочення часу аналізу локацій (з тижнів до годин).
+ Автоматизація рутинних завдань відділу розвитку.
+ Можливість одночасного порівняння десятків локацій за ключовими метриками.
+Стратегічні:
+ Зменшення канібалізації.
+ Оптимальне покриття ринку без надмірних інвестицій.
+ Прозора та об’єктивна методологія ухвалення рішень.
+ Підвищення точності довгострокового фінпланування та стратегічного планування розвитку.`,
+    risk: `Не прийняття відділом розвитку
+Точність моделювання`,
+    screenshots: ["images/slide27_Рисунок_27.png", "images/slide27_Рисунок_30.png", "images/slide27_Рисунок_31.png", "images/slide27_Рисунок_35.png", "images/slide27_Рисунок_36.png"]
+  },
+  {
+    id: "assessment",
+    name: `Оцінка персоналу`,
+    shortName: `Оцінка персоналу`,
+    desc: ``,
+    product: `Модуль в системі Moco TMS. Дозволяє оцінювати співробітників
+за компетенціями, KPI, формувати індивідуальні плани розвитку
+збирати зворотний зв’язок, налаштовувати аналітичні звіти та 
+впроваджувати процедури оцінювання (опитування, NPS)`,
+    status: "test",
+    statusLabel: `Test`,
+    deadline: `Q2 2026`,
+    owner: `Чередник О.`,
+    category: `HR & Operations`,
+    req: `Необхідність стандартизованої, прозорої та масштабованої системи оцінки персоналу, яка дозволяє порівнювати результати, відстежувати динаміку розвитку, давати рекомендації та формувати аналітичні дані для прийняття управлінських рішень.`,
+    tasks: `Інтеграція з Teams
+Виправлення зауважень які виникли після впровадження`,
+    benefit: `Автоматизація процесу оцінки, зменшення ручної роботи HR.
+ Більш об’єктивне оцінювання персоналу.
+ Формування планів розвитку співробітників.
+ Гнучке налаштування під цілі компанії.`,
+    risk: `Інтеграція з Teams на стороні команди IT Аврора (терміни реалізації)`,
+    screenshots: []
+  },
+  {
+    id: "ai-center",
+    name: `AI Центр експертизи`,
+    shortName: `AI Центр експертизи`,
+    desc: `Прискорити створення та масштабування бізнес-цінності від ШІ у всіх підрозділах компанії через стандарти, сервісну модель та навчання.`,
+    product: `01`,
+    status: "live",
+    statusLabel: `✔ Live`,
+    deadline: `Q3 2026 (лип.)`,
+    owner: `Далюк А.`,
+    category: `AI & ML`,
+    req: ``,
+    tasks: `AI Університет`,
+    benefit: `Регулярна централізована комунікація, щотижневі публікації новин та кейсів для підвищення залученості.`,
+    risk: ``,
+    screenshots: []
+  },
+  {
+    id: "conversion",
+    name: `Зовнішня конверсія (People Detection)`,
+    shortName: `Зовнішня конверсія`,
+    desc: `Визначати співвідношення між кількістю людей, що проходять повз магазин, і тими, хто заходить усередину.`,
+    product: `Система CV для детекції та підрахунку перехожих і відвідувачів магазину, з аналітикою потоку людей і конверсії у відвідування. Власна розробка.`,
+    status: "scale",
+    statusLabel: `Масштабування`,
+    deadline: `Q2 2026`,
+    owner: `Сабанюк О.`,
+    category: `AI & ML`,
+    req: ``,
+    tasks: ``,
+    benefit: ``,
+    risk: ``,
+    screenshots: ["images/slide31_Рисунок_7.png", "images/slide31_Рисунок_9.png", "images/slide31_Picture_4.jpg"]
+  },
+  {
+    id: "smart-parking",
+    name: `Smart parking (Car Detection)`,
+    shortName: `Smart Parking`,
+    desc: `Система CV для автоматичної детекції автомобілів на паркомайданчику, визначення вільних/зайнятих місць та інтеграції з інформаційними табло. Власна розробка.`,
+    product: `Система CV для автоматичної детекції автомобілів на паркомайданчику, визначення вільних/зайнятих місць та інтеграції з інформаційними табло. Власна розробка.`,
+    status: "dev",
+    statusLabel: `Активна розробка`,
+    deadline: `Q2 2026`,
+    owner: `Сабанюк О.`,
+    category: `AI & ML`,
+    req: `Оптимізувати використання паркомісць і підвищити зручність для водіїв завдяки автоматизованому моніторингу заповненості паркінгу.`,
+    tasks: `Статус: досягнуто гарної точності, оновлено та зібрано модельну частину, завершено масштабування на всю зовнішню парковку ОП 
+Наразі система розгорнута на 8 камерах, паралельно триває доопрацювання інтерфейсної частини та виправлення виявлених багів.
+Також відкривається зовнішній доступ, щоб перевести рішення у повноцінне прод-використання для користувачів.
+Наступний крок - окремо перевірити якість детекції вантажного транспорту, оскільки саме цей сценарій поки не проходив достатньо глибокого тестування.`,
+    benefit: `Визначати наявність вільних і зайнятих місць у реальному часі та зменшити час пошуку місця для паркування.`,
+    risk: `На точність впливають погодні умови, нічний режим, перекриття автомобілів та особливості розмітки паркінгу.`,
+    screenshots: ["images/slide32_Picture_4.jpg", "images/slide32_Рисунок_7.png"]
+  },
+  {
+    id: "lpr",
+    name: `License plates recognition (LPR)`,
+    shortName: `LPR`,
+    desc: `Камери та технологія розпізнавання номерних знаків на в’їздах і виїзді. Власна розробка.`,
+    product: `Камери та технологія розпізнавання номерних знаків на в’їздах і виїзді. Власна розробка.`,
+    status: "dev",
+    statusLabel: `Стабільна робота`,
+    deadline: `Q2 2026`,
+    owner: `Сабанюк О.`,
+    category: `AI & ML`,
+    req: `Автоматизувати контроль в’їзду та виїзду транспорту на територію офісу.`,
+    tasks: `Статус: система працює стабільно, наступним етапом - тестування автоматичного відкриття реле/шлагбаумів уже в production-сценарії.
+Модель розпізнавання номерних знаків натреновано та доведено до стабільної роботи. Паралельно розвивається прикладна частина рішення: реалізовано три основні панелі - user, admin та monitoring, а також оновлено їхній візуальний стиль і виправлено низку технічних помилок, зокрема пов’язаних із роботою детектора та внутрішніми шляхами.
+Фокус: розробка цільової архітектури з ієрархією міст, об’єктів, КПП та проїздів, створення відповідної бази даних, прив’язку камер до конкретних точок в’їзду/виїзду, подальший розвиток інтерфейсу, а згодом - сутності працівників та інтеграцію з суміжною системою безпеки.`,
+    benefit: `Впровадити зручну та безпечну систему розпізнавання номерних знаків для контролю та аналітики.`,
+    risk: `Якість розпізнавання залежить від швидкості руху транспорту, освітлення, стану номерних знаків і налаштування камер; також є залежність від вендорного рішення.`,
+    screenshots: ["images/slide33_Image_0.png", "images/slide33_Picture_5.jpg"]
+  },
+  {
+    id: "baskets",
+    name: `Аналітика використання кошиків`,
+    shortName: `Аналітика кошиків`,
+    desc: `Аналітична CV-платформа для підрахунку використання кошиків, відстеження їх руху між зонами магазину та розрахунку поведінкових метрик.`,
+    product: `Аналітична CV-платформа для підрахунку використання кошиків, відстеження їх руху між зонами магазину та розрахунку поведінкових метрик.`,
+    status: "dev",
+    statusLabel: `Доопрацювання`,
+    deadline: `Q2 2026`,
+    owner: `Сабанюк О.`,
+    category: `AI & ML`,
+    req: `Підвищити ефективність управління клієнтським потоком і операційними процесами в торговій точці через аналітику використання кошиків.`,
+    tasks: `Наразі в частині детекції отримано суттєве покращення якості: модель показує орієнтовно 85-95% залежно від сценарію та дистанції, що значно краще за попередні результати.
+Наступний фокус - доопрацювання трекінгу переміщення кошиків між зонами, щоб зрозуміти загальну точність рішення, подальше підвищення точності та стабільності аналітики`,
+    benefit: `Оптимізувати клієнтський шлях, підвищити використання кошиків та як результат середній чек.`,
+    risk: `Поточна точність становить орієнтовно 85-90%, тому модель потребує подальшого доопрацювання для різних сценаріїв руху кошиків, перекриттів і відмінностей між локаціями.`,
+    screenshots: ["images/slide34_Picture_2.png"]
+  },
+  {
+    id: "assistant",
+    name: `Віртуальний помічник (для offline)`,
+    shortName: `Віртуальний помічник`,
+    desc: `Віртуальний помічник на базі AI, який працює у ТТ, аналізує дані відвідувача та пропонує релевантні товари.`,
+    product: `Віртуальний помічник на базі AI, який працює у ТТ, аналізує дані відвідувача та пропонує релевантні товари.`,
+    status: "dev",
+    statusLabel: `Підготовка до пілоту`,
+    deadline: `Q3 2026`,
+    owner: `Сабанюк О.`,
+    category: `AI & ML`,
+    req: `Підвищити рівень сервісу та збільшити продажі завдяки персоналізованим рекомендаціям у режимі offline.`,
+    tasks: `Поточний етап - тестування на різних мобільних пристроях і підготовка до пілотного запуску на тестових девайсах у торгових точках та офісі, після чого фокус зміститься на оцінку навантаження, масштабування та побудову більш децентралізованої архітектури.`,
+    benefit: `Рекомендувати покупцям товари відповідно до їхніх подій, потреб чи інтересів.`,
+    risk: `Якість рекомендацій залежить від повноти даних, сценаріїв взаємодії та готовності клієнта користуватися таким інструментом у ТТ.`,
+    screenshots: ["images/slide35_Рисунок_12.png", "images/slide35_Рисунок_7.png"]
+  },
+  {
+    id: "ai-platform",
+    name: `AURORA AI PLATFORM`,
+    shortName: `Aurora AI Platform`,
+    desc: `Єдина AI-платформа для конфігурації, швидкого запуску та масштабування AI-рішень у компанії: асистентів, агентів, tools та інших AI-сервісів.`,
+    product: `Єдина AI-платформа для конфігурації, швидкого запуску та масштабування AI-рішень у компанії: асистентів, агентів, tools та інших AI-сервісів.`,
+    status: "dev",
+    statusLabel: `Активна розробка`,
+    deadline: `Q2 2026`,
+    owner: `Сабанюк О.`,
+    category: `AI & ML`,
+    req: `Створити централізовану технологічну основу для швидкого впровадження, уніфікації та масштабування AI-рішень у різних Департаментах Компанії.`,
+    tasks: `Платформа перебуває на етапі активної розробки як власне мульти-тенантне AI-рішення AI Lab у складі R&D.
+Критичних проблем не зафіксовано; ключовий виклик - системне масштабування та стандартизація.`,
+    benefit: `Прискорити впровадження інновацій, знизити вартість розробки та забезпечити масштабне використання AI в операційній діяльності Компанії.`,
+    risk: `Ризики пов’язані зі складністю платформеного розвитку, інтеграціями, governance, пріоритезацією use cases та забезпеченням єдиних стандартів.`,
+    screenshots: ["images/slide36_Picture_3.jpg", "images/slide36_Picture_4.jpg", "images/slide36_Picture_5.jpg"]
+  },
+  {
+    id: "rag-logistics",
+    name: `RAG для Logistics`,
+    shortName: `RAG Logistics`,
+    desc: `Асистент на базі RAG, який допомагає логістам і складському персоналу швидко знаходити потрібні дані та інструкції в режимі реального часу.`,
+    product: `Асистент на базі RAG, який допомагає логістам і складському персоналу швидко знаходити потрібні дані та інструкції в режимі реального часу.`,
+    status: "test",
+    statusLabel: `Тестування`,
+    deadline: `Q2 2026`,
+    owner: `Сабанюк О.`,
+    category: `AI & ML`,
+    req: `Підвищити ефективність роботи логістів і співробітників складу шляхом швидкого доступу до корпоративних знань.`,
+    tasks: `Для логістичного напряму вже був проведений первинний тест-пілот AI-асистента, який підтвердив практичний інтерес до рішення, після чого команда перейшла до другого етапу на основі більш якісної та актуальної документації.
+Ці кейси вже зібрано, проаналізовано та передано в роботу, а наступні кроки - покращення якості відповідей, повторне тестування, підготовка до пілотного масштабування на керівників РЦК, а надалі - перенесення рішення на AURORA AI PLATFORM і подальше розгортання на інші РЦ
+Фокус - підвищення якості відповідей і повноти контенту.`,
+    benefit: `Забезпечити працівників інструментом для оперативного пошуку інформації, інструкцій і рішень у логістиці та складських операціях.`,
+    risk: `Основні ризики - неточні відповіді, неповне покриття кейсів та залежність від якості джерел знань і логіки пошуку.`,
+    screenshots: ["images/slide37_Image_1.png", "images/slide37_Picture_3.jpg"]
+  },
+  {
+    id: "rag-retail",
+    name: `RAG для Роздробу - UA`,
+    shortName: `RAG Роздріб`,
+    desc: `AI-асистент для співробітників роздрібного напряму, який дає швидкі відповіді на операційні питання на основі внутрішньої бази знань департаменту.`,
+    product: `AI-асистент для співробітників роздрібного напряму, який дає швидкі відповіді на операційні питання на основі внутрішньої бази знань департаменту.`,
+    status: "dev",
+    statusLabel: `Підготовка контенту`,
+    deadline: `Q2 2026`,
+    owner: `Сабанюк О.`,
+    category: `AI & ML`,
+    req: `Забезпечити працівників роздрібного напряму швидким і зручним доступом до внутрішніх знань для підвищення якості та швидкості операційних задач.`,
+    tasks: `Для напряму роздробу вже було підготовлено тестового RAG-асистента на основі першого набору документів, який пройшов початкове пілотування та підтвердив зацікавленість бізнесу в подальшому production-розгортанні.
+Подальший план - запуск цього асистента вже в межах AURORA AI PLATFORM у мультитенантному форматі, де сам напрям роздробу зможе керувати своєю базою знань і підтримкою асистента, а команда R&D виступатиме Платформеним owner-ом і забезпечуватиме верхньорівневий супровід запуску.`,
+    benefit: `Підвищити продуктивність співробітників, забезпечити швидкий доступ до регламентів і зменшити навантаження на лінійних керівників.`,
+    risk: `Основний ризик - неточні або неповні відповіді у випадку неактуальної бази знань чи недостатнього покриття кейсів.`,
+    screenshots: ["images/slide38_Picture_5.jpg"]
+  },
+  {
+    id: "process-repo",
+    name: `Process Management Repository - AI`,
+    shortName: `Process Repository`,
+    desc: `AI-асистент для процесного офісу з доступом у форматі «питання-відповідь» до end-to-end процесів, правил, стандартів і регламентів.`,
+    product: `AI-асистент для процесного офісу з доступом у форматі «питання-відповідь» до end-to-end процесів, правил, стандартів і регламентів.`,
+    status: "init",
+    statusLabel: `Ініціація`,
+    deadline: `Q2 2026`,
+    owner: `Сабанюк О.`,
+    category: `AI & ML`,
+    req: `Підвищити прозорість, керованість і ефективність бізнес-процесів компанії завдяки єдиному AI-інструменту для процесного офісу.`,
+    tasks: `Статус: Ініціатива еволюціонувала від ідеї AI-асистента для Процесного офісу до більш комплексного бачення повноцінного Процесного репозиторію нового покоління. Цільове рішення - не лише швидкий пошук і відповіді по процесах, а й централізоване ведення карт процесів, аналітику, виявлення прогалин і дублікатів, та повний життєвий цикл роботи з процесами в єдиній системі замість розрізнених інструментів. 
+Наразі проєкт перебуває на стадії ініціації: сформовано кілька ітерацій технічного завдання, включно з розширеною поточною версією, яка вже передана на опрацювання розробникам.
+Поточний фокус - отримання зворотного зв’язку та оцінки ресурсів, після чого буде прийнято рішення щодо старту повноцінної розробки.
+основний акцент - якість бази знань і коректність процесної інтерпретації`,
+    benefit: `Виявляти неефективні процеси, скорочувати операційні витрати, оптимізувати бізнес-процеси та підтримувати єдине розуміння процесної моделі компанії.`,
+    risk: `Можливі неточні результати або неповне трактування процесної логіки, якщо джерела знань недостатньо формалізовані чи неактуальні.`,
+    screenshots: ["images/slide39_Рисунок_30.png", "images/slide39_Рисунок_31.png"]
+  },
+  {
+    id: "generators",
+    name: `Система контролю генераторів`,
+    shortName: `Контроль генераторів`,
+    desc: `Система моніторингу генераторів, яка відстежує стан обладнання, веде облік мотогодин, підтримує планування ТО та має безпекові функції.`,
+    product: `Система моніторингу генераторів, яка відстежує стан обладнання, веде облік мотогодин, підтримує планування ТО та має безпекові функції.`,
+    status: "live",
+    statusLabel: `✔ Live`,
+    deadline: `Q1 2026`,
+    owner: `Сабанюк О.`,
+    category: `Infrastructure`,
+    req: `Забезпечити безперебійну та надійну роботу торгових точок завдяки централізованому контролю генераторів і своєчасному технічному обслуговуванню.`,
+    tasks: `Статус: Розробку розпочато наприкінці 2025, і вже на 1 етапі команда виконала роботи за ТЗ, а також реалізувала низку додаткових функцій і технічних змін, зокрема переналаштування трекерів на власну систему та супровід пов’язаних інфраструктурних оновлень. 
+Проєкт перейшов у фазу функціонального розвитку: додано нові елементи звітності та інші покращення, сформовано великий наступний блок доробок, який розбито на 6 етапів - від простіших змін до інтеграцій і створення нових модулів 
+Орієнтовно 30-40% етапу вже реалізовано та розгорнуто в production, а технічна енерго-команда працює з системою та наповнює базу даних для продовження розробки на живих даних`,
+    benefit: `Зменшити втрати та ризики простоїв ТТ, оптимізувати ТО за фактичним використанням обладнання та підвищити стійкість мережі.`,
+    risk: `Якість моніторингу залежить від стабільності підключення обладнання (трекерів), коректності телеметрії та повноти інтеграції.`,
+    screenshots: ["images/slide40_Picture_2.png"]
+  },
+  {
+    id: "westgate",
+    name: `West Gate Automation`,
+    shortName: `West Gate`,
+    desc: `Автоматизовані рішення для розподільчого центра`,
+    product: `Автоматизовані рішення для розподільчого центра`,
+    status: "dev",
+    statusLabel: `В роботі`,
+    deadline: `Q2 2027`,
+    owner: `Адамов В.`,
+    category: `Infrastructure`,
+    req: `Зменшення залежності від персоналу
+Зменшення кількості помилок у процесах
+Підвищення пропускної здатності РЦ
+Масштабованість рішень`,
+    tasks: `Підтвердження To Be з урахуванням автоматизації
+Детальне проєктування автоматизованих рішень
+Розробка комерційних пропозицій з постачальниками`,
+    benefit: `Підняття продуктивності
+Досвід впровадження автоматизованого обладнання
+Масштабованість рішень`,
+    risk: `Складність залучення закордонних підрядників
+Пізні терміни поставки рішень`,
+    keyDates: `Ключові терміни:
+Завершення будівництва секцій 1, 2: 04.2026
+Завершення будівництва секцій 4, 6: 11.2026
+Перевезення Імпорт Хабу: 04.2026
+Завершення проектування автоматизації: 06.2027`,
+    screenshots: ["images/slide41_Рисунок_6.png", "images/slide41_Рисунок_28.png"]
+  },
+  {
+    id: "price",
+    name: `Price Automation`,
+    shortName: `Price Automation`,
+    desc: `Автоматизація процесу ціноутворення`,
+    product: `Автоматизація процесу ціноутворення`,
+    status: "dev",
+    statusLabel: `В роботі`,
+    deadline: `Q3 2026 (серп.)`,
+    owner: `Адамов В.`,
+    category: `Supply Chain`,
+    req: `Зменшення “ручних” операцій
+Зменшення кількості помилок
+Створення більш конкурентних пропозицій
+Покращення позиціонованості цін на товари на ринку
+Технічні можливості кластеризації магазинів по цінам`,
+    tasks: `Інтеграційні роботи між Yieldigo та GMS
+Аналіз і розробка To Be для регулярного ціноутворення
+Аналіз і розробка To Be для промо-ціноутворення`,
+    benefit: `Автоматизація процесу ціноутворення
+Систематизація стратегій ціноутворення
+Підвищення маржинальності у продажах
+Підвищення товарообігу
+Динамічний підхід у ціноутворенні в різних зонах`,
+    risk: `Затримка в інтеграційних роботах`,
+    keyDates: `Ключові терміни:
+Завершення Інтеграційні роботи, включаючи історичні – 15.05.26
+Розробка та тестування стратегій регулярного ціноутворення – 19.06.26
+Запуск регулярного ціноутворення – 03.07.26
+Розробка та налаштування цільового процесу Промо – 17.07.26
+Запуск промо-модулю Yieldigo - 14.08.26`,
+    screenshots: []
+  },
+  {
+    id: "supply-chain",
+    name: `Supply chain: F&R, Assortment Management`,
+    shortName: `Supply Chain`,
+    desc: `Автоматизація процесів прогнозування та замовлення, керування асортиментом`,
+    product: `Автоматизація процесів прогнозування та замовлення, керування асортиментом`,
+    status: "dev",
+    statusLabel: `В роботі`,
+    deadline: `Q3 2027`,
+    owner: `Адамов В.`,
+    category: `Supply Chain`,
+    req: `Кластеризація магазинів по асортименту
+Розробка правил кластеризації
+Інструмент керування кластерами та асортиментом
+Перегляд процесу прогнозування та замовлення
+Підвищення точності прогнозування замовлень`,
+    tasks: `Дослідження постачальників Relex & MySales & Leafio
+Дослідження модулів керування асортиментом
+Створення Business-case
+Референс-коли з іншими компаніями`,
+    benefit: `Розбивка магазинів на кластери
+Покращення асортиментної пропозиції покупцям
+Зменшення трудовитрат на поповнення
+Зниження рівня товарних запасих
+Підняття обертовості товарних запасів`,
+    risk: `Повернення ROI у дороговартісних проектах SAAS`,
+    screenshots: ["images/slide43_Рисунок_5.png"]
+  },
+  {
+    id: "mc-control",
+    name: `Побудова єдиної системи обліку та контролю МЦ`,
+    shortName: `Облік МЦ`,
+    desc: `Це про системне управління активами, де цифра, процес і відповідальність об’єднуються в єдину операційну модель. Це фундамент не тільки для скорочення втрат, а й для підвищення якості управлінських рішень на всіх рівнях компанії`,
+    product: `Уніфікована модель управлінського обліку матеріальних цінностей в компанії, яка забезпечує SSOT, прозорість процесу, аналітичну звітність та контроль витрат і залишків`,
+    status: "dev",
+    statusLabel: `В роботі`,
+    deadline: `Q3 2026`,
+    owner: `Кутняк Ю.`,
+    category: `Infrastructure`,
+    req: `Створити інфраструктуру обліку МЦ, яка дозволяє не лише бачити залишки, а керувати повним життєвим циклом МЦ як ресурсом, із прогнозом, відповідальністю, аналітикою і мінімізацією втрат. Це фундамент для ефективного масштабування бізнесу і зменшення витрат, пов’язаних із непродуктивним використанням матеріальних активів`,
+    tasks: `• Затвердження TO BE
+• Формування вимог
+• Прорахунок ROI
+• Підготовка бізнес-кейсу
+• Запуск 1-ї ітерації (Переміщення-Залишки) в реалізацію`,
+    benefit: `• Керованість активами в масштабі всієї мережі
+• Зменшення фінансових втрат і оптимізація інвестицій
+• Підвищення точності й актуальності даних
+• Оптимізація процесів і автоматизація
+• Управлінська аналітика в реальному часі
+• Зниження ризиків і підвищення відповідальності`,
+    risk: `• Опір змінам з боку МВО та користувачів
+• Розрив між регламентами і реальними процесами в магазинах/ підрозділах
+• Фінансова модель не буде визнана достовірною
+• Обмежена залученість бізнесу до формування рішень.`,
+    screenshots: []
+  },
+  {
+    id: "salary-region",
+    name: `Система оцінки ЗП по регіонах`,
+    shortName: `Оцінка ЗП`,
+    desc: `Система, при якій співробітники ТТ можуть ініціювати зміну заробітної плати, якщо вона нижче ніж у конкурентів по регіону.`,
+    product: `Розроблена та впроваджена система оцінки ЗП в розрізі посад «роздрібу», з подальшим прийняттям рішення про її зміну один раз на місяць. Рівень деталізації: регіон, область, місто, ПГТ, ТТ`,
+    status: "dev",
+    statusLabel: `В роботі`,
+    deadline: `Q3 2026`,
+    owner: `Кутняк Ю.`,
+    category: `HR & Operations`,
+    req: `Утримання персоналу «роздрібу» за рахунок актуальної ЗП в кожному регіоні.`,
+    tasks: `• Аналітика зібраних даних по тестовому продзвону КЦ
+• Уніфікація зібраної інформації
+• Тестування дашборду
+• Побудова робочого місця для оператора КЦ в веб-додатку`,
+    benefit: `• Підвищення конкурентоспроможності компанії як роботодавця
+• Зменшення витрат на рекрутинг і втрати від вакансій
+• Зниження плинності, швидше закриття вакансій
+• Ясна, регулярна аналітика на рівні регіону, ТТ, посади
+• Уніфікація процесу прийняття рішень про зміну ЗП`,
+    risk: `• Недостатність ринкових даних по регіонах
+• Неузгодженість даних між джерелами
+• Відсутність єдиної логіки формування ЗП
+• Відсутність стандартизації ЗП`,
+    screenshots: []
+  },
+  {
+    id: "grading",
+    name: `Грейдингова структура оплати праці`,
+    shortName: `Грейдинг`,
+    desc: `Це проєкт про побудову прозорої, справедливої та ринково обґрунтованої системи оплати праці, яка базується на оцінці «ваги» посад і дозволяє компанії ефективно управляти компенсацією, мотивацією та розвитком персоналу.`,
+    product: `Побудована грейдингова модель посад із визначеними грейдами, оціночними балами та аналітикою зарплат, а також підготовлена внутрішня команда й інструменти для подальшого впровадження і підтримки цієї системи в компанії.`,
+    status: "dev",
+    statusLabel: `В роботі`,
+    deadline: `Q3 2026`,
+    owner: `Кутняк Ю.`,
+    category: `HR & Operations`,
+    req: `Забезпечити прозору, справедливу і керовану систему оплати праці, що дозволяє утримувати та залучати потрібні таланти, усунути необґрунтовані диспропорції в зарплатах, забезпечити контроль бюджету і мати інструмент для управління компенсаційною політикою в динамічному середовищі.`,
+    tasks: `• Затвердження факторів
+• Проведення внутрішнього навчання
+• Запуск внутрішньої оцінки`,
+    benefit: `• Прозора логіка оплати праці на рівні всієї компанії
+• Контрольоване зростання Фонду оплати праці з поетапним вирівнюванням
+• Формування внутрішньої експертизи
+• Можливість аргументованого прийняття рішень по зарплатах
+• Основа для побудови кар’єрних маршрутів та внутрішнього розвитку
+• Зменшення юридичних і репутаційних ризиків`,
+    risk: `• Критична залежність від внутрішніх ресурсів при виконанні core-частини робіт
+• Низька швидкість зворотного зв’язку та тривалі цикли погодження з боку підрядника
+• Відсутність чітких критеріїв приймання
+• Розмитість фактичних строків виконання задач від підрядника
+• Обмежений доступ до логіки моделі після завершення проєкту`,
+    screenshots: []
+  }
+];
+
+// ═══ STATUS MAP ═══
+const statusMap = {
+  live: {cls:"status-live", label:"Live"},
+  dev: {cls:"status-dev", label:"В розробці"},
+  test: {cls:"status-test", label:"Тестування"},
+  init: {cls:"status-init", label:"Ініціація"},
+  paused: {cls:"status-paused", label:"Призупинено"},
+  closed: {cls:"status-closed", label:"Закритий"},
+  scale: {cls:"status-scale", label:"Масштабування"}
+};
+
+// ═══ CATEGORIES ═══
+const categories = [...new Set(projects.map(p=>p.category))];
+
+// ═══ RENDER FILTERS ═══
+const filterBar = document.getElementById('filterBar');
+const allBtn = document.createElement('button');
+allBtn.className = 'filter-btn active';
+allBtn.textContent = `Всі`;
+allBtn.dataset.filter = 'all';
+filterBar.appendChild(allBtn);
+
+// Status filters
+const statusFilters = [
+  {key:'live',label:'Live',count:projects.filter(p=>p.status==='live').length},
+  {key:'dev',label:'В розробці',count:projects.filter(p=>p.status==='dev').length},
+  {key:'test',label:'Тестування',count:projects.filter(p=>p.status==='test').length},
+  {key:'init',label:'Ініціація',count:projects.filter(p=>p.status==='init').length},
+  {key:'scale',label:'Масштабування',count:projects.filter(p=>p.status==='scale').length},
+  {key:'paused',label:'Призупинено',count:projects.filter(p=>p.status==='paused').length},
+  {key:'closed',label:'Закритий',count:projects.filter(p=>p.status==='closed').length},
+];
+statusFilters.forEach(f=>{
+  if(f.count===0) return;
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn';
+  btn.innerHTML = `${f.label}<span class="filter-count">${f.count}</span>`;
+  btn.dataset.filter = f.key;
+  filterBar.appendChild(btn);
+});
+
+// ═══ RENDER PROJECT GRID ═══
+const grid = document.getElementById('projectGrid');
+let activeFilter = 'all';
+let searchTerm = '';
+
+function renderProjects() {
+  grid.innerHTML = '';
+  const filtered = projects.filter(p => {
+    const matchFilter = activeFilter === 'all' || p.status === activeFilter;
+    const matchSearch = !searchTerm ||
+      p.name.toLowerCase().includes(searchTerm) ||
+      p.desc.toLowerCase().includes(searchTerm) ||
+      p.owner.toLowerCase().includes(searchTerm) ||
+      p.category.toLowerCase().includes(searchTerm);
+    return matchFilter && matchSearch;
+  });
+
+  filtered.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'project-card reveal';
+    card.style.animationDelay = `${i * 0.04}s`;
+    const sm = statusMap[p.status];
+    const hasScreenshots = p.screenshots && p.screenshots.length > 0;
+
+    card.innerHTML = `
+      <div class="project-card-inner">
+        <div class="project-card-top">
+          <div class="project-name">${p.name}</div>
+        </div>
+        <div class="project-desc">${p.desc}</div>
+        <div class="project-meta">
+          <span class="status-pill ${sm.cls}">${p.statusLabel}</span>
+          <span class="deadline-tag">${p.deadline}</span>
+          <span class="owner-tag">${p.owner}</span>
+        </div>
+      </div>
+      ${hasScreenshots ? `<div class="project-card-screenshots">${p.screenshots.slice(0,3).map(s=>`<img src="${s}" alt="" loading="lazy">`).join('')}</div>` : ''}
+    `;
+    card.addEventListener('click', () => openModal(p));
+    grid.appendChild(card);
+  });
+
+}
+
+// ═══ FILTER CLICK ═══
+filterBar.addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilter = btn.dataset.filter;
+  renderProjects();
+});
+
+// ═══ SEARCH ═══
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase().trim();
+  renderProjects();
+});
+
+renderProjects();
+
+// ═══ MODAL ═══
+const modalOverlay = document.getElementById('modalOverlay');
+const modalContainer = document.getElementById('modalContainer');
+const modalTitle = document.getElementById('modalTitle');
+const modalBody = document.getElementById('modalBody');
+const modalClose = document.getElementById('modalClose');
+
+function nl2li(text) {
+  if (!text) return '';
+  return '<ul>' + text.split('\n').filter(l=>l.trim()).map(l => `<li>${l.trim().replace(/^[•\-]\s*/,'')}</li>`).join('') + '</ul>';
+}
+
+function openModal(p) {
+  const sm = statusMap[p.status];
+  modalTitle.textContent = p.name;
+
+  let html = `
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+      <span class="status-pill ${sm.cls}" style="font-size:13px;padding:6px 14px">${p.statusLabel}</span>
+      <span style="font-size:14px;color:var(--text3);font-weight:500">${p.deadline}</span>
+      <span style="font-size:14px;color:var(--text4)">Керівник: ${p.owner}</span>
+      <span style="font-size:12px;color:var(--blue);background:rgba(0,122,255,0.08);padding:4px 10px;border-radius:100px">${p.category}</span>
+    </div>
+    <div class="modal-product">
+      <div class="modal-product-label">Продукт проєкту</div>
+      <div class="modal-product-text">${p.product}</div>
+    </div>
+    <div class="modal-grid">
+      <div class="modal-block">
+        <div class="modal-block-title req">&#x1F3AF; Вимога бізнесу</div>
+        <div class="modal-block-text">${nl2li(p.req)}</div>
+      </div>
+      <div class="modal-block">
+        <div class="modal-block-title tasks">&#x1F527; Задачі в фокусі</div>
+        <div class="modal-block-text">${nl2li(p.tasks)}</div>
+      </div>
+    </div>
+    <div class="modal-grid">
+      <div class="modal-block">
+        <div class="modal-block-title benefit">&#x2705; Вигода</div>
+        <div class="modal-block-text">${nl2li(p.benefit)}</div>
+      </div>
+      <div class="modal-block">
+        <div class="modal-block-title risk">&#x26A0;&#xFE0F; Ризики</div>
+        <div class="modal-block-text">${nl2li(p.risk || 'Не визначено')}</div>
+      </div>
+    </div>
+  `;
+
+  if (p.keyDates) {
+    html += `
+      <div class="modal-key-dates">
+        <div class="modal-key-dates-title">&#x1F4C5; Ключові терміни</div>
+        <div class="modal-key-dates-text">${p.keyDates.split('\n').join('<br>')}</div>
+      </div>
+    `;
+  }
+
+  if (p.screenshots && p.screenshots.length > 0) {
+    html += `
+      <div class="modal-screenshots">
+        <div class="modal-screenshots-title">&#x1F4F1; Інтерфейс системи</div>
+        <div class="modal-screenshots-grid">
+          ${p.screenshots.map(s => `<img src="${s}" alt="Скріншот" loading="lazy" onclick="openLightbox('${s}')">`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  modalBody.innerHTML = html;
+  modalOverlay.classList.add('open');
+  modalContainer.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modalOverlay.classList.remove('open');
+  modalContainer.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+modalOverlay.addEventListener('click', closeModal);
+modalClose.addEventListener('click', closeModal);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeLightbox(); }
+});
+
+// ═══ LIGHTBOX ═══
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+
+function openLightbox(src) {
+  event.stopPropagation();
+  lightboxImg.src = src;
+  lightbox.classList.add('open');
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  lightboxImg.src = '';
+}
+
+lightbox.addEventListener('click', closeLightbox);
+
+// ═══ STATS ═══
+const statsGrid = document.getElementById('statsGrid');
+const statusCounts = {};
+const categoryCounts = {};
+projects.forEach(p => {
+  statusCounts[p.status] = (statusCounts[p.status]||0)+1;
+  categoryCounts[p.category] = (categoryCounts[p.category]||0)+1;
+});
+
+const total = projects.length;
+const statusColors = {live:'#34C759',dev:'#007AFF',test:'#FF9500',init:'#8E8E93',paused:'#FF2D55',closed:'#C7C7CC',scale:'#5856D6'};
+const statusNames = {live:'Live',dev:'В розробці',test:'Тестування',init:'Ініціація',paused:'Призупинено',closed:'Закритий',scale:'Масштабування'};
+
+let statusBars = '';
+Object.entries(statusCounts).sort((a,b)=>b[1]-a[1]).forEach(([k,v])=>{
+  statusBars += `<div class="stat-bar-row">
+    <div class="stat-bar-label">${statusNames[k]||k}</div>
+    <div class="stat-bar-track"><div class="stat-bar-fill" style="width:${v/total*100}%;background:${statusColors[k]||'#8E8E93'}"></div></div>
+    <div class="stat-bar-count">${v}</div>
+  </div>`;
+});
+
+let categoryBars = '';
+const catColors = ['#007AFF','#34C759','#5856D6','#FF9500','#FF2D55','#AF52DE','#5AC8FA'];
+Object.entries(categoryCounts).sort((a,b)=>b[1]-a[1]).forEach(([k,v],i)=>{
+  categoryBars += `<div class="stat-bar-row">
+    <div class="stat-bar-label">${k}</div>
+    <div class="stat-bar-track"><div class="stat-bar-fill" style="width:${v/total*100}%;background:${catColors[i%catColors.length]}"></div></div>
+    <div class="stat-bar-count">${v}</div>
+  </div>`;
+});
+
+statsGrid.innerHTML = `
+  <div class="stat-card">
+    <div class="stat-card-title">По статусу</div>
+    ${statusBars}
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-title">По категоріям</div>
+    ${categoryBars}
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-title">Ключові показники</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px">
+      <div style="text-align:center;padding:20px;background:var(--gray6);border-radius:var(--radius)">
+        <div style="font-size:32px;font-weight:700;color:var(--text)">${total}</div>
+        <div style="font-size:12px;color:var(--text4);margin-top:4px">Всього проєктів</div>
+      </div>
+      <div style="text-align:center;padding:20px;background:rgba(52,199,89,0.08);border-radius:var(--radius)">
+        <div style="font-size:32px;font-weight:700;color:#248A3D">${statusCounts.live||0}</div>
+        <div style="font-size:12px;color:var(--text4);margin-top:4px">У продакшені</div>
+      </div>
+      <div style="text-align:center;padding:20px;background:rgba(0,122,255,0.06);border-radius:var(--radius)">
+        <div style="font-size:32px;font-weight:700;color:#0062CC">${statusCounts.dev||0}</div>
+        <div style="font-size:12px;color:var(--text4);margin-top:4px">В розробці</div>
+      </div>
+      <div style="text-align:center;padding:20px;background:rgba(255,149,0,0.08);border-radius:var(--radius)">
+        <div style="font-size:32px;font-weight:700;color:#C77800">${statusCounts.test||0}</div>
+        <div style="font-size:12px;color:var(--text4);margin-top:4px">На тестуванні</div>
+      </div>
+    </div>
+  </div>
+`;
+
+// ═══ TEAMS ═══
+const teamGrid = document.getElementById('teamGrid');
+const ownerProjects = {};
+projects.forEach(p => {
+  if (!ownerProjects[p.owner]) ownerProjects[p.owner] = [];
+  ownerProjects[p.owner].push(p);
+});
+
+Object.entries(ownerProjects).sort((a,b)=>b[1].length-a[1].length).forEach(([owner, pList]) => {
+  const initials = owner.split(' ').map(w=>w[0]).join('');
+  const card = document.createElement('div');
+  card.className = 'team-card';
+  card.innerHTML = `
+    <div class="team-avatar">${initials}</div>
+    <div class="team-name">${owner}</div>
+    <div class="team-count">${pList.length} проєкт${pList.length>4?'ів':pList.length>1?'и':''}</div>
+    <div style="margin-top:8px;font-size:12px;color:var(--text4);line-height:1.5">${pList.map(p=>p.shortName).join(', ')}</div>
+  `;
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', () => {
+    document.getElementById('searchInput').value = owner;
+    searchTerm = owner.toLowerCase();
+    activeFilter = 'all';
+    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    filterBar.querySelector('[data-filter="all"]').classList.add('active');
+    renderProjects();
+    document.getElementById('portfolio').scrollIntoView({behavior:'smooth'});
+  });
+  teamGrid.appendChild(card);
+});
+
+// ═══ NAV SCROLL ═══
+const nav = document.getElementById('nav');
+const progress = document.getElementById('progress');
+const backTop = document.getElementById('backTop');
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = `${(scrollY / maxScroll) * 100}%`;
+
+  if (scrollY > 300) {
+    nav.classList.add('visible');
+    backTop.classList.add('visible');
+  } else {
+    nav.classList.remove('visible');
+    backTop.classList.remove('visible');
+  }
+  lastScroll = scrollY;
+}, {passive:true});
+
+backTop.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+
+
+// ═══ ACTIVE NAV LINK ═══
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const link = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, {threshold: 0.3});
+sections.forEach(s => sectionObserver.observe(s));
+</script>
+</body>
+</html>

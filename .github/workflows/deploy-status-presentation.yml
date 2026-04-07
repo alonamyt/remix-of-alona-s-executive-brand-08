@@ -1,0 +1,52 @@
+name: Deploy Status Presentation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - sites/status-presentation/**
+      - .github/workflows/deploy-status-presentation.yml
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-status-presentation
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare SSH key
+        env:
+          ORACLE_DEPLOY_KEY: ${{ secrets.ORACLE_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$ORACLE_DEPLOY_KEY" > ~/.ssh/oracle_deploy_key
+          chmod 600 ~/.ssh/oracle_deploy_key
+          ssh-keyscan -H 158.178.151.156 >> ~/.ssh/known_hosts
+
+      - name: Upload site files
+        run: |
+          ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 'rm -rf /home/ubuntu/status-presentation-deploy && mkdir -p /home/ubuntu/status-presentation-deploy/site'
+          scp -i ~/.ssh/oracle_deploy_key -r sites/status-presentation/. ubuntu@158.178.151.156:/home/ubuntu/status-presentation-deploy/site
+
+      - name: Deploy on server
+        run: |
+          ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 '
+            target=/var/www/html/status-presentation &&
+            if [ -d "$target" ]; then
+              backup=/var/www/status-presentation-backup-$(date +%Y%m%d-%H%M%S) &&
+              sudo cp -a "$target" "$backup";
+            fi &&
+            sudo mkdir -p "$target" &&
+            sudo find "$target" -mindepth 1 -maxdepth 1 -exec rm -rf {} + &&
+            sudo cp -a /home/ubuntu/status-presentation-deploy/site/. "$target"/ &&
+            sudo find "$target" -type d -exec chmod 755 {} + &&
+            sudo find "$target" -type f -exec chmod 644 {} + &&
+            sudo systemctl reload nginx
+          '
