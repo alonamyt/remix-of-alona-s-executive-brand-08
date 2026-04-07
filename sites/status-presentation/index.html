@@ -1301,6 +1301,14 @@ function resolveImageSrc(src) {
   return encodeURI(src);
 }
 
+function escapeAttr(value = '') {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 function handleImageError(img) {
   if (img.dataset.fallbackApplied === '1') {
     const frame = img.closest('.modal-screenshot-frame');
@@ -1351,7 +1359,7 @@ function renderProjects() {
         <div class="project-card-top">
           <div class="project-name">${p.name}</div>
         </div>
-        <div class="project-desc">${p.desc}</div>
+        <div class="project-desc" title="${escapeAttr(p.desc.replace(/\n+/g, ' ').trim())}">${p.desc}</div>
         <div class="project-meta">
           <span class="status-pill ${sm.cls}">${p.cardStatusLabel || p.statusLabel}</span>
           <span class="deadline-tag">${p.deadline}</span>
