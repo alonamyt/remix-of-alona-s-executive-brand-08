@@ -30,8 +30,8 @@ body{font-family:var(--font);color:var(--text);background:var(--bg);-webkit-font
 /* ═══ NAV ═══ */
 nav{position:fixed;top:0;left:0;right:0;z-index:10000;padding:0 max(2rem,env(safe-area-inset-left));height:52px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);background:rgba(242,242,247,0.72);border-bottom:0.5px solid rgba(0,0,0,0.12);transform:translateY(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
 nav.visible{transform:translateY(0)}
-.nav-logo{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-0.02em}
-.nav-logo span{color:var(--blue)}
+.nav-logo{display:inline-flex;align-items:center;justify-content:center;padding:6px 12px;border-radius:999px;background:#111318;box-shadow:0 10px 24px rgba(15,23,42,0.12)}
+.nav-logo img{display:block;height:24px;width:auto}
 .nav-links{display:flex;gap:24px}
 .nav-links a{font-size:13px;color:var(--text3);text-decoration:none;font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--blue)}
@@ -227,6 +227,9 @@ nav.visible{transform:translateY(0)}
 
 /* ═══ FOOTER ═══ */
 footer{padding:40px max(2rem,5vw);border-top:0.5px solid rgba(0,0,0,0.06);text-align:center}
+.footer-brand{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.footer-brand-badge{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:999px;background:#111318;box-shadow:0 10px 24px rgba(15,23,42,0.12)}
+.footer-brand-badge img{display:block;height:22px;width:auto}
 footer p{font-size:13px;color:var(--text4)}
 
 /* ═══ ANIMATIONS ═══ */
@@ -265,7 +268,9 @@ footer p{font-size:13px;color:var(--text4)}
 <div id="progress"></div>
 
 <nav id="nav">
-  <div class="nav-logo">Aurora <span>R&D</span></div>
+  <div class="nav-logo">
+    <img src="images/brand/ard-logo-white.png" alt="AR&D">
+  </div>
   <div class="nav-links">
     <a href="#analytics">Аналітика</a>
     <a href="#portfolio">Портфель</a>
@@ -337,7 +342,12 @@ footer p{font-size:13px;color:var(--text4)}
 </section>
 
 <footer>
-  <p>Aurora R&D Department &middot; Портфель проєктів &middot; Березень 2026</p>
+  <div class="footer-brand">
+    <span class="footer-brand-badge">
+      <img src="images/brand/ard-logo-white.png" alt="AR&D">
+    </span>
+    <p>Портфель проєктів &middot; Березень 2026</p>
+  </div>
 </footer>
 
 <div class="modal-overlay" id="modalOverlay"></div>
