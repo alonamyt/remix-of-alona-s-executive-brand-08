@@ -115,10 +115,17 @@ nav.visible{transform:translateY(0)}
 .modal-close{width:36px;height:36px;border-radius:50%;border:none;background:rgba(0,0,0,0.06);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text3);transition:background .2s;font-family:var(--font)}
 .modal-close:hover{background:rgba(0,0,0,0.12)}
 .modal-title{font-size:17px;font-weight:600;letter-spacing:-0.01em}
-.modal-body{max-width:960px;margin:0 auto;padding:20px max(24px,5vw) 80px}
-.modal-meta-row{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
+.modal-body{max-width:960px;margin:0 auto;padding:12px max(24px,5vw) 72px}
+.modal-meta-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:12px}
 .modal-meta-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0}
 .modal-meta-right{display:flex;justify-content:flex-end;flex:1 1 280px}
+.modal-nav-layer{pointer-events:none}
+.modal-project-nav{position:fixed;top:50%;transform:translateY(-50%);z-index:20003;width:48px;height:48px;border:none;border-radius:999px;background:rgba(255,255,255,0.88);color:var(--text);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 18px 34px rgba(15,23,42,0.16);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);cursor:pointer;pointer-events:auto;transition:transform .2s ease, background .2s ease, opacity .2s ease}
+.modal-project-nav:hover{transform:translateY(-50%) scale(1.04);background:rgba(255,255,255,0.96)}
+.modal-project-nav:active{transform:translateY(-50%) scale(0.98)}
+.modal-project-nav[hidden]{display:none}
+.modal-project-nav-prev{left:max(16px,3vw)}
+.modal-project-nav-next{right:max(16px,3vw)}
 .modal-product{background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:16px;border:0.5px solid rgba(0,0,0,0.06)}
 .modal-product-label{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
 .modal-product-text{font-size:15px;color:var(--text2);line-height:1.6}
@@ -191,18 +198,21 @@ nav.visible{transform:translateY(0)}
 .owner-photo-composite .owner-photo-bg{object-fit:var(--bg-fit,cover);object-position:var(--bg-position,50% 50%);filter:blur(var(--portrait-blur,20px));transform:translate(var(--bg-shift-x,0%),var(--bg-shift-y,0%)) scale(var(--bg-scale,1.14));transform-origin:center}
 .owner-photo-composite .owner-photo-focus{object-fit:var(--fg-fit,cover);object-position:var(--fg-position,50% 12%);transform:translate(var(--fg-shift-x,0%),var(--fg-shift-y,0%)) scale(var(--fg-scale,0.96));transform-origin:center;filter:drop-shadow(0 10px 24px rgba(15,23,42,.08))}
 .owner-photo-lg{width:132px;height:132px}
-.owner-photo-md{width:60px;height:60px}
+.owner-photo-md{width:52px;height:52px}
 .owner-photo-sm{width:54px;height:54px}
 .owner-photo-initials{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;letter-spacing:0.04em}
 .owner-photo-fallback .owner-photo-initials{display:flex}
-.owner-modal-pill{display:inline-flex;align-items:center;gap:10px;padding:4px 12px 4px 4px;border-radius:22px;background:rgba(255,255,255,0.72);border:1px solid rgba(255,255,255,0.55);box-shadow:0 14px 28px rgba(15,23,42,0.08);backdrop-filter:blur(14px)}
-.owner-modal-meta{display:flex;flex-direction:column;gap:1px;line-height:1;min-width:0}
-.owner-modal-label{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text4)}
-.owner-modal-name{font-size:15px;font-weight:700;color:var(--text);letter-spacing:-0.02em}
+.owner-modal-pill{display:inline-flex;align-items:center;gap:8px;padding:2px 10px 2px 2px;border-radius:18px;background:rgba(255,255,255,0.72);border:1px solid rgba(255,255,255,0.55);box-shadow:0 12px 24px rgba(15,23,42,0.06);backdrop-filter:blur(14px)}
+.owner-modal-meta{display:flex;flex-direction:column;gap:0;line-height:1;min-width:0}
+.owner-modal-label{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text4)}
+.owner-modal-name{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-0.02em}
 @media (max-width: 640px){
   .owner-photo-lg{width:112px;height:112px}
-  .owner-photo-md{width:54px;height:54px}
-  .owner-modal-pill{padding-right:10px}
+  .owner-photo-md{width:48px;height:48px}
+  .owner-modal-pill{padding-right:8px}
+  .modal-project-nav{width:42px;height:42px;font-size:20px}
+  .modal-project-nav-prev{left:10px}
+  .modal-project-nav-next{right:10px}
 }
 
 /* ═══ STATS SECTION ═══ */
@@ -238,6 +248,16 @@ footer p{font-size:13px;color:var(--text4)}
 .search-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,122,255,0.12)}
 .search-input::placeholder{color:var(--text4)}
 .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text4);font-size:16px;pointer-events:none}
+.owner-filter-wrap{display:none;align-items:center;gap:10px;margin:-4px 0 14px}
+.owner-filter-wrap.visible{display:flex}
+.owner-filter-wrap.flash{animation:ownerFilterPulse .5s ease}
+.owner-filter-label{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text4)}
+.owner-filter-chip{display:inline-flex;align-items:center;gap:10px;padding:8px 12px;border-radius:999px;background:rgba(0,122,255,0.08);color:var(--blue);font-size:14px;font-weight:600}
+.owner-filter-clear{width:24px;height:24px;border:none;border-radius:50%;background:rgba(0,122,255,0.12);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;cursor:pointer;transition:background .2s ease, transform .2s ease}
+.owner-filter-clear:hover{background:rgba(0,122,255,0.18);transform:scale(1.04)}
+.owner-modal-pill.is-interactive{cursor:pointer;transition:transform .2s ease, box-shadow .2s ease, background .2s ease}
+.owner-modal-pill.is-interactive:hover{transform:translateY(-1px);box-shadow:0 16px 28px rgba(15,23,42,0.1);background:rgba(255,255,255,0.9)}
+@keyframes ownerFilterPulse{0%{transform:scale(.98);opacity:.7}100%{transform:scale(1);opacity:1}}
 </style>
 </head>
 <body>
@@ -297,6 +317,13 @@ footer p{font-size:13px;color:var(--text4)}
     <span class="search-icon">&#x1F50D;</span>
     <input type="text" class="search-input" id="searchInput" placeholder="Пошук проєктів...">
   </div>
+  <div class="owner-filter-wrap reveal" id="ownerFilterWrap">
+    <span class="owner-filter-label">Відібрано</span>
+    <span class="owner-filter-chip">
+      <span id="ownerFilterName"></span>
+      <button class="owner-filter-clear" id="ownerFilterClear" type="button" aria-label="Скинути відбір">&times;</button>
+    </span>
+  </div>
   <div class="filter-bar reveal" id="filterBar"></div>
   <div class="project-grid" id="projectGrid"></div>
 </section>
@@ -318,6 +345,10 @@ footer p{font-size:13px;color:var(--text4)}
   <div class="modal-header">
     <div class="modal-title" id="modalTitle"></div>
     <button class="modal-close" id="modalClose">&times;</button>
+  </div>
+  <div class="modal-nav-layer" aria-hidden="true">
+    <button class="modal-project-nav modal-project-nav-prev" id="modalPrev" type="button" aria-label="Попередній проєкт" hidden>&#10094;</button>
+    <button class="modal-project-nav modal-project-nav-next" id="modalNext" type="button" aria-label="Наступний проєкт" hidden>&#10095;</button>
   </div>
   <div class="modal-body" id="modalBody"></div>
 </div>
@@ -1388,6 +1419,52 @@ statusFilters.forEach(f=>{
 const grid = document.getElementById('projectGrid');
 let activeFilter = 'all';
 let searchTerm = '';
+let activeOwner = '';
+const searchInput = document.getElementById('searchInput');
+const ownerFilterWrap = document.getElementById('ownerFilterWrap');
+const ownerFilterName = document.getElementById('ownerFilterName');
+const ownerFilterClear = document.getElementById('ownerFilterClear');
+
+function syncOwnerFilterUi() {
+  ownerFilterWrap.classList.toggle('visible', Boolean(activeOwner));
+  ownerFilterName.textContent = activeOwner || '';
+}
+
+function focusFilteredProjects() {
+  const focusTarget = activeOwner ? ownerFilterWrap : grid;
+  focusTarget.scrollIntoView({ behavior:'smooth', block:'start' });
+  if (activeOwner) {
+    ownerFilterWrap.classList.remove('flash');
+    void ownerFilterWrap.offsetWidth;
+    ownerFilterWrap.classList.add('flash');
+  }
+}
+
+function applyOwnerFilter(owner, options = {}) {
+  activeOwner = owner;
+  searchTerm = '';
+  searchInput.value = '';
+  if (!options.keepStatusFilter) {
+    activeFilter = 'all';
+    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    filterBar.querySelector('[data-filter="all"]').classList.add('active');
+  }
+  syncOwnerFilterUi();
+  renderProjects();
+  if (options.closeModal) closeModal();
+  if (options.scrollToPortfolio !== false) {
+    requestAnimationFrame(() => focusFilteredProjects());
+  }
+}
+
+function clearOwnerFilter(options = {}) {
+  activeOwner = '';
+  syncOwnerFilterUi();
+  renderProjects();
+  if (options.scrollToPortfolio) {
+    document.getElementById('portfolio').scrollIntoView({behavior:'smooth'});
+  }
+}
 
 function resolveImageSrc(src) {
   return encodeURI(src);
@@ -1490,7 +1567,7 @@ function renderOwnerPhoto(owner, size = 'sm') {
 
 function renderOwnerBadge(owner) {
   return `
-    <span class="owner-modal-pill">
+    <span class="owner-modal-pill is-interactive" data-owner="${escapeAttr(owner)}" role="button" tabindex="0" aria-label="Показати проєкти керівника ${escapeAttr(owner)}">
       ${renderOwnerPhoto(owner, 'md')}
       <span class="owner-modal-meta">
         <span class="owner-modal-label">Керівник</span>
@@ -1535,17 +1612,22 @@ function renderModalVideo(src) {
   `;
 }
 
+let visibleProjects = projects.slice();
+let currentModalProjectIndex = -1;
+
 function renderProjects() {
   grid.innerHTML = '';
   const filtered = projects.filter(p => {
     const matchFilter = activeFilter === 'all' || p.status === activeFilter;
+    const matchOwner = !activeOwner || p.owner === activeOwner;
     const matchSearch = !searchTerm ||
       p.name.toLowerCase().includes(searchTerm) ||
       p.desc.toLowerCase().includes(searchTerm) ||
       p.owner.toLowerCase().includes(searchTerm) ||
       p.category.toLowerCase().includes(searchTerm);
-    return matchFilter && matchSearch;
+    return matchFilter && matchOwner && matchSearch;
   });
+  visibleProjects = filtered.slice();
 
   filtered.forEach((p, i) => {
     const card = document.createElement('div');
@@ -1593,8 +1675,10 @@ document.getElementById('searchInput').addEventListener('input', e => {
   searchTerm = e.target.value.toLowerCase().trim();
   renderProjects();
 });
+ownerFilterClear.addEventListener('click', () => clearOwnerFilter({ scrollToPortfolio: true }));
 
 renderProjects();
+syncOwnerFilterUi();
 
 // ═══ MODAL ═══
 const modalOverlay = document.getElementById('modalOverlay');
@@ -1602,6 +1686,20 @@ const modalContainer = document.getElementById('modalContainer');
 const modalTitle = document.getElementById('modalTitle');
 const modalBody = document.getElementById('modalBody');
 const modalClose = document.getElementById('modalClose');
+const modalPrev = document.getElementById('modalPrev');
+const modalNext = document.getElementById('modalNext');
+
+function updateModalProjectNav() {
+  const canNavigate = visibleProjects.length > 1 && currentModalProjectIndex !== -1;
+  modalPrev.hidden = !canNavigate;
+  modalNext.hidden = !canNavigate;
+}
+
+function openProjectByOffset(offset) {
+  if (visibleProjects.length <= 1 || currentModalProjectIndex === -1) return;
+  const nextIndex = (currentModalProjectIndex + offset + visibleProjects.length) % visibleProjects.length;
+  openModal(visibleProjects[nextIndex]);
+}
 
 function nl2li(text) {
   if (!text) return '';
@@ -1647,6 +1745,7 @@ function renderHighlightCards(cards) {
 
 function openModal(p) {
   const sm = statusMap[p.status];
+  currentModalProjectIndex = visibleProjects.findIndex(project => project.id === p.id);
   currentModalScreenshots = Array.isArray(p.screenshots) ? p.screenshots.slice() : [];
   modalTitle.textContent = p.name;
 
@@ -1673,6 +1772,7 @@ function openModal(p) {
     modalOverlay.classList.add('open');
     modalContainer.classList.add('open');
     document.body.style.overflow = 'hidden';
+    updateModalProjectNav();
     return;
   }
 
@@ -1739,18 +1839,47 @@ function openModal(p) {
   modalOverlay.classList.add('open');
   modalContainer.classList.add('open');
   document.body.style.overflow = 'hidden';
+  updateModalProjectNav();
 }
 
 function closeModal() {
   modalOverlay.classList.remove('open');
   modalContainer.classList.remove('open');
   document.body.style.overflow = '';
+  currentModalProjectIndex = -1;
+  updateModalProjectNav();
 }
 
 modalOverlay.addEventListener('click', closeModal);
 modalClose.addEventListener('click', closeModal);
+modalPrev.addEventListener('click', () => openProjectByOffset(-1));
+modalNext.addEventListener('click', () => openProjectByOffset(1));
+modalBody.addEventListener('click', e => {
+  const ownerTrigger = e.target.closest('.owner-modal-pill[data-owner]');
+  if (!ownerTrigger) return;
+  applyOwnerFilter(ownerTrigger.dataset.owner, { closeModal: true, scrollToPortfolio: true });
+});
+modalBody.addEventListener('keydown', e => {
+  const ownerTrigger = e.target.closest('.owner-modal-pill[data-owner]');
+  if (!ownerTrigger) return;
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  e.preventDefault();
+  applyOwnerFilter(ownerTrigger.dataset.owner, { closeModal: true, scrollToPortfolio: true });
+});
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeModal(); closeLightbox(); }
+  if (modalContainer.classList.contains('open') && !lightbox.classList.contains('open')) {
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      openProjectByOffset(-1);
+      return;
+    }
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      openProjectByOffset(1);
+      return;
+    }
+  }
   if (!lightbox.classList.contains('open')) return;
   if (e.key === 'ArrowLeft') {
     e.preventDefault();
@@ -1916,15 +2045,7 @@ Object.entries(ownerProjects).sort((a,b)=>b[1].length-a[1].length).forEach(([own
     <div style="margin-top:8px;font-size:12px;color:var(--text4);line-height:1.5">${pList.map(p=>p.shortName).join(', ')}</div>
   `;
   card.style.cursor = 'pointer';
-  card.addEventListener('click', () => {
-    document.getElementById('searchInput').value = owner;
-    searchTerm = owner.toLowerCase();
-    activeFilter = 'all';
-    filterBar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    filterBar.querySelector('[data-filter="all"]').classList.add('active');
-    renderProjects();
-    document.getElementById('portfolio').scrollIntoView({behavior:'smooth'});
-  });
+  card.addEventListener('click', () => applyOwnerFilter(owner));
   teamGrid.appendChild(card);
 });
 
