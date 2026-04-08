@@ -115,11 +115,15 @@ nav.visible{transform:translateY(0)}
 .modal-close{width:36px;height:36px;border-radius:50%;border:none;background:rgba(0,0,0,0.06);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text3);transition:background .2s;font-family:var(--font)}
 .modal-close:hover{background:rgba(0,0,0,0.12)}
 .modal-title{font-size:17px;font-weight:600;letter-spacing:-0.01em}
-.modal-body{max-width:960px;margin:0 auto;padding:32px max(24px,5vw) 80px}
+.modal-body{max-width:960px;margin:0 auto;padding:20px max(24px,5vw) 80px}
+.modal-meta-row{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px}
+.modal-meta-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0}
+.modal-meta-right{display:flex;justify-content:flex-end;flex:1 1 280px}
 .modal-product{background:var(--card);border-radius:var(--radius);padding:20px;margin-bottom:16px;border:0.5px solid rgba(0,0,0,0.06)}
 .modal-product-label{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
 .modal-product-text{font-size:15px;color:var(--text2);line-height:1.6}
 .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:860px){.modal-meta-row{flex-direction:column;align-items:stretch}.modal-meta-right{justify-content:flex-start}}
 @media(max-width:600px){.modal-grid{grid-template-columns:1fr}}
 .modal-block{background:var(--card);border-radius:var(--radius);padding:20px;border:0.5px solid rgba(0,0,0,0.06)}
 .modal-block-title{font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
@@ -174,12 +178,32 @@ nav.visible{transform:translateY(0)}
 }
 
 /* ═══ TEAM SECTION ═══ */
-.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.team-card{background:var(--card);border-radius:var(--radius);padding:20px;border:0.5px solid rgba(0,0,0,0.06);text-align:center;transition:all .2s}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.team-card{background:var(--card);border-radius:var(--radius);padding:24px 20px;border:0.5px solid rgba(0,0,0,0.06);text-align:center;transition:all .2s}
 .team-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
-.team-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--indigo));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:#fff;margin:0 auto 12px}
+.team-avatar{display:flex;justify-content:center;margin:0 auto 16px}
 .team-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
 .team-count{font-size:12px;color:var(--text4)}
+.owner-photo{position:relative;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,var(--blue),var(--indigo));border:none;box-shadow:0 14px 28px rgba(15,23,42,0.14)}
+.owner-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%;display:block}
+.owner-photo-layer{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.owner-photo-composite{background:#dfe5ef}
+.owner-photo-composite .owner-photo-bg{object-fit:var(--bg-fit,cover);object-position:var(--bg-position,50% 50%);filter:blur(var(--portrait-blur,20px));transform:translate(var(--bg-shift-x,0%),var(--bg-shift-y,0%)) scale(var(--bg-scale,1.14));transform-origin:center}
+.owner-photo-composite .owner-photo-focus{object-fit:var(--fg-fit,cover);object-position:var(--fg-position,50% 12%);transform:translate(var(--fg-shift-x,0%),var(--fg-shift-y,0%)) scale(var(--fg-scale,0.96));transform-origin:center;filter:drop-shadow(0 10px 24px rgba(15,23,42,.08))}
+.owner-photo-lg{width:132px;height:132px}
+.owner-photo-md{width:60px;height:60px}
+.owner-photo-sm{width:54px;height:54px}
+.owner-photo-initials{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;letter-spacing:0.04em}
+.owner-photo-fallback .owner-photo-initials{display:flex}
+.owner-modal-pill{display:inline-flex;align-items:center;gap:10px;padding:4px 12px 4px 4px;border-radius:22px;background:rgba(255,255,255,0.72);border:1px solid rgba(255,255,255,0.55);box-shadow:0 14px 28px rgba(15,23,42,0.08);backdrop-filter:blur(14px)}
+.owner-modal-meta{display:flex;flex-direction:column;gap:1px;line-height:1;min-width:0}
+.owner-modal-label{font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text4)}
+.owner-modal-name{font-size:15px;font-weight:700;color:var(--text);letter-spacing:-0.02em}
+@media (max-width: 640px){
+  .owner-photo-lg{width:112px;height:112px}
+  .owner-photo-md{width:54px;height:54px}
+  .owner-modal-pill{padding-right:10px}
+}
 
 /* ═══ STATS SECTION ═══ */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
@@ -1321,6 +1345,15 @@ const statusMap = {
   scale: {cls:"status-scale", label:"Масштабування"}
 };
 
+const ownerPhotoMap = {
+          'Кустреюк О.': { src: 'images/team/provided/kustreuk-current.png' },
+          'Горбунов В.': { src: 'images/team/provided/gorbunov-current.jpg' },
+          'Сабанюк О.': { src: 'images/team/provided/sabanyuk-current.png' },
+          'Адамов В.': { src: 'images/team/provided/adamov-current.jpg' },
+          'Кошелєв І.': { src: 'images/team/provided/kosheliev-current.png' },
+          'Чередник О.': { src: 'images/team/provided/cherednyk-current.jpg' }
+        };
+
 // ═══ CATEGORIES ═══
 const categories = [...new Set(projects.map(p=>p.category))];
 
@@ -1391,6 +1424,92 @@ function renderCardVideoPreview() {
       <div class="project-card-video-pill">
         <span class="project-card-video-icon">&#9658;</span>
         <span>Відео</span>
+      </div>
+    </div>
+  `;
+}
+
+function getOwnerInitials(owner) {
+  return owner.split(' ').map(word => word[0]).join('');
+}
+
+function buildOwnerPhotoStyle(photo) {
+  const vars = [];
+  const addVar = (name, value) => {
+    if (value !== undefined && value !== null && value !== '') vars.push(`${name}:${value}`);
+  };
+  addVar('--bg-position', photo.bgPosition);
+  addVar('--fg-position', photo.fgPosition);
+  addVar('--bg-fit', photo.bgFit);
+  addVar('--fg-fit', photo.fgFit);
+  addVar('--fg-scale', photo.fgScale);
+  addVar('--fg-shift-x', photo.fgShiftX);
+  addVar('--fg-shift-y', photo.fgShiftY);
+  addVar('--bg-scale', photo.bgScale);
+  addVar('--bg-shift-x', photo.bgShiftX);
+  addVar('--bg-shift-y', photo.bgShiftY);
+  addVar('--focus-w', photo.focusW);
+  addVar('--focus-h', photo.focusH);
+  addVar('--focus-y', photo.focusY);
+  addVar('--portrait-blur', photo.portraitBlur);
+  return vars.length ? ` style="${escapeAttr(vars.join(';'))}"` : '';
+}
+
+function renderOwnerPhoto(owner, size = 'sm') {
+  const photo = ownerPhotoMap[owner];
+  const initials = getOwnerInitials(owner);
+
+  if (!photo) {
+    return `
+      <span class="owner-photo owner-photo-${size} owner-photo-fallback">
+        <span class="owner-photo-initials">${initials}</span>
+      </span>
+    `;
+  }
+
+  if (photo.type === 'composite') {
+    const safeSrc = resolveImageSrc(photo.src);
+    const styleAttr = buildOwnerPhotoStyle(photo);
+    return `
+      <span class="owner-photo owner-photo-${size} owner-photo-composite"${styleAttr}>
+        <img class="owner-photo-layer owner-photo-bg" src="${safeSrc}" alt="" aria-hidden="true" loading="lazy">
+        <img class="owner-photo-layer owner-photo-focus" src="${safeSrc}" alt="${owner}" loading="lazy" onerror="this.remove(); this.parentElement.classList.add('owner-photo-fallback');">
+        <span class="owner-photo-initials">${initials}</span>
+      </span>
+    `;
+  }
+
+  const safeSrc = resolveImageSrc(photo.src);
+  return `
+    <span class="owner-photo owner-photo-${size}">
+      <img src="${safeSrc}" alt="${owner}" loading="lazy" onerror="this.remove(); this.parentElement.classList.add('owner-photo-fallback');">
+      <span class="owner-photo-initials">${initials}</span>
+    </span>
+  `;
+}
+
+function renderOwnerBadge(owner) {
+  return `
+    <span class="owner-modal-pill">
+      ${renderOwnerPhoto(owner, 'md')}
+      <span class="owner-modal-meta">
+        <span class="owner-modal-label">Керівник</span>
+        <span class="owner-modal-name">${owner}</span>
+      </span>
+    </span>
+  `;
+}
+
+function renderModalMetaRow(project, statusMeta) {
+  return `
+    <div class="modal-meta-row">
+      <div class="modal-meta-left">
+        <span class="status-pill ${statusMeta.cls}" style="font-size:13px;padding:6px 14px">${project.detailStatusLabel || project.statusLabel}</span>
+        <span style="font-size:14px;color:var(--text3);font-weight:500">${project.deadline}</span>
+        <span style="font-size:12px;color:var(--blue);background:rgba(0,122,255,0.08);padding:4px 10px;border-radius:100px">${project.category}</span>
+      </div>
+      <div class="modal-meta-right">
+        ${renderOwnerBadge(project.owner)}
       </div>
     </div>
   `;
@@ -1533,12 +1652,7 @@ function openModal(p) {
 
   if (p.id === 'ai-center') {
     modalBody.innerHTML = `
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
-        <span class="status-pill ${sm.cls}" style="font-size:13px;padding:6px 14px">${p.detailStatusLabel || p.statusLabel}</span>
-        <span style="font-size:14px;color:var(--text3);font-weight:500">${p.deadline}</span>
-        <span style="font-size:14px;color:var(--text4)">Керівник: ${p.owner}</span>
-        <span style="font-size:12px;color:var(--blue);background:rgba(0,122,255,0.08);padding:4px 10px;border-radius:100px">${p.category}</span>
-      </div>
+      ${renderModalMetaRow(p, sm)}
       <div class="modal-product">
         <div class="modal-product-label">Продукт проєкту</div>
         <div class="modal-product-text">${p.product}</div>
@@ -1563,12 +1677,7 @@ function openModal(p) {
   }
 
   let html = `
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap">
-      <span class="status-pill ${sm.cls}" style="font-size:13px;padding:6px 14px">${p.detailStatusLabel || p.statusLabel}</span>
-      <span style="font-size:14px;color:var(--text3);font-weight:500">${p.deadline}</span>
-      <span style="font-size:14px;color:var(--text4)">Керівник: ${p.owner}</span>
-      <span style="font-size:12px;color:var(--blue);background:rgba(0,122,255,0.08);padding:4px 10px;border-radius:100px">${p.category}</span>
-    </div>
+    ${renderModalMetaRow(p, sm)}
     <div class="modal-product">
       <div class="modal-product-label">Продукт проєкту</div>
       <div class="modal-product-text">${p.product}</div>
@@ -1798,11 +1907,10 @@ projects.forEach(p => {
 });
 
 Object.entries(ownerProjects).sort((a,b)=>b[1].length-a[1].length).forEach(([owner, pList]) => {
-  const initials = owner.split(' ').map(w=>w[0]).join('');
   const card = document.createElement('div');
   card.className = 'team-card';
   card.innerHTML = `
-    <div class="team-avatar">${initials}</div>
+    <div class="team-avatar">${renderOwnerPhoto(owner, 'lg')}</div>
     <div class="team-name">${owner}</div>
     <div class="team-count">${pList.length} проєкт${pList.length>4?'ів':pList.length>1?'и':''}</div>
     <div style="margin-top:8px;font-size:12px;color:var(--text4);line-height:1.5">${pList.map(p=>p.shortName).join(', ')}</div>
