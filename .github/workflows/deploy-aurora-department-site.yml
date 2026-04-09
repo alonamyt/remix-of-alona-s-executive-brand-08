@@ -58,14 +58,38 @@ jobs:
         run: |
           ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 '
             target=/var/www/aurora-department-site &&
-            if [ -d "$target" ]; then
-              backup=/var/www/aurora-department-site-backup-$(date +%Y%m%d-%H%M%S) &&
-              sudo cp -a "$target" "$backup";
+            releases=/var/www/aurora-department-site-releases &&
+            release="$releases/release-$(date +%Y%m%d-%H%M%S)" &&
+            backup=/var/www/aurora-department-site-backup-$(date +%Y%m%d-%H%M%S) &&
+            legacy="$releases/legacy-$(date +%Y%m%d-%H%M%S)" &&
+            link_tmp=/var/www/.aurora-department-site-link &&
+            sudo mkdir -p "$releases" &&
+            sudo mkdir -p "$release" &&
+            sudo cp -a /home/ubuntu/aurora-department-site-deploy/dist/. "$release"/ &&
+            sudo find "$release" -type d -exec chmod 755 {} + &&
+            sudo find "$release" -type f -exec chmod 644 {} + &&
+            if [ -L "$target" ]; then
+              current_target=$(readlink -f "$target") &&
+              if [ -n "$current_target" ] && [ -d "$current_target" ]; then
+                sudo cp -a "$current_target" "$backup";
+              fi;
+            elif [ -d "$target" ]; then
+              sudo cp -a "$target" "$backup" &&
+              sudo mv "$target" "$legacy";
             fi &&
+            sudo ln -sfn "$release" "$link_tmp" &&
+            sudo mv -Tf "$link_tmp" "$target" &&
+            sudo find "$releases" -maxdepth 1 -mindepth 1 -type d -name "release-*" | sort | head -n -5 | xargs -r sudo rm -rf &&
             sudo mkdir -p "$target" &&
-            sudo find "$target" -mindepth 1 -maxdepth 1 -exec rm -rf {} + &&
-            sudo cp -a /home/ubuntu/aurora-department-site-deploy/dist/. "$target"/ &&
-            sudo find "$target" -type d -exec chmod 755 {} + &&
-            sudo find "$target" -type f -exec chmod 644 {} + &&
-            sudo systemctl reload nginx
+            sudo systemctl reload nginx &&
+            curl -fsS http://127.0.0.1/aurora-department-site/ >/dev/null
           '
+
+      - name: Verify production URL
+        run: |
+          for attempt in 1 2 3 4 5; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://158.178.151.156/aurora-department-site/) &&
+            echo "attempt $attempt -> $code" &&
+            test "$code" = "200"
+            sleep 2
+          done
