@@ -1053,11 +1053,11 @@ const content: Record<Language, LocaleContent> = {
               members: [
                 { name: "Ніконова Анастасія", role: "Адміністратор проєктного офісу" },
                 { name: "Горбунов Віктор", role: "Проєктний менеджер" },
-                { name: "Грінченко Віталій", role: "Проєктний менеджер" },
-                { name: "Кошелєв Ілля", role: "Проєктний менеджер" },
                 { name: "Кустреюк Олександр", role: "Керівник програми проєктів по діджиталізації документообігу" },
                 { name: "Кутняк Юлія", role: "Проєктна менеджерка" },
                 { name: "Адамов Володимир", role: "Проєктний менеджер" },
+                { name: "Кошелєв Ілля", role: "Проєктний менеджер" },
+                { name: "Грінченко Віталій", role: "Проєктний менеджер" },
               ],
             },
             {
@@ -1547,11 +1547,11 @@ const content: Record<Language, LocaleContent> = {
               members: [
                 { name: "Nikonova Anastasiia", role: "Project Office Administrator" },
                 { name: "Horbunov Viktor", role: "Project Manager" },
-                { name: "Hrinchenko Vitalii", role: "Project Manager" },
-                { name: "Kosheliev Illia", role: "Project Manager" },
                 { name: "Kustreiuk Oleksandr", role: "Head of Digital Document Management Program" },
                 { name: "Kutniak Yuliia", role: "Project Manager" },
                 { name: "Adamov Volodymyr", role: "Project Manager" },
+                { name: "Kosheliev Illia", role: "Project Manager" },
+                { name: "Hrinchenko Vitalii", role: "Project Manager" },
               ],
             },
             {
