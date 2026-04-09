@@ -195,6 +195,7 @@ nav.visible{transform:translateY(0)}
 .team-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px}
 .team-count{font-size:12px;color:var(--text4)}
 .team-project-list{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 14px;color:var(--text4);font-size:12px;line-height:1.35;text-align:left}
+.team-project-list.single-column{grid-template-columns:1fr}
 .team-project-list li{display:flex;align-items:flex-start;justify-content:flex-start;gap:8px;min-width:0}
 .team-project-list li span{display:block;min-width:0}
 .team-project-list li::before{content:"•";color:var(--blue);font-weight:700;line-height:1.2;flex:0 0 auto}
@@ -2073,7 +2074,8 @@ Object.entries(ownerProjects).sort((a,b)=>b[1].length-a[1].length).forEach(([own
   const card = document.createElement('div');
   card.className = 'team-card';
   const balancedProjects = getBalancedTeamProjectList(pList);
-  const projectsMarkup = `<ul class="team-project-list">${balancedProjects.map(p => `<li><span>${p.shortName}</span></li>`).join('')}</ul>`;
+  const listClassName = `team-project-list${balancedProjects.length === 1 ? ' single-column' : ''}`;
+  const projectsMarkup = `<ul class="${listClassName}">${balancedProjects.map(p => `<li><span>${p.shortName}</span></li>`).join('')}</ul>`;
   card.innerHTML = `
     <div class="team-avatar">${renderOwnerPhoto(owner, 'lg')}</div>
     <div class="team-name">${owner}</div>
