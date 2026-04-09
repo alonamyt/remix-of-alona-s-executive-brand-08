@@ -35,8 +35,20 @@ import smartWikiVisualDay from "./assets/project/день/Smart Wikid.png";
 import vehicleDetectionVisual from "./assets/project/Vehicle detection system2.png";
 import vehicleDetectionVisualDay from "./assets/project/день/Vehicle detection systemd.png";
 import auroraAiPlatformVisualDay from "./assets/project/день/Aurora AI Platformd.png";
-import cherednykPhoto from "./assets/project/команда/керівник Чредник.jpg";
-import cherednykCutout from "./assets/project/team/cherednyk-cutout.png";
+import cherednykPhoto from "./assets/project/команда/чередник 2.png";
+import sabaniukPhoto from "./assets/project/команда/сабанюк.png";
+import adamovPhoto from "./assets/project/команда/adamov_upscaled.jpg";
+import horbunovPhoto from "./assets/project/команда/горбунов.png";
+import beshliahaPhoto from "./assets/project/команда/Бешляга.png";
+import daliukPhoto from "./assets/project/команда/далюк.png";
+import hrinchenkoPhoto from "./assets/project/команда/грінченко.jpg";
+import kutniakPhoto from "./assets/project/команда/кутняк.png";
+import koshelievPhoto from "./assets/project/команда/кошелєв.png";
+import kustreiukPhoto from "./assets/project/команда/кустреюк.png";
+import kucherenkoPhoto from "./assets/project/команда/кучеренко.jpg";
+import mahlovanaPhoto from "./assets/project/команда/магльована.png";
+import palamarchukPhoto from "./assets/project/команда/паламарчук.png";
+import perekhrestPhoto from "./assets/project/команда/перехрест.png";
 
 type Language = "ua" | "en";
 type ThemeMode = "night" | "day";
@@ -1067,7 +1079,6 @@ const content: Record<Language, LocaleContent> = {
           text: "",
           members: [
             { name: "Кракович Борислав", role: "Розробник AI-рішень" },
-            { name: "Смольнікова Ксенія", role: "Розробник AI-рішень" },
             { name: "Медар Кирило", role: "AI Development Intern (Стажер з розробки AI-рішень)" },
             { name: "Боженко Едуард", role: "Operations Manager" },
           ],
@@ -1562,7 +1573,6 @@ const content: Record<Language, LocaleContent> = {
           text: "",
           members: [
             { name: "Krakovych Boryslav", role: "AI Solutions Developer" },
-            { name: "Smolnikova Kseniia", role: "AI Solutions Developer" },
             { name: "Medar Kyrylo", role: "AI Development Intern" },
             { name: "Bozhenko Eduard", role: "Operations Manager" },
           ],
@@ -1718,7 +1728,116 @@ const getTeamRolePortrait = (title: string) => {
   if (title.includes("Чередник") || title.includes("Cherednyk")) {
     return {
       photo: cherednykPhoto,
-      cutout: cherednykCutout,
+      position: "center 20%",
+      scale: 1.08,
+    };
+  }
+
+  if (title.includes("Сабанюк") || title.includes("Sabaniuk")) {
+    return {
+      photo: sabaniukPhoto,
+      position: "center 18%",
+      scale: 1.06,
+    };
+  }
+
+  if (title.includes("Кучеренко") || title.includes("Kucherenko")) {
+    return {
+      photo: kucherenkoPhoto,
+      position: "center 18%",
+      scale: 1.08,
+    };
+  }
+
+  return null;
+};
+
+const getTeamMemberPortrait = (name: string) => {
+  if (name.includes("Адамов") || name.includes("Adamov")) {
+    return {
+      photo: adamovPhoto,
+      position: "center 18%",
+      scale: 1.18,
+    };
+  }
+
+  if (name.includes("Горбунов") || name.includes("Horbunov")) {
+    return {
+      photo: horbunovPhoto,
+      position: "center 18%",
+      scale: 1.12,
+    };
+  }
+
+  if (name.includes("Далюк") || name.includes("Daliuk")) {
+    return {
+      photo: daliukPhoto,
+      position: "center 18%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Бешляга") || name.includes("Beshliaha")) {
+    return {
+      photo: beshliahaPhoto,
+      position: "center 18%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Кошелєв") || name.includes("Kosheliev")) {
+    return {
+      photo: koshelievPhoto,
+      position: "center 18%",
+      scale: 1.16,
+    };
+  }
+
+  if (name.includes("Грінченко") || name.includes("Hrinchenko")) {
+    return {
+      photo: hrinchenkoPhoto,
+      position: "center 18%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Кустреюк") || name.includes("Kustreiuk")) {
+    return {
+      photo: kustreiukPhoto,
+      position: "center 18%",
+      scale: 1.14,
+    };
+  }
+
+  if (name.includes("Кутняк") || name.includes("Kutniak")) {
+    return {
+      photo: kutniakPhoto,
+      position: "center 16%",
+      scale: 1.1,
+    };
+  }
+
+  if (name.includes("Паламарчук") || name.includes("Palamarchuk")) {
+    return {
+      photo: palamarchukPhoto,
+      position: "center 18%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Магльована") || name.includes("Mahlovana")) {
+    return {
+      photo: mahlovanaPhoto,
+      position: "center 18%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Перехрест") || name.includes("Perekhrest")) {
+    return {
+      photo: perekhrestPhoto,
+      position: "center 18%",
+      scale: 1.08,
     };
   }
 
@@ -2022,7 +2141,12 @@ function App() {
   const [authPassword, setAuthPassword] = useState("");
   const [authError, setAuthError] = useState("");
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [lightbox, setLightbox] = useState<{ title: string; images: string[]; index: number } | null>(null);
+  const [lightbox, setLightbox] = useState<{
+    title: string;
+    images: string[];
+    index: number;
+    variant?: "default" | "portrait";
+  } | null>(null);
   const [communitySlides, setCommunitySlides] = useState<Record<string, number>>({});
   const t = content[language];
   const marketShowcaseOrder = [2, 0, 1];
@@ -2117,8 +2241,13 @@ function App() {
     };
   }, []);
 
-  const openGallery = (title: string, images: string[], index = 0) => {
-    setLightbox({ title, images, index });
+  const openGallery = (
+    title: string,
+    images: string[],
+    index = 0,
+    options?: { variant?: "default" | "portrait" }
+  ) => {
+    setLightbox({ title, images, index, variant: options?.variant ?? "default" });
   };
 
   const moveCommunitySlide = (title: string, images: string[], direction: number) => {
@@ -2205,9 +2334,14 @@ function App() {
         <div className="team-topline">
           <article className="leader-card">
             <div className="leader-media">
-              <div className="leader-photo-frame">
+              <button
+                type="button"
+                className="leader-photo-frame leader-photo-button"
+                onClick={() => openGallery(t.team.leader.name, [voinalovychPhoto], 0, { variant: "portrait" })}
+                aria-label={`${t.team.leader.name}: ${language === "ua" ? "відкрити фото" : "open photo"}`}
+              >
                 <img src={voinalovychPhoto} alt={t.team.leader.name} className="leader-photo" />
-              </div>
+              </button>
             </div>
             <div className="leader-copy">
               <h3>{t.team.leader.name}</h3>
@@ -2222,22 +2356,30 @@ function App() {
           </article>
 
           {featuredTeamRole ? (
+            (() => {
+              const portrait = getTeamRolePortrait(featuredTeamRole.title);
+
+              return (
             <article className="role-card role-card-featured role-card-solo">
               <div className="role-card-head">
-                <div className={`role-avatar${getTeamRolePortrait(featuredTeamRole.title) ? " role-avatar-photo" : ""}`} aria-hidden="true">
-                  {getTeamRolePortrait(featuredTeamRole.title) ? (
-                    <>
-                      <img
-                        className="role-avatar-image role-avatar-image-blur"
-                        src={getTeamRolePortrait(featuredTeamRole.title)?.photo ?? ""}
-                        alt=""
-                      />
-                      <img
-                        className="role-avatar-image role-avatar-image-foreground"
-                        src={getTeamRolePortrait(featuredTeamRole.title)?.cutout ?? ""}
-                        alt=""
-                      />
-                    </>
+                <div className={`role-avatar${portrait ? " role-avatar-photo" : ""}`} aria-hidden="true">
+                  {portrait ? (
+                    <button
+                      type="button"
+                      className="role-avatar-button"
+                      onClick={() => openGallery(featuredTeamRole.title, [portrait.photo], 0, { variant: "portrait" })}
+                      aria-label={`${featuredTeamRole.title}: ${language === "ua" ? "відкрити фото" : "open photo"}`}
+                    >
+                    <img
+                      className="role-avatar-image role-avatar-image-single"
+                      src={portrait.photo}
+                      alt=""
+                      style={{
+                        objectPosition: portrait.position,
+                        transform: `scale(${portrait.scale})`,
+                      }}
+                    />
+                    </button>
                   ) : (
                     <span>{getInitials(featuredTeamRole.title)}</span>
                   )}
@@ -2249,30 +2391,39 @@ function App() {
                 </div>
               </div>
             </article>
+              );
+            })()
           ) : null}
         </div>
 
         <div className="role-grid">
-          {primaryTeamRoles.map((role) => (
+          {primaryTeamRoles.map((role) => {
+            const portrait = getTeamRolePortrait(role.title);
+
+            return (
             <article
-              className={`role-card${role.members?.length || role.branches?.length ? " role-card-team" : " role-card-solo"}${role.branches?.length ? " role-card-branches role-card-wide" : ""}`}
+              className={`role-card${role.members?.length || role.branches?.length ? " role-card-team" : " role-card-solo"}${role.branches?.length ? " role-card-branches role-card-wide" : ""}${role.title.includes("Сабанюк") || role.title.includes("Sabaniuk") ? " role-card-ai-lab" : ""}`}
               key={role.title}
             >
               <div className="role-card-head">
-                <div className={`role-avatar${getTeamRolePortrait(role.title) ? " role-avatar-photo" : ""}`} aria-hidden="true">
-                  {getTeamRolePortrait(role.title) ? (
-                    <>
+                <div className={`role-avatar${portrait ? " role-avatar-photo" : ""}`} aria-hidden="true">
+                  {portrait ? (
+                    <button
+                      type="button"
+                      className="role-avatar-button"
+                      onClick={() => openGallery(role.title, [portrait.photo], 0, { variant: "portrait" })}
+                      aria-label={`${role.title}: ${language === "ua" ? "відкрити фото" : "open photo"}`}
+                    >
                       <img
-                        className="role-avatar-image role-avatar-image-blur"
-                        src={getTeamRolePortrait(role.title)?.photo ?? ""}
+                        className="role-avatar-image role-avatar-image-single"
+                        src={portrait.photo}
                         alt=""
+                        style={{
+                          objectPosition: portrait.position,
+                          transform: `scale(${portrait.scale})`,
+                        }}
                       />
-                      <img
-                        className="role-avatar-image role-avatar-image-foreground"
-                        src={getTeamRolePortrait(role.title)?.cutout ?? ""}
-                        alt=""
-                      />
-                    </>
+                    </button>
                   ) : (
                     <span>{getInitials(role.title)}</span>
                   )}
@@ -2286,10 +2437,32 @@ function App() {
 
               {role.members?.length ? (
                 <div className="role-members">
-                  {role.members.map((member) => (
+                  {role.members.map((member) => {
+                    const memberPortrait = getTeamMemberPortrait(member.name);
+
+                    return (
                     <div className="role-member" key={`${role.title}-${member.name}`}>
-                      <div className="role-member-avatar" aria-hidden="true">
+                      <div className={`role-member-avatar${memberPortrait ? " role-member-avatar-photo" : ""}`} aria-hidden="true">
+                        {memberPortrait ? (
+                          <button
+                            type="button"
+                            className="role-member-avatar-button"
+                            onClick={() => openGallery(member.name, [memberPortrait.photo], 0, { variant: "portrait" })}
+                            aria-label={`${member.name}: ${language === "ua" ? "відкрити фото" : "open photo"}`}
+                          >
+                          <img
+                            className="role-member-avatar-image"
+                            src={memberPortrait.photo}
+                            alt=""
+                            style={{
+                              objectPosition: memberPortrait.position,
+                              transform: `scale(${memberPortrait.scale})`,
+                            }}
+                          />
+                          </button>
+                        ) : (
                         <span>{getInitials(member.name)}</span>
+                        )}
                       </div>
                       <div className="role-member-copy">
                         <strong>{member.name}</strong>
@@ -2297,7 +2470,8 @@ function App() {
                         {member.note ? <em>{member.note}</em> : null}
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : null}
 
@@ -2307,10 +2481,32 @@ function App() {
                     <section className="role-branch" key={`${role.title}-${branch.label}`}>
                       <h4>{branch.label}</h4>
                       <div className="role-members">
-                        {branch.members.map((member) => (
+                        {branch.members.map((member) => {
+                          const memberPortrait = getTeamMemberPortrait(member.name);
+
+                          return (
                           <div className="role-member" key={`${role.title}-${branch.label}-${member.name}`}>
-                            <div className="role-member-avatar" aria-hidden="true">
+                            <div className={`role-member-avatar${memberPortrait ? " role-member-avatar-photo" : ""}`} aria-hidden="true">
+                              {memberPortrait ? (
+                                <button
+                                  type="button"
+                                  className="role-member-avatar-button"
+                                  onClick={() => openGallery(member.name, [memberPortrait.photo], 0, { variant: "portrait" })}
+                                  aria-label={`${member.name}: ${language === "ua" ? "відкрити фото" : "open photo"}`}
+                                >
+                                <img
+                                  className="role-member-avatar-image"
+                                  src={memberPortrait.photo}
+                                  alt=""
+                                  style={{
+                                    objectPosition: memberPortrait.position,
+                                    transform: `scale(${memberPortrait.scale})`,
+                                  }}
+                                />
+                                </button>
+                              ) : (
                               <span>{getInitials(member.name)}</span>
+                              )}
                             </div>
                             <div className="role-member-copy">
                               <strong>{member.name}</strong>
@@ -2318,14 +2514,16 @@ function App() {
                               {member.note ? <em>{member.note}</em> : null}
                             </div>
                           </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </section>
                   ))}
                 </div>
               ) : null}
             </article>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -2943,7 +3141,7 @@ function App() {
           aria-label={lightbox.title}
           onClick={() => setLightbox(null)}
         >
-          <div className="lightbox-shell" onClick={(event) => event.stopPropagation()}>
+          <div className={`lightbox-shell${lightbox.variant === "portrait" ? " lightbox-shell-portrait" : ""}`} onClick={(event) => event.stopPropagation()}>
             <button
               type="button"
               className="lightbox-close"
@@ -2953,7 +3151,8 @@ function App() {
               Close
             </button>
 
-            <div className="lightbox-frame">
+            <div className={`lightbox-frame${lightbox.variant === "portrait" ? " lightbox-frame-portrait" : ""}`}>
+              {lightbox.images.length > 1 ? (
               <button
                 type="button"
                 className="lightbox-nav lightbox-nav-prev"
@@ -2962,13 +3161,15 @@ function App() {
               >
                 Prev
               </button>
+              ) : null}
 
               <img
                 src={lightbox.images[lightbox.index]}
                 alt={`${lightbox.title} ${lightbox.index + 1}`}
-                className="lightbox-image"
+                className={`lightbox-image${lightbox.variant === "portrait" ? " lightbox-image-portrait" : ""}`}
               />
 
+              {lightbox.images.length > 1 ? (
               <button
                 type="button"
                 className="lightbox-nav lightbox-nav-next"
@@ -2977,6 +3178,7 @@ function App() {
               >
                 Next
               </button>
+              ) : null}
             </div>
 
             <div className="lightbox-meta">
