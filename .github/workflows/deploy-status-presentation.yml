@@ -39,14 +39,27 @@ jobs:
         run: |
           ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 '
             target=/var/www/html/status-presentation &&
-            if [ -d "$target" ]; then
-              backup=/var/www/status-presentation-backup-$(date +%Y%m%d-%H%M%S) &&
-              sudo cp -a "$target" "$backup";
+            releases=/var/www/status-presentation-releases &&
+            release="$releases/release-$(date +%Y%m%d-%H%M%S)" &&
+            backup=/var/www/status-presentation-backup-$(date +%Y%m%d-%H%M%S) &&
+            legacy="$releases/legacy-$(date +%Y%m%d-%H%M%S)" &&
+            link_tmp=/var/www/html/.status-presentation-link &&
+            sudo mkdir -p "$releases" &&
+            sudo mkdir -p "$release" &&
+            sudo cp -a /home/ubuntu/status-presentation-deploy/site/. "$release"/ &&
+            sudo find "$release" -type d -exec chmod 755 {} + &&
+            sudo find "$release" -type f -exec chmod 644 {} + &&
+            if [ -L "$target" ]; then
+              current_target=$(readlink -f "$target") &&
+              if [ -n "$current_target" ] && [ -d "$current_target" ]; then
+                sudo cp -a "$current_target" "$backup";
+              fi;
+            elif [ -d "$target" ]; then
+              sudo cp -a "$target" "$backup" &&
+              sudo mv "$target" "$legacy";
             fi &&
-            sudo mkdir -p "$target" &&
-            sudo find "$target" -mindepth 1 -maxdepth 1 -exec rm -rf {} + &&
-            sudo cp -a /home/ubuntu/status-presentation-deploy/site/. "$target"/ &&
-            sudo find "$target" -type d -exec chmod 755 {} + &&
-            sudo find "$target" -type f -exec chmod 644 {} + &&
+            sudo ln -sfn "$release" "$link_tmp" &&
+            sudo mv -Tf "$link_tmp" "$target" &&
+            sudo find "$releases" -maxdepth 1 -mindepth 1 -type d -name "release-*" | sort | head -n -5 | xargs -r sudo rm -rf &&
             sudo systemctl reload nginx
           '
