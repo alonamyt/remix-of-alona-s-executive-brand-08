@@ -39,15 +39,15 @@ nav.visible{transform:translateY(0)}
 @media(max-width:768px){.nav-links{display:none}}
 
 /* ═══ HERO ═══ */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:4rem max(3rem,5vw) 5rem;background:linear-gradient(160deg,#1C1C1E 0%,#2C2C2E 50%,#1C1C1E 100%);position:relative;overflow:hidden}
+.hero{min-height:58vh;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem max(3rem,5vw) 2.5rem;background:linear-gradient(160deg,#1C1C1E 0%,#2C2C2E 50%,#1C1C1E 100%);position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(0,122,255,0.12),transparent),radial-gradient(ellipse 50% 40% at 20% 80%,rgba(88,86,214,0.08),transparent)}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:60px 60px}
 .hero-content{position:relative;z-index:1;max-width:900px}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);padding:6px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:100px;margin-bottom:32px;backdrop-filter:blur(8px);background:rgba(255,255,255,0.04)}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5);padding:6px 14px;border:1px solid rgba(255,255,255,0.12);border-radius:100px;margin-bottom:18px;backdrop-filter:blur(8px);background:rgba(255,255,255,0.04)}
 .hero-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
-.hero h1{font-size:clamp(40px,7vw,72px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin-bottom:16px}
+.hero h1{font-size:clamp(40px,7vw,72px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin-bottom:12px}
 .hero h1 em{font-style:normal;color:var(--blue);font-weight:700}
-.hero-sub{font-size:clamp(16px,2vw,20px);color:rgba(255,255,255,0.5);max-width:600px;line-height:1.6;font-weight:400;margin-bottom:48px}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:rgba(255,255,255,0.5);max-width:600px;line-height:1.5;font-weight:400;margin-bottom:12px}
 
 /* ═══ METRICS ROW ═══ */
 .metrics-row{display:flex;gap:1px;position:relative;z-index:1}
