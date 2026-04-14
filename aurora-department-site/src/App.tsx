@@ -39,16 +39,32 @@ import cherednykPhoto from "./assets/project/команда/чередник 2.p
 import sabaniukPhoto from "./assets/project/команда/сабанюк.png";
 import adamovPhoto from "./assets/project/команда/adamov_upscaled.jpg";
 import horbunovPhoto from "./assets/project/команда/горбунов.png";
-import beshliahaPhoto from "./assets/project/команда/Бешляга.png";
+import beshliahaPhoto from "./assets/project/команда/БешлягаСергій.png";
 import daliukPhoto from "./assets/project/команда/далюк.png";
+import chipenkoPhoto from "./assets/project/команда/чипенко2.jpg";
 import hrinchenkoPhoto from "./assets/project/команда/грінченко.jpg";
 import kutniakPhoto from "./assets/project/команда/кутняк.png";
+import kovalenkoPhoto from "./assets/project/команда/коваленко.png";
 import koshelievPhoto from "./assets/project/команда/кошелєв.png";
 import kustreiukPhoto from "./assets/project/команда/кустреюк.png";
 import kucherenkoPhoto from "./assets/project/команда/кучеренко.jpg";
+import lukashenkoPhoto from "./assets/project/команда/лукашенко поліна 2.png";
 import mahlovanaPhoto from "./assets/project/команда/магльована.png";
+import mandrykPhoto from "./assets/project/команда/мандрик софія.png";
+import matiitsovPhoto from "./assets/project/команда/матійцов.png";
+import bozhkoPhoto from "./assets/project/команда/божко ольга.png";
+import bozhenkoPhoto from "./assets/project/команда/Боженко Едуард.png";
+import diabinaPhoto from "./assets/project/команда/дябіна марина.png";
+import krakovychPhoto from "./assets/project/команда/кракович борислав.png";
+import medarPhoto from "./assets/project/команда/медар кирило.png";
+import nikonovaPhoto from "./assets/project/команда/ніконова анастасія.png";
+import onopriienkoPhoto from "./assets/project/команда/онопрієнко дарина.png";
+import panovPhoto from "./assets/project/команда/панов дмитро.png";
 import palamarchukPhoto from "./assets/project/команда/паламарчук.png";
-import perekhrestPhoto from "./assets/project/команда/перехрест.png";
+import perekhrestPhoto from "./assets/project/команда/ПерехрестЛюдмила.png";
+import pidopryhoraPhoto from "./assets/project/команда/підопригора.png";
+import shopskaPhoto from "./assets/project/команда/шопська анастасія.png";
+import voroninPhoto from "./assets/project/команда/воронін станіслав.png";
 
 type Language = "ua" | "en";
 type ThemeMode = "night" | "day";
@@ -57,6 +73,12 @@ type TeamMember = {
   name: string;
   role: string;
   note?: string;
+};
+
+type LightboxItem = {
+  src: string;
+  title: string;
+  subtitle?: string;
 };
 
 type TeamBranch = {
@@ -713,8 +735,8 @@ const content: Record<Language, LocaleContent> = {
     },
     header: { department: "Департамент", language: "Мова", theme: "Режим", day: "День", night: "Ніч" },
     hero: {
-      eyebrow: "R&D департамент Aurora",
-      title: "Створюємо середовище, у якому Aurora росте швидше й посилює свою перевагу",
+      eyebrow: "R&D департамент Аврора",
+      title: "Створюємо середовище, у якому Аврора росте швидше й посилює свою перевагу",
       text: "",
       primary: "Дивитися продукти",
       secondary: "Обговорити партнерство",
@@ -725,11 +747,11 @@ const content: Record<Language, LocaleContent> = {
       ],
       notes: ["Швидший ріст", "Швидші рішення", "Ринковий потенціал"],
       editorialLabel: "Продуктовий сигнал",
-      editorialTitle: "Технології, що допомагають Aurora рости швидше",
+      editorialTitle: "Технології, що допомагають Аврора рости швидше",
       editorialText:
-        "Ми створюємо не просто внутрішні інструменти, а середовище для зростання компанії. Найсильніші рішення, перевірені в Aurora, згодом можуть ставати окремими продуктами для зовнішнього ринку.",
+        "Ми створюємо не просто внутрішні інструменти, а середовище для зростання компанії. Найсильніші рішення, перевірені в Аврора, згодом можуть ставати окремими продуктами для зовнішнього ринку.",
       signals: [
-        { label: "Зростання", value: "швидший ріст Aurora" },
+        { label: "Зростання", value: "швидший ріст Аврора" },
         { label: "Швидкість + сервіс", value: "швидші рішення, людяний сервіс" },
         { label: "Потенціал ринку", value: "продукти, готові до масштабу" },
         { label: "Продуктове мислення", value: "кожне рішення стартує з цінності для людини та бізнесу" },
@@ -755,12 +777,12 @@ const content: Record<Language, LocaleContent> = {
         },
       },
       meter: "ритм росту",
-      photoInsight: { label: "поле переваги", title: "Рух, який прискорює Aurora" },
+      photoInsight: { label: "поле переваги", title: "Рух, який прискорює Аврора" },
       captions: [
         {
           index: "01",
           title: "Зростання",
-          text: "Продукти, що допомагають Aurora швидше набирати бізнес-оберти.",
+          text: "Продукти, що допомагають Аврора швидше набирати бізнес-оберти.",
         },
         {
           index: "02",
@@ -774,7 +796,7 @@ const content: Record<Language, LocaleContent> = {
         },
       ],
       beacons: ["швидший ріст", "людяний сервіс", "готовність до ринку"],
-      brandWord: "AURORA",
+      brandWord: "АВРОРА",
       forces: { ai: "ШІ", humanity: "Людяність", system: "Система" },
       fusionLabel: "ШІ + людяність + система",
       projectionLabel: "світло переваги",
@@ -783,9 +805,9 @@ const content: Record<Language, LocaleContent> = {
     manifesto: {
       kicker: "Візія / маніфест",
       title:
-        "Ми не просто автоматизуємо процеси. Ми створюємо середовище, у якому компанія росте швидше, сервіс працює людяніше, а технології стають відчутною перевагою Aurora.",
+        "Ми не просто автоматизуємо процеси. Ми створюємо середовище, у якому компанія росте швидше, сервіс працює людяніше, а технології стають відчутною перевагою Аврора.",
       text:
-        "Сайт має презентувати департамент як команду, що прискорює бізнес Aurora, формує нову якість досвіду й закладає основу для майбутніх продуктів, які можуть масштабуватися поза межі компанії.",
+        "Сайт має презентувати департамент як команду, що прискорює бізнес Аврора, формує нову якість досвіду й закладає основу для майбутніх продуктів, які можуть масштабуватися поза межі компанії.",
       columns: [
         {
           title: "Продуктове мислення",
@@ -803,10 +825,10 @@ const content: Record<Language, LocaleContent> = {
       numbers: {
         eyebrow: "Цифри",
         title: "Ми в цифрах",
-        note: "Фінальні показники додамо після узгодження.",
+        note: "Ключові цифри департаменту станом на зараз.",
         items: [
-          { value: "XX+", label: "років розвитку напряму" },
-          { value: "XX чол", label: "команда департаменту" },
+          { value: "7", label: "років розвитку напряму" },
+          { value: "35 чол", label: "команда департаменту" },
           { value: "XXXX+", label: "активних користувачів і команд у контурі рішень" },
           { value: "XX+", label: "продуктових та операційних сценаріїв" },
           { value: "XX+", label: "напрямів, де рішення дають бізнес-ефект" },
@@ -815,7 +837,7 @@ const content: Record<Language, LocaleContent> = {
     },
     projects: {
       eyebrow: "Флагманські продукти",
-      title: "Портфель продуктів, що прискорюють Aurora сьогодні й можуть масштабуватися назовні завтра",
+      title: "Портфель продуктів, що прискорюють Аврора сьогодні й можуть масштабуватися назовні завтра",
       text:
         "Це не каталог задач. Тут ми спершу показуємо цінність для бізнесу й людей, а вже потім пояснюємо, яким продуктом і функціоналом вона досягається.",
       items: [
@@ -867,7 +889,7 @@ const content: Record<Language, LocaleContent> = {
           ],
         },
         {
-          title: "Aurora AI Platform",
+          title: "Аврора AI Platform",
           category: "ai orchestration platform",
           categoryLabel: "Платформа оркестрації ШІ",
           description:
@@ -902,7 +924,7 @@ const content: Record<Language, LocaleContent> = {
     },
     market: {
       eyebrow: "Комерційні рішення",
-      title: "Внутрішні технології Aurora, упаковані в чіткі рішення для зовнішнього ринку",
+      title: "Внутрішні технології Аврора, упаковані в чіткі рішення для зовнішнього ринку",
       text:
         "Ми пропонуємо не абстрактні послуги, а три зрозумілі формати співпраці: консалтинг, індивідуальну розробку та готові перевірені рішення, які вже працюють у мережі «Аврора».",
       offers: [
@@ -977,7 +999,7 @@ const content: Record<Language, LocaleContent> = {
           title: "Готові рішення",
           text: "Battle-tested продукти, що використовуються в мережі «Аврора» і доступні клієнтам.",
           detailTitle: "Готові рішення",
-          detailText: "Продукти, перевірені в операційній роботі Aurora і готові до швидкого запуску у партнера.",
+          detailText: "Продукти, перевірені в операційній роботі Аврора і готові до швидкого запуску у партнера.",
           panels: [
             {
               eyebrow: "Запуск",
@@ -997,9 +1019,9 @@ const content: Record<Language, LocaleContent> = {
             },
             {
               eyebrow: "Операційна",
-              title: "Практика Aurora",
+              title: "Практика Аврора",
               items: [
-                { lead: "Не лабораторний концепт", text: "Опора на реальну операційну практику Aurora, а не на лабораторні концепти." },
+                { lead: "Не лабораторний концепт", text: "Опора на реальну операційну практику Аврора, а не на лабораторні концепти." },
                 { lead: "Готовність до масштабу", text: "Рішення побудовані з урахуванням реального навантаження." },
               ],
             },
@@ -1025,10 +1047,10 @@ const content: Record<Language, LocaleContent> = {
           direction: "Керівник відділу досліджень і розробок",
           text: "",
           members: [
+            { name: "Бешляга Сергій", role: "Розробник" },
             { name: "Далюк Анна", role: "Проєктний менеджер" },
             { name: "Попов Іван", role: "Розробник" },
             { name: "Перехрест Людмила", role: "Аналітик" },
-            { name: "Бешляга Сергій", role: "Розробник" },
             { name: "Чипенко Олена", role: "Product Owner" },
           ],
         },
@@ -1062,14 +1084,14 @@ const content: Record<Language, LocaleContent> = {
             },
             {
               label: "Офіс управління процесами",
-              members: [
-                { name: "Матійцов Ростислав", role: "Процесний аналітик" },
-                { name: "Дябіна Марина", role: "Процесний аналітик" },
-                { name: "Коваленко Олександра", role: "Процесний аналітик" },
-                { name: "Божко Ольга", role: "Архітекторка процесів" },
-                { name: "Підопригора Юлія", role: "Менеджер процесів" },
-                { name: "Воронін Станіслав", role: "Процесний аналітик" },
-              ],
+	              members: [
+	                { name: "Божко Ольга", role: "Архітекторка процесів" },
+	                { name: "Підопригора Юлія", role: "Менеджер процесів" },
+	                { name: "Матійцов Ростислав", role: "Процесний аналітик" },
+	                { name: "Дябіна Марина", role: "Процесний аналітик" },
+	                { name: "Коваленко Олександра", role: "Процесний аналітик" },
+	                { name: "Воронін Станіслав", role: "Процесний аналітик" },
+	              ],
             },
           ],
         },
@@ -1078,9 +1100,13 @@ const content: Record<Language, LocaleContent> = {
           direction: "Керівник AVRORA AI Lab",
           text: "",
           members: [
-            { name: "Кракович Борислав", role: "Розробник AI-рішень" },
-            { name: "Медар Кирило", role: "AI Development Intern (Стажер з розробки AI-рішень)" },
             { name: "Боженко Едуард", role: "Operations Manager" },
+            { name: "Кракович Борислав", role: "Розробник AI-рішень" },
+            { name: "Медар Кирило", role: "Розробник AI-рішень, інтерн" },
+            { name: "Мандрик Софія", role: "Фахівець інформаційних технологій, інтерн" },
+            { name: "Лукашенко Поліна", role: "Фахівець інформаційних технологій, інтерн" },
+            { name: "Шопська Анастасія", role: "Фахівець інформаційних технологій, інтерн" },
+            { name: "Онопрієнко Дарина", role: "Фахівець інформаційних технологій, інтерн" },
           ],
         },
         {
@@ -1093,7 +1119,7 @@ const content: Record<Language, LocaleContent> = {
     },
     impact: {
       eyebrow: "Історія та масштаб",
-      title: "Від старту департаменту до внутрішнього технологічного бренду Aurora",
+      title: "Від старту департаменту до внутрішнього технологічного бренду Аврора",
       text:
         "Це не просто хронологія. Це шлях від команди-ініціативи до продуктового ядра, яке відчутно впливає на компанію щодня.",
       metrics: [
@@ -1120,7 +1146,7 @@ const content: Record<Language, LocaleContent> = {
         {
           year: "2025",
           title: "Видимий масштаб",
-          text: "Продукти стають частиною ширшого сервісного та операційного досвіду Aurora.",
+          text: "Продукти стають частиною ширшого сервісного та операційного досвіду Аврора.",
         },
       ],
     },
@@ -1128,11 +1154,11 @@ const content: Record<Language, LocaleContent> = {
       eyebrow: "Публічність та спільнота",
       title: "Експертиза, яку видно не лише всередині компанії",
       text:
-        "Реальні виступи, галузеві події й розвиток молодих талантів показують департамент як сильний голос Aurora у професійній спільноті та середовищі майбутніх продуктів.",
+        "Реальні виступи, галузеві події й розвиток молодих талантів показують департамент як сильний голос Аврора у професійній спільноті та середовищі майбутніх продуктів.",
       events: [
         {
           title: "Forbes AI Summit, Львів",
-          text: "На Forbes AI Summit команда Aurora показала, що штучний інтелект для нас уже не майбутнє, а сьогодення. Олександр Войналович розповів, як GenAI та Computer Vision уже працюють у магазинах і бек-офісі: AI-асистенти підтримують команди, аналітика трафіку пришвидшує рішення, а автоматизація зменшує рутину, підвищує точність і покращує сервіс.",
+          text: "На Forbes AI Summit команда Аврора показала, що штучний інтелект для нас уже не майбутнє, а сьогодення. Олександр Войналович розповів, як GenAI та Computer Vision уже працюють у магазинах і бек-офісі: AI-асистенти підтримують команди, аналітика трафіку пришвидшує рішення, а автоматизація зменшує рутину, підвищує точність і покращує сервіс.",
           meta: "Forbes Ukraine / 27.11.2025 / Олександр Войналович / GenAI + Computer Vision",
           href: "https://forbes.ua/innovations/shvidki-innovatsii-tse-batl-yak-vprovaditi-shi-bez-sprotivu-pratsivnikiv-i-zvidki-brati-idei-dlya-rozrobok-dosvid-avrora-nova-i-ukrsibbanku-16122025-34864",
           linkLabel: "Перейти на Forbes і дивитися панель",
@@ -1157,8 +1183,8 @@ const content: Record<Language, LocaleContent> = {
         },
         {
           title: "Студенти в команді R&D",
-          text: "Зараз у команді Aurora R&D працюють 4 студенти в межах цієї програми. Вони долучені не до навчальних симуляцій, а до реальних продуктових і дослідницьких задач, які формують майбутню силу команди.",
-          meta: "Aurora R&D / 4 студенти / реальна продуктова практика",
+          text: "Зараз у команді Аврора R&D працюють 4 студенти в межах цієї програми. Вони долучені не до навчальних симуляцій, а до реальних продуктових і дослідницьких задач, які формують майбутню силу команди.",
+          meta: "Аврора R&D / 4 студенти / реальна продуктова практика",
           href: "https://www.facebook.com/voinalovych.o/posts/25173397178933144/",
           linkLabel: "Перейти до історії програми",
         },
@@ -1207,8 +1233,8 @@ const content: Record<Language, LocaleContent> = {
     },
     header: { department: "Department", language: "Language", theme: "Mode", day: "Day", night: "Night" },
     hero: {
-      eyebrow: "Aurora R&D Department",
-      title: "We create an environment where Aurora grows faster and strengthens its advantage",
+      eyebrow: "Avrora R&D Department",
+      title: "We create an environment where Avrora grows faster and strengthens its advantage",
       text: "",
       primary: "See products",
       secondary: "Discuss partnership",
@@ -1219,11 +1245,11 @@ const content: Record<Language, LocaleContent> = {
       ],
       notes: ["Faster growth", "Faster execution", "Market potential"],
       editorialLabel: "Product signal",
-      editorialTitle: "Technology that helps Aurora grow faster",
+      editorialTitle: "Technology that helps Avrora grow faster",
       editorialText:
         "We build more than internal tooling. We create an environment for company growth first, and the strongest solutions can later evolve into standalone market offerings.",
       signals: [
-        { label: "Growth", value: "faster Aurora growth" },
+        { label: "Growth", value: "faster Avrora growth" },
         { label: "Speed + service", value: "faster decisions, more human service" },
         { label: "Market potential", value: "products ready to scale outward" },
         { label: "Product thinking", value: "every solution starts from value for people and the business" },
@@ -1249,12 +1275,12 @@ const content: Record<Language, LocaleContent> = {
         },
       },
       meter: "growth rhythm",
-      photoInsight: { label: "advantage field", title: "Aurora momentum in motion" },
+      photoInsight: { label: "advantage field", title: "Avrora momentum in motion" },
       captions: [
         {
           index: "01",
           title: "Growth",
-          text: "Products that help Aurora accelerate business momentum.",
+          text: "Products that help Avrora accelerate business momentum.",
         },
         {
           index: "02",
@@ -1268,7 +1294,7 @@ const content: Record<Language, LocaleContent> = {
         },
       ],
       beacons: ["faster growth", "human service", "market-ready systems"],
-      brandWord: "AURORA",
+      brandWord: "AVRORA",
       forces: { ai: "AI", humanity: "Humanity", system: "System" },
       fusionLabel: "AI + humanity + system",
       projectionLabel: "advantage beam",
@@ -1277,9 +1303,9 @@ const content: Record<Language, LocaleContent> = {
     manifesto: {
       kicker: "Vision / manifesto",
       title:
-        "We do not just automate processes. We create an environment where the company grows faster, service feels more human, and technology becomes a tangible Aurora advantage.",
+        "We do not just automate processes. We create an environment where the company grows faster, service feels more human, and technology becomes a tangible Avrora advantage.",
       text:
-        "The site should present the department as a team accelerating Aurora's business, shaping a better quality of experience, and building the foundation for products that can later scale beyond the company.",
+        "The site should present the department as a team accelerating Avrora's business, shaping a better quality of experience, and building the foundation for products that can later scale beyond the company.",
       columns: [
         {
           title: "Product thinking",
@@ -1297,10 +1323,10 @@ const content: Record<Language, LocaleContent> = {
       numbers: {
         eyebrow: "Numbers",
         title: "Us in numbers",
-        note: "Final metrics will be added once they are approved.",
+        note: "Key department metrics as of now.",
         items: [
-          { value: "XX+", label: "years of building the R&D direction" },
-          { value: "XX people", label: "department team" },
+          { value: "7", label: "years of building the R&D direction" },
+          { value: "35 people", label: "department team" },
           { value: "XXXX+", label: "active users and teams supported by the solutions" },
           { value: "XX+", label: "product and operational scenarios covered" },
           { value: "XX+", label: "business areas where the products create impact" },
@@ -1309,7 +1335,7 @@ const content: Record<Language, LocaleContent> = {
     },
     projects: {
       eyebrow: "Flagship products",
-      title: "A portfolio of products accelerating Aurora today and ready to scale outward tomorrow",
+      title: "A portfolio of products accelerating Avrora today and ready to scale outward tomorrow",
       text:
         "This is not a task catalog. We start with value for the business and people first, then explain which product and functionality make that value real.",
       items: [
@@ -1361,7 +1387,7 @@ const content: Record<Language, LocaleContent> = {
           ],
         },
         {
-          title: "Aurora AI Platform",
+          title: "Avrora AI Platform",
           category: "ai orchestration platform",
           categoryLabel: "AI orchestration platform",
           description:
@@ -1396,9 +1422,9 @@ const content: Record<Language, LocaleContent> = {
     },
     market: {
       eyebrow: "Commercial solutions",
-      title: "Aurora’s internal technologies, packaged into clear solutions for the external market",
+      title: "Avrora’s internal technologies, packaged into clear solutions for the external market",
       text:
-        "We offer not abstract services, but three clear collaboration formats: consulting, turnkey product development, and battle-tested solutions already used across Aurora.",
+        "We offer not abstract services, but three clear collaboration formats: consulting, turnkey product development, and battle-tested solutions already used across Avrora.",
       offers: [
         {
           title: "Consulting",
@@ -1469,9 +1495,9 @@ const content: Record<Language, LocaleContent> = {
         },
         {
           title: "Ready-made solutions",
-          text: "Battle-tested products already used across Aurora and available to clients.",
+          text: "Battle-tested products already used across Avrora and available to clients.",
           detailTitle: "Ready-made solutions",
-          detailText: "Products proven in Aurora’s operations and ready for faster partner launch.",
+          detailText: "Products proven in Avrora’s operations and ready for faster partner launch.",
           panels: [
             {
               eyebrow: "Launch",
@@ -1490,10 +1516,10 @@ const content: Record<Language, LocaleContent> = {
               ],
             },
             {
-              eyebrow: "Aurora",
+              eyebrow: "Avrora",
               title: "Operational practice",
               items: [
-                { lead: "Not a lab concept", text: "Built on real Aurora operating practice, not lab-only ideas." },
+                { lead: "Not a lab concept", text: "Built on real Avrora operating practice, not lab-only ideas." },
                 { lead: "Ready for scale", text: "Designed with real operational load in mind." },
               ],
             },
@@ -1519,10 +1545,10 @@ const content: Record<Language, LocaleContent> = {
           direction: "Head of Research and Development",
           text: "",
           members: [
+            { name: "Beshliaha Serhii", role: "Developer" },
             { name: "Daliuk Anna", role: "Project Manager" },
             { name: "Popov Ivan", role: "Developer" },
             { name: "Perekhrest Liudmyla", role: "Analyst" },
-            { name: "Beshliaha Serhii", role: "Developer" },
             { name: "Chypenko Olena", role: "Product Owner" },
           ],
         },
@@ -1556,14 +1582,14 @@ const content: Record<Language, LocaleContent> = {
             },
             {
               label: "Process Management Office",
-              members: [
-                { name: "Matiitsov Rostyslav", role: "Process Analyst" },
-                { name: "Diabina Maryna", role: "Process Analyst" },
-                { name: "Kovalenko Oleksandra", role: "Process Analyst" },
-                { name: "Bozhko Olha", role: "Process Architect" },
-                { name: "Pidopryhora Yuliia", role: "Process Manager" },
-                { name: "Voronin Stanislav", role: "Process Analyst" },
-              ],
+	              members: [
+	                { name: "Bozhko Olha", role: "Process Architect" },
+	                { name: "Pidopryhora Yuliia", role: "Process Manager" },
+	                { name: "Matiitsov Rostyslav", role: "Process Analyst" },
+	                { name: "Diabina Maryna", role: "Process Analyst" },
+	                { name: "Kovalenko Oleksandra", role: "Process Analyst" },
+	                { name: "Voronin Stanislav", role: "Process Analyst" },
+	              ],
             },
           ],
         },
@@ -1572,9 +1598,13 @@ const content: Record<Language, LocaleContent> = {
           direction: "Head of AVRORA AI Lab",
           text: "",
           members: [
-            { name: "Krakovych Boryslav", role: "AI Solutions Developer" },
-            { name: "Medar Kyrylo", role: "AI Development Intern" },
             { name: "Bozhenko Eduard", role: "Operations Manager" },
+            { name: "Krakovych Boryslav", role: "AI Solutions Developer" },
+            { name: "Medar Kyrylo", role: "AI Solutions Developer, Intern" },
+            { name: "Mandryk Sofiia", role: "Information Technology Specialist, Intern" },
+            { name: "Lukashenko Polina", role: "Information Technology Specialist, Intern" },
+            { name: "Shopska Anastasiia", role: "Information Technology Specialist, Intern" },
+            { name: "Onopriienko Daryna", role: "Information Technology Specialist, Intern" },
           ],
         },
         {
@@ -1587,7 +1617,7 @@ const content: Record<Language, LocaleContent> = {
     },
     impact: {
       eyebrow: "Story and scale",
-      title: "From department launch to Aurora's internal technology brand",
+      title: "From department launch to Avrora's internal technology brand",
       text:
         "This is more than a timeline. It is the path from initiative team to product core that influences the company every day.",
       metrics: [
@@ -1614,7 +1644,7 @@ const content: Record<Language, LocaleContent> = {
         {
           year: "2025",
           title: "Visible scale",
-          text: "Products become part of Aurora's broader service and operational experience.",
+          text: "Products become part of Avrora's broader service and operational experience.",
         },
       ],
     },
@@ -1622,18 +1652,18 @@ const content: Record<Language, LocaleContent> = {
       eyebrow: "Public presence and community",
       title: "Expertise that is visible beyond the company itself",
       text:
-        "Talks, industry events, and the development of emerging talent position the department as a visible Aurora voice in the professional community and in the space of future products.",
+        "Talks, industry events, and the development of emerging talent position the department as a visible Avrora voice in the professional community and in the space of future products.",
       events: [
         {
           title: "Forbes AI Summit, Lviv",
-          text: "At Forbes AI Summit, Aurora showed that AI is not a future concept for us but part of today's retail operations. Oleksandr Voinalovych shared how GenAI and Computer Vision already work across stores and back office: AI assistants support teams, traffic analytics speeds up decisions, and automation reduces routine, improves accuracy, and elevates service.",
+          text: "At Forbes AI Summit, Avrora showed that AI is not a future concept for us but part of today's retail operations. Oleksandr Voinalovych shared how GenAI and Computer Vision already work across stores and back office: AI assistants support teams, traffic analytics speeds up decisions, and automation reduces routine, improves accuracy, and elevates service.",
           meta: "Forbes Ukraine / 27.11.2025 / Oleksandr Voinalovych / GenAI + Computer Vision",
           href: "https://forbes.ua/innovations/shvidki-innovatsii-tse-batl-yak-vprovaditi-shi-bez-sprotivu-pratsivnikiv-i-zvidki-brati-idei-dlya-rozrobok-dosvid-avrora-nova-i-ukrsibbanku-16122025-34864",
           linkLabel: "Open Forbes and watch the panel",
         },
         {
           title: "Retail Expo 2025",
-          text: "At RETAIL EXPO 2025, we spoke about how Aurora is reshaping retail through technology and human-centered service. Our R&D director Oleksandr Voinalovych presented how we integrate artificial intelligence into daily work: customer assistants help people quickly find what they need, AI supports employees in complex situations, and traffic analytics helps plan staffing better and improve the shopper experience. In parallel, HR director Olha Pravda joined a key discussion on responsible retail and shared how we build a safe environment, support the psychological resilience of teams, and adapt HR initiatives to different roles across the company. The focus was on care for people, empathetic communication, preserving a coherent corporate culture even in times of crisis, and inclusivity in retail, from accessible spaces to service experiences that consider everyone’s needs. We are building a retail model where technology strengthens people and values shape the experience for teams, customers, and society.",
+          text: "At RETAIL EXPO 2025, we spoke about how Avrora is reshaping retail through technology and human-centered service. Our R&D director Oleksandr Voinalovych presented how we integrate artificial intelligence into daily work: customer assistants help people quickly find what they need, AI supports employees in complex situations, and traffic analytics helps plan staffing better and improve the shopper experience. In parallel, HR director Olha Pravda joined a key discussion on responsible retail and shared how we build a safe environment, support the psychological resilience of teams, and adapt HR initiatives to different roles across the company. The focus was on care for people, empathetic communication, preserving a coherent corporate culture even in times of crisis, and inclusivity in retail, from accessible spaces to service experiences that consider everyone’s needs. We are building a retail model where technology strengthens people and values shape the experience for teams, customers, and society.",
           meta: "Retail Expo 2025 / Oleksandr Voinalovych / AI + human-centered retail",
         },
         {
@@ -1645,8 +1675,8 @@ const content: Record<Language, LocaleContent> = {
         },
         {
           title: "Students in the R&D team",
-          text: "Aurora R&D currently includes 4 students through this program. They are involved not in training simulations but in real product and research work that helps shape the team's future strength.",
-          meta: "Aurora R&D / 4 students / real product practice",
+          text: "Avrora R&D currently includes 4 students through this program. They are involved not in training simulations but in real product and research work that helps shape the team's future strength.",
+          meta: "Avrora R&D / 4 students / real product practice",
           href: "https://www.facebook.com/voinalovych.o/posts/25173397178933144/",
           linkLabel: "Open the program story",
         },
@@ -1781,6 +1811,14 @@ const getTeamMemberPortrait = (name: string) => {
     return {
       photo: beshliahaPhoto,
       position: "center 18%",
+      scale: 1.1,
+    };
+  }
+
+  if (name.includes("Чипенко") || name.includes("Chipenko")) {
+    return {
+      photo: chipenkoPhoto,
+      position: "center 16%",
       scale: 1.08,
     };
   }
@@ -1817,6 +1855,46 @@ const getTeamMemberPortrait = (name: string) => {
     };
   }
 
+  if (name.includes("Коваленко") || name.includes("Kovalenko")) {
+    return {
+      photo: kovalenkoPhoto,
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Матійцов") || name.includes("Matiitsov")) {
+    return {
+      photo: matiitsovPhoto,
+      position: "center 16%",
+      scale: 1.1,
+    };
+  }
+
+  if (name.includes("Дябіна") || name.includes("Diabina")) {
+    return {
+      photo: diabinaPhoto,
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Божко") || name.includes("Bozhko")) {
+    return {
+      photo: bozhkoPhoto,
+      position: "center 14%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Боженко") || name.includes("Bozhenko")) {
+    return {
+      photo: bozhenkoPhoto,
+      position: "center 14%",
+      scale: 1.08,
+    };
+  }
+
   if (name.includes("Паламарчук") || name.includes("Palamarchuk")) {
     return {
       photo: palamarchukPhoto,
@@ -1833,10 +1911,90 @@ const getTeamMemberPortrait = (name: string) => {
     };
   }
 
+  if (name.includes("Мандрик") || name.includes("Mandryk")) {
+    return {
+      photo: mandrykPhoto,
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Лукашенко") || name.includes("Lukashenko")) {
+    return {
+      photo: lukashenkoPhoto,
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Ніконова") || name.includes("Nikonova")) {
+    return {
+      photo: nikonovaPhoto,
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
   if (name.includes("Перехрест") || name.includes("Perekhrest")) {
     return {
       photo: perekhrestPhoto,
-      position: "center 18%",
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Підопригора") || name.includes("Pidopryhora")) {
+    return {
+      photo: pidopryhoraPhoto,
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Шопська") || name.includes("Shopska")) {
+    return {
+      photo: shopskaPhoto,
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Онопрієнко") || name.includes("Onopriienko")) {
+    return {
+      photo: onopriienkoPhoto,
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Кракович") || name.includes("Krakovych")) {
+    return {
+      photo: krakovychPhoto,
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Медар") || name.includes("Medar")) {
+    return {
+      photo: medarPhoto,
+      position: "center 14%",
+      scale: 1.1,
+    };
+  }
+
+  if (name.includes("Панов") || name.includes("Panov")) {
+    return {
+      photo: panovPhoto,
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Воронін") || name.includes("Voronin")) {
+    return {
+      photo: voroninPhoto,
+      position: "center 16%",
       scale: 1.08,
     };
   }
@@ -2142,8 +2300,7 @@ function App() {
   const [authError, setAuthError] = useState("");
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [lightbox, setLightbox] = useState<{
-    title: string;
-    images: string[];
+    items: LightboxItem[];
     index: number;
     variant?: "default" | "portrait";
   } | null>(null);
@@ -2243,11 +2400,37 @@ function App() {
 
   const openGallery = (
     title: string,
-    images: string[],
+    entries: Array<string | LightboxItem>,
     index = 0,
     options?: { variant?: "default" | "portrait" }
   ) => {
-    setLightbox({ title, images, index, variant: options?.variant ?? "default" });
+    const items = entries.map((entry) =>
+      typeof entry === "string"
+        ? { src: entry, title }
+        : entry
+    );
+
+    setLightbox({ items, index, variant: options?.variant ?? "default" });
+  };
+
+  const openTeamMemberGallery = (members: TeamMember[], activeName: string) => {
+    const items = members.flatMap((member) => {
+      const portrait = getTeamMemberPortrait(member.name);
+      if (!portrait) return [];
+
+      return [
+        {
+          src: portrait.photo,
+          title: member.name,
+          subtitle: member.role,
+        },
+      ];
+    });
+
+    if (!items.length) return;
+
+    const activeIndex = items.findIndex((item) => item.title === activeName);
+    openGallery(activeName, items, activeIndex >= 0 ? activeIndex : 0, { variant: "portrait" });
   };
 
   const moveCommunitySlide = (title: string, images: string[], direction: number) => {
@@ -2261,7 +2444,7 @@ function App() {
   const moveGallery = (direction: number) => {
     setLightbox((current) => {
       if (!current) return current;
-      const nextIndex = (current.index + direction + current.images.length) % current.images.length;
+      const nextIndex = (current.index + direction + current.items.length) % current.items.length;
       return { ...current, index: nextIndex };
     });
   };
@@ -2447,7 +2630,7 @@ function App() {
                           <button
                             type="button"
                             className="role-member-avatar-button"
-                            onClick={() => openGallery(member.name, [memberPortrait.photo], 0, { variant: "portrait" })}
+                            onClick={() => openTeamMemberGallery(role.members ?? [], member.name)}
                             aria-label={`${member.name}: ${language === "ua" ? "відкрити фото" : "open photo"}`}
                           >
                           <img
@@ -2491,7 +2674,7 @@ function App() {
                                 <button
                                   type="button"
                                   className="role-member-avatar-button"
-                                  onClick={() => openGallery(member.name, [memberPortrait.photo], 0, { variant: "portrait" })}
+                                  onClick={() => openTeamMemberGallery(branch.members, member.name)}
                                   aria-label={`${member.name}: ${language === "ua" ? "відкрити фото" : "open photo"}`}
                                 >
                                 <img
@@ -2564,8 +2747,16 @@ function App() {
     <div className="page-shell" data-theme={theme}>
       <header className="topbar">
         <div className="brandmarks">
-          <a href={currentView === "internal" ? "#internal-top" : "#hero"} className="brandmark brandmark-aurora" aria-label="Aurora">
-            <img src={theme === "day" ? auroraLogoDay : auroraLogo} alt="Aurora" className="brandmark-aurora-image" />
+          <a
+            href={currentView === "internal" ? "#internal-top" : "#hero"}
+            className="brandmark brandmark-aurora"
+            aria-label={language === "ua" ? "Аврора" : "Avrora"}
+          >
+            <img
+              src={theme === "day" ? auroraLogoDay : auroraLogo}
+              alt={language === "ua" ? "Аврора" : "Avrora"}
+              className="brandmark-aurora-image"
+            />
           </a>
 
           <a href={currentView === "internal" ? "#internal-top" : "#hero"} className="brandmark brandmark-department">
@@ -3138,7 +3329,7 @@ function App() {
           className="lightbox-backdrop"
           role="dialog"
           aria-modal="true"
-          aria-label={lightbox.title}
+          aria-label={lightbox.items[lightbox.index]?.title ?? "Lightbox"}
           onClick={() => setLightbox(null)}
         >
           <div className={`lightbox-shell${lightbox.variant === "portrait" ? " lightbox-shell-portrait" : ""}`} onClick={(event) => event.stopPropagation()}>
@@ -3152,7 +3343,7 @@ function App() {
             </button>
 
             <div className={`lightbox-frame${lightbox.variant === "portrait" ? " lightbox-frame-portrait" : ""}`}>
-              {lightbox.images.length > 1 ? (
+              {lightbox.items.length > 1 ? (
               <button
                 type="button"
                 className="lightbox-nav lightbox-nav-prev"
@@ -3164,12 +3355,12 @@ function App() {
               ) : null}
 
               <img
-                src={lightbox.images[lightbox.index]}
-                alt={`${lightbox.title} ${lightbox.index + 1}`}
+                src={lightbox.items[lightbox.index]?.src}
+                alt={lightbox.items[lightbox.index]?.title ?? ""}
                 className={`lightbox-image${lightbox.variant === "portrait" ? " lightbox-image-portrait" : ""}`}
               />
 
-              {lightbox.images.length > 1 ? (
+              {lightbox.items.length > 1 ? (
               <button
                 type="button"
                 className="lightbox-nav lightbox-nav-next"
@@ -3182,8 +3373,13 @@ function App() {
             </div>
 
             <div className="lightbox-meta">
-              <strong>{lightbox.title}</strong>
-              <span>{lightbox.index + 1} / {lightbox.images.length}</span>
+              <div className="lightbox-meta-copy">
+                <strong>{lightbox.items[lightbox.index]?.title}</strong>
+                {lightbox.items[lightbox.index]?.subtitle ? (
+                  <p>{lightbox.items[lightbox.index]?.subtitle}</p>
+                ) : null}
+              </div>
+              <span>{lightbox.index + 1} / {lightbox.items.length}</span>
             </div>
           </div>
         </div>
