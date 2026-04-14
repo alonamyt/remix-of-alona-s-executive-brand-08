@@ -293,23 +293,6 @@ footer p{font-size:13px;color:var(--text4)}
     <div class="hero-badge animate-in">Березень 2026</div>
     <h1 class="animate-in delay-1">Статуси проєктів<br>департаменту <em>R&D</em></h1>
     <p class="hero-sub animate-in delay-2">Портфель інноваційних рішень для автоматизації бізнес-процесів та підвищення ефективності операцій</p>
-    <div class="metrics-row animate-in delay-3">
-      <div class="metric-card">
-        <div class="metric-val" id="heroProjectCount">38</div>
-        <div class="metric-label">Активних проєктів</div>
-        <div class="metric-detail">WFM, Кабінет орендодавця, Smart Parking...</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-val">6</div>
-        <div class="metric-label">Місяці розробки</div>
-        <div class="metric-detail">Середній термін виведення на ринок</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-val">+10%</div>
-        <div class="metric-label">Ефективність</div>
-        <div class="metric-detail">Приріст продуктивності від автоматизації</div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1993,8 +1976,6 @@ projects.forEach(p => {
 });
 
 const total = projects.length;
-const heroProjectCount = document.getElementById('heroProjectCount');
-if (heroProjectCount) heroProjectCount.textContent = total;
 const statusColors = {live:'#34C759',dev:'#007AFF',test:'#FF9500',init:'#8E8E93',paused:'#FF2D55',closed:'#C7C7CC',scale:'#5856D6'};
 const statusNames = {live:'Live',dev:'В розробці',test:'Тестування',init:'Ініціація',paused:'Призупинено',closed:'Закритий',scale:'Масштабування'};
 
