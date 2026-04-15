@@ -63,6 +63,7 @@ import panovPhoto from "./assets/project/команда/панов дмитро.
 import palamarchukPhoto from "./assets/project/команда/паламарчук.png";
 import perekhrestPhoto from "./assets/project/команда/ПерехрестЛюдмила.png";
 import pidopryhoraPhoto from "./assets/project/команда/підопригора.png";
+import popovPhoto from "./assets/project/команда/попов іван.jpg";
 import shopskaPhoto from "./assets/project/команда/шопська анастасія.png";
 import voroninPhoto from "./assets/project/команда/воронін станіслав.png";
 
@@ -1986,6 +1987,14 @@ const getTeamMemberPortrait = (name: string) => {
   if (name.includes("Панов") || name.includes("Panov")) {
     return {
       photo: panovPhoto,
+      position: "center 16%",
+      scale: 1.08,
+    };
+  }
+
+  if (name.includes("Попов") || name.includes("Popov")) {
+    return {
+      photo: popovPhoto,
       position: "center 16%",
       scale: 1.08,
     };
