@@ -39,12 +39,10 @@ jobs:
         run: |
           ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 '
             current=/var/www/status-presentation-current &&
-            public=/var/www/html/status-presentation &&
             releases=/var/www/status-presentation-releases &&
             release="$releases/release-$(date +%Y%m%d-%H%M%S)" &&
             previous=$(readlink -f "$current" 2>/dev/null || true) &&
             link_tmp=/var/www/.status-presentation-current.tmp &&
-            public_tmp=/var/www/html/.status-presentation-public.tmp &&
             sudo mkdir -p "$releases" &&
             sudo mkdir -p "$release" &&
             sudo cp -a /home/ubuntu/status-presentation-deploy/site/. "$release"/ &&
@@ -53,17 +51,15 @@ jobs:
             test -f "$release/index.html" &&
             sudo ln -sfn "$release" "$link_tmp" &&
             sudo mv -Tf "$link_tmp" "$current" &&
-            sudo ln -sfn "$release" "$public_tmp" &&
-            sudo mv -Tf "$public_tmp" "$public" &&
-            curl -fsS http://127.0.0.1/status-presentation/ >/dev/null || (
+            sudo systemctl reload nginx &&
+            curl -fsS http://127.0.0.1/status-presentation/ >/dev/null &&
+            curl -fsS -I http://127.0.0.1/status-presentation >/dev/null || (
               if [ -n "$previous" ] && [ -d "$previous" ]; then
                 sudo ln -sfn "$previous" "$link_tmp" &&
                 sudo mv -Tf "$link_tmp" "$current" &&
-                sudo ln -sfn "$previous" "$public_tmp" &&
-                sudo mv -Tf "$public_tmp" "$public";
+                sudo systemctl reload nginx;
               fi;
               exit 1;
             ) &&
-            sudo find "$releases" -maxdepth 1 -mindepth 1 -type d -name "release-*" | sort | head -n -5 | xargs -r sudo rm -rf &&
-            sudo systemctl reload nginx
+            sudo find "$releases" -maxdepth 1 -mindepth 1 -type d -name "release-*" | sort | head -n -5 | xargs -r sudo rm -rf
           '
