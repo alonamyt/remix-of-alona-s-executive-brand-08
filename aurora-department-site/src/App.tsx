@@ -39,10 +39,10 @@ import cherednykPhoto from "./assets/project/команда/чередник 2.p
 import sabaniukPhoto from "./assets/project/команда/сабанюк.png";
 import adamovPhoto from "./assets/project/команда/adamov_upscaled.jpg";
 import horbunovPhoto from "./assets/project/команда/горбунов.png";
+import borodaiPhoto from "./assets/project/команда/Бородай Ірина.png";
 import beshliahaPhoto from "./assets/project/команда/БешлягаСергій.png";
 import daliukPhoto from "./assets/project/команда/далюк.png";
 import chipenkoPhoto from "./assets/project/команда/чипенко2.jpg";
-import hrinchenkoPhoto from "./assets/project/команда/грінченко.jpg";
 import kutniakPhoto from "./assets/project/команда/кутняк.png";
 import kovalenkoPhoto from "./assets/project/команда/коваленко.png";
 import koshelievPhoto from "./assets/project/команда/кошелєв.png";
@@ -1063,7 +1063,6 @@ const content: Record<Language, LocaleContent> = {
             { name: "Панов Дмитро", role: "Бізнес-аналітик" },
             { name: "Магльована Марія", role: "Аналітик" },
             { name: "Паламарчук Олександра", role: "Спеціалістка з ЕДО" },
-            { name: "Полюхович Ілона", role: "Бізнес-аналітик" },
           ],
         },
         {
@@ -1080,7 +1079,6 @@ const content: Record<Language, LocaleContent> = {
                 { name: "Кутняк Юлія", role: "Проєктна менеджерка" },
                 { name: "Адамов Володимир", role: "Проєктний менеджер" },
                 { name: "Кошелєв Ілля", role: "Проєктний менеджер" },
-                { name: "Грінченко Віталій", role: "Проєктний менеджер" },
               ],
             },
             {
@@ -1561,7 +1559,6 @@ const content: Record<Language, LocaleContent> = {
             { name: "Panov Dmytro", role: "Business Analyst" },
             { name: "Mahlovana Mariia", role: "Analyst" },
             { name: "Palamarchuk Oleksandra", role: "EDI Specialist" },
-            { name: "Poliukhovych Ilona", role: "Business Analyst" },
           ],
         },
         {
@@ -1578,7 +1575,6 @@ const content: Record<Language, LocaleContent> = {
                 { name: "Kutniak Yuliia", role: "Project Manager" },
                 { name: "Adamov Volodymyr", role: "Project Manager" },
                 { name: "Kosheliev Illia", role: "Project Manager" },
-                { name: "Hrinchenko Vitalii", role: "Project Manager" },
               ],
             },
             {
@@ -1772,6 +1768,14 @@ const getTeamRolePortrait = (title: string) => {
     };
   }
 
+  if (title.includes("Бородай") || title.includes("Borodai")) {
+    return {
+      photo: borodaiPhoto,
+      position: "center 17%",
+      scale: 0.88,
+    };
+  }
+
   if (title.includes("Кучеренко") || title.includes("Kucherenko")) {
     return {
       photo: kucherenkoPhoto,
@@ -1829,14 +1833,6 @@ const getTeamMemberPortrait = (name: string) => {
       photo: koshelievPhoto,
       position: "center 18%",
       scale: 1.16,
-    };
-  }
-
-  if (name.includes("Грінченко") || name.includes("Hrinchenko")) {
-    return {
-      photo: hrinchenkoPhoto,
-      position: "center 18%",
-      scale: 1.08,
     };
   }
 
@@ -2591,6 +2587,7 @@ function App() {
         <div className="role-grid">
           {primaryTeamRoles.map((role) => {
             const portrait = getTeamRolePortrait(role.title);
+            const isBorodaiRole = role.title.includes("Бородай") || role.title.includes("Borodai");
 
             return (
             <article
@@ -2598,7 +2595,7 @@ function App() {
               key={role.title}
             >
               <div className="role-card-head">
-                <div className={`role-avatar${portrait ? " role-avatar-photo" : ""}`} aria-hidden="true">
+                <div className={`role-avatar${portrait ? " role-avatar-photo" : ""}${isBorodaiRole ? " role-avatar-borodai" : ""}`} aria-hidden="true">
                   {portrait ? (
                     <button
                       type="button"

@@ -4273,6 +4273,29 @@ main {
   transition: transform 180ms ease;
 }
 
+.role-avatar-borodai {
+  padding: 6px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(248, 250, 255, 0.92), rgba(241, 245, 252, 0.84));
+  border-color: rgba(116, 141, 188, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.38),
+    0 18px 34px -24px rgba(0, 0, 0, 0.16);
+}
+
+.role-avatar-borodai .role-avatar-button {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+.role-avatar-borodai .role-avatar-image-single {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .role-member-avatar-photo {
   background: linear-gradient(180deg, rgba(227, 232, 241, 0.96), rgba(204, 213, 228, 0.92));
 }
