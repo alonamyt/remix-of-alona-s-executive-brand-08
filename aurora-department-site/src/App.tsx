@@ -66,6 +66,7 @@ import pidopryhoraPhoto from "./assets/project/команда/підоприго
 import popovPhoto from "./assets/project/команда/попов іван.jpg";
 import shopskaPhoto from "./assets/project/команда/шопська анастасія.png";
 import voroninPhoto from "./assets/project/команда/воронін станіслав.png";
+import mytrofanovaPhoto from "./assets/project/команда/митрофанова.png";
 
 type Language = "ua" | "en";
 type ThemeMode = "night" | "day";
@@ -1771,8 +1772,16 @@ const getTeamRolePortrait = (title: string) => {
   if (title.includes("Бородай") || title.includes("Borodai")) {
     return {
       photo: borodaiPhoto,
-      position: "center 17%",
-      scale: 0.88,
+      position: "center 18%",
+      scale: 1.08,
+    };
+  }
+
+  if (title.includes("Митрофанова") || title.includes("Mytrofanova")) {
+    return {
+      photo: mytrofanovaPhoto,
+      position: "center 18%",
+      scale: 1.08,
     };
   }
 
@@ -2587,7 +2596,6 @@ function App() {
         <div className="role-grid">
           {primaryTeamRoles.map((role) => {
             const portrait = getTeamRolePortrait(role.title);
-            const isBorodaiRole = role.title.includes("Бородай") || role.title.includes("Borodai");
 
             return (
             <article
@@ -2595,7 +2603,7 @@ function App() {
               key={role.title}
             >
               <div className="role-card-head">
-                <div className={`role-avatar${portrait ? " role-avatar-photo" : ""}${isBorodaiRole ? " role-avatar-borodai" : ""}`} aria-hidden="true">
+                <div className={`role-avatar${portrait ? " role-avatar-photo" : ""}`} aria-hidden="true">
                   {portrait ? (
                     <button
                       type="button"
