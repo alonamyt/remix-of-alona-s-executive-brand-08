@@ -37,6 +37,7 @@ jobs:
       - name: Build site
         env:
           SITE_BASE: /student-opportunities/
+          BUILD_OUT_DIR: deploy-dist
         run: npm run build
 
       - name: Prepare SSH key
@@ -52,7 +53,7 @@ jobs:
         working-directory: .
         run: |
           ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 'rm -rf /home/ubuntu/student-opportunities-deploy && mkdir -p /home/ubuntu/student-opportunities-deploy'
-          scp -i ~/.ssh/oracle_deploy_key -r "преза можливості для студентів/dist" ubuntu@158.178.151.156:/home/ubuntu/student-opportunities-deploy
+          scp -i ~/.ssh/oracle_deploy_key -r "преза можливості для студентів/deploy-dist" ubuntu@158.178.151.156:/home/ubuntu/student-opportunities-deploy
 
       - name: Deploy on server
         run: |
@@ -65,7 +66,7 @@ jobs:
             fi &&
             sudo rm -rf "$target" &&
             sudo mkdir -p "$target" &&
-            sudo cp -a /home/ubuntu/student-opportunities-deploy/dist/. "$target"/ &&
+            sudo cp -a /home/ubuntu/student-opportunities-deploy/deploy-dist/. "$target"/ &&
             sudo find "$target" -type d -exec chmod 755 {} + &&
             sudo find "$target" -type f -exec chmod 644 {} + &&
             sudo systemctl reload nginx &&
