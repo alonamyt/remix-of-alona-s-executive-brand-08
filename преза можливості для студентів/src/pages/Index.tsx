@@ -599,7 +599,7 @@ const Index = () => {
         <section className="slide slide--roles">
           <div className="slide-heading">
             <div className="section-label">Ролі студентів</div>
-            <h2>У яких проєктах беруть участь студенти і що саме вони роблять</h2>
+            <h2>У яких проєктах беруть участь студенти</h2>
             <p>
               Студенти заходять не в навчальні симуляції, а в реальні продуктові, аналітичні та процесні
               задачі. Нижче і загальні напрями, і живі приклади того, над чим вони вже працюють.
@@ -618,7 +618,6 @@ const Index = () => {
                     />
                   </div>
                   <div className="student-story__heading">
-                    <p className="meta-note">Студент у проєктах</p>
                     <h3>{story.name}</h3>
                   </div>
                 </div>
