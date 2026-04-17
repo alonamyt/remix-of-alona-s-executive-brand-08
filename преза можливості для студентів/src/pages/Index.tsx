@@ -338,7 +338,7 @@ const Index = () => {
     <div className="page">
       <header className="topbar">
         <div className="topbar__brand">
-          <img className="brand-logo" src={publicAsset("student-opportunities/department-logo.png")} alt="Лого департаменту R&D" />
+          <img className="brand-logo" src={departmentLogo} alt="Лого департаменту R&D" />
           <span>Можливості для студентів у команді Аврора</span>
         </div>
 
@@ -372,7 +372,7 @@ const Index = () => {
         <section className="slide slide--intro" id="intro">
           <div className="intro-card">
             <div className="intro-photo">
-              <img src={publicAsset("student-opportunities/alona-portrait.jpg")} alt="Альона Митрофанова" />
+              <img src={alonaPortrait} alt="Альона Митрофанова" />
             </div>
 
             <div className="intro-copy">
