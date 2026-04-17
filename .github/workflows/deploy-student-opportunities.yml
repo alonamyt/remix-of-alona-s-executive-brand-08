@@ -1,0 +1,83 @@
+name: Deploy Student Opportunities
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "преза можливості для студентів/**"
+      - ".github/workflows/deploy-student-opportunities.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-student-opportunities
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "преза можливості для студентів"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: "преза можливості для студентів/package-lock.json"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        env:
+          SITE_BASE: /student-opportunities/
+        run: npm run build
+
+      - name: Prepare SSH key
+        env:
+          ORACLE_DEPLOY_KEY: ${{ secrets.ORACLE_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$ORACLE_DEPLOY_KEY" > ~/.ssh/oracle_deploy_key
+          chmod 600 ~/.ssh/oracle_deploy_key
+          ssh-keyscan -H 158.178.151.156 >> ~/.ssh/known_hosts
+
+      - name: Upload build artifacts
+        working-directory: .
+        run: |
+          ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 'rm -rf /home/ubuntu/student-opportunities-deploy && mkdir -p /home/ubuntu/student-opportunities-deploy'
+          scp -i ~/.ssh/oracle_deploy_key -r "преза можливості для студентів/dist" ubuntu@158.178.151.156:/home/ubuntu/student-opportunities-deploy
+
+      - name: Deploy on server
+        run: |
+          ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 '
+            target=/var/www/html/student-opportunities &&
+            backup=/var/www/html-backup-student-opportunities-$(date +%Y%m%d-%H%M%S) &&
+            sudo mkdir -p /var/www/html &&
+            if [ -d "$target" ]; then
+              sudo cp -a "$target" "$backup";
+            fi &&
+            sudo rm -rf "$target" &&
+            sudo mkdir -p "$target" &&
+            sudo cp -a /home/ubuntu/student-opportunities-deploy/dist/. "$target"/ &&
+            sudo find "$target" -type d -exec chmod 755 {} + &&
+            sudo find "$target" -type f -exec chmod 644 {} + &&
+            sudo systemctl reload nginx &&
+            curl -fsS http://127.0.0.1/student-opportunities/ >/dev/null
+          '
+
+      - name: Verify production URL
+        run: |
+          for attempt in 1 2 3 4 5; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://158.178.151.156/student-opportunities/) &&
+            echo "attempt $attempt -> $code" &&
+            test "$code" = "200" && exit 0
+            sleep 2
+          done
+          exit 1
