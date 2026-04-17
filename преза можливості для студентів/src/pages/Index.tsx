@@ -29,37 +29,39 @@ import ivanPopov from "@/assets/students/ivan-popov.jpg";
 import leanFestTeam from "@/assets/lean-fest-team.jpg";
 import mlWeek2025 from "@/assets/students-paths/ml-week-2025.jpeg";
 
+const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+
 const teamLeads = [
   {
     name: "Олександр Войналович",
     role: "R&D директор",
-    image: "/student-opportunities/voinalovych.jpg",
+    image: publicAsset("student-opportunities/voinalovych.jpg"),
   },
   {
     name: "Альона",
     role: "Заступник директора департаменту по розвитку продуктів",
-    image: "/student-opportunities/mytrofanova-team.png",
+    image: publicAsset("student-opportunities/mytrofanova-team.png"),
   },
   {
     name: "Олександр",
     role: "Відділ досліджень і розробок",
-    image: "/student-opportunities/cherednyk.png",
+    image: publicAsset("student-opportunities/cherednyk.png"),
   },
   {
     name: "Ірина",
     role: "Відділ бізнес-аналізу",
-    image: "/student-opportunities/borodai-balanced.jpg",
+    image: publicAsset("student-opportunities/borodai-balanced.jpg"),
     imageClassName: "leader-avatar__image--borodai",
   },
   {
     name: "Євгенія",
     role: "Офіс управління проєктами та процесами",
-    image: "/student-opportunities/kucherenko.jpg",
+    image: publicAsset("student-opportunities/kucherenko.jpg"),
   },
   {
     name: "Олександр",
     role: "AVRORA AI Lab",
-    image: "/student-opportunities/sabaniuk.png",
+    image: publicAsset("student-opportunities/sabaniuk.png"),
   },
 ];
 const missionCards = [
@@ -101,14 +103,14 @@ const involvementPaths = [
   {
     title: "Літні програми та Aurora Students",
     text: "Частина студентів приходить через промо освітніх програм, читає про можливості, подається на Aurora Students і входить у взаємодію з командою ще до повноцінної роботи.",
-    image: "/student-opportunities/rd-students-team.jpg",
+    image: publicAsset("student-opportunities/rd-students-team.jpg"),
     href: "https://robota.avrora.ua/avrora-dlia-studentiv-ta-molodi",
     source: "Аврора для студентів та молоді",
   },
   {
     title: "Рекомендації кафедр",
     text: "Викладачі, завідувачі кафедр і університетські спільноти рекомендують студентів, коли бачать сильну мотивацію, готовність працювати й інтерес до реальних бізнес-задач.",
-    image: "/student-opportunities/community-students-rd.jpg",
+    image: publicAsset("student-opportunities/community-students-rd.jpg"),
     href: "https://robota.avrora.ua/aurora-students-sered-peremozciv-sustainable-impact-award-2025",
     source: "Aurora Students / студентська спільнота",
   },
@@ -238,42 +240,42 @@ const projects = [
   {
     title: "Система підрахунку зовнішньої конверсії",
     text: "Для ритейлу: від відеоспостереження до зростання продажів. Аналізує зовнішній трафік та конверсію у відвідування і покупки на базі відеоаналітики та алгоритмів машинного навчання. Це інструмент виміру впливу реклами, локації і потоків на реальну конверсію. Дає зниження неефективних витрат, збільшення продажів через оптимізацію маркетингу та прозору аналітику ефективності точок.",
-    image: "/student-opportunities/project-conversion-day.png",
+    image: publicAsset("student-opportunities/project-conversion-day.png"),
     metric: "31.05%",
     metricLabel: "видима конверсія у воронці",
   },
   {
     title: "Система детекції автомобілів",
     text: "Рішення для аналізу автомобільного трафіку біля локацій. Дає змогу бачити потоки, розуміти динаміку відвідуваності, оцінювати потенціал локацій і доповнювати картину поведінки клієнтів у фізичному ритейлі реальними даними з поля.",
-    image: "/student-opportunities/project-vehicle-day.png",
+    image: publicAsset("student-opportunities/project-vehicle-day.png"),
     metric: "CV",
     metricLabel: "computer vision для польової аналітики",
   },
   {
     title: "Система контролю генераторів",
     text: "Моніторинг стану, подій та стабільності генераторної інфраструктури. Допомагає швидше реагувати на інциденти, централізовано бачити роботу обладнання та підтримувати безперервність операційної діяльності магазинів.",
-    image: "/student-opportunities/project-generator-day.png",
+    image: publicAsset("student-opportunities/project-generator-day.png"),
     metric: "24/7",
     metricLabel: "контроль критичної інфраструктури",
   },
   {
     title: "Аврора AI Platform",
     text: "Власна AI-платформа й внутрішні інструменти, які команда розвиває як середовище для автоматизації, побудови нових сценаріїв та масштабування продуктів. Це база для майбутніх сервісів, які можуть працювати і всередині компанії, і назовні.",
-    image: "/student-opportunities/project-ai-platform-day.png",
+    image: publicAsset("student-opportunities/project-ai-platform-day.png"),
     metric: "AI",
     metricLabel: "платформа для внутрішніх та зовнішніх сценаріїв",
   },
   {
     title: "Smart Wiki",
     text: "База знань нового покоління, де інформація стає швидко доступною, структурованою та корисною для команд і процесів. Допомагає швидше знаходити відповіді, зменшує втрати часу і покращує якість внутрішньої взаємодії.",
-    image: "/student-opportunities/project-smartwiki-day.png",
+    image: publicAsset("student-opportunities/project-smartwiki-day.png"),
     metric: "Wiki",
     metricLabel: "швидкі знання для команд",
   },
   {
     title: "Розробка під ключ і продуктові сценарії",
     text: "Окремий напрям створення готових рішень і нових операційних сценаріїв на базі внутрішньої експертизи департаменту. Це шлях від дослідження і задачі бізнесу до робочого рішення, яке можна впровадити, виміряти й розвивати далі.",
-    image: "/student-opportunities/project-development-day.png",
+    image: publicAsset("student-opportunities/project-development-day.png"),
     metric: "R&D",
     metricLabel: "від задачі до готового рішення",
   },
@@ -322,7 +324,7 @@ const Index = () => {
     <div className="page">
       <header className="topbar">
         <div className="topbar__brand">
-          <img className="brand-logo" src="/student-opportunities/department-logo.png" alt="Лого департаменту R&D" />
+          <img className="brand-logo" src={publicAsset("student-opportunities/department-logo.png")} alt="Лого департаменту R&D" />
           <span>Можливості для студентів у команді Аврора</span>
         </div>
 
@@ -356,7 +358,7 @@ const Index = () => {
         <section className="slide slide--intro" id="intro">
           <div className="intro-card">
             <div className="intro-photo">
-              <img src="/student-opportunities/alona-portrait.jpg" alt="Альона Митрофанова" />
+              <img src={publicAsset("student-opportunities/alona-portrait.jpg")} alt="Альона Митрофанова" />
             </div>
 
             <div className="intro-copy">
