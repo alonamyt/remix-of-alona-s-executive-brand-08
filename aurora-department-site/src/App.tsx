@@ -1772,8 +1772,8 @@ const getTeamRolePortrait = (title: string) => {
   if (title.includes("Бородай") || title.includes("Borodai")) {
     return {
       photo: borodaiPhoto,
-      position: "center 18%",
-      scale: 1.08,
+      position: "center 6%",
+      scale: 1.01,
     };
   }
 
