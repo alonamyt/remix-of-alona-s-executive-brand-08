@@ -28,40 +28,54 @@ import stanislavVoronin from "@/assets/students/stanislav-voronin.png";
 import ivanPopov from "@/assets/students/ivan-popov.jpg";
 import leanFestTeam from "@/assets/lean-fest-team.jpg";
 import mlWeek2025 from "@/assets/students-paths/ml-week-2025.jpeg";
-
-const publicAsset = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+import departmentLogo from "@/assets/student-opportunities/department-logo.png";
+import alonaPortrait from "@/assets/student-opportunities/alona-portrait.jpg";
+import voinalovychPhoto from "@/assets/student-opportunities/voinalovych.jpg";
+import mytrofanovaTeamPhoto from "@/assets/student-opportunities/mytrofanova-team.png";
+import cherednykPhoto from "@/assets/student-opportunities/cherednyk.png";
+import borodaiBalancedPhoto from "@/assets/student-opportunities/borodai-balanced.jpg";
+import kucherenkoPhoto from "@/assets/student-opportunities/kucherenko.jpg";
+import sabaniukPhoto from "@/assets/student-opportunities/sabaniuk.png";
+import rdStudentsTeamPhoto from "@/assets/student-opportunities/rd-students-team.jpg";
+import communityStudentsPhoto from "@/assets/student-opportunities/community-students-rd.jpg";
+import projectConversionPhoto from "@/assets/student-opportunities/project-conversion-day.png";
+import projectVehiclePhoto from "@/assets/student-opportunities/project-vehicle-day.png";
+import projectGeneratorPhoto from "@/assets/student-opportunities/project-generator-day.png";
+import projectAiPlatformPhoto from "@/assets/student-opportunities/project-ai-platform-day.png";
+import projectSmartwikiPhoto from "@/assets/student-opportunities/project-smartwiki-day.png";
+import projectDevelopmentPhoto from "@/assets/student-opportunities/project-development-day.png";
 
 const teamLeads = [
   {
     name: "Олександр Войналович",
     role: "R&D директор",
-    image: publicAsset("student-opportunities/voinalovych.jpg"),
+    image: voinalovychPhoto,
   },
   {
     name: "Альона",
     role: "Заступник директора департаменту по розвитку продуктів",
-    image: publicAsset("student-opportunities/mytrofanova-team.png"),
+    image: mytrofanovaTeamPhoto,
   },
   {
     name: "Олександр",
     role: "Відділ досліджень і розробок",
-    image: publicAsset("student-opportunities/cherednyk.png"),
+    image: cherednykPhoto,
   },
   {
     name: "Ірина",
     role: "Відділ бізнес-аналізу",
-    image: publicAsset("student-opportunities/borodai-balanced.jpg"),
+    image: borodaiBalancedPhoto,
     imageClassName: "leader-avatar__image--borodai",
   },
   {
     name: "Євгенія",
     role: "Офіс управління проєктами та процесами",
-    image: publicAsset("student-opportunities/kucherenko.jpg"),
+    image: kucherenkoPhoto,
   },
   {
     name: "Олександр",
     role: "AVRORA AI Lab",
-    image: publicAsset("student-opportunities/sabaniuk.png"),
+    image: sabaniukPhoto,
   },
 ];
 const missionCards = [
@@ -103,14 +117,14 @@ const involvementPaths = [
   {
     title: "Літні програми та Aurora Students",
     text: "Частина студентів приходить через промо освітніх програм, читає про можливості, подається на Aurora Students і входить у взаємодію з командою ще до повноцінної роботи.",
-    image: publicAsset("student-opportunities/rd-students-team.jpg"),
+    image: rdStudentsTeamPhoto,
     href: "https://robota.avrora.ua/avrora-dlia-studentiv-ta-molodi",
     source: "Аврора для студентів та молоді",
   },
   {
     title: "Рекомендації кафедр",
     text: "Викладачі, завідувачі кафедр і університетські спільноти рекомендують студентів, коли бачать сильну мотивацію, готовність працювати й інтерес до реальних бізнес-задач.",
-    image: publicAsset("student-opportunities/community-students-rd.jpg"),
+    image: communityStudentsPhoto,
     href: "https://robota.avrora.ua/aurora-students-sered-peremozciv-sustainable-impact-award-2025",
     source: "Aurora Students / студентська спільнота",
   },
@@ -240,42 +254,42 @@ const projects = [
   {
     title: "Система підрахунку зовнішньої конверсії",
     text: "Для ритейлу: від відеоспостереження до зростання продажів. Аналізує зовнішній трафік та конверсію у відвідування і покупки на базі відеоаналітики та алгоритмів машинного навчання. Це інструмент виміру впливу реклами, локації і потоків на реальну конверсію. Дає зниження неефективних витрат, збільшення продажів через оптимізацію маркетингу та прозору аналітику ефективності точок.",
-    image: publicAsset("student-opportunities/project-conversion-day.png"),
+    image: projectConversionPhoto,
     metric: "31.05%",
     metricLabel: "видима конверсія у воронці",
   },
   {
     title: "Система детекції автомобілів",
     text: "Рішення для аналізу автомобільного трафіку біля локацій. Дає змогу бачити потоки, розуміти динаміку відвідуваності, оцінювати потенціал локацій і доповнювати картину поведінки клієнтів у фізичному ритейлі реальними даними з поля.",
-    image: publicAsset("student-opportunities/project-vehicle-day.png"),
+    image: projectVehiclePhoto,
     metric: "CV",
     metricLabel: "computer vision для польової аналітики",
   },
   {
     title: "Система контролю генераторів",
     text: "Моніторинг стану, подій та стабільності генераторної інфраструктури. Допомагає швидше реагувати на інциденти, централізовано бачити роботу обладнання та підтримувати безперервність операційної діяльності магазинів.",
-    image: publicAsset("student-opportunities/project-generator-day.png"),
+    image: projectGeneratorPhoto,
     metric: "24/7",
     metricLabel: "контроль критичної інфраструктури",
   },
   {
     title: "Аврора AI Platform",
     text: "Власна AI-платформа й внутрішні інструменти, які команда розвиває як середовище для автоматизації, побудови нових сценаріїв та масштабування продуктів. Це база для майбутніх сервісів, які можуть працювати і всередині компанії, і назовні.",
-    image: publicAsset("student-opportunities/project-ai-platform-day.png"),
+    image: projectAiPlatformPhoto,
     metric: "AI",
     metricLabel: "платформа для внутрішніх та зовнішніх сценаріїв",
   },
   {
     title: "Smart Wiki",
     text: "База знань нового покоління, де інформація стає швидко доступною, структурованою та корисною для команд і процесів. Допомагає швидше знаходити відповіді, зменшує втрати часу і покращує якість внутрішньої взаємодії.",
-    image: publicAsset("student-opportunities/project-smartwiki-day.png"),
+    image: projectSmartwikiPhoto,
     metric: "Wiki",
     metricLabel: "швидкі знання для команд",
   },
   {
     title: "Розробка під ключ і продуктові сценарії",
     text: "Окремий напрям створення готових рішень і нових операційних сценаріїв на базі внутрішньої експертизи департаменту. Це шлях від дослідження і задачі бізнесу до робочого рішення, яке можна впровадити, виміряти й розвивати далі.",
-    image: publicAsset("student-opportunities/project-development-day.png"),
+    image: projectDevelopmentPhoto,
     metric: "R&D",
     metricLabel: "від задачі до готового рішення",
   },
