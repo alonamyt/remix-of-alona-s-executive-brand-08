@@ -1,5 +1,4 @@
 import {
-  ArrowRight,
   BadgeCheck,
   BrainCircuit,
   BriefcaseBusiness,
@@ -21,17 +20,19 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import liudmylaPerekhrest from "@/assets/students/liudmyla-perekhrest.png";
 import boryslavKrakovych from "@/assets/students/boryslav-krakovych.png";
+import anastasiiaNikonova from "@/assets/students/anastasiia-nikonova.png";
 import kyryloMedar from "@/assets/students/kyrylo-medar.png";
 import stanislavVoronin from "@/assets/students/stanislav-voronin.png";
 import ivanPopov from "@/assets/students/ivan-popov.jpg";
 import leanFestTeam from "@/assets/lean-fest-team.jpg";
 import mlWeek2025 from "@/assets/students-paths/ml-week-2025.jpeg";
 import departmentLogo from "@/assets/student-opportunities/department-logo.png";
-import alonaPortrait from "@/assets/student-opportunities/alona-portrait.jpg";
+import alonaPortrait from "@/assets/student-opportunities/alona-portrait-short.png";
 import voinalovychPhoto from "@/assets/student-opportunities/voinalovych.jpg";
-import mytrofanovaTeamPhoto from "@/assets/student-opportunities/mytrofanova-team.png";
+import mytrofanovaTeamPhoto from "@/assets/student-opportunities/mytrofanova-team-updated.png";
 import cherednykPhoto from "@/assets/student-opportunities/cherednyk.png";
 import borodaiBalancedPhoto from "@/assets/student-opportunities/borodai-balanced.jpg";
 import kucherenkoPhoto from "@/assets/student-opportunities/kucherenko.jpg";
@@ -231,6 +232,15 @@ const studentProjectStories = [
       "Перевірка працездатності проєктів, базова розробка, аналіз і окремі частини проєкту.",
   },
   {
+    name: "Анастасія",
+    image: anastasiiaNikonova,
+    imagePosition: "center 20%",
+    projects:
+      "До різних: працюємо над проєктом із фінансовим департаментом; удосконалення внутрішньої системи управління портфелем проєктів; восени були підготовка та участь у ініціативах по типу retail expo; організація та проведення навчань.",
+    ownership:
+      "По факту, більшість задач я веду самостійно, але певні - в рамках стандартного процесу погодження з керівником. Наприклад, сама проводжу навчання по системі LEO PPM, розробляю навчальні програми для LMS з подальшим погодженням перед публікацією, комунікую з підрядниками, беру участь у процесах закупівлі і оплат, збираю вимоги до задач і процесів.",
+  },
+  {
     name: "Станіслав",
     image: stanislavVoronin,
     imagePosition: "center 18%",
@@ -295,6 +305,19 @@ const projects = [
   },
 ];
 
+const featuredProjects = projects.slice(0, 3);
+const platformProjects = projects.slice(3);
+
+const studentStoriesLead = studentProjectStories.filter((story) =>
+  ["Борислав", "Людмила"].includes(story.name),
+);
+const studentStoriesMiddle = studentProjectStories.filter((story) =>
+  ["Кирило", "Анастасія"].includes(story.name),
+);
+const studentStoriesFinal = studentProjectStories.filter(
+  (story) => ["Станіслав", "Іван"].includes(story.name),
+);
+
 const benefits = [
   { icon: BadgeCheck, text: "Офіційне працевлаштування з першого робочого дня." },
   { icon: GraduationCap, text: "Безкоштовні курси і тренінги від корпоративного навчального центру." },
@@ -334,6 +357,124 @@ const sources = [
 const heroSignals = ["AI", "Data Science", "Computer Vision", "Product Thinking"];
 
 const Index = () => {
+  const [isEmailCopied, setIsEmailCopied] = useState(false);
+  const presenterLockRef = useRef(0);
+
+  useEffect(() => {
+    const stepSelector = '[data-step-section="true"]';
+
+    const getSteps = () =>
+      Array.from(document.querySelectorAll<HTMLElement>(stepSelector));
+
+    const getTopbarOffset = () => {
+      const topbar = document.querySelector<HTMLElement>(".topbar");
+
+      if (!topbar) {
+        return 112;
+      }
+
+      return Math.ceil(topbar.getBoundingClientRect().height + topbar.offsetTop + 18);
+    };
+
+    const getStepTop = (step: HTMLElement) => {
+      const offset = getTopbarOffset();
+      const adjustment = Number(step.dataset.stepAdjust ?? "0");
+
+      return Math.max(0, window.scrollY + step.getBoundingClientRect().top - offset + adjustment);
+    };
+
+    const getCurrentStepIndex = (steps: HTMLElement[]) => {
+      const currentY = window.scrollY + getTopbarOffset() + 8;
+      let currentIndex = 0;
+
+      steps.forEach((step, index) => {
+        if (getStepTop(step) <= currentY) {
+          currentIndex = index;
+        }
+      });
+
+      return currentIndex;
+    };
+
+    const moveByStep = (direction: 1 | -1) => {
+      const now = Date.now();
+
+      if (now < presenterLockRef.current) {
+        return;
+      }
+
+      const steps = getSteps();
+
+      if (!steps.length) {
+        return;
+      }
+
+      const currentIndex = getCurrentStepIndex(steps);
+      const nextIndex = Math.max(0, Math.min(steps.length - 1, currentIndex + direction));
+
+      if (nextIndex === currentIndex) {
+        return;
+      }
+
+      presenterLockRef.current = now + 720;
+      window.scrollTo({
+        top: getStepTop(steps[nextIndex]),
+        behavior: "smooth",
+      });
+    };
+
+    const isInteractiveTarget = (target: EventTarget | null) =>
+      target instanceof HTMLElement &&
+      Boolean(target.closest('input, textarea, select, button, a, [contenteditable="true"]'));
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || isInteractiveTarget(event.target)) {
+        return;
+      }
+
+      if (event.key === "ArrowDown" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        moveByStep(1);
+      }
+
+      if (event.key === "ArrowUp" || event.key === "PageUp") {
+        event.preventDefault();
+        moveByStep(-1);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const handleCopyEmail = async () => {
+    const email = "a.mytrofanova@avrora.ua";
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(email);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = email;
+        textarea.setAttribute("readonly", "true");
+        textarea.style.position = "absolute";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+
+      setIsEmailCopied(true);
+      window.setTimeout(() => setIsEmailCopied(false), 1600);
+    } catch (error) {
+      console.error("Не вдалося скопіювати пошту", error);
+    }
+  };
+
   return (
     <div className="page">
       <header className="topbar">
@@ -343,18 +484,17 @@ const Index = () => {
         </div>
 
         <nav className="topbar__nav">
-          <a href="#hero">Титул</a>
-          <a href="#intro">Знайомство</a>
           <a href="#team">Команда</a>
+          <a href="#involvement">Точки залучення</a>
           <a href="#projects">Проєкти</a>
-          <a href="#invite">Контакт</a>
+          <a href="#benefits">Аврора надає</a>
+          <a href="#invite">Контакти</a>
         </nav>
       </header>
 
       <main className="story">
-        <section className="slide slide--hero" id="hero">
+        <section className="slide slide--hero" id="hero" data-step-section="true">
           <div className="hero-shell">
-            <p className="hero-kicker">Презентація для студентів</p>
             <h1>Можливості для студентів у команді R&amp;D Аврора</h1>
             <p className="hero-lead">
               Департамент інновацій та проєктного управління розвиває рішення, які поєднують бізнес,
@@ -369,7 +509,7 @@ const Index = () => {
           </div>
         </section>
 
-        <section className="slide slide--intro" id="intro">
+        <section className="slide slide--intro" id="intro" data-step-section="true">
           <div className="intro-card">
             <div className="intro-photo">
               <img src={alonaPortrait} alt="Альона Митрофанова" />
@@ -406,22 +546,22 @@ const Index = () => {
           </div>
         </section>
 
-        <section className="slide slide--team" id="team">
-          <div className="slide-heading">
-            <div className="section-label">Ціль та команда</div>
+        <section className="slide slide--team slide--team-overview" id="team">
+          <div className="team-step" data-step-section="true">
+            <div className="slide-heading">
             <h2>Ціль і команда департаменту інновацій та проєктного управління</h2>
-          </div>
+            </div>
 
-          <div className="mission-grid">
+            <div className="mission-grid">
             {missionCards.map((card) => (
               <article key={card.title} className={`mission-card mission-card--${card.tone}`}>
                 <p className="meta-note">{card.title}</p>
                 <p>{card.text}</p>
               </article>
             ))}
-          </div>
+            </div>
 
-          <div className="stats-strip">
+            <div className="stats-strip">
             <div>
               <strong>7</strong>
               <span>років розвитку напряму</span>
@@ -431,16 +571,18 @@ const Index = () => {
               <span>людей у команді департаменту</span>
             </div>
             <div>
-              <strong>7</strong>
-              <span>студентів уже працювали в R&amp;D-команді з липня 2025</span>
+              <strong>10 студентів</strong>
+              <span>7 з них працюють в R&amp;D-команді з 2025</span>
             </div>
             <div>
               <strong>200+</strong>
               <span>заявок на Aurora Students у 2025</span>
             </div>
+            </div>
           </div>
 
-          <div className="leadership-showcase">
+          <div className="team-step" data-step-section="true">
+            <div className="leadership-showcase">
             <article className="leader-card leader-card--featured">
               <div className="leader-card__hero">
                 <div className="leader-avatar leader-avatar--xl">
@@ -475,9 +617,9 @@ const Index = () => {
                 </div>
               </div>
             </article>
-          </div>
+            </div>
 
-          <div className="leaders-grid leaders-grid--compact">
+            <div className="leaders-grid leaders-grid--compact">
             {teamLeads.slice(2).map((person) => (
               <article key={person.name} className="leader-card leader-card--compact">
                 <div className="leader-avatar leader-avatar--md">
@@ -489,12 +631,12 @@ const Index = () => {
                 </div>
               </article>
             ))}
+            </div>
           </div>
         </section>
 
-        <section className="slide slide--involvement">
+        <section className="slide slide--involvement" id="involvement" data-step-section="true" data-step-adjust="76">
           <div className="slide-heading">
-            <div className="section-label">Точки залучення</div>
             <h2>Як студенти потрапляють у команду</h2>
             <p>
               Аврора активно співпрацює з університетами, проводить лекції, відкриті зустрічі, освітні
@@ -539,10 +681,9 @@ const Index = () => {
           </div>
         </section>
 
-        <section className="slide slide--students">
+        <section className="slide slide--students" data-step-section="true" data-step-adjust="110">
           <div className="slide-heading">
-            <div className="section-label">Студенти в команді</div>
-            <h2>Студенти вже є в команді R&amp;D</h2>
+            <h2>Студенти в команді R&amp;D</h2>
           </div>
 
           <div className="students-intro">
@@ -587,97 +728,205 @@ const Index = () => {
           </div>
         </section>
         <section className="slide slide--projects" id="projects">
-          <div className="slide-heading">
-            <div className="section-label">Наші проєкти</div>
-            <h2>Проєкти, які розвиває команда</h2>
+          <div className="content-step content-step--projects" data-step-section="true">
+            <div className="slide-heading">
+              <h2>Проєкти, які розвиває команда</h2>
+            </div>
+
+            <div className="projects-grid">
+              {featuredProjects.map((project, index) => (
+                <article key={project.title} className="project-card">
+                  <div className="project-card__image">
+                    <img src={project.image} alt={project.title} />
+                  </div>
+                  <div className="project-card__copy">
+                    <p className="meta-note">Проєкт {index + 1}</p>
+                    <h3>{project.title}</h3>
+                    <p>{project.text}</p>
+                    <div className="metric-box">
+                      <strong>{project.metric}</strong>
+                      <span>{project.metricLabel}</span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
 
-          <div className="projects-grid">
-            {projects.map((project, index) => (
-              <article key={project.title} className="project-card">
-                <div className="project-card__image">
-                  <img src={project.image} alt={project.title} />
-                </div>
-                <div className="project-card__copy">
-                  <p className="meta-note">Проєкт {index + 1}</p>
-                  <h3>{project.title}</h3>
-                  <p>{project.text}</p>
-                  <div className="metric-box">
-                    <strong>{project.metric}</strong>
-                    <span>{project.metricLabel}</span>
+          <div className="content-step content-step--projects" data-step-section="true" data-step-adjust="28">
+            <div className="projects-grid">
+              {platformProjects.map((project, index) => (
+                <article key={project.title} className="project-card">
+                  <div className="project-card__image">
+                    <img src={project.image} alt={project.title} />
                   </div>
-                </div>
-              </article>
-            ))}
+                  <div className="project-card__copy">
+                    <p className="meta-note">Проєкт {featuredProjects.length + index + 1}</p>
+                    <h3>{project.title}</h3>
+                    <p>{project.text}</p>
+                    <div className="metric-box">
+                      <strong>{project.metric}</strong>
+                      <span>{project.metricLabel}</span>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
         <section className="slide slide--roles">
-          <div className="slide-heading">
-            <div className="section-label">Ролі студентів</div>
-            <h2>У яких проєктах беруть участь студенти</h2>
-            <p>
-              Студенти заходять не в навчальні симуляції, а в реальні продуктові, аналітичні та процесні
-              задачі. Нижче і загальні напрями, і живі приклади того, над чим вони вже працюють.
-            </p>
+          <div className="content-step content-step--roles" data-step-section="true">
+            <div className="slide-heading">
+              <h2>У яких проєктах беруть участь студенти</h2>
+              <p>
+                Студенти заходять не в навчальні симуляції, а в реальні продуктові, аналітичні та процесні
+                задачі. Нижче і загальні напрями, і живі приклади того, над чим вони вже працюють.
+              </p>
+            </div>
           </div>
 
-          <div className="student-stories">
-            {studentProjectStories.map((story) => (
-              <article key={story.name} className="student-story">
-                <div className="student-story__person">
-                  <div className="student-story__photo">
-                    <img
-                      src={story.image}
-                      alt={story.name}
-                      style={{ objectPosition: story.imagePosition }}
-                    />
+          <div className="content-step content-step--roles" data-step-section="true" data-step-adjust="24">
+            <div className="student-stories">
+              {studentStoriesLead.map((story) => (
+                <article key={story.name} className="student-story">
+                  <div className="student-story__person">
+                    <div className="student-story__photo">
+                      <img
+                        src={story.image}
+                        alt={story.name}
+                        style={{ objectPosition: story.imagePosition }}
+                      />
+                    </div>
+                    <div className="student-story__heading">
+                      <h3>{story.name}</h3>
+                    </div>
                   </div>
-                  <div className="student-story__heading">
-                    <h3>{story.name}</h3>
-                  </div>
-                </div>
 
-                <div className="student-story__quotes">
-                  <div className="story-quote">
-                    <p className="quote-card__label">До яких проєктів долучався</p>
-                    <blockquote className="quote-block">
-                      <span className="quote-block__icon" aria-hidden="true">
-                        <Quote size={18} />
-                      </span>
-                      <span>{story.projects}</span>
-                    </blockquote>
+                  <div className="student-story__quotes">
+                    <div className="story-quote">
+                      <p className="quote-card__label">До яких проєктів долучався</p>
+                      <blockquote className="quote-block">
+                        <span className="quote-block__icon" aria-hidden="true">
+                          <Quote size={18} />
+                        </span>
+                        <span>{story.projects}</span>
+                      </blockquote>
+                    </div>
+                    <div className="story-quote">
+                      <p className="quote-card__label">Що вже робить самостійно</p>
+                      <blockquote className="quote-block">
+                        <span className="quote-block__icon" aria-hidden="true">
+                          <Quote size={18} />
+                        </span>
+                        <span>{story.ownership}</span>
+                      </blockquote>
+                    </div>
                   </div>
-                  <div className="story-quote">
-                    <p className="quote-card__label">Що вже робить самостійно</p>
-                    <blockquote className="quote-block">
-                      <span className="quote-block__icon" aria-hidden="true">
-                        <Quote size={18} />
-                      </span>
-                      <span>{story.ownership}</span>
-                    </blockquote>
-                  </div>
-                </div>
-              </article>
-            ))}
+                </article>
+              ))}
+            </div>
           </div>
 
-          <div className="role-grid">
-            {studentRoles.map(({ icon: Icon, title, text }) => (
-              <article key={title} className="role-card">
-                <div className="role-card__icon">
-                  <Icon size={20} />
-                </div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
-            ))}
+          <div className="content-step content-step--roles" data-step-section="true" data-step-adjust="24">
+            <div className="student-stories">
+              {studentStoriesMiddle.map((story) => (
+                <article key={story.name} className="student-story">
+                  <div className="student-story__person">
+                    <div className="student-story__photo">
+                      <img
+                        src={story.image}
+                        alt={story.name}
+                        style={{ objectPosition: story.imagePosition }}
+                      />
+                    </div>
+                    <div className="student-story__heading">
+                      <h3>{story.name}</h3>
+                    </div>
+                  </div>
+
+                  <div className="student-story__quotes">
+                    <div className="story-quote">
+                      <p className="quote-card__label">До яких проєктів долучався</p>
+                      <blockquote className="quote-block">
+                        <span className="quote-block__icon" aria-hidden="true">
+                          <Quote size={18} />
+                        </span>
+                        <span>{story.projects}</span>
+                      </blockquote>
+                    </div>
+                    <div className="story-quote">
+                      <p className="quote-card__label">Що вже робить самостійно</p>
+                      <blockquote className="quote-block">
+                        <span className="quote-block__icon" aria-hidden="true">
+                          <Quote size={18} />
+                        </span>
+                        <span>{story.ownership}</span>
+                      </blockquote>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="content-step content-step--roles" data-step-section="true" data-step-adjust="24">
+            <div className="student-stories">
+              {studentStoriesFinal.map((story) => (
+                <article key={story.name} className="student-story">
+                  <div className="student-story__person">
+                    <div className="student-story__photo">
+                      <img
+                        src={story.image}
+                        alt={story.name}
+                        style={{ objectPosition: story.imagePosition }}
+                      />
+                    </div>
+                    <div className="student-story__heading">
+                      <h3>{story.name}</h3>
+                    </div>
+                  </div>
+
+                  <div className="student-story__quotes">
+                    <div className="story-quote">
+                      <p className="quote-card__label">До яких проєктів долучався</p>
+                      <blockquote className="quote-block">
+                        <span className="quote-block__icon" aria-hidden="true">
+                          <Quote size={18} />
+                        </span>
+                        <span>{story.projects}</span>
+                      </blockquote>
+                    </div>
+                    <div className="story-quote">
+                      <p className="quote-card__label">Що вже робить самостійно</p>
+                      <blockquote className="quote-block">
+                        <span className="quote-block__icon" aria-hidden="true">
+                          <Quote size={18} />
+                        </span>
+                        <span>{story.ownership}</span>
+                      </blockquote>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="role-grid">
+              {studentRoles.map(({ icon: Icon, title, text }) => (
+                <article key={title} className="role-card">
+                  <div className="role-card__icon">
+                    <Icon size={20} />
+                  </div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
 
-        <section className="slide slide--benefits">
+        <section className="slide slide--benefits" id="benefits" data-step-section="true">
           <div className="slide-heading">
-            <div className="section-label">Аврора надає</div>
             <h2>Чому працювати в Аврорі класно</h2>
           </div>
 
@@ -704,10 +953,9 @@ const Index = () => {
           </div>
         </section>
 
-        <section className="slide slide--join">
+        <section className="slide slide--join" data-step-section="true">
           <div className="join-grid">
             <div className="join-copy">
-              <div className="section-label">Кого ми шукаємо</div>
               <h2>Шукаємо не просто виконавців, а людей зі свіжим мисленням</h2>
               <p>
                 Департамент інновацій та проєктного управління шукає людей, яким цікаво впливати на
@@ -736,27 +984,41 @@ const Index = () => {
           </div>
         </section>
 
-        <section className="slide slide--invite" id="invite">
+        <section className="slide slide--invite" id="invite" data-step-section="true">
           <div className="invite-panel">
             <div>
-              <div className="section-label section-label--light">Запрошуємо долучитися</div>
+              <div className="section-label section-label--light">Контакти</div>
               <h2>Якщо цікаво, давай знайомитися</h2>
-              <p>Якщо тобі цікаво долучитися до команди, написати або зателефонувати можна напряму.</p>
+              <p>Якщо тобі цікаво долучитися до команди, зв'язатися можна напряму.</p>
             </div>
 
             <div className="invite-actions">
-              <a className="button button--primary" href="mailto:a.mytrofanova@avrora.ua">
-                Написати на пошту
-                <ArrowRight size={18} />
-              </a>
-              <a className="button button--ghost" href="tel:+380970006104">
-                Подзвонити
-              </a>
+              <div className="invite-contact-card">
+                <div className="invite-contact-card__meta">
+                  <Mail size={18} />
+                  <span>Пошта</span>
+                </div>
+                <a className="invite-contact-card__value" href="mailto:a.mytrofanova@avrora.ua">
+                  a.mytrofanova@avrora.ua
+                </a>
+                <button className="button button--primary" type="button" onClick={handleCopyEmail}>
+                  {isEmailCopied ? "Скопійовано" : "Скопіювати"}
+                </button>
+              </div>
+              <div className="invite-contact-card">
+                <div className="invite-contact-card__meta">
+                  <Phone size={18} />
+                  <span>Телефон</span>
+                </div>
+                <a className="invite-contact-card__value" href="tel:+380970006104">
+                  +380 97 000 61 04
+                </a>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="slide slide--sources" id="sources">
+        <section className="slide slide--sources" id="sources" data-step-section="true">
           <div className="slide-heading">
             <div className="section-label">Джерела</div>
             <h2>Відкриті матеріали, на які спирається сторінка</h2>
