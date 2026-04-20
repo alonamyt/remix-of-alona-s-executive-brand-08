@@ -572,7 +572,7 @@ const Index = () => {
             </div>
             <div>
               <strong>10 студентів</strong>
-              <span>7 з них працюють в R&amp;D-команді з 2025</span>
+              <span>залучати студентів почали 3 роки тому</span>
             </div>
             <div>
               <strong>200+</strong>
