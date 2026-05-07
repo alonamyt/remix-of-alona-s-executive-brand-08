@@ -48,7 +48,6 @@ import kovalenkoPhoto from "./assets/project/команда/коваленко.p
 import koshelievPhoto from "./assets/project/команда/кошелєв.png";
 import kustreiukPhoto from "./assets/project/команда/кустреюк.png";
 import kucherenkoPhoto from "./assets/project/команда/кучеренко.jpg";
-import lukashenkoPhoto from "./assets/project/команда/лукашенко поліна 2.png";
 import mahlovanaPhoto from "./assets/project/команда/магльована.png";
 import mandrykPhoto from "./assets/project/команда/мандрик софія.png";
 import matiitsovPhoto from "./assets/project/команда/матійцов.png";
@@ -66,6 +65,8 @@ import pidopryhoraPhoto from "./assets/project/команда/підоприго
 import popovPhoto from "./assets/project/команда/попов іван.jpg";
 import shopskaPhoto from "./assets/project/команда/шопська анастасія.png";
 import voroninPhoto from "./assets/project/команда/воронін станіслав.png";
+import zubenkoPhoto from "./assets/project/команда/зубенко карина.png";
+import cherevanPhoto from "./assets/project/команда/черевань анастасія.png";
 import mytrofanovaPhoto from "./assets/project/команда/митрофанова.png";
 
 type Language = "ua" | "en";
@@ -86,6 +87,15 @@ type LightboxItem = {
 type TeamBranch = {
   label: string;
   members: TeamMember[];
+};
+
+type ImpactMetric = {
+  value: string;
+  label: string;
+  href?: string;
+  secondaryValue?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
 };
 
 type TeamRole = {
@@ -198,7 +208,7 @@ type LocaleContent = {
     eyebrow: string;
     title: string;
     text: string;
-    metrics: Array<{ value: string; label: string }>;
+    metrics: ImpactMetric[];
     timeline: Array<{ year: string; title: string; text: string }>;
   };
   community: {
@@ -1080,6 +1090,7 @@ const content: Record<Language, LocaleContent> = {
                 { name: "Кутняк Юлія", role: "Проєктна менеджерка" },
                 { name: "Адамов Володимир", role: "Проєктний менеджер" },
                 { name: "Кошелєв Ілля", role: "Проєктний менеджер" },
+                { name: "Зубенко Карина", role: "Адміністратор (проєкти ЕДО)" },
               ],
             },
             {
@@ -1087,6 +1098,7 @@ const content: Record<Language, LocaleContent> = {
 	              members: [
 	                { name: "Божко Ольга", role: "Архітекторка процесів" },
 	                { name: "Підопригора Юлія", role: "Менеджер процесів" },
+	                { name: "Черевань Анастасія", role: "Адміністратор, інтерн" },
 	                { name: "Матійцов Ростислав", role: "Процесний аналітик" },
 	                { name: "Дябіна Марина", role: "Процесний аналітик" },
 	                { name: "Коваленко Олександра", role: "Процесний аналітик" },
@@ -1104,7 +1116,6 @@ const content: Record<Language, LocaleContent> = {
             { name: "Кракович Борислав", role: "Розробник AI-рішень" },
             { name: "Медар Кирило", role: "Розробник AI-рішень, інтерн" },
             { name: "Мандрик Софія", role: "Фахівець інформаційних технологій, інтерн" },
-            { name: "Лукашенко Поліна", role: "Фахівець інформаційних технологій, інтерн" },
             { name: "Шопська Анастасія", role: "Фахівець інформаційних технологій, інтерн" },
             { name: "Онопрієнко Дарина", role: "Фахівець інформаційних технологій, інтерн" },
           ],
@@ -1124,7 +1135,14 @@ const content: Record<Language, LocaleContent> = {
         "Це не просто хронологія. Це шлях від команди-ініціативи до продуктового ядра, яке відчутно впливає на компанію щодня.",
       metrics: [
         { value: "2019", label: "робота команди R&D з 2019" },
-        { value: "12+", label: "продуктів у портфелі" },
+        { value: "38", label: "проєктів в роботі", href: "http://158.178.151.156/status-presentation/" },
+        {
+          value: "35 чол",
+          label: "команда департаменту",
+          secondaryValue: "10 студентів",
+          secondaryLabel: "можливості для студентів",
+          secondaryHref: "http://158.178.151.156/student/",
+        },
         { value: "2 аудиторії", label: "співробітники та клієнти" },
       ],
       timeline: [
@@ -1576,6 +1594,7 @@ const content: Record<Language, LocaleContent> = {
                 { name: "Kutniak Yuliia", role: "Project Manager" },
                 { name: "Adamov Volodymyr", role: "Project Manager" },
                 { name: "Kosheliev Illia", role: "Project Manager" },
+                { name: "Zubenko Karina", role: "Administrator (EDO projects)" },
               ],
             },
             {
@@ -1583,6 +1602,7 @@ const content: Record<Language, LocaleContent> = {
 	              members: [
 	                { name: "Bozhko Olha", role: "Process Architect" },
 	                { name: "Pidopryhora Yuliia", role: "Process Manager" },
+	                { name: "Cherevan Anastasiia", role: "Administrator, Intern" },
 	                { name: "Matiitsov Rostyslav", role: "Process Analyst" },
 	                { name: "Diabina Maryna", role: "Process Analyst" },
 	                { name: "Kovalenko Oleksandra", role: "Process Analyst" },
@@ -1600,7 +1620,6 @@ const content: Record<Language, LocaleContent> = {
             { name: "Krakovych Boryslav", role: "AI Solutions Developer" },
             { name: "Medar Kyrylo", role: "AI Solutions Developer, Intern" },
             { name: "Mandryk Sofiia", role: "Information Technology Specialist, Intern" },
-            { name: "Lukashenko Polina", role: "Information Technology Specialist, Intern" },
             { name: "Shopska Anastasiia", role: "Information Technology Specialist, Intern" },
             { name: "Onopriienko Daryna", role: "Information Technology Specialist, Intern" },
           ],
@@ -1620,7 +1639,14 @@ const content: Record<Language, LocaleContent> = {
         "This is more than a timeline. It is the path from initiative team to product core that influences the company every day.",
       metrics: [
         { value: "2019", label: "R&D team active since 2019" },
-        { value: "12+", label: "products in portfolio" },
+        { value: "38", label: "projects in progress", href: "http://158.178.151.156/status-presentation/" },
+        {
+          value: "35 people",
+          label: "department team",
+          secondaryValue: "10 students",
+          secondaryLabel: "student opportunities",
+          secondaryHref: "http://158.178.151.156/student/",
+        },
         { value: "2 audiences", label: "employees and customers" },
       ],
       timeline: [
@@ -1925,14 +1951,6 @@ const getTeamMemberPortrait = (name: string) => {
     };
   }
 
-  if (name.includes("Лукашенко") || name.includes("Lukashenko")) {
-    return {
-      photo: lukashenkoPhoto,
-      position: "center 16%",
-      scale: 1.08,
-    };
-  }
-
   if (name.includes("Ніконова") || name.includes("Nikonova")) {
     return {
       photo: nikonovaPhoto,
@@ -2010,6 +2028,22 @@ const getTeamMemberPortrait = (name: string) => {
       photo: voroninPhoto,
       position: "center 16%",
       scale: 1.08,
+    };
+  }
+
+  if (name.includes("Зубенко") || name.includes("Zubenko")) {
+    return {
+      photo: zubenkoPhoto,
+      position: "center 16%",
+      scale: 1.06,
+    };
+  }
+
+  if (name.includes("Черевань") || name.includes("Cherevan")) {
+    return {
+      photo: cherevanPhoto,
+      position: "center 16%",
+      scale: 1.06,
     };
   }
 
@@ -2737,10 +2771,44 @@ function App() {
       <div className="impact-grid">
         <div className="impact-metrics">
           {t.impact.metrics.map((metric) => (
-            <article className="numbers-card impact-metric-card" key={metric.label}>
-              <strong>{metric.value}</strong>
-              <span>{metric.label}</span>
-            </article>
+            metric.href ? (
+              <a
+                className="numbers-card impact-metric-card impact-metric-card-link"
+                key={metric.label}
+                href={metric.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <strong>{metric.value}</strong>
+                <span>{metric.label}</span>
+                <em className="impact-metric-action">
+                  <span aria-hidden="true">☞</span>
+                  <span>{language === "ua" ? "відкрити" : "open"}</span>
+                </em>
+              </a>
+            ) : (
+              <article className="numbers-card impact-metric-card" key={metric.label}>
+                <strong>{metric.value}</strong>
+                <span>{metric.label}</span>
+                {metric.secondaryValue && metric.secondaryLabel && metric.secondaryHref ? (
+                  <a
+                    className="impact-metric-secondary"
+                    href={metric.secondaryHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    title={
+                      language === "ua"
+                        ? "Можливості студентів в команді R&D Аврора"
+                        : "Student opportunities in the Avrora R&D team"
+                    }
+                  >
+                    <b>{metric.secondaryValue}</b>
+                    <small>{metric.secondaryLabel}</small>
+                    <i aria-hidden="true">☞</i>
+                  </a>
+                ) : null}
+              </article>
+            )
           ))}
         </div>
 
