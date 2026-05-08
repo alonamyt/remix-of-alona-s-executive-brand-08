@@ -98,6 +98,28 @@ type ImpactMetric = {
   secondaryHref?: string;
 };
 
+function ClickCueIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M12 3.5a1 1 0 0 1 1 1v7.6l1.12-1.18a1.9 1.9 0 0 1 2.77 2.6l-1.18 1.27 1.45-.34a1.9 1.9 0 0 1 .86 3.7l-1.59.37 1.16.66a1.9 1.9 0 1 1-1.87 3.3l-4.26-2.42a4.6 4.6 0 0 1-2.02-2.39l-1.58-4.63a1.9 1.9 0 1 1 3.6-1.23l.54 1.59V4.5a1 1 0 0 1 1-1Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M13.2 2.3a6 6 0 0 1 4.58 4.58M13.7 6.3a2.7 2.7 0 0 1 2 2"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 type TeamRole = {
   title: string;
   direction: string;
@@ -1098,11 +1120,11 @@ const content: Record<Language, LocaleContent> = {
 	              members: [
 	                { name: "Божко Ольга", role: "Архітекторка процесів" },
 	                { name: "Підопригора Юлія", role: "Менеджер процесів" },
-	                { name: "Черевань Анастасія", role: "Адміністратор, інтерн" },
 	                { name: "Матійцов Ростислав", role: "Процесний аналітик" },
 	                { name: "Дябіна Марина", role: "Процесний аналітик" },
 	                { name: "Коваленко Олександра", role: "Процесний аналітик" },
 	                { name: "Воронін Станіслав", role: "Процесний аналітик" },
+	                { name: "Черевань Анастасія", role: "Адміністратор, інтерн" },
 	              ],
             },
           ],
@@ -1602,11 +1624,11 @@ const content: Record<Language, LocaleContent> = {
 	              members: [
 	                { name: "Bozhko Olha", role: "Process Architect" },
 	                { name: "Pidopryhora Yuliia", role: "Process Manager" },
-	                { name: "Cherevan Anastasiia", role: "Administrator, Intern" },
 	                { name: "Matiitsov Rostyslav", role: "Process Analyst" },
 	                { name: "Diabina Maryna", role: "Process Analyst" },
 	                { name: "Kovalenko Oleksandra", role: "Process Analyst" },
 	                { name: "Voronin Stanislav", role: "Process Analyst" },
+	                { name: "Cherevan Anastasiia", role: "Administrator, Intern" },
 	              ],
             },
           ],
@@ -2782,7 +2804,9 @@ function App() {
                 <strong>{metric.value}</strong>
                 <span>{metric.label}</span>
                 <em className="impact-metric-action">
-                  <span aria-hidden="true">☞</span>
+                  <span className="impact-metric-icon" aria-hidden="true">
+                    <ClickCueIcon />
+                  </span>
                   <span>{language === "ua" ? "відкрити" : "open"}</span>
                 </em>
               </a>
@@ -2803,8 +2827,9 @@ function App() {
                     }
                   >
                     <b>{metric.secondaryValue}</b>
-                    <small>{metric.secondaryLabel}</small>
-                    <i aria-hidden="true">☞</i>
+                    <i className="impact-metric-icon" aria-hidden="true">
+                      <ClickCueIcon />
+                    </i>
                   </a>
                 ) : null}
               </article>
