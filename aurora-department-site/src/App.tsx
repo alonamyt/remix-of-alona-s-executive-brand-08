@@ -3011,18 +3011,6 @@ function App() {
             </a>
           )}
 
-          <div className="view-counter-chip" aria-label={viewCounterLabel} title={viewCounterLabel}>
-            <span className="view-counter-chip-icon" aria-hidden="true">
-              <EyeIcon />
-            </span>
-            <span className="view-counter-chip-copy">
-              <strong>{viewCounter.total?.toLocaleString(language === "ua" ? "uk-UA" : "en-US") ?? "—"}</strong>
-              <span>
-                ({viewCounter.today?.toLocaleString(language === "ua" ? "uk-UA" : "en-US") ?? "—"} {todayLabel})
-              </span>
-            </span>
-          </div>
-
           <div className="theme-switch" aria-label={t.header.theme}>
             <button
               type="button"
@@ -3485,6 +3473,20 @@ function App() {
           </>
         )}
       </main>
+
+      <div className="page-view-counter-footer">
+        <div className="view-counter-chip" aria-label={viewCounterLabel} title={viewCounterLabel}>
+          <span className="view-counter-chip-icon" aria-hidden="true">
+            <EyeIcon />
+          </span>
+          <span className="view-counter-chip-copy">
+            <strong>{viewCounter.total?.toLocaleString(language === "ua" ? "uk-UA" : "en-US") ?? "—"}</strong>
+            <span>
+              ({viewCounter.today?.toLocaleString(language === "ua" ? "uk-UA" : "en-US") ?? "—"} {todayLabel})
+            </span>
+          </span>
+        </div>
+      </div>
 
       {currentView === "public" ? (
         <button

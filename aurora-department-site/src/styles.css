@@ -12933,6 +12933,17 @@ body[data-theme="day"] {
   color: #18345f;
 }
 
+.page-view-counter-footer {
+  display: flex;
+  justify-content: center;
+  padding: 0 0 1.8rem;
+}
+
+.page-view-counter-footer .view-counter-chip {
+  min-height: 42px;
+  padding-inline: 1rem;
+}
+
 .page-shell[data-theme="day"] .view-counter-chip-icon {
   color: rgba(193, 123, 28, 0.92);
 }
@@ -13116,12 +13127,8 @@ body[data-theme="day"] {
     justify-content: flex-end;
   }
 
-  .view-counter-chip {
-    order: 2;
-  }
-
   .theme-switch {
-    order: 3;
+    order: 2;
   }
 }
 
