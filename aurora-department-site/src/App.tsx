@@ -1225,7 +1225,7 @@ const content: Record<Language, LocaleContent> = {
         },
         {
           value: "Працюємо для",
-          label: "співробітників, клієнтів і реального операційного масштабу",
+          label: "",
           details: ["16,5 тис співробітників", "8 млн клієнтів", "36 млн відвідувачів в міс."],
         },
       ],
@@ -1733,7 +1733,7 @@ const content: Record<Language, LocaleContent> = {
         },
         {
           value: "Working for",
-          label: "employees, customers, and real operational scale",
+          label: "",
           details: ["16.5k employees", "8M customers", "36M monthly visits"],
         },
       ],
