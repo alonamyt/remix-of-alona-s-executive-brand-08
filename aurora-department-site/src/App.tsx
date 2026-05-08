@@ -96,7 +96,20 @@ type ImpactMetric = {
   secondaryValue?: string;
   secondaryLabel?: string;
   secondaryHref?: string;
+  details?: string[];
 };
+
+type ViewCounterSnapshot = {
+  total: number | null;
+  today: number | null;
+};
+
+declare global {
+  interface Window {
+    __avroraViewCounterHits?: Set<string>;
+    __avroraViewCounterCache?: Record<string, ViewCounterSnapshot>;
+  }
+}
 
 function ClickCueIcon() {
   return (
@@ -119,6 +132,51 @@ function ClickCueIcon() {
     </svg>
   );
 }
+
+function EyeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M2.2 12s3.6-6 9.8-6 9.8 6 9.8 6-3.6 6-9.8 6-9.8-6-9.8-6Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+const VIEW_COUNTER_NAMESPACE = "avrora-rd-network";
+
+const getViewCounterKey = (pathname: string) => {
+  const normalized = pathname.replace(/^\/+|\/+$/g, "").replace(/[^a-zA-Z0-9_-]+/g, "-");
+  return normalized || "home";
+};
+
+const getKyivDateKey = () =>
+  new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Kiev",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+
+const hitCountApi = async (key: string) => {
+  const response = await fetch(`https://api.countapi.xyz/hit/${VIEW_COUNTER_NAMESPACE}/${key}`, {
+    method: "GET",
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error(`Counter request failed with ${response.status}`);
+  }
+
+  const payload = (await response.json()) as { value?: number };
+  return typeof payload.value === "number" ? payload.value : null;
+};
 
 type TeamRole = {
   title: string;
@@ -1165,7 +1223,11 @@ const content: Record<Language, LocaleContent> = {
           secondaryLabel: "можливості для студентів",
           secondaryHref: "http://158.178.151.156/student/",
         },
-        { value: "2 аудиторії", label: "співробітники та клієнти" },
+        {
+          value: "Працюємо для",
+          label: "співробітників, клієнтів і реального операційного масштабу",
+          details: ["16,5 тис співробітників", "8 млн клієнтів", "36 млн відвідувачів в міс."],
+        },
       ],
       timeline: [
         {
@@ -1669,7 +1731,11 @@ const content: Record<Language, LocaleContent> = {
           secondaryLabel: "student opportunities",
           secondaryHref: "http://158.178.151.156/student/",
         },
-        { value: "2 audiences", label: "employees and customers" },
+        {
+          value: "Working for",
+          label: "employees, customers, and real operational scale",
+          details: ["16.5k employees", "8M customers", "36M monthly visits"],
+        },
       ],
       timeline: [
         {
@@ -2369,6 +2435,7 @@ function App() {
   const [authPassword, setAuthPassword] = useState("");
   const [authError, setAuthError] = useState("");
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [viewCounter, setViewCounter] = useState<ViewCounterSnapshot>({ total: null, today: null });
   const [lightbox, setLightbox] = useState<{
     items: LightboxItem[];
     index: number;
@@ -2376,6 +2443,10 @@ function App() {
   } | null>(null);
   const [communitySlides, setCommunitySlides] = useState<Record<string, number>>({});
   const t = content[language];
+  const pageViewKey =
+    typeof window === "undefined" ? "aurora-department-site" : getViewCounterKey(window.location.pathname);
+  const viewCounterLabel = language === "ua" ? "Перегляди сторінки" : "Page views";
+  const todayLabel = language === "ua" ? "сьогодні" : "today";
   const marketShowcaseOrder = [2, 0, 1];
   const featuredTeamRole = t.team.roles.find((role) => role.featured);
   const primaryTeamRoles = t.team.roles.filter((role) => !role.featured);
@@ -2454,6 +2525,37 @@ function App() {
       setCurrentView("public");
     }
   }, [currentView, isInternalAuthenticated]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const todayKey = getKyivDateKey();
+    const totalKey = `${pageViewKey}-total`;
+    const dailyKey = `${pageViewKey}-${todayKey}`;
+    const hitMarker = `${pageViewKey}:${todayKey}`;
+    const hitRegistry = (window.__avroraViewCounterHits ??= new Set<string>());
+    const counterCache = (window.__avroraViewCounterCache ??= {});
+
+    if (counterCache[hitMarker]) {
+      setViewCounter(counterCache[hitMarker]);
+    }
+
+    if (hitRegistry.has(hitMarker)) {
+      return;
+    }
+
+    hitRegistry.add(hitMarker);
+
+    Promise.allSettled([hitCountApi(totalKey), hitCountApi(dailyKey)]).then((results) => {
+      const nextSnapshot: ViewCounterSnapshot = {
+        total: results[0].status === "fulfilled" ? results[0].value : counterCache[hitMarker]?.total ?? null,
+        today: results[1].status === "fulfilled" ? results[1].value : counterCache[hitMarker]?.today ?? null,
+      };
+
+      counterCache[hitMarker] = nextSnapshot;
+      setViewCounter(nextSnapshot);
+    });
+  }, [pageViewKey]);
 
   useEffect(() => {
     const syncBackToTopVisibility = () => {
@@ -2811,9 +2913,19 @@ function App() {
                 </em>
               </a>
             ) : (
-              <article className="numbers-card impact-metric-card" key={metric.label}>
+              <article
+                className={`numbers-card impact-metric-card${metric.details?.length ? " impact-metric-card-detail" : ""}`}
+                key={metric.label}
+              >
                 <strong>{metric.value}</strong>
                 <span>{metric.label}</span>
+                {metric.details?.length ? (
+                  <ul className="impact-metric-details" aria-label={metric.value}>
+                    {metric.details.map((detail) => (
+                      <li key={detail}>{detail}</li>
+                    ))}
+                  </ul>
+                ) : null}
                 {metric.secondaryValue && metric.secondaryLabel && metric.secondaryHref ? (
                   <a
                     className="impact-metric-secondary"
@@ -2898,6 +3010,18 @@ function App() {
               {t.hero.secondary}
             </a>
           )}
+
+          <div className="view-counter-chip" aria-label={viewCounterLabel} title={viewCounterLabel}>
+            <span className="view-counter-chip-icon" aria-hidden="true">
+              <EyeIcon />
+            </span>
+            <span className="view-counter-chip-copy">
+              <strong>{viewCounter.total?.toLocaleString(language === "ua" ? "uk-UA" : "en-US") ?? "—"}</strong>
+              <span>
+                ({viewCounter.today?.toLocaleString(language === "ua" ? "uk-UA" : "en-US") ?? "—"} {todayLabel})
+              </span>
+            </span>
+          </div>
 
           <div className="theme-switch" aria-label={t.header.theme}>
             <button
