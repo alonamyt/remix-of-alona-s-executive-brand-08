@@ -310,13 +310,6 @@ type HeroExpoSceneProps = {
   theme: ThemeMode;
 };
 
-const internalAccounts = [
-  {
-    login: "a.mytrofanova",
-    password: "Pasha2026",
-  },
-] as const;
-
 function HeroExpoScene({ hero }: HeroExpoSceneProps) {
   return (
     <svg
@@ -2422,18 +2415,9 @@ function App() {
   });
   const [currentView, setCurrentView] = useState<ViewMode>(() => {
     if (typeof window === "undefined") return "public";
-    const storedUser = window.sessionStorage.getItem("aurora-internal-user");
     const storedView = window.sessionStorage.getItem("aurora-department-view");
-    return storedUser && storedView === "internal" ? "internal" : "public";
+    return storedView === "internal" ? "internal" : "public";
   });
-  const [internalUser, setInternalUser] = useState<string | null>(() => {
-    if (typeof window === "undefined") return null;
-    return window.sessionStorage.getItem("aurora-internal-user");
-  });
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [authLogin, setAuthLogin] = useState("");
-  const [authPassword, setAuthPassword] = useState("");
-  const [authError, setAuthError] = useState("");
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [viewCounter, setViewCounter] = useState<ViewCounterSnapshot>({ total: null, today: null });
   const [lightbox, setLightbox] = useState<{
@@ -2450,47 +2434,28 @@ function App() {
   const marketShowcaseOrder = [2, 0, 1];
   const featuredTeamRole = t.team.roles.find((role) => role.featured);
   const primaryTeamRoles = t.team.roles.filter((role) => !role.featured);
-  const isInternalAuthenticated = Boolean(internalUser);
   const internalUi =
     language === "ua"
       ? {
           history: "Історія департаменту",
           internalEntry: "Внутрішній розділ",
           internalHint: "Схований розділ департаменту",
-          loginTitle: "Вхід у внутрішній розділ",
-          loginText: "Тимчасовий локальний доступ для співробітників департаменту.",
-          loginField: "Логін",
-          passwordField: "Пароль",
-          cancel: "Скасувати",
-          enter: "Увійти",
-          wrongCredentials: "Невірний логін або пароль.",
           backToSite: "Повернутись на сайт",
-          logout: "Вийти",
           internalEyebrow: "Внутрішній простір AR&D",
-          internalTitle: "Команда та історія департаменту в окремому захищеному розділі",
+          internalTitle: "Команда та історія департаменту в окремому внутрішньому розділі",
           internalText:
-            "Тут зібрано внутрішню структуру команди, фокус ролей і хронологію розвитку департаменту в одному закритому просторі.",
-          signedInAs: "Доступ відкрито для",
-          lockTooltip: "Відкрити внутрішній розділ",
+            "Тут зібрано внутрішню структуру команди, фокус ролей і хронологію розвитку департаменту в одному просторі.",
+          lockTooltip: "Перейти до внутрішнього розділу",
         }
       : {
           history: "Department history",
           internalEntry: "Internal space",
           internalHint: "Hidden department section",
-          loginTitle: "Internal access",
-          loginText: "Temporary local access for department members.",
-          loginField: "Login",
-          passwordField: "Password",
-          cancel: "Cancel",
-          enter: "Enter",
-          wrongCredentials: "Wrong login or password.",
           backToSite: "Back to public site",
-          logout: "Log out",
           internalEyebrow: "AR&D internal space",
-          internalTitle: "Team and department history in a dedicated protected view",
+          internalTitle: "Team and department history in a dedicated internal view",
           internalText:
-            "This space brings together the internal team structure, role ownership, and the department timeline in one restricted view.",
-          signedInAs: "Access granted for",
+            "This space brings together the internal team structure, role ownership, and the department timeline in one dedicated view.",
           lockTooltip: "Open internal section",
         };
 
@@ -2508,23 +2473,8 @@ function App() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    if (internalUser) {
-      window.sessionStorage.setItem("aurora-internal-user", internalUser);
-    } else {
-      window.sessionStorage.removeItem("aurora-internal-user");
-    }
-
-    window.sessionStorage.setItem(
-      "aurora-department-view",
-      currentView === "internal" && internalUser ? "internal" : "public"
-    );
-  }, [currentView, internalUser]);
-
-  useEffect(() => {
-    if (!isInternalAuthenticated && currentView === "internal") {
-      setCurrentView("public");
-    }
-  }, [currentView, isInternalAuthenticated]);
+    window.sessionStorage.setItem("aurora-department-view", currentView);
+  }, [currentView]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -2631,49 +2581,7 @@ function App() {
   };
 
   const openInternalEntry = () => {
-    if (isInternalAuthenticated) {
-      setCurrentView("internal");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-
-    setAuthError("");
-    setAuthPassword("");
-    setShowAuthModal(true);
-  };
-
-  const closeAuthModal = () => {
-    setShowAuthModal(false);
-    setAuthError("");
-    setAuthPassword("");
-  };
-
-  const submitInternalAccess = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const account = internalAccounts.find(
-      (entry) => entry.login === authLogin.trim() && entry.password === authPassword
-    );
-
-    if (!account) {
-      setAuthError(internalUi.wrongCredentials);
-      return;
-    }
-
-    setInternalUser(account.login);
-    setShowAuthModal(false);
-    setAuthError("");
-    setAuthPassword("");
     setCurrentView("internal");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const logoutInternalAccess = () => {
-    setInternalUser(null);
-    setCurrentView("public");
-    setShowAuthModal(false);
-    setAuthPassword("");
-    setAuthLogin("");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -3452,17 +3360,14 @@ function App() {
 
               <div className="internal-portal-panel">
                 <div className="internal-portal-card">
-                  <span>{internalUi.signedInAs}</span>
-                  <strong>{internalUser}</strong>
+                  <span>{internalUi.internalEntry}</span>
+                  <strong>{internalUi.history}</strong>
                   <p>{internalUi.internalHint}</p>
                 </div>
 
                 <div className="internal-portal-actions">
                   <button type="button" className="button button-secondary" onClick={goToPublicView}>
                     {internalUi.backToSite}
-                  </button>
-                  <button type="button" className="button button-primary" onClick={logoutInternalAccess}>
-                    {internalUi.logout}
                   </button>
                 </div>
               </div>
@@ -3491,7 +3396,7 @@ function App() {
       {currentView === "public" ? (
         <button
           type="button"
-          className={isInternalAuthenticated ? "internal-entry-button is-authorized" : "internal-entry-button"}
+          className="internal-entry-button"
           onClick={openInternalEntry}
           aria-label={internalUi.lockTooltip}
           title={internalUi.lockTooltip}
@@ -3499,7 +3404,7 @@ function App() {
           <span className="internal-entry-button-icon" aria-hidden="true">🔒</span>
           <span className="internal-entry-button-copy">
             <strong>{internalUi.internalEntry}</strong>
-            <span>{isInternalAuthenticated ? internalUser : internalUi.internalHint}</span>
+            <span>{internalUi.internalHint}</span>
           </span>
         </button>
       ) : null}
@@ -3512,50 +3417,6 @@ function App() {
       >
         <span className="scroll-top-button-icon" aria-hidden="true">↑</span>
       </button>
-
-      {showAuthModal ? (
-        <div className="auth-modal-backdrop" role="dialog" aria-modal="true" aria-label={internalUi.loginTitle}>
-          <form className="auth-modal-card" onSubmit={submitInternalAccess}>
-            <div className="auth-modal-copy">
-              <p className="eyebrow">{internalUi.internalEntry}</p>
-              <h3>{internalUi.loginTitle}</h3>
-              <p>{internalUi.loginText}</p>
-            </div>
-
-            <label className="auth-modal-field">
-              <span>{internalUi.loginField}</span>
-              <input
-                type="text"
-                value={authLogin}
-                onChange={(event) => setAuthLogin(event.target.value)}
-                autoComplete="username"
-                autoFocus
-              />
-            </label>
-
-            <label className="auth-modal-field">
-              <span>{internalUi.passwordField}</span>
-              <input
-                type="password"
-                value={authPassword}
-                onChange={(event) => setAuthPassword(event.target.value)}
-                autoComplete="current-password"
-              />
-            </label>
-
-            {authError ? <p className="auth-modal-error">{authError}</p> : null}
-
-            <div className="auth-modal-actions">
-              <button type="button" className="button button-secondary" onClick={closeAuthModal}>
-                {internalUi.cancel}
-              </button>
-              <button type="submit" className="button button-primary">
-                {internalUi.enter}
-              </button>
-            </div>
-          </form>
-        </div>
-      ) : null}
 
       {lightbox ? (
         <div
