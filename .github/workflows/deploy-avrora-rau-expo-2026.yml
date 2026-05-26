@@ -57,39 +57,55 @@ jobs:
       - name: Deploy on server
         run: |
           ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 '
-            target=/var/www/avrora-rau-expo-2026 &&
-            releases=/var/www/avrora-rau-expo-2026-releases &&
-            release="$releases/release-$(date +%Y%m%d-%H%M%S)" &&
-            backup=/var/www/avrora-rau-expo-2026-backup-$(date +%Y%m%d-%H%M%S) &&
-            legacy="$releases/legacy-$(date +%Y%m%d-%H%M%S)" &&
-            link_tmp=/var/www/.avrora-rau-expo-2026-link &&
-            sudo mkdir -p "$releases" &&
-            sudo mkdir -p "$release" &&
-            sudo cp -a /home/ubuntu/avrora-rau-expo-2026-deploy/dist/. "$release"/ &&
-            sudo find "$release" -type d -exec chmod 755 {} + &&
-            sudo find "$release" -type f -exec chmod 644 {} + &&
+            set -euo pipefail
+
+            target=/var/www/avrora-rau-expo-2026
+            releases=/var/www/avrora-rau-expo-2026-releases
+            release="$releases/release-$(date +%Y%m%d-%H%M%S)"
+            current_target=""
+            link_tmp=/var/www/.avrora-rau-expo-2026-link
+
             if [ -L "$target" ]; then
-              current_target=$(readlink -f "$target") &&
+              current_target=$(readlink -f "$target")
+            fi
+
+            sudo mkdir -p "$releases"
+            sudo mkdir -p "$release"
+            sudo cp -a /home/ubuntu/avrora-rau-expo-2026-deploy/dist/. "$release"/
+
+            test -f "$release/index.html"
+            test -d "$release/assets"
+            grep -q "/avrora-rau-expo-2026/assets/" "$release/index.html"
+
+            sudo find "$release" -type d -exec chmod 755 {} +
+            sudo find "$release" -type f -exec chmod 644 {} +
+            sudo chown -R www-data:www-data "$release"
+
+            sudo ln -sfn "$release" "$link_tmp"
+            sudo mv -Tf "$link_tmp" "$target"
+            sudo systemctl reload nginx
+
+            if ! curl -fsS http://127.0.0.1/avrora-rau-expo-2026/ >/dev/null; then
               if [ -n "$current_target" ] && [ -d "$current_target" ]; then
-                sudo cp -a "$current_target" "$backup";
-              fi;
-            elif [ -d "$target" ]; then
-              sudo cp -a "$target" "$backup" &&
-              sudo mv "$target" "$legacy";
-            fi &&
-            sudo ln -sfn "$release" "$link_tmp" &&
-            sudo mv -Tf "$link_tmp" "$target" &&
-            sudo find "$releases" -maxdepth 1 -mindepth 1 -type d -name "release-*" | sort | head -n -5 | xargs -r sudo rm -rf &&
-            sudo mkdir -p "$target" &&
-            sudo systemctl reload nginx &&
-            curl -fsS http://127.0.0.1/avrora-rau-expo-2026/ >/dev/null
+                sudo ln -sfn "$current_target" "$link_tmp"
+                sudo mv -Tf "$link_tmp" "$target"
+                sudo systemctl reload nginx
+              fi
+              sudo rm -rf "$release"
+              exit 1
+            fi
+
+            sudo find "$releases" -maxdepth 1 -mindepth 1 -type d -name "release-*" | sort | head -n -5 | xargs -r sudo rm -rf
           '
 
       - name: Verify production URL
         run: |
           for attempt in 1 2 3 4 5; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" http://158.178.151.156/avrora-rau-expo-2026/) &&
-            echo "attempt $attempt -> $code" &&
-            test "$code" = "200"
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://158.178.151.156/avrora-rau-expo-2026/)
+            echo "attempt $attempt -> $code"
+            if [ "$code" = "200" ]; then
+              exit 0
+            fi
             sleep 2
           done
+          exit 1
