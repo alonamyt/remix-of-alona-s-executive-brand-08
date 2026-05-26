@@ -21,7 +21,7 @@
   --radius-lg: 1.5rem;
   --radius-md: 1.1rem;
   --page-width: min(1500px, calc(100vw - 0.5rem));
-  --screen-panel-height: clamp(23rem, 56vh, 31rem);
+  --screen-panel-height: clamp(34rem, 78vh, 46rem);
   --showcase-panel-height: clamp(26rem, 62vh, 36rem);
   --screen-panel-padding: clamp(0.42rem, 0.7vw, 0.62rem);
   font-family: "Geist", sans-serif;
@@ -487,7 +487,8 @@ body[data-theme="day"] .inline-back-link {
 }
 
 .showcase-slide .section-heading {
-  padding-bottom: 0.04rem;
+  padding-top: 0.72rem;
+  padding-bottom: 0.22rem;
 }
 
 .product-grid {
@@ -739,6 +740,7 @@ body[data-theme="day"] .view-counter {
 .hero-slide {
   min-height: var(--screen-panel-height);
   align-content: start;
+  align-items: stretch;
 }
 
 @media (max-width: 1100px) {
