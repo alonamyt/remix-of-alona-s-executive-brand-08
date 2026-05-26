@@ -49,12 +49,9 @@ type LocaleContent = {
     subtitle: string;
     primary: string;
     secondary: string;
-    signalTitle: string;
-    signalLines: string[];
   };
   showcase: {
     title: string;
-    hint: string;
   };
   productSection: {
     action: string;
@@ -109,12 +106,9 @@ const locales: Record<Language, LocaleContent> = {
       subtitle: "Системи, що масштабуються. Технології для зростання. Інструменти для щоденної операційної стійкості.",
       primary: "Дивитися продукти",
       secondary: "До 4 рішень",
-      signalTitle: "R&D showcase",
-      signalLines: ["Retail analytics", "Energy resilience", "Access control", "Smart parking"],
     },
     showcase: {
       title: "Продукти",
-      hint: "натисни",
     },
     productSection: {
       action: "До картки продукту",
@@ -141,12 +135,9 @@ const locales: Record<Language, LocaleContent> = {
       subtitle: "Scalable systems. Technology for expansion. Tools for resilient daily operations.",
       primary: "Explore products",
       secondary: "Go to 4 solutions",
-      signalTitle: "R&D showcase",
-      signalLines: ["Retail analytics", "Energy resilience", "Access control", "Smart parking"],
     },
     showcase: {
       title: "Products",
-      hint: "tap",
     },
     productSection: {
       action: "Back to product card",
