@@ -522,7 +522,8 @@ body[data-theme="day"] .inline-back-link {
 .product-card-copy h3 {
   font-size: clamp(2.3rem, 2.7vw, 3.25rem);
   line-height: 0.96;
-  max-width: 11ch;
+  max-width: none;
+  text-wrap: pretty;
 }
 
 .product-card-copy p {
