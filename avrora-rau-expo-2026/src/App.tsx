@@ -642,8 +642,8 @@ export default function App() {
               </a>
             </div>
 
-            <div className="detail-layout">
-              <div className="detail-copy">
+            <div className={`detail-layout${product.id === "lpr-access-control" ? " detail-layout-top-aligned" : ""}`}>
+              <div className={`detail-copy${product.id === "lpr-access-control" ? " detail-copy-top-aligned" : ""}`}>
                 <h2>{product.title}</h2>
                 <p className="detail-lead">{product.summary}</p>
                 <p>{product.detailLead}</p>

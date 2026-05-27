@@ -627,9 +627,18 @@ body[data-theme="day"] .inline-back-link {
   padding: 0 var(--screen-panel-padding) var(--screen-panel-padding);
 }
 
+.detail-layout-top-aligned {
+  align-items: start;
+}
+
 .detail-copy {
   display: grid;
   gap: 0.7rem;
+}
+
+.detail-copy-top-aligned {
+  align-content: start;
+  padding-top: 0.1rem;
 }
 
 .detail-copy h2 {
