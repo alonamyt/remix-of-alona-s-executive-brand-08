@@ -363,6 +363,13 @@ h3 {
   flex-wrap: wrap;
 }
 
+.detail-actions {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .hero-actions {
   margin-top: 0.45rem;
 }
@@ -697,6 +704,42 @@ body[data-theme="day"] .inline-back-link {
     var(--shadow);
 }
 
+.traffic-platform-showcase {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.traffic-platform-main {
+  display: block;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 18px 42px -34px rgba(0, 0, 0, 0.7);
+}
+
+.traffic-platform-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.traffic-platform-thumb {
+  overflow: hidden;
+  border-radius: 1.1rem;
+  background: rgba(4, 12, 24, 0.36);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.traffic-platform-thumb img {
+  width: 100%;
+  height: 100%;
+  min-height: 118px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
 .parking-placeholder {
   position: relative;
   width: 100%;
@@ -858,6 +901,10 @@ body[data-theme="day"] .view-counter {
     grid-template-columns: 1fr;
   }
 
+  .traffic-platform-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .hero-slide {
     align-content: start;
   }
@@ -946,5 +993,14 @@ body[data-theme="day"] .view-counter {
 
   .detail-copy h2 {
     white-space: normal;
+  }
+
+  .detail-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .traffic-platform-grid {
+    grid-template-columns: 1fr;
   }
 }

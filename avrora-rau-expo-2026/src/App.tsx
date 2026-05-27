@@ -14,6 +14,11 @@ import lprVisualDay from "./assets/project/день/Vehicle detection systemd.pn
 
 import smartParkingVisualNight from "./assets/project/smart-parking-night.png";
 import smartParkingVisualDay from "./assets/project/smart-parking-day.jpg";
+import trafficPlatformMain from "./assets/project/traffic-platform/traffic-platform-main.png";
+import trafficPlatformOne from "./assets/project/traffic-platform/traffic-platform-1.png";
+import trafficPlatformTwo from "./assets/project/traffic-platform/traffic-platform-2.png";
+import trafficPlatformThree from "./assets/project/traffic-platform/traffic-platform-3.png";
+import trafficPlatformFour from "./assets/project/traffic-platform/traffic-platform-4.png";
 
 type Language = "ua" | "en";
 type ThemeMode = "night" | "day";
@@ -86,6 +91,13 @@ function EyeIcon() {
 }
 
 const sectionOrder = ["intro", "showcase", "traffic-counter", "generator-control", "lpr-access-control", "smart-parking"];
+const trafficCounterUrl = "https://traffic-counter.rnd-dev.avrora.lan/";
+const trafficPlatformGallery = [
+  trafficPlatformOne,
+  trafficPlatformTwo,
+  trafficPlatformThree,
+  trafficPlatformFour,
+];
 
 const locales: Record<Language, LocaleContent> = {
   ua: {
@@ -550,17 +562,51 @@ export default function App() {
                   ))}
                 </div>
 
-                <a className="button button-secondary" href="#showcase">
-                  {copy.productSection.action}
-                </a>
+                <div className="detail-actions">
+                  {product.id === "traffic-counter" ? (
+                    <a
+                      className="button button-primary"
+                      href={trafficCounterUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Перейти на сайт платформи
+                    </a>
+                  ) : null}
+
+                  <a className="button button-secondary" href="#showcase">
+                    {copy.productSection.action}
+                  </a>
+                </div>
               </div>
 
               <div className="detail-visual-frame">
-                <img
-                  className="detail-image"
-                  src={productVisuals[product.id]}
-                  alt={product.visualAlt}
-                />
+                {product.id === "traffic-counter" ? (
+                  <div className="traffic-platform-showcase">
+                    <a
+                      className="traffic-platform-main"
+                      href={trafficCounterUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <img className="detail-image" src={trafficPlatformMain} alt="Traffic Counter platform overview" />
+                    </a>
+
+                    <div className="traffic-platform-grid" aria-label="Traffic Counter platform screenshots">
+                      {trafficPlatformGallery.map((imageSrc, index) => (
+                        <div key={imageSrc} className="traffic-platform-thumb">
+                          <img src={imageSrc} alt={`Traffic Counter platform screen ${index + 1}`} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <img
+                    className="detail-image"
+                    src={productVisuals[product.id]}
+                    alt={product.visualAlt}
+                  />
+                )}
               </div>
             </div>
           </section>
