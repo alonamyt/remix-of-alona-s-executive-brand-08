@@ -93,10 +93,11 @@ function EyeIcon() {
 const sectionOrder = ["intro", "showcase", "traffic-counter", "generator-control", "lpr-access-control", "smart-parking"];
 const trafficCounterUrl = "https://traffic-counter.rnd-dev.avrora.lan/";
 const trafficPlatformGallery = [
-  trafficPlatformOne,
   trafficPlatformTwo,
-  trafficPlatformThree,
+  trafficPlatformOne,
   trafficPlatformFour,
+  trafficPlatformThree,
+  trafficPlatformMain,
 ];
 
 const locales: Record<Language, LocaleContent> = {
@@ -340,6 +341,7 @@ export default function App() {
   const [language, setLanguage] = useState<Language>("ua");
   const [theme, setTheme] = useState<ThemeMode>("night");
   const [visitorCount, setVisitorCount] = useState<number | null>(null);
+  const [trafficGalleryIndex, setTrafficGalleryIndex] = useState(0);
 
   const copy = locales[language];
   const products = productsByLanguage[language];
@@ -354,6 +356,8 @@ export default function App() {
     }),
     [theme],
   );
+
+  const activeTrafficGalleryImage = trafficPlatformGallery[trafficGalleryIndex] ?? trafficPlatformGallery[0];
 
   useEffect(() => {
     document.documentElement.lang = language === "ua" ? "uk" : "en";
@@ -583,21 +587,70 @@ export default function App() {
               <div className="detail-visual-frame">
                 {product.id === "traffic-counter" ? (
                   <div className="traffic-platform-showcase">
-                    <a
-                      className="traffic-platform-main"
-                      href={trafficCounterUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <img className="detail-image" src={trafficPlatformMain} alt="Traffic Counter platform overview" />
-                    </a>
+                    <img
+                      className="detail-image"
+                      src={productVisuals[product.id]}
+                      alt={product.visualAlt}
+                    />
 
-                    <div className="traffic-platform-grid" aria-label="Traffic Counter platform screenshots">
-                      {trafficPlatformGallery.map((imageSrc, index) => (
-                        <div key={imageSrc} className="traffic-platform-thumb">
-                          <img src={imageSrc} alt={`Traffic Counter platform screen ${index + 1}`} />
-                        </div>
-                      ))}
+                    <div className="traffic-platform-carousel" aria-label="Traffic Counter platform screenshots">
+                      <div className="traffic-platform-carousel-topline">
+                        <span className="traffic-platform-label">Платформа Traffic Counter</span>
+                        <a
+                          className="traffic-platform-link"
+                          href={trafficCounterUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Відкрити сайт
+                        </a>
+                      </div>
+
+                      <div className="traffic-platform-carousel-frame">
+                        <button
+                          type="button"
+                          className="traffic-carousel-arrow traffic-carousel-arrow-left"
+                          aria-label="Попередній скрін"
+                          onClick={() =>
+                            setTrafficGalleryIndex((current) =>
+                              current === 0 ? trafficPlatformGallery.length - 1 : current - 1,
+                            )
+                          }
+                        >
+                          ‹
+                        </button>
+
+                        <img
+                          className="traffic-platform-carousel-image"
+                          src={activeTrafficGalleryImage}
+                          alt={`Traffic Counter platform screen ${trafficGalleryIndex + 1}`}
+                        />
+
+                        <button
+                          type="button"
+                          className="traffic-carousel-arrow traffic-carousel-arrow-right"
+                          aria-label="Наступний скрін"
+                          onClick={() =>
+                            setTrafficGalleryIndex((current) =>
+                              current === trafficPlatformGallery.length - 1 ? 0 : current + 1,
+                            )
+                          }
+                        >
+                          ›
+                        </button>
+                      </div>
+
+                      <div className="traffic-platform-dots" aria-label="Слайди платформи">
+                        {trafficPlatformGallery.map((imageSrc, index) => (
+                          <button
+                            key={imageSrc}
+                            type="button"
+                            className={`traffic-platform-dot${index === trafficGalleryIndex ? " is-active" : ""}`}
+                            aria-label={`Показати скрін ${index + 1}`}
+                            onClick={() => setTrafficGalleryIndex(index)}
+                          />
+                        ))}
+                      </div>
                     </div>
                   </div>
                 ) : (
