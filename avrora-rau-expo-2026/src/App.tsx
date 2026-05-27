@@ -12,6 +12,8 @@ import generatorVisualDay from "./assets/project/день/Generator control syst
 import generatorPlatformExtra from "./assets/project/generator-platform-extra.png";
 import lprVisualNight from "./assets/project/Vehicle detection system2.png";
 import lprVisualDay from "./assets/project/день/Vehicle detection systemd.png";
+import lprPlatformOne from "./assets/project/lpr-platform-1.png";
+import lprPlatformTwo from "./assets/project/lpr-platform-2.png";
 
 import smartParkingVisualNight from "./assets/project/smart-parking-night.png";
 import smartParkingVisualDay from "./assets/project/smart-parking-day.jpg";
@@ -91,6 +93,36 @@ function EyeIcon() {
   );
 }
 
+function ChevronLeftIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M14.5 5.5 8 12l6.5 6.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ChevronRightIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path
+        d="M9.5 5.5 16 12l-6.5 6.5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 const sectionOrder = ["intro", "showcase", "traffic-counter", "generator-control", "lpr-access-control", "smart-parking"];
 const trafficCounterUrl = "https://traffic-counter.rnd-dev.avrora.lan/";
 const trafficPlatformGallery = [
@@ -100,6 +132,7 @@ const trafficPlatformGallery = [
   trafficPlatformThree,
   trafficPlatformMain,
 ];
+const lprPlatformGallery = [lprPlatformOne, lprPlatformTwo];
 
 const locales: Record<Language, LocaleContent> = {
   ua: {
@@ -347,7 +380,8 @@ export default function App() {
   const [theme, setTheme] = useState<ThemeMode>("night");
   const [visitorCount, setVisitorCount] = useState<number | null>(null);
   const [trafficGalleryIndex, setTrafficGalleryIndex] = useState(0);
-  const [isTrafficLightboxOpen, setIsTrafficLightboxOpen] = useState(false);
+  const [lprGalleryIndex, setLprGalleryIndex] = useState(0);
+  const [activeLightboxGallery, setActiveLightboxGallery] = useState<ProductId | null>(null);
 
   const copy = locales[language];
   const products = productsByLanguage[language];
@@ -364,10 +398,44 @@ export default function App() {
   );
 
   const activeTrafficGalleryImage = trafficPlatformGallery[trafficGalleryIndex] ?? trafficPlatformGallery[0];
+  const activeLprGalleryImage = lprPlatformGallery[lprGalleryIndex] ?? lprPlatformGallery[0];
+  const activeLightboxImages =
+    activeLightboxGallery === "traffic-counter"
+      ? trafficPlatformGallery
+      : activeLightboxGallery === "lpr-access-control"
+        ? lprPlatformGallery
+        : [];
+  const activeLightboxIndex =
+    activeLightboxGallery === "traffic-counter"
+      ? trafficGalleryIndex
+      : activeLightboxGallery === "lpr-access-control"
+        ? lprGalleryIndex
+        : 0;
+  const activeLightboxImage = activeLightboxImages[activeLightboxIndex] ?? activeLightboxImages[0] ?? "";
   const showPreviousTrafficGalleryImage = () =>
     setTrafficGalleryIndex((current) => (current === 0 ? trafficPlatformGallery.length - 1 : current - 1));
   const showNextTrafficGalleryImage = () =>
     setTrafficGalleryIndex((current) => (current === trafficPlatformGallery.length - 1 ? 0 : current + 1));
+  const showPreviousLprGalleryImage = () =>
+    setLprGalleryIndex((current) => (current === 0 ? lprPlatformGallery.length - 1 : current - 1));
+  const showNextLprGalleryImage = () =>
+    setLprGalleryIndex((current) => (current === lprPlatformGallery.length - 1 ? 0 : current + 1));
+  const showPreviousLightboxImage = () => {
+    if (activeLightboxGallery === "traffic-counter") {
+      showPreviousTrafficGalleryImage();
+    }
+    if (activeLightboxGallery === "lpr-access-control") {
+      showPreviousLprGalleryImage();
+    }
+  };
+  const showNextLightboxImage = () => {
+    if (activeLightboxGallery === "traffic-counter") {
+      showNextTrafficGalleryImage();
+    }
+    if (activeLightboxGallery === "lpr-access-control") {
+      showNextLprGalleryImage();
+    }
+  };
 
   useEffect(() => {
     document.documentElement.lang = language === "ua" ? "uk" : "en";
@@ -413,20 +481,20 @@ export default function App() {
         return;
       }
 
-      if (isTrafficLightboxOpen) {
+      if (activeLightboxGallery) {
         if (event.key === "Escape") {
           event.preventDefault();
-          setIsTrafficLightboxOpen(false);
+          setActiveLightboxGallery(null);
         }
 
         if (event.key === "ArrowLeft") {
           event.preventDefault();
-          showPreviousTrafficGalleryImage();
+          showPreviousLightboxImage();
         }
 
         if (event.key === "ArrowRight") {
           event.preventDefault();
-          showNextTrafficGalleryImage();
+          showNextLightboxImage();
         }
 
         return;
@@ -463,7 +531,7 @@ export default function App() {
 
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, [isTrafficLightboxOpen, products]);
+  }, [activeLightboxGallery, products]);
 
   const topLogo = theme === "night" ? logoDark : logoLight;
   const topAuroraLogo = theme === "night" ? auroraLogoDark : auroraLogoLight;
@@ -643,20 +711,16 @@ export default function App() {
                           type="button"
                           className="traffic-carousel-arrow traffic-carousel-arrow-left"
                           aria-label="Попередній скрін"
-                          onClick={() =>
-                            setTrafficGalleryIndex((current) =>
-                              current === 0 ? trafficPlatformGallery.length - 1 : current - 1,
-                            )
-                          }
+                          onClick={showPreviousTrafficGalleryImage}
                         >
-                          ‹
+                          <ChevronLeftIcon />
                         </button>
 
                         <button
                           type="button"
                           className="traffic-platform-image-button"
                           aria-label={`Відкрити скрін ${trafficGalleryIndex + 1} у великому розмірі`}
-                          onClick={() => setIsTrafficLightboxOpen(true)}
+                          onClick={() => setActiveLightboxGallery("traffic-counter")}
                         >
                           <img
                             className="traffic-platform-carousel-image"
@@ -669,13 +733,9 @@ export default function App() {
                           type="button"
                           className="traffic-carousel-arrow traffic-carousel-arrow-right"
                           aria-label="Наступний скрін"
-                          onClick={() =>
-                            setTrafficGalleryIndex((current) =>
-                              current === trafficPlatformGallery.length - 1 ? 0 : current + 1,
-                            )
-                          }
+                          onClick={showNextTrafficGalleryImage}
                         >
-                          ›
+                          <ChevronRightIcon />
                         </button>
                       </div>
 
@@ -709,6 +769,65 @@ export default function App() {
                       />
                     </div>
                   </div>
+                ) : product.id === "lpr-access-control" ? (
+                  <div className="traffic-platform-showcase">
+                    <img
+                      className="detail-image"
+                      src={productVisuals[product.id]}
+                      alt={product.visualAlt}
+                    />
+
+                    <div className="traffic-platform-carousel" aria-label="LPR platform screenshots">
+                      <div className="traffic-platform-carousel-topline">
+                        <span className="traffic-platform-label">LPR & Access Control platform</span>
+                      </div>
+
+                      <div className="traffic-platform-carousel-frame">
+                        <button
+                          type="button"
+                          className="traffic-carousel-arrow traffic-carousel-arrow-left"
+                          aria-label="Попередній скрін"
+                          onClick={showPreviousLprGalleryImage}
+                        >
+                          <ChevronLeftIcon />
+                        </button>
+
+                        <button
+                          type="button"
+                          className="traffic-platform-image-button"
+                          aria-label={`Відкрити LPR скрін ${lprGalleryIndex + 1} у великому розмірі`}
+                          onClick={() => setActiveLightboxGallery("lpr-access-control")}
+                        >
+                          <img
+                            className="traffic-platform-carousel-image"
+                            src={activeLprGalleryImage}
+                            alt={`LPR platform screen ${lprGalleryIndex + 1}`}
+                          />
+                        </button>
+
+                        <button
+                          type="button"
+                          className="traffic-carousel-arrow traffic-carousel-arrow-right"
+                          aria-label="Наступний скрін"
+                          onClick={showNextLprGalleryImage}
+                        >
+                          <ChevronRightIcon />
+                        </button>
+                      </div>
+
+                      <div className="traffic-platform-dots" aria-label="Слайди LPR платформи">
+                        {lprPlatformGallery.map((imageSrc, index) => (
+                          <button
+                            key={imageSrc}
+                            type="button"
+                            className={`traffic-platform-dot${index === lprGalleryIndex ? " is-active" : ""}`}
+                            aria-label={`Показати LPR скрін ${index + 1}`}
+                            onClick={() => setLprGalleryIndex(index)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 ) : (
                   <img
                     className="detail-image"
@@ -722,20 +841,20 @@ export default function App() {
         ))}
       </main>
 
-      {isTrafficLightboxOpen ? (
+      {activeLightboxGallery ? (
         <div
           className="traffic-lightbox"
           role="dialog"
           aria-modal="true"
-          aria-label="Traffic Counter platform gallery"
-          onClick={() => setIsTrafficLightboxOpen(false)}
+          aria-label="Platform gallery"
+          onClick={() => setActiveLightboxGallery(null)}
         >
           <div className="traffic-lightbox-panel" onClick={(event) => event.stopPropagation()}>
             <button
               type="button"
               className="traffic-lightbox-close"
-              aria-label="Р—Р°РєСЂРёС‚Рё РіР°Р»РµСЂРµСЋ"
-              onClick={() => setIsTrafficLightboxOpen(false)}
+              aria-label="Закрити галерею"
+              onClick={() => setActiveLightboxGallery(null)}
             >
               ×
             </button>
@@ -743,35 +862,42 @@ export default function App() {
             <button
               type="button"
               className="traffic-carousel-arrow traffic-carousel-arrow-left traffic-lightbox-arrow"
-              aria-label="РџРѕРїРµСЂРµРґРЅС–Р№ СЃРєСЂС–РЅ"
-              onClick={showPreviousTrafficGalleryImage}
+              aria-label="Попередній скрін"
+              onClick={showPreviousLightboxImage}
             >
-              вЂ№
+              <ChevronLeftIcon />
             </button>
 
             <img
               className="traffic-lightbox-image"
-              src={activeTrafficGalleryImage}
-              alt={`Traffic Counter platform screen ${trafficGalleryIndex + 1}`}
+              src={activeLightboxImage}
+              alt={`Platform screen ${activeLightboxIndex + 1}`}
             />
 
             <button
               type="button"
               className="traffic-carousel-arrow traffic-carousel-arrow-right traffic-lightbox-arrow"
-              aria-label="РќР°СЃС‚СѓРїРЅРёР№ СЃРєСЂС–РЅ"
-              onClick={showNextTrafficGalleryImage}
+              aria-label="Наступний скрін"
+              onClick={showNextLightboxImage}
             >
-              вЂє
+              <ChevronRightIcon />
             </button>
 
-            <div className="traffic-platform-dots traffic-lightbox-dots" aria-label="РЎР»Р°Р№РґРё РїР»Р°С‚С„РѕСЂРјРё">
-              {trafficPlatformGallery.map((imageSrc, index) => (
+            <div className="traffic-platform-dots traffic-lightbox-dots" aria-label="Слайди платформи">
+              {activeLightboxImages.map((imageSrc, index) => (
                 <button
                   key={`lightbox-${imageSrc}`}
                   type="button"
-                  className={`traffic-platform-dot${index === trafficGalleryIndex ? " is-active" : ""}`}
-                  aria-label={`РџРѕРєР°Р·Р°С‚Рё СЃРєСЂС–РЅ ${index + 1}`}
-                  onClick={() => setTrafficGalleryIndex(index)}
+                  className={`traffic-platform-dot${index === activeLightboxIndex ? " is-active" : ""}`}
+                  aria-label={`Показати скрін ${index + 1}`}
+                  onClick={() => {
+                    if (activeLightboxGallery === "traffic-counter") {
+                      setTrafficGalleryIndex(index);
+                    }
+                    if (activeLightboxGallery === "lpr-access-control") {
+                      setLprGalleryIndex(index);
+                    }
+                  }}
                 />
               ))}
             </div>

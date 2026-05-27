@@ -802,6 +802,7 @@ body[data-theme="day"] .inline-back-link {
 }
 
 .traffic-platform-image-button {
+  display: block;
   padding: 0;
   border: 0;
   width: 100%;
@@ -878,6 +879,13 @@ body[data-theme="day"] .inline-back-link {
     inset 0 0 0 1px rgba(255, 255, 255, 0.08),
     0 12px 24px -18px rgba(0, 0, 0, 0.8);
   cursor: pointer;
+}
+
+.traffic-carousel-arrow svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  display: block;
+  margin: 0 auto;
 }
 
 .traffic-carousel-arrow-left {
