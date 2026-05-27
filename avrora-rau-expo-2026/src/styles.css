@@ -528,7 +528,7 @@ body[data-theme="day"] .inline-back-link {
 
 .showcase-button-card {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: minmax(15.5rem, 15.5rem) auto;
   gap: 0.55rem;
   min-height: clamp(260px, 48vh, 420px);
   padding: 0.72rem;
@@ -544,7 +544,10 @@ body[data-theme="day"] .inline-back-link {
 
 .showcase-button-copy {
   display: grid;
-  gap: 0.22rem;
+  grid-template-rows: minmax(7.6rem, auto) minmax(0, 1fr);
+  gap: 0.42rem;
+  align-content: start;
+  min-height: 0;
 }
 
 .showcase-button-copy h3 {
@@ -552,11 +555,15 @@ body[data-theme="day"] .inline-back-link {
   line-height: 0.96;
   max-width: none;
   text-wrap: pretty;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .showcase-button-copy p {
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1.45;
@@ -566,18 +573,22 @@ body[data-theme="day"] .inline-back-link {
 .showcase-button-visual {
   display: grid;
   place-items: center;
-  min-height: clamp(100px, 18vh, 180px);
+  height: clamp(220px, 24vh, 310px);
   overflow: hidden;
-  border-radius: calc(var(--radius-lg) - 0.35rem);
-  background: transparent;
-  box-shadow: none;
+  padding: 0.2rem;
+  border-radius: 1.7rem;
+  background: rgba(4, 12, 24, 0.38);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  align-self: end;
 }
 
 .showcase-button-visual img,
 .detail-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 1.5rem;
 }
 
 .detail-slide {
@@ -845,11 +856,16 @@ body[data-theme="day"] .view-counter {
   }
 
   .showcase-button-card {
+    grid-template-rows: auto auto;
     min-height: auto;
   }
 
+  .showcase-button-copy {
+    grid-template-rows: auto auto;
+  }
+
   .showcase-button-visual {
-    min-height: 120px;
+    height: 180px;
   }
 
   h1 {
