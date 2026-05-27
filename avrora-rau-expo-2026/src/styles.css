@@ -551,14 +551,12 @@ body[data-theme="day"] .inline-back-link {
 }
 
 .showcase-button-copy h3 {
-  font-size: clamp(2.3rem, 2.7vw, 3.25rem);
-  line-height: 0.96;
+  font-size: clamp(1.9rem, 2.1vw, 2.65rem);
+  line-height: 1;
   max-width: none;
-  text-wrap: pretty;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .showcase-button-copy p {
@@ -612,6 +610,11 @@ body[data-theme="day"] .inline-back-link {
 .detail-copy {
   display: grid;
   gap: 0.7rem;
+}
+
+.detail-copy h2 {
+  max-width: none;
+  white-space: nowrap;
 }
 
 .detail-lead {
@@ -881,5 +884,11 @@ body[data-theme="day"] .view-counter {
   .showcase-button-copy h3 {
     font-size: clamp(1.8rem, 7vw, 2.5rem);
     max-width: none;
+    white-space: normal;
+    text-overflow: clip;
+  }
+
+  .detail-copy h2 {
+    white-space: normal;
   }
 }
