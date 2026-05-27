@@ -573,9 +573,10 @@ body[data-theme="day"] .inline-back-link {
   font-size: clamp(1.9rem, 2.1vw, 2.65rem);
   line-height: 1;
   max-width: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  text-wrap: balance;
 }
 
 .showcase-button-copy p {
