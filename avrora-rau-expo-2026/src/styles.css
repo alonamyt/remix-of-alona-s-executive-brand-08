@@ -688,26 +688,14 @@ body[data-theme="day"] .inline-back-link {
 .detail-list li::before {
   content: "";
   position: absolute;
-  left: 0.88rem;
+  left: 1rem;
   top: 50%;
-  width: 1.22rem;
-  height: 1.22rem;
-  border-radius: 999px;
+  width: 0.42rem;
+  height: 0.74rem;
   transform: translateY(-50%);
-  background: linear-gradient(135deg, var(--benefit-blue-strong), var(--benefit-gold-strong));
-  box-shadow: 0 0 18px var(--benefit-blue-shadow);
-}
-
-.detail-list li::after {
-  content: "";
-  position: absolute;
-  left: 1.24rem;
-  top: 50%;
-  width: 0.36rem;
-  height: 0.58rem;
-  border-right: 2px solid #06111f;
-  border-bottom: 2px solid #06111f;
-  transform: translateY(-60%) rotate(45deg);
+  border-right: 3px solid var(--benefit-blue-strong);
+  border-bottom: 3px solid var(--benefit-blue-strong);
+  transform: translateY(-62%) rotate(45deg);
 }
 
 .detail-visual-frame {
