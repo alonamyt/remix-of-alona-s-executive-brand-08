@@ -604,10 +604,11 @@ body[data-theme="day"] .inline-back-link {
   height: clamp(220px, 24vh, 310px);
   overflow: hidden;
   padding: 0;
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-radius: var(--radius-lg);
   background: transparent;
   box-shadow: none;
   align-self: stretch;
+  margin: 0 0.72rem 0.72rem;
 }
 
 .showcase-button-visual img,
@@ -617,6 +618,14 @@ body[data-theme="day"] .inline-back-link {
   object-fit: cover;
   object-position: center;
   border-radius: inherit;
+}
+
+body[data-theme="night"] .showcase-button-visual {
+  box-shadow: inset 0 0 0 1px rgba(160, 205, 255, 0.16);
+}
+
+body[data-theme="day"] .showcase-button-visual {
+  box-shadow: none;
 }
 
 .detail-slide {
