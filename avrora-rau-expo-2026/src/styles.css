@@ -621,11 +621,55 @@ body[data-theme="day"] .inline-back-link {
   font-size: 1.05rem;
 }
 
+.detail-benefits-label {
+  margin: 0.3rem 0 0;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
 .detail-list {
   display: grid;
-  gap: 0.55rem;
-  padding-left: 1.25rem;
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   color: var(--text-soft);
+}
+
+.detail-list li {
+  position: relative;
+  padding: 0.95rem 1rem 0.95rem 3.2rem;
+  border-radius: 1.15rem;
+  background:
+    linear-gradient(135deg, rgba(91, 194, 255, 0.12), rgba(255, 207, 88, 0.12)),
+    rgba(11, 22, 37, 0.72);
+  box-shadow: inset 0 0 0 1px rgba(110, 168, 255, 0.18);
+}
+
+.detail-list li::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  width: 1.45rem;
+  height: 1.45rem;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, rgba(91, 194, 255, 0.95), rgba(255, 207, 88, 0.95));
+  box-shadow: 0 0 18px rgba(91, 194, 255, 0.28);
+}
+
+.detail-list li::after {
+  content: "";
+  position: absolute;
+  left: 1.45rem;
+  top: 50%;
+  width: 0.42rem;
+  height: 0.7rem;
+  border-right: 2px solid #06111f;
+  border-bottom: 2px solid #06111f;
+  transform: translateY(-63%) rotate(45deg);
 }
 
 .detail-visual-frame {
@@ -892,3 +936,4 @@ body[data-theme="day"] .view-counter {
     white-space: normal;
   }
 }
+
