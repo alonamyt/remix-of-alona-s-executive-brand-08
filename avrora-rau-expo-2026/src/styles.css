@@ -21,8 +21,10 @@
   --radius-lg: 1.5rem;
   --radius-md: 1.1rem;
   --page-width: min(1500px, calc(100vw - 0.5rem));
-  --screen-panel-height: clamp(34rem, 78vh, 46rem);
-  --showcase-panel-height: clamp(26rem, 62vh, 36rem);
+  --topbar-height: 2.9rem;
+  --slide-height: calc(100svh - var(--topbar-height) - 0.35rem);
+  --screen-panel-height: var(--slide-height);
+  --showcase-panel-height: var(--slide-height);
   --screen-panel-padding: clamp(0.42rem, 0.7vw, 0.62rem);
   font-family: "Geist", sans-serif;
 }
@@ -135,7 +137,7 @@ button {
   width: var(--page-width);
   margin: 0 auto;
   padding: 0.03rem 0 0.02rem;
-  min-height: 2.8rem;
+  min-height: var(--topbar-height);
   backdrop-filter: blur(18px);
   background: linear-gradient(180deg, rgba(7, 17, 31, 0.88), rgba(7, 17, 31, 0.56));
   border-bottom: 1px solid var(--line);
@@ -264,6 +266,11 @@ body[data-theme="day"] .language-chip {
 .detail-layout {
   grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
   gap: clamp(0.72rem, 1.2vw, 1rem);
+}
+
+.hero-slide,
+.showcase-slide {
+  min-height: var(--slide-height);
 }
 
 .hero-copy,
@@ -482,8 +489,8 @@ body[data-theme="day"] .inline-back-link {
 }
 
 .showcase-slide {
-  align-content: start;
-  min-height: var(--showcase-panel-height);
+  align-content: stretch;
+  grid-template-rows: auto 1fr;
 }
 
 .showcase-slide .section-heading {
@@ -491,19 +498,39 @@ body[data-theme="day"] .inline-back-link {
   padding-bottom: 0.22rem;
 }
 
-.product-grid {
+.showcase-shortcut-badge,
+.showcase-shortcut-title {
+  display: block;
+}
+
+.showcase-shortcut-badge {
+  color: var(--accent);
+  font-family: "Geist Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.showcase-shortcut-title {
+  font-size: clamp(1rem, 1.25vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.showcase-button-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.5rem;
   padding: 0 var(--screen-panel-padding) var(--screen-panel-padding);
   align-content: stretch;
 }
 
-.product-card {
+.showcase-button-card {
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 0.55rem;
-  min-height: clamp(168px, 18vh, 220px);
+  min-height: clamp(260px, 48vh, 420px);
   padding: 0.72rem;
   border-radius: var(--radius-lg);
   background:
@@ -515,19 +542,19 @@ body[data-theme="day"] .inline-back-link {
     var(--shadow);
 }
 
-.product-card-copy {
+.showcase-button-copy {
   display: grid;
   gap: 0.22rem;
 }
 
-.product-card-copy h3 {
+.showcase-button-copy h3 {
   font-size: clamp(2.3rem, 2.7vw, 3.25rem);
   line-height: 0.96;
   max-width: none;
   text-wrap: pretty;
 }
 
-.product-card-copy p {
+.showcase-button-copy p {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -536,17 +563,17 @@ body[data-theme="day"] .inline-back-link {
   font-size: 0.98rem;
 }
 
-.product-card-visual {
+.showcase-button-visual {
   display: grid;
   place-items: center;
-  min-height: clamp(72px, 7vw, 110px);
+  min-height: clamp(100px, 18vh, 180px);
   overflow: hidden;
   border-radius: calc(var(--radius-lg) - 0.35rem);
   background: transparent;
   box-shadow: none;
 }
 
-.product-card-visual img,
+.showcase-button-visual img,
 .detail-image {
   width: 100%;
   height: 100%;
@@ -738,7 +765,6 @@ body[data-theme="day"] .view-counter {
 }
 
 .hero-slide {
-  min-height: var(--screen-panel-height);
   align-content: start;
   align-items: stretch;
 }
@@ -758,12 +784,8 @@ body[data-theme="day"] .view-counter {
 
   .hero-slide,
   .detail-layout,
-  .product-grid {
+  .showcase-button-grid {
     grid-template-columns: 1fr;
-  }
-
-  .product-grid {
-    display: grid;
   }
 
   .hero-slide {
@@ -788,6 +810,7 @@ body[data-theme="day"] .view-counter {
 @media (max-width: 720px) {
   :root {
     --page-width: min(100vw - 1rem, 100%);
+    --topbar-height: auto;
     --screen-panel-height: auto;
     --showcase-panel-height: auto;
     --screen-panel-padding: 1rem;
@@ -817,11 +840,15 @@ body[data-theme="day"] .view-counter {
     flex-direction: column;
   }
 
-  .product-card {
+  .showcase-button-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .showcase-button-card {
     min-height: auto;
   }
 
-  .product-card-visual {
+  .showcase-button-visual {
     min-height: 120px;
   }
 
@@ -835,7 +862,7 @@ body[data-theme="day"] .view-counter {
     font-size: clamp(1.8rem, 9vw, 2.5rem);
   }
 
-  .product-card-copy h3 {
+  .showcase-button-copy h3 {
     font-size: clamp(1.8rem, 7vw, 2.5rem);
     max-width: none;
   }

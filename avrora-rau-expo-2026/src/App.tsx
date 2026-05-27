@@ -493,15 +493,16 @@ export default function App() {
             <h2>{copy.showcase.title}</h2>
           </div>
 
-          <div className="product-grid">
+          <div className="showcase-button-grid" aria-label={copy.showcase.title}>
             {products.map((product) => (
-              <a key={product.id} className="product-card" href={`#${product.id}`}>
-                <div className="product-card-copy">
+              <a key={product.id} className="showcase-button-card" href={`#${product.id}`}>
+                <div className="showcase-button-copy">
+                  <span className="showcase-shortcut-badge">{product.badge}</span>
                   <h3>{product.title}</h3>
                   <p>{product.summary}</p>
                 </div>
 
-                <div className="product-card-visual">
+                <div className="showcase-button-visual">
                   {product.id === "smart-parking" ? (
                     <SmartParkingPlaceholder theme={theme} />
                   ) : (
