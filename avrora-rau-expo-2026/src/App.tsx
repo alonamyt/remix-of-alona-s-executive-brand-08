@@ -381,7 +381,14 @@ function ExpoVisual({ theme }: { theme: ThemeMode }) {
 
 export default function App() {
   const [language, setLanguage] = useState<Language>("ua");
-  const [theme, setTheme] = useState<ThemeMode>("night");
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    if (typeof window === "undefined") {
+      return "night";
+    }
+
+    const savedTheme = window.localStorage.getItem("avrora-rau-theme");
+    return savedTheme === "day" || savedTheme === "night" ? savedTheme : "night";
+  });
   const [visitorCount, setVisitorCount] = useState<number | null>(null);
   const [trafficGalleryIndex, setTrafficGalleryIndex] = useState(0);
   const [lprGalleryIndex, setLprGalleryIndex] = useState(0);
@@ -444,7 +451,9 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = language === "ua" ? "uk" : "en";
     document.title = copy.pageTitle;
+    document.documentElement.dataset.theme = theme;
     document.body.dataset.theme = theme;
+    window.localStorage.setItem("avrora-rau-theme", theme);
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute("content", copy.pageDescription);
