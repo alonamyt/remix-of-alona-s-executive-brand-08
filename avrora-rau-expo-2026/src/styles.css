@@ -620,6 +620,12 @@ body[data-theme="day"] .inline-back-link {
   border-radius: inherit;
 }
 
+.detail-image {
+  display: block;
+  min-height: 220px;
+  border-radius: calc(var(--radius-lg) - 0.25rem);
+}
+
 body[data-theme="night"] .showcase-button-visual {
   box-shadow: inset 0 0 0 1px rgba(160, 205, 255, 0.16);
 }
