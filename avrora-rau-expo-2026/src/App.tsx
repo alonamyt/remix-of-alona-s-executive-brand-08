@@ -292,6 +292,25 @@ const productsByLanguage: Record<Language, ProductContent[]> = {
   ],
 };
 
+productsByLanguage.ua[0] = {
+  ...productsByLanguage.ua[0],
+  summary:
+    "Система підрахунку та аналітики конверсії відвідування та покупок клієнтів на базі відеоаналітики, алгоритмів машинного навчання.",
+  detailLead:
+    "Інструмент працює на базі розумних камер і дозволяє в режимі реального часу аналізувати шлях покупця: від моменту, коли людина звертає увагу на магазин, до здійснення покупки на касі.",
+  detailBody:
+    "Платформа також аналізує середній чек, його глибину, активні години та варіативність трафіку, підсвічує патерни.",
+  bullets: [
+    "Платформа змінює підхід від ручного точкового аналізу до системного.",
+    "Дає можливість вивчати і управляти потоком клієнтів та приймати рішення, спираючись на точні цифри.",
+    "Економія 240 люд./год (30 тис. грн) в місяць і 2880 люд./год (360 тис. грн) в рік на аутсорсі.",
+    "Дає можливість бачити реальну загальну картину трафіку і конверсії та заглибитись у кожен регіон, магазин, годину роботи.",
+    "Дозволяє оцінювати ефективність як окремого магазину, так і типу магазинів у порівнянні один до одного, аналізувати динаміку.",
+    "Дозволяє оцінювати реакцію людей на маркетингові активності.",
+  ],
+  metrics: ["Video analytics", "Machine learning", "Traffic insights"],
+};
+
 function ExpoVisual({ theme }: { theme: ThemeMode }) {
   return (
     <div className={`expo-visual expo-visual-${theme}`} aria-hidden="true">
@@ -486,7 +505,6 @@ export default function App() {
             {products.map((product) => (
               <a key={product.id} className="showcase-button-card" href={`#${product.id}`}>
                 <div className="showcase-button-copy">
-                  <span className="showcase-shortcut-badge">{product.badge}</span>
                   <h3>{product.title}</h3>
                   <p>{product.summary}</p>
                 </div>
