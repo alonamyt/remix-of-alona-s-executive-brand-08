@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;700&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;700&display=swap");
 
 :root {
   color-scheme: dark;
@@ -765,6 +765,68 @@ body[data-theme="day"] .inline-back-link {
   display: block;
 }
 
+.traffic-platform-image-button {
+  padding: 0;
+  border: 0;
+  width: 100%;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.traffic-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 1.4rem;
+  background: rgba(3, 9, 18, 0.82);
+  backdrop-filter: blur(14px);
+}
+
+.traffic-lightbox-panel {
+  position: relative;
+  width: min(1180px, 100%);
+  padding: 1rem;
+  border-radius: 1.5rem;
+  background: rgba(8, 18, 35, 0.9);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 24px 80px -38px rgba(0, 0, 0, 0.9);
+}
+
+.traffic-lightbox-image {
+  width: 100%;
+  max-height: min(78vh, 900px);
+  object-fit: contain;
+  object-position: center;
+  border-radius: 1.15rem;
+  display: block;
+}
+
+.traffic-lightbox-close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 3;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(7, 17, 31, 0.84);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+}
+
+.traffic-lightbox-arrow {
+  top: 50%;
+}
+
+.traffic-lightbox-dots {
+  margin-top: 0.8rem;
+}
+
 .traffic-carousel-arrow {
   position: absolute;
   top: 50%;
@@ -1075,3 +1137,4 @@ body[data-theme="day"] .view-counter {
     align-items: stretch;
   }
 }
+

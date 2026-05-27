@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import logoDark from "./assets/ard-logo-white.png";
 import logoLight from "./assets/project/день/Group 23.png";
 import auroraLogoDark from "./assets/aurora-white-subtitle.png";
@@ -342,6 +342,7 @@ export default function App() {
   const [theme, setTheme] = useState<ThemeMode>("night");
   const [visitorCount, setVisitorCount] = useState<number | null>(null);
   const [trafficGalleryIndex, setTrafficGalleryIndex] = useState(0);
+  const [isTrafficLightboxOpen, setIsTrafficLightboxOpen] = useState(false);
 
   const copy = locales[language];
   const products = productsByLanguage[language];
@@ -358,6 +359,10 @@ export default function App() {
   );
 
   const activeTrafficGalleryImage = trafficPlatformGallery[trafficGalleryIndex] ?? trafficPlatformGallery[0];
+  const showPreviousTrafficGalleryImage = () =>
+    setTrafficGalleryIndex((current) => (current === 0 ? trafficPlatformGallery.length - 1 : current - 1));
+  const showNextTrafficGalleryImage = () =>
+    setTrafficGalleryIndex((current) => (current === trafficPlatformGallery.length - 1 ? 0 : current + 1));
 
   useEffect(() => {
     document.documentElement.lang = language === "ua" ? "uk" : "en";
@@ -403,6 +408,25 @@ export default function App() {
         return;
       }
 
+      if (isTrafficLightboxOpen) {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          setIsTrafficLightboxOpen(false);
+        }
+
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          showPreviousTrafficGalleryImage();
+        }
+
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          showNextTrafficGalleryImage();
+        }
+
+        return;
+      }
+
       const currentIndex = sectionOrder.findIndex((id) => `#${id}` === window.location.hash);
       const safeIndex = currentIndex === -1 ? 0 : currentIndex;
 
@@ -434,7 +458,7 @@ export default function App() {
 
     window.addEventListener("keydown", handleKeydown);
     return () => window.removeEventListener("keydown", handleKeydown);
-  }, [products]);
+  }, [isTrafficLightboxOpen, products]);
 
   const topLogo = theme === "night" ? logoDark : logoLight;
   const topAuroraLogo = theme === "night" ? auroraLogoDark : auroraLogoLight;
@@ -666,6 +690,63 @@ export default function App() {
         ))}
       </main>
 
+      {isTrafficLightboxOpen ? (
+        <div
+          className="traffic-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Traffic Counter platform gallery"
+          onClick={() => setIsTrafficLightboxOpen(false)}
+        >
+          <div className="traffic-lightbox-panel" onClick={(event) => event.stopPropagation()}>
+            <button
+              type="button"
+              className="traffic-lightbox-close"
+              aria-label="Р—Р°РєСЂРёС‚Рё РіР°Р»РµСЂРµСЋ"
+              onClick={() => setIsTrafficLightboxOpen(false)}
+            >
+              ×
+            </button>
+
+            <button
+              type="button"
+              className="traffic-carousel-arrow traffic-carousel-arrow-left traffic-lightbox-arrow"
+              aria-label="РџРѕРїРµСЂРµРґРЅС–Р№ СЃРєСЂС–РЅ"
+              onClick={showPreviousTrafficGalleryImage}
+            >
+              вЂ№
+            </button>
+
+            <img
+              className="traffic-lightbox-image"
+              src={activeTrafficGalleryImage}
+              alt={`Traffic Counter platform screen ${trafficGalleryIndex + 1}`}
+            />
+
+            <button
+              type="button"
+              className="traffic-carousel-arrow traffic-carousel-arrow-right traffic-lightbox-arrow"
+              aria-label="РќР°СЃС‚СѓРїРЅРёР№ СЃРєСЂС–РЅ"
+              onClick={showNextTrafficGalleryImage}
+            >
+              вЂє
+            </button>
+
+            <div className="traffic-platform-dots traffic-lightbox-dots" aria-label="РЎР»Р°Р№РґРё РїР»Р°С‚С„РѕСЂРјРё">
+              {trafficPlatformGallery.map((imageSrc, index) => (
+                <button
+                  key={`lightbox-${imageSrc}`}
+                  type="button"
+                  className={`traffic-platform-dot${index === trafficGalleryIndex ? " is-active" : ""}`}
+                  aria-label={`РџРѕРєР°Р·Р°С‚Рё СЃРєСЂС–РЅ ${index + 1}`}
+                  onClick={() => setTrafficGalleryIndex(index)}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       <footer className="view-counter" aria-label={visitorLabel}>
         <span className="view-counter-icon" aria-hidden="true">
           <EyeIcon />
@@ -676,3 +757,4 @@ export default function App() {
     </div>
   );
 }
+
