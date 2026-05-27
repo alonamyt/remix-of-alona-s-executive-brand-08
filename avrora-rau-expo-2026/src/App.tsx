@@ -9,6 +9,7 @@ import trafficVisualNight from "./assets/project/conversion tracking3.png";
 import trafficVisualDay from "./assets/project/день/conversion tracking3d.png";
 import generatorVisualNight from "./assets/project/Generator control system2.png";
 import generatorVisualDay from "./assets/project/день/Generator control systemd.png";
+import generatorPlatformExtra from "./assets/project/generator-platform-extra.png";
 import lprVisualNight from "./assets/project/Vehicle detection system2.png";
 import lprVisualDay from "./assets/project/день/Vehicle detection systemd.png";
 
@@ -651,11 +652,18 @@ export default function App() {
                           ‹
                         </button>
 
-                        <img
-                          className="traffic-platform-carousel-image"
-                          src={activeTrafficGalleryImage}
-                          alt={`Traffic Counter platform screen ${trafficGalleryIndex + 1}`}
-                        />
+                        <button
+                          type="button"
+                          className="traffic-platform-image-button"
+                          aria-label={`Відкрити скрін ${trafficGalleryIndex + 1} у великому розмірі`}
+                          onClick={() => setIsTrafficLightboxOpen(true)}
+                        >
+                          <img
+                            className="traffic-platform-carousel-image"
+                            src={activeTrafficGalleryImage}
+                            alt={`Traffic Counter platform screen ${trafficGalleryIndex + 1}`}
+                          />
+                        </button>
 
                         <button
                           type="button"
@@ -682,6 +690,23 @@ export default function App() {
                           />
                         ))}
                       </div>
+                    </div>
+                  </div>
+                ) : product.id === "generator-control" ? (
+                  <div className="generator-platform-showcase">
+                    <img
+                      className="detail-image"
+                      src={productVisuals[product.id]}
+                      alt={product.visualAlt}
+                    />
+
+                    <div className="generator-platform-extra">
+                      <span className="generator-platform-label">Платформа контролю генераторів</span>
+                      <img
+                        className="generator-platform-extra-image"
+                        src={generatorPlatformExtra}
+                        alt="Додатковий екран платформи контролю генераторів"
+                      />
                     </div>
                   </div>
                 ) : (
