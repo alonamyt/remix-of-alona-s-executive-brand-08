@@ -12,6 +12,9 @@ import generatorVisualDay from "./assets/project/день/Generator control syst
 import lprVisualNight from "./assets/project/Vehicle detection system2.png";
 import lprVisualDay from "./assets/project/день/Vehicle detection systemd.png";
 
+import smartParkingVisualNight from "./assets/project/smart-parking-night.png";
+import smartParkingVisualDay from "./assets/project/smart-parking-day.jpg";
+
 type Language = "ua" | "en";
 type ThemeMode = "night" | "day";
 
@@ -302,21 +305,6 @@ function ExpoVisual({ theme }: { theme: ThemeMode }) {
   );
 }
 
-function SmartParkingPlaceholder({ theme }: { theme: ThemeMode }) {
-  return (
-    <div className={`parking-placeholder parking-placeholder-${theme}`} aria-hidden="true">
-      <div className="parking-road parking-road-a" />
-      <div className="parking-road parking-road-b" />
-      <div className="parking-slot-grid">
-        {Array.from({ length: 8 }).map((_, index) => (
-          <span key={index} className={index % 3 === 0 ? "is-active" : ""} />
-        ))}
-      </div>
-      <div className="parking-badge">Smart Parking</div>
-    </div>
-  );
-}
-
 export default function App() {
   const [language, setLanguage] = useState<Language>("ua");
   const [theme, setTheme] = useState<ThemeMode>("night");
@@ -331,6 +319,7 @@ export default function App() {
       "traffic-counter": theme === "night" ? trafficVisualNight : trafficVisualDay,
       "generator-control": theme === "night" ? generatorVisualNight : generatorVisualDay,
       "lpr-access-control": theme === "night" ? lprVisualNight : lprVisualDay,
+      "smart-parking": theme === "night" ? smartParkingVisualNight : smartParkingVisualDay,
     }),
     [theme],
   );
@@ -503,11 +492,7 @@ export default function App() {
                 </div>
 
                 <div className="showcase-button-visual">
-                  {product.id === "smart-parking" ? (
-                    <SmartParkingPlaceholder theme={theme} />
-                  ) : (
-                    <img src={productVisuals[product.id]} alt={product.visualAlt} />
-                  )}
+                  <img src={productVisuals[product.id]} alt={product.visualAlt} />
                 </div>
               </a>
             ))}
@@ -549,15 +534,11 @@ export default function App() {
               </div>
 
               <div className="detail-visual-frame">
-                {product.id === "smart-parking" ? (
-                  <SmartParkingPlaceholder theme={theme} />
-                ) : (
-                  <img
-                    className="detail-image"
-                    src={productVisuals[product.id]}
-                    alt={product.visualAlt}
-                  />
-                )}
+                <img
+                  className="detail-image"
+                  src={productVisuals[product.id]}
+                  alt={product.visualAlt}
+                />
               </div>
             </div>
           </section>
