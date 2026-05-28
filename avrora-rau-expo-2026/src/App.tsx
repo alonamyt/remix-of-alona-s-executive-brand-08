@@ -58,8 +58,11 @@ type LocaleContent = {
     badge: string;
     title: string;
     subtitle: string;
+    support: string;
     primary: string;
     secondary: string;
+    proof: string[];
+    visualLabel: string;
   };
   showcase: {
     title: string;
@@ -152,10 +155,13 @@ const locales: Record<Language, LocaleContent> = {
     },
     hero: {
       badge: "Avrora RAU Expo 2026",
-      title: "Створюємо технології для розвитку бізнесу.",
-      subtitle: "Системи, що масштабуються. Технології для зростання. Інструменти для щоденної операційної стійкості.",
+      title: "Технології для розвитку бізнесу.",
+      subtitle: "R&D-рішення для безпеки, аналітики, операційної стійкості та керування інфраструктурою.",
+      support: "Від expo-демо до прикладних систем, які працюють у магазинах, логістиці та на об'єктах компанії.",
       primary: "Дивитися продукти",
-      secondary: "До 4 рішень",
+      secondary: "4 продуктові системи",
+      proof: ["Traffic Counter", "Generator Control", "LPR & Access", "Smart Parking"],
+      visualLabel: "Retail R&D systems",
     },
     showcase: {
       title: "Продукти",
@@ -181,10 +187,13 @@ const locales: Record<Language, LocaleContent> = {
     },
     hero: {
       badge: "Avrora RAU Expo 2026",
-      title: "We create technology for business growth.",
-      subtitle: "Scalable systems. Technology for expansion. Tools for resilient daily operations.",
+      title: "Technology for business growth.",
+      subtitle: "R&D systems for security, analytics, operational resilience, and infrastructure control.",
+      support: "From expo storytelling to applied products already designed for stores, logistics, and physical sites.",
       primary: "Explore products",
-      secondary: "Go to 4 solutions",
+      secondary: "4 product systems",
+      proof: ["Traffic Counter", "Generator Control", "LPR & Access", "Smart Parking"],
+      visualLabel: "Retail R&D systems",
     },
     showcase: {
       title: "Products",
@@ -606,6 +615,7 @@ export default function App() {
             <p className="eyebrow">{copy.hero.badge}</p>
             <h1>{copy.hero.title}</h1>
             <p className="hero-subtitle">{copy.hero.subtitle}</p>
+            <p className="hero-support">{copy.hero.support}</p>
 
             <div className="hero-actions">
               <a className="button button-primary" href="#showcase">
@@ -615,10 +625,24 @@ export default function App() {
                 {copy.hero.secondary}
               </a>
             </div>
+
+            <div className="hero-proof" aria-label="Product directions">
+              {copy.hero.proof.map((item) => (
+                <span key={item} className="hero-proof-chip">
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
 
           <div className="hero-visual-panel">
-            <ExpoVisual theme={theme} />
+            <div className="hero-visual-wrap">
+              <ExpoVisual theme={theme} />
+              <div className="hero-visual-label">
+                <span className="hero-visual-label-mark" />
+                {copy.hero.visualLabel}
+              </div>
+            </div>
           </div>
         </section>
 
