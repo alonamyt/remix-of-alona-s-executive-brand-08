@@ -121,7 +121,7 @@ nav.visible{transform:translateY(0)}
 .modal-body{max-width:960px;margin:0 auto;padding:12px max(24px,5vw) 72px}
 .modal-meta-row{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:12px}
 .modal-meta-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-width:0}
-.modal-meta-right{display:flex;justify-content:flex-end;flex:1 1 280px}
+.modal-meta-right{display:flex;justify-content:flex-end;align-items:center;gap:12px;flex:1 1 280px}
 .modal-nav-layer{pointer-events:none}
 .modal-project-nav{position:fixed;top:50%;transform:translateY(-50%);z-index:20003;width:48px;height:48px;border:none;border-radius:999px;background:rgba(255,255,255,0.88);color:var(--text);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 18px 34px rgba(15,23,42,0.16);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);cursor:pointer;pointer-events:auto;transition:transform .2s ease, background .2s ease, opacity .2s ease}
 .modal-project-nav:hover{transform:translateY(-50%) scale(1.04);background:rgba(255,255,255,0.96)}
@@ -212,16 +212,49 @@ nav.visible{transform:translateY(0)}
 .owner-photo-initials{position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700;letter-spacing:0.04em}
 .owner-photo-fallback .owner-photo-initials{display:flex}
 .owner-modal-pill{display:inline-flex;align-items:center;gap:8px;padding:2px 10px 2px 2px;border-radius:18px;background:rgba(255,255,255,0.72);border:1px solid rgba(255,255,255,0.55);box-shadow:0 12px 24px rgba(15,23,42,0.06);backdrop-filter:blur(14px)}
+.owner-modal-pill-inner{display:inline-flex;align-items:center;gap:8px}
 .owner-modal-meta{display:flex;flex-direction:column;gap:0;line-height:1;min-width:0}
 .owner-modal-label{font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text4)}
 .owner-modal-name{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-0.02em}
+.owner-avatar-launch{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;padding:0 12px;border:none;border-radius:999px;background:#0f172a;color:#fff;font-size:12px;font-weight:700;line-height:1;cursor:pointer;box-shadow:0 10px 20px rgba(15,23,42,0.14);flex:0 0 auto}
+.owner-avatar-launch:hover{background:#111c31}
+.owner-avatar-launch-icon{font-size:13px;line-height:1}
+.avatar-popup{position:fixed;top:92px;right:24px;width:min(420px,calc(100vw - 40px));background:rgba(255,255,255,.98);border:1px solid rgba(15,23,42,.06);border-radius:28px;box-shadow:0 26px 60px rgba(15,23,42,.20);overflow:hidden;opacity:0;pointer-events:none;transform:translateY(-12px) scale(.98);transition:opacity .25s ease,transform .25s ease;z-index:26000}
+.avatar-popup.open{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+.avatar-popup-top{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 10px;background:linear-gradient(180deg,#fafbff 0%,rgba(250,251,255,.88) 100%)}
+.avatar-popup-title{font-size:13px;font-weight:700;color:#111827;letter-spacing:.03em}
+.avatar-popup-close{width:34px;height:34px;border:none;border-radius:50%;background:#eef2ff;color:#111827;font-size:22px;line-height:1;cursor:pointer}
+.avatar-popup-body{padding:0 18px 18px}
+.avatar-popup-frame{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:16/9;background:#0f172a}
+.avatar-popup-frame video,.avatar-popup-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.avatar-popup-photo-shell{position:relative;width:100%;height:100%;overflow:hidden;background:radial-gradient(circle at 20% 20%,rgba(255,255,255,0.16),transparent 35%),linear-gradient(135deg,#162033 0%,#0f172a 100%)}
+.avatar-popup-photo-shell::after{content:"";position:absolute;inset:auto -20% -30% -20%;height:48%;background:radial-gradient(ellipse at center,rgba(0,122,255,0.22),transparent 70%);pointer-events:none}
+.avatar-popup-photo{width:100%;height:100%;object-fit:cover;animation:avatarFloat 12s ease-in-out infinite alternate;transform-origin:center 28%}
+.avatar-popup-photo-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,23,42,0.12) 0%,rgba(15,23,42,0.36) 100%)}
+.avatar-popup-wave{position:absolute;left:18px;right:18px;bottom:16px;display:flex;align-items:flex-end;gap:6px;height:34px}
+.avatar-popup-wave span{flex:1 1 0;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(125,211,252,0.72));animation:wavePulse 1.4s ease-in-out infinite}
+.avatar-popup-wave span:nth-child(2){animation-delay:.12s}
+.avatar-popup-wave span:nth-child(3){animation-delay:.24s}
+.avatar-popup-wave span:nth-child(4){animation-delay:.36s}
+.avatar-popup-wave span:nth-child(5){animation-delay:.48s}
+.avatar-popup-wave span:nth-child(6){animation-delay:.60s}
+.avatar-popup-wave span:nth-child(7){animation-delay:.72s}
+.avatar-popup-wave span:nth-child(8){animation-delay:.84s}
+.avatar-popup-wave span:nth-child(9){animation-delay:.96s}
+.avatar-popup-wave span:nth-child(10){animation-delay:1.08s}
+.avatar-popup-status{font-size:12px;line-height:1.45;color:#667085;margin-top:12px}
+.avatar-popup-copy{font-size:13px;line-height:1.55;color:#1f2937;margin-top:10px}
+@keyframes avatarFloat{0%{transform:scale(1.04) translate3d(-1%,0,0)}100%{transform:scale(1.1) translate3d(1.5%,-1.5%,0)}}
+@keyframes wavePulse{0%,100%{height:18%}50%{height:100%}}
 @media (max-width: 640px){
   .owner-photo-lg{width:112px;height:112px}
   .owner-photo-md{width:48px;height:48px}
   .owner-modal-pill{padding-right:8px}
+  .owner-avatar-launch-label{display:none}
   .modal-project-nav{width:42px;height:42px;font-size:20px}
   .modal-project-nav-prev{left:10px}
   .modal-project-nav-next{right:10px}
+  .avatar-popup{right:16px;top:76px}
 }
 
 /* ═══ STATS SECTION ═══ */
@@ -1378,6 +1411,25 @@ const statusMap = {
   scale: {cls:"status-scale", label:"Масштабування"}
 };
 
+const avatarMediaByProject = {
+  wfm: {
+    poster: 'images/gorbunov_upscaled.jpg',
+    motionVideos: [
+      'images/wfm_victor_anytalker_4s.mp4',
+      'images/wfm_victor_anytalker_seg1.mp4'
+    ],
+    audioSegments: [
+      'images/wfm-uk-tts/wfm_seg_01.wav',
+      'images/wfm-uk-tts/wfm_seg_02.wav',
+      'images/wfm-uk-tts/wfm_seg_03.wav',
+      'images/wfm-uk-tts/wfm_seg_04.wav',
+      'images/wfm-uk-tts/wfm_seg_05.wav',
+      'images/wfm-uk-tts/wfm_seg_06.wav'
+    ],
+    briefingText: `Вітаю. Представляю статус проєкту WFM, Work Force Management. Проєкт уже працює в live-режимі та формує основу для більш точного, керованого і економічно ефективного планування персоналу в роздрібній мережі. Його практична цінність полягає в тому, щоб забезпечувати необхідну кількість співробітників у потрібний час на торгових точках, знижувати операційні втрати та підвищувати якість виконання бізнес-процесів. На поточному етапі команда сфокусована на трьох ключових напрямах: інтеграція з 1С та Active Directory, підготовка рішення до тесту на проникнення, а також публікація зовнішнього контуру системи. Наступний крок для команди — завершити інтеграційний блок, посилити безпекову готовність і підготувати рішення до подальшого масштабування.`
+  }
+};
+
 const ownerPhotoMap = {
           'Кустреюк О.': { src: 'images/team/provided/kustreuk-current.png' },
           'Горбунов В.': { src: 'images/team/provided/gorbunov-current.png' },
@@ -1582,6 +1634,68 @@ function renderOwnerBadge(owner) {
   `;
 }
 
+function getProjectAvatarAssets(project) {
+  const mapped = avatarMediaByProject[project.id] || {};
+  return {
+    poster: project.presenterPhoto || mapped.poster || '',
+    motionVideos: mapped.motionVideos || [],
+    audioSegments: mapped.audioSegments || [],
+    briefingText: project.avatarBriefingText || mapped.briefingText || project.voiceover || ''
+  };
+}
+
+function renderOwnerAvatarBadge(project) {
+  const owner = project.owner;
+  return `
+    <span class="owner-modal-pill is-interactive" data-owner="${escapeAttr(owner)}" role="button" tabindex="0" aria-label="Показати проєкти керівника ${escapeAttr(owner)}">
+      <span class="owner-modal-pill-inner">
+        ${renderOwnerPhoto(owner, 'md')}
+        <span class="owner-modal-meta">
+          <span class="owner-modal-label">Керівник</span>
+          <span class="owner-modal-name">${owner}</span>
+        </span>
+      </span>
+    </span>
+  `;
+}
+
+function renderAvatarPopup(project) {
+  const assets = getProjectAvatarAssets(project);
+  if (!assets.poster && !assets.briefingText) return '';
+  const poster = assets.poster ? resolveImageSrc(assets.poster) : '';
+  const motionVideo = assets.motionVideos && assets.motionVideos.length ? resolveImageSrc(assets.motionVideos[0]) : '';
+  const shortCopy = assets.briefingText
+    ? assets.briefingText.split('. ').slice(0, 2).join('. ').trim()
+    : '';
+  return `
+    <div class="avatar-popup" id="avatarPopup" aria-hidden="true">
+      <div class="avatar-popup-top">
+        <div class="avatar-popup-title">Executive Avatar Preview</div>
+        <button class="avatar-popup-close" type="button" id="avatarPopupClose">&times;</button>
+      </div>
+      <div class="avatar-popup-body">
+        <div class="avatar-popup-frame">
+          ${motionVideo ? `
+            <video id="avatarMotionVideo" class="avatar-popup-motion-video" autoplay muted loop playsinline preload="auto" poster="${poster}">
+              <source src="${motionVideo}" type="video/mp4">
+            </video>
+          ` : `
+            <div class="avatar-popup-photo-shell">
+              ${poster ? `<img class="avatar-popup-photo" src="${poster}" alt="${escapeAttr(project.owner || project.name)}" loading="lazy">` : ''}
+              <div class="avatar-popup-photo-overlay"></div>
+              <div class="avatar-popup-wave" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+          `}
+        </div>
+        <div class="avatar-popup-status" id="avatarPopupStatus">Запускаю executive-озвучку без лип-синк розсинхрону.</div>
+      </div>
+    </div>
+  `;
+}
+
 function renderModalMetaRow(project, statusMeta) {
   return `
     <div class="modal-meta-row">
@@ -1591,7 +1705,11 @@ function renderModalMetaRow(project, statusMeta) {
         <span style="font-size:12px;color:var(--blue);background:rgba(0,122,255,0.08);padding:4px 10px;border-radius:100px">${project.category}</span>
       </div>
       <div class="modal-meta-right">
-        ${renderOwnerBadge(project.owner)}
+        <button class="owner-avatar-launch" type="button" data-avatar-launch="${escapeAttr(project.id)}" aria-label="Озвучити статус проєкту">
+          <span class="owner-avatar-launch-icon">▶</span>
+          <span class="owner-avatar-launch-label">Озвучити</span>
+        </button>
+        ${renderOwnerAvatarBadge(project)}
       </div>
     </div>
   `;
@@ -1619,6 +1737,52 @@ function renderModalVideo(src) {
 
 let visibleProjects = projects.slice();
 let currentModalProjectIndex = -1;
+let activeAvatarAudio = null;
+let activeAvatarQueue = [];
+let activeAvatarSegmentIndex = 0;
+
+function stopAvatarAudioSequence() {
+  if (activeAvatarAudio) {
+    activeAvatarAudio.pause();
+    activeAvatarAudio.src = '';
+    activeAvatarAudio = null;
+  }
+  activeAvatarQueue = [];
+  activeAvatarSegmentIndex = 0;
+}
+
+function playAvatarAudioSequence(segmentPaths = [], statusEl) {
+  stopAvatarAudioSequence();
+  if (!segmentPaths.length) return;
+  activeAvatarQueue = segmentPaths.map(src => resolveImageSrc(src));
+  const audio = new Audio();
+  activeAvatarAudio = audio;
+  audio.preload = 'auto';
+  audio.volume = 1;
+  audio.addEventListener('ended', () => {
+    activeAvatarSegmentIndex += 1;
+    if (activeAvatarSegmentIndex >= activeAvatarQueue.length) {
+      if (statusEl) statusEl.textContent = 'Брифінг завершено.';
+      stopAvatarAudioSequence();
+      return;
+    }
+    audio.src = activeAvatarQueue[activeAvatarSegmentIndex];
+    audio.play().catch(() => {
+      if (statusEl) statusEl.textContent = 'Не вдалося продовжити озвучку.';
+    });
+  });
+  audio.addEventListener('error', () => {
+    if (statusEl) statusEl.textContent = 'Не вдалося відтворити озвучку.';
+    stopAvatarAudioSequence();
+  });
+  audio.src = activeAvatarQueue[0];
+  audio.play().then(() => {
+    if (statusEl) statusEl.textContent = 'Відтворюю executive-озвучку.';
+  }).catch(() => {
+    if (statusEl) statusEl.textContent = 'Браузер заблокував автозапуск озвучки.';
+    stopAvatarAudioSequence();
+  });
+}
 
 function renderProjects() {
   grid.innerHTML = '';
@@ -1840,7 +2004,7 @@ function openModal(p) {
     `;
   }
 
-  modalBody.innerHTML = html;
+  modalBody.innerHTML = `${html}${renderAvatarPopup(p)}`;
   modalOverlay.classList.add('open');
   modalContainer.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1850,6 +2014,12 @@ function openModal(p) {
 function closeModal() {
   modalOverlay.classList.remove('open');
   modalContainer.classList.remove('open');
+  stopAvatarAudioSequence();
+  const popup = document.getElementById('avatarPopup');
+  if (popup) {
+    popup.classList.remove('open');
+    popup.setAttribute('aria-hidden', 'true');
+  }
   document.body.style.overflow = '';
   currentModalProjectIndex = -1;
   updateModalProjectNav();
@@ -1860,9 +2030,87 @@ modalClose.addEventListener('click', closeModal);
 modalPrev.addEventListener('click', () => openProjectByOffset(-1));
 modalNext.addEventListener('click', () => openProjectByOffset(1));
 modalBody.addEventListener('click', e => {
+  const avatarTrigger = e.target.closest('[data-avatar-launch]');
+  if (avatarTrigger) {
+    e.preventDefault();
+    e.stopPropagation();
+    const projectId = avatarTrigger.getAttribute('data-avatar-launch');
+    const project = projects.find(item => item.id === projectId);
+    const assets = project ? getProjectAvatarAssets(project) : null;
+    const popup = document.getElementById('avatarPopup');
+    const status = document.getElementById('avatarPopupStatus');
+    if (popup) {
+      popup.classList.add('open');
+      popup.setAttribute('aria-hidden', 'false');
+    }
+    if (status) {
+      status.textContent = assets?.briefingText
+        ? 'Avatar preview відкрито. Далі підключу студійний голосовий рушій замість browser voice.'
+        : 'Avatar preview відкрито.';
+    }
+    const existingCopy = popup ? popup.querySelector('.avatar-popup-copy') : null;
+    if (popup && assets?.briefingText && !existingCopy) {
+      const copy = document.createElement('div');
+      copy.className = 'avatar-popup-copy';
+      copy.textContent = assets.briefingText.split('. ').slice(0, 2).join('. ').trim();
+      popup.querySelector('.avatar-popup-body')?.appendChild(copy);
+    }
+    const motionVideo = popup ? popup.querySelector('#avatarMotionVideo') : null;
+    if (motionVideo) {
+      motionVideo.currentTime = 0;
+      motionVideo.play().catch(() => {});
+    }
+    if (assets?.audioSegments?.length) {
+      playAvatarAudioSequence(assets.audioSegments, status);
+    } else {
+      stopAvatarAudioSequence();
+    }
+    return;
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance((assets && assets.briefingText) || '');
+      const voices = window.speechSynthesis.getVoices();
+      const preferredVoice =
+        voices.find(v => /uk-UA/i.test(v.lang)) ||
+        voices.find(v => /uk/i.test(v.lang)) ||
+        voices.find(v => /ru-RU/i.test(v.lang) && /Pavel/i.test(v.name)) ||
+        voices.find(v => /en-GB|en-US/i.test(v.lang));
+      if (preferredVoice) utterance.voice = preferredVoice;
+      utterance.lang = preferredVoice?.lang || 'uk-UA';
+      utterance.rate = 0.9;
+      utterance.pitch = 0.9;
+      utterance.volume = 1;
+      utterance.onstart = () => {
+        if (status) status.textContent = 'Озвучка відтворюється у clean executive-режимі.';
+      };
+      utterance.onend = () => {
+        if (status) status.textContent = 'Брифінг завершено.';
+        activeAvatarSpeech = null;
+      };
+      utterance.onerror = () => {
+        if (status) status.textContent = 'Не вдалося запустити озвучку в цьому браузері.';
+        activeAvatarSpeech = null;
+      };
+      activeAvatarSpeech = utterance;
+      window.speechSynthesis.speak(utterance);
+    } else if (status) {
+      status.textContent = 'У цьому браузері недоступна вбудована озвучка.';
+    }
+    return;
+  }
   const ownerTrigger = e.target.closest('.owner-modal-pill[data-owner]');
   if (!ownerTrigger) return;
   applyOwnerFilter(ownerTrigger.dataset.owner, { closeModal: true, scrollToPortfolio: true });
+});
+modalBody.addEventListener('click', e => {
+  const closeTrigger = e.target.closest('#avatarPopupClose');
+  if (!closeTrigger) return;
+  stopAvatarAudioSequence();
+  const popup = document.getElementById('avatarPopup');
+  if (popup) {
+    popup.classList.remove('open');
+    popup.setAttribute('aria-hidden', 'true');
+  }
 });
 modalBody.addEventListener('keydown', e => {
   const ownerTrigger = e.target.closest('.owner-modal-pill[data-owner]');
