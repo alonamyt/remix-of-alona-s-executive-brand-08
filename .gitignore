@@ -27,3 +27,6 @@ sites/other-sites/aurora-department-site/
 *.njsproj
 *.sln
 *.sw?
+
+# Винесено в окремий приватний репозиторій
+sites/status-presentation-new/
