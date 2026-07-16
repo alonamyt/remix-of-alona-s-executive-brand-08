@@ -1634,6 +1634,9 @@ function renderOwnerBadge(owner) {
   `;
 }
 
+// Озвучка (executive-аватар Віктора) — лише для локальної версії.
+// На публічному сайті вимкнено: false ховає кнопку «Озвучити» та попап.
+const AVATAR_VOICEOVER_ENABLED = false;
 function getProjectAvatarAssets(project) {
   const mapped = avatarMediaByProject[project.id] || {};
   return {
@@ -1660,6 +1663,7 @@ function renderOwnerAvatarBadge(project) {
 }
 
 function renderAvatarPopup(project) {
+  if (!AVATAR_VOICEOVER_ENABLED) return '';
   const assets = getProjectAvatarAssets(project);
   if (!assets.poster && !assets.briefingText) return '';
   const poster = assets.poster ? resolveImageSrc(assets.poster) : '';
@@ -1705,10 +1709,10 @@ function renderModalMetaRow(project, statusMeta) {
         <span style="font-size:12px;color:var(--blue);background:rgba(0,122,255,0.08);padding:4px 10px;border-radius:100px">${project.category}</span>
       </div>
       <div class="modal-meta-right">
-        <button class="owner-avatar-launch" type="button" data-avatar-launch="${escapeAttr(project.id)}" aria-label="Озвучити статус проєкту">
+        ${AVATAR_VOICEOVER_ENABLED ? `<button class="owner-avatar-launch" type="button" data-avatar-launch="${escapeAttr(project.id)}" aria-label="Озвучити статус проєкту">
           <span class="owner-avatar-launch-icon">▶</span>
           <span class="owner-avatar-launch-label">Озвучити</span>
-        </button>
+        </button>` : ''}
         ${renderOwnerAvatarBadge(project)}
       </div>
     </div>
