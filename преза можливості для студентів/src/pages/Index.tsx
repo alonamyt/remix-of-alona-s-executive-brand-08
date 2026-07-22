@@ -1,7 +1,9 @@
-import {
+﻿import {
   BadgeCheck,
   BrainCircuit,
   BriefcaseBusiness,
+  CircleCheckBig,
+  CircleX,
   ExternalLink,
   Gift,
   GraduationCap,
@@ -19,16 +21,21 @@ import {
   Target,
   TrendingUp,
   Users,
+  Video,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import liudmylaPerekhrest from "@/assets/students/liudmyla-perekhrest.png";
 import boryslavKrakovych from "@/assets/students/boryslav-krakovych.png";
-import anastasiiaNikonova from "@/assets/students/anastasiia-nikonova.png";
+import anastasiiaNikonova from "@/assets/students/anastasiia-nikonova.jpg";
 import kyryloMedar from "@/assets/students/kyrylo-medar.png";
 import stanislavVoronin from "@/assets/students/stanislav-voronin.png";
 import ivanPopov from "@/assets/students/ivan-popov.jpg";
+import sofiiaPhoto from "@/assets/students/sofiia.png";
 import leanFestTeam from "@/assets/lean-fest-team.jpg";
 import mlWeek2025 from "@/assets/students-paths/ml-week-2025.jpeg";
+import involvementKmbs from "@/assets/students-paths/kmbs-forum.jpg";
+import involvementRobotics1 from "@/assets/students-paths/aurora-robotics-1.png";
+import involvementRobotics2 from "@/assets/students-paths/aurora-robotics-2.png";
 import departmentLogo from "@/assets/student-opportunities/department-logo.png";
 import alonaPortrait from "@/assets/student-opportunities/alona-portrait-short.png";
 import voinalovychPhoto from "@/assets/student-opportunities/voinalovych.jpg";
@@ -38,11 +45,12 @@ import borodaiBalancedPhoto from "@/assets/student-opportunities/borodai-balance
 import kucherenkoPhoto from "@/assets/student-opportunities/kucherenko.jpg";
 import sabaniukPhoto from "@/assets/student-opportunities/sabaniuk.png";
 import rdStudentsTeamPhoto from "@/assets/student-opportunities/rd-students-team.jpg";
-import communityStudentsPhoto from "@/assets/student-opportunities/community-students-rd.jpg";
+import rdStudentsGroupPhoto from "@/assets/student-opportunities/rd-students-group.jpg";
+import auroraStudentsQrPoster from "@/assets/student-opportunities/aurora-students-how-to-join.jpg";
 import projectConversionPhoto from "@/assets/student-opportunities/project-conversion-day.png";
-import projectVehiclePhoto from "@/assets/student-opportunities/project-vehicle-day.png";
+import projectVehiclePhoto from "@/assets/student-opportunities/project-vehicle-detection-system.png";
+import projectSmartParkingPhoto from "@/assets/student-opportunities/project-smart-parking-system.jpg";
 import projectGeneratorPhoto from "@/assets/student-opportunities/project-generator-day.png";
-import projectAiPlatformPhoto from "@/assets/student-opportunities/project-ai-platform-day.png";
 import projectSmartwikiPhoto from "@/assets/student-opportunities/project-smartwiki-day.png";
 import projectDevelopmentPhoto from "@/assets/student-opportunities/project-development-day.png";
 
@@ -100,11 +108,40 @@ const missionCards = [
     text: "Творці швидких і легких рішень для компанії та клієнтів.",
     tone: "department",
   },
+  {
+    title: "R&D - функція, яка",
+    items: [
+      "створює нові продукти",
+      "тестує інновації",
+      "автоматизовує бізнес",
+      "оптимізує процеси",
+    ],
+    tone: "department",
+  },
+  {
+    title: "Мета",
+    text: "заробити більше або витрачати менше ;)",
+    tone: "department",
+  },
+];
+
+const heroRealityCards = [
+  {
+    text: "задачі на практику",
+    tone: "wrong",
+    icon: CircleX,
+  },
+  {
+    text: "можливість створювати продукти, які реально працюють у бізнесі",
+    tone: "right",
+    icon: CircleCheckBig,
+  },
 ];
 
 const involvementQuotes = [
   "Хакатони з Data Science і зимові школи з АІ, де ми вперше й побачились з Олександром Сабанюком.",
   "Мені промо літньої школи поширив знайомий, я почитала, зацікавилась.",
+  "Я побачила анонс Аврора Стюдентс у Вайбер-групі для ВПО. В описі програми є управлінський і менеджерський компонент, тому подалася. Проєкт мені цей дуже сподобався. Одне з найкращих, що зі мною відбувалося в плані навчання, досвіду, нетворкінгу і вражень.",
   "Прийшов на роботу після комунікації з своїм зав. кафедри: якось при неформальній розмові сказав, що шукаю роботу, то він потім повідомив мене, що Аврора шукає студентів.",
 ];
 const involvementPaths = [
@@ -112,22 +149,26 @@ const involvementPaths = [
     title: "Хакатони та AI-школи",
     text: "Знайомство з командою часто починається з Data Science хакатонів, зимових і літніх шкіл з AI та ML. Саме там видно ініціативність, рівень підготовки й те, як людина мислить у реальних задачах.",
     image: mlWeek2025,
+    imagePosition: "center 72%",
+    imageScale: 1.14,
     href: "https://pma.fpm.kpi.ua/uk/news/ml-week-2025-summary",
-    source: "ML Week 2025 / КПІ",
+    source: "Хакатони та AI-школи",
   },
   {
     title: "Літні програми та Aurora Students",
-    text: "Частина студентів приходить через промо освітніх програм, читає про можливості, подається на Aurora Students і входить у взаємодію з командою ще до повноцінної роботи.",
-    image: rdStudentsTeamPhoto,
+    text: "Online Aurora Base - розвиток управлінських, лідерських і комунікаційних навичок через 12 навчальних блоків із практичними інструментами. Бізнес-школа від AURORA STUDENTS - offline-навчання від топ-менеджерів, реальні кейси, нетворкінг і шанс отримати стажування у великій компанії.",
+    image: rdStudentsGroupPhoto,
+    imagePosition: "center center",
     href: "https://robota.avrora.ua/avrora-dlia-studentiv-ta-molodi",
-    source: "Аврора для студентів та молоді",
+    source: "Літні програми та Aurora Students",
   },
   {
     title: "Рекомендації кафедр",
     text: "Викладачі, завідувачі кафедр і університетські спільноти рекомендують студентів, коли бачать сильну мотивацію, готовність працювати й інтерес до реальних бізнес-задач.",
-    image: communityStudentsPhoto,
+    image: rdStudentsTeamPhoto,
+    imagePosition: "center center",
     href: "https://robota.avrora.ua/aurora-students-sered-peremozciv-sustainable-impact-award-2025",
-    source: "Aurora Students / студентська спільнота",
+    source: "Рекомендації кафедр",
   },
 ];
 const studentGroups = [
@@ -176,6 +217,22 @@ const studentGroups = [
         image: ivanPopov,
         imagePosition: "center 22%",
       },
+      {
+        name: "Анастасія",
+        year: "4 курс",
+        track: "Факультет психології, соціальної роботи та спеціальної освіти",
+        universityNote: "Київський столичний університет імені Бориса Грінченка",
+        image: anastasiiaNikonova,
+        imagePosition: "center 20%",
+      },
+      {
+        name: "Софія",
+        year: "3 курс",
+        track: "Факультет програмних систем та прикладної математики",
+        universityNote: 'НТУУ "Київський політехнічний інститут імені Ігоря Сікорського"',
+        image: sofiiaPhoto,
+        imagePosition: "center 20%",
+      },
     ],
   },
 ];
@@ -208,6 +265,7 @@ const studentProjectStories = [
     name: "Людмила",
     image: liudmylaPerekhrest,
     imagePosition: "center 18%",
+    projectsLabel: "До яких проєктів долучалася",
     projects:
       "Віртуальний HR, дашборди для відділу якості (один робився з нуля, інший трохи доповнювала).",
     ownership:
@@ -235,6 +293,7 @@ const studentProjectStories = [
     name: "Анастасія",
     image: anastasiiaNikonova,
     imagePosition: "center 20%",
+    projectsLabel: "До яких проєктів долучалася",
     projects:
       "До різних: працюємо над проєктом із фінансовим департаментом; удосконалення внутрішньої системи управління портфелем проєктів; восени були підготовка та участь у ініціативах по типу retail expo; організація та проведення навчань.",
     ownership:
@@ -257,6 +316,32 @@ const studentProjectStories = [
       "Вітрина ШІ інструментів, автоматизація по табелю та новому персоналу, lean-fest застосунок, застосунок генерації документів, lean-quest застосунок, HR 2.0, генератор презентацій.",
     ownership:
       "Поступово беру на себе окремі прикладні інструменти й автоматизації, де важлива швидка реалізація, підтримка та розвиток функціоналу.",
+  },
+  {
+    name: "Софія",
+    image: sofiiaPhoto,
+    imagePosition: "center 20%",
+    projectsLabel: "До яких проєктів долучалася",
+    projects: (
+      <>
+        <span style={{ display: "block" }}>
+          <strong>1. Є-Архів — ШІ-обробка документів.</strong> Система сама розпізнає скани
+          українських юридичних документів, визначає тип і витягує ключові поля. Архіваріус лише
+          перевіряє й публікує замість ручного заповнення карток.
+        </span>
+        <span className="story-metric">
+          ~50 000 сторінок/місяць — потік документів на автоматизацію
+        </span>
+        <span style={{ display: "block", marginTop: "14px" }}>
+          <strong>2. Детекція фейків — захист бренду.</strong> Користувач завантажує скріншот
+          підозрілого оголошення чи «вакансії», а система повертає рівень ризику з поясненням
+          простими словами. Багатошаровий пайплайн замість однієї «магічної моделі».
+        </span>
+        <span className="story-metric">OCR + Rules + RAG + LLM — зважений risk score</span>
+      </>
+    ),
+    ownership:
+      "Веду обидва проєкти майже автономно: проєктую архітектуру, порівнюю LLM-моделі й обираю оптимальну під задачу, пишу промпти та код екстракції, налаштовую гібридний підхід OCR+LLM, щоб тримати вартість обробки низькою. Приймаю технічні рішення сама, а більші кроки — інтеграції, розгортання, зміни — в межах стандартного процесу погодження задач з керівником.",
   },
 ];
 
@@ -283,11 +368,11 @@ const projects = [
     metricLabel: "контроль критичної інфраструктури",
   },
   {
-    title: "Аврора AI Platform",
-    text: "Власна AI-платформа й внутрішні інструменти, які команда розвиває як середовище для автоматизації, побудови нових сценаріїв та масштабування продуктів. Це база для майбутніх сервісів, які можуть працювати і всередині компанії, і назовні.",
-    image: projectAiPlatformPhoto,
-    metric: "AI",
-    metricLabel: "платформа для внутрішніх та зовнішніх сценаріїв",
+    title: "Smart parking",
+    text: "Система CV для автоматичної детекції автомобілів на паркомайданчику, визначення вільних/зайнятих місць та інтеграції з інформаційними табло.",
+    image: projectSmartParkingPhoto,
+    metric: "CV",
+    metricLabel: "автоматична детекція місць на паркінгу",
   },
   {
     title: "Smart Wiki",
@@ -315,20 +400,20 @@ const studentStoriesMiddle = studentProjectStories.filter((story) =>
   ["Кирило", "Анастасія"].includes(story.name),
 );
 const studentStoriesFinal = studentProjectStories.filter(
-  (story) => ["Станіслав", "Іван"].includes(story.name),
+  (story) => ["Станіслав", "Іван", "Софія"].includes(story.name),
 );
 
 const benefits = [
   { icon: BadgeCheck, text: "Офіційне працевлаштування з першого робочого дня." },
   { icon: GraduationCap, text: "Безкоштовні курси і тренінги від корпоративного навчального центру." },
-  { icon: ShoppingBag, text: "Знижка 15% на покупки товарів у мережі." },
+  { icon: ShoppingBag, text: "Реальний досвід у роботі з AI, розробці та впровадженні продуктів та проєктів." },
   { icon: BrainCircuit, text: "Можливість навчатись на зовнішніх платформах із компенсацією вартості." },
   { icon: Sparkles, text: "Можливість вивчати англійську з частковою або повною компенсацією." },
   { icon: TrendingUp, text: "Швидке горизонтальне та вертикальне кар'єрне зростання." },
   { icon: Users, text: "Дружня команда однодумців і сильна корпоративна культура." },
   { icon: HeartHandshake, text: "Благодійні ініціативи, спортивне ком'юніті та середовище підтримки." },
   { icon: ShieldCheck, text: "Безпечне та стабільне середовище для розвитку і роботи." },
-  { icon: Gift, text: "Внутрішні програми підтримки й приємні бонуси для співробітників." },
+  { icon: Gift, text: "Внутрішні програми підтримки й приємні бонуси для співробітників: знижка 15% на покупки товарів у мережі та приємні бонуси для співробітників." },
 ];
 
 const sources = [
@@ -356,9 +441,73 @@ const sources = [
 
 const heroSignals = ["AI", "Data Science", "Computer Vision", "Product Thinking"];
 
+const pathwayBenefits = [
+  "практичні знання від топменеджерів і команди Аврори",
+  "реальні бізнес-кейси й робота з живими задачами",
+  "нетворкінг зі студентами та співробітниками компанії",
+  "сертифікат про проходження програми",
+];
+
+const pathwayAudience = [
+  "мислиш нестандартно та хочеш проявитись у реальній роботі",
+  "цікавишся AI, продуктами, бізнесом або менеджментом",
+  "вмієш аргументувати свої ідеї",
+  "прагнеш побудувати успішну кар'єру",
+  "готовий показати себе через кейси, комунікацію та ініціативу",
+];
+
+const pathwaySteps = [
+  {
+    icon: Send,
+    text: "Реєстрація: 13.04-27.05",
+  },
+  {
+    icon: Sparkles,
+    text: "Навчання та захист ідей: 06.07-28.07",
+  },
+  {
+    icon: BriefcaseBusiness,
+    text: "Шанс на офер",
+  },
+];
+
+const pathwayRewards = [
+  {
+    icon: Gift,
+    label: "стажування",
+    text: "у топменеджерів компанії",
+  },
+  {
+    icon: GraduationCap,
+    label: "грант",
+    text: "на оплату навчання та підтримку професійного розвитку",
+  },
+  {
+    icon: BriefcaseBusiness,
+    label: "офер",
+    text: "на роботу в одному з департаментів компанії",
+  },
+];
+
 const Index = () => {
-  const [isEmailCopied, setIsEmailCopied] = useState(false);
   const presenterLockRef = useRef(0);
+  // Блок «Знайомство / Митрофанова Альона» приховано за замовчуванням.
+  // Розкривається кліком на непомітну точку в лівому нижньому куті екрана.
+  const [showIntro, setShowIntro] = useState(false);
+
+  const toggleIntro = () => {
+    setShowIntro((prev) => {
+      const next = !prev;
+      if (next) {
+        requestAnimationFrame(() => {
+          document
+            .getElementById("intro")
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+      return next;
+    });
+  };
 
   useEffect(() => {
     const stepSelector = '[data-step-section="true"]';
@@ -450,31 +599,6 @@ const Index = () => {
     };
   }, []);
 
-  const handleCopyEmail = async () => {
-    const email = "a.mytrofanova@avrora.ua";
-
-    try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(email);
-      } else {
-        const textarea = document.createElement("textarea");
-        textarea.value = email;
-        textarea.setAttribute("readonly", "true");
-        textarea.style.position = "absolute";
-        textarea.style.left = "-9999px";
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textarea);
-      }
-
-      setIsEmailCopied(true);
-      window.setTimeout(() => setIsEmailCopied(false), 1600);
-    } catch (error) {
-      console.error("Не вдалося скопіювати пошту", error);
-    }
-  };
-
   return (
     <div className="page">
       <header className="topbar">
@@ -488,7 +612,6 @@ const Index = () => {
           <a href="#involvement">Точки залучення</a>
           <a href="#projects">Проєкти</a>
           <a href="#benefits">Аврора надає</a>
-          <a href="#invite">Контакти</a>
         </nav>
       </header>
 
@@ -496,6 +619,14 @@ const Index = () => {
         <section className="slide slide--hero" id="hero" data-step-section="true">
           <div className="hero-shell">
             <h1>Можливості для студентів у команді R&amp;D Аврора</h1>
+            <div className="hero-reality">
+              {heroRealityCards.map(({ text, tone, icon: Icon }) => (
+                <div key={text} className={`hero-reality__item hero-reality__item--${tone}`}>
+                  <Icon size={18} />
+                  <span>{text}</span>
+                </div>
+              ))}
+            </div>
             <p className="hero-lead">
               Департамент інновацій та проєктного управління розвиває рішення, які поєднують бізнес,
               аналітику, AI, automation і реальні продуктові сценарії.
@@ -509,6 +640,7 @@ const Index = () => {
           </div>
         </section>
 
+        {showIntro && (
         <section className="slide slide--intro" id="intro" data-step-section="true">
           <div className="intro-card">
             <div className="intro-photo">
@@ -545,18 +677,34 @@ const Index = () => {
             </div>
           </div>
         </section>
+        )}
 
         <section className="slide slide--team slide--team-overview" id="team">
           <div className="team-step" data-step-section="true">
             <div className="slide-heading">
-            <h2>Ціль і команда департаменту інновацій та проєктного управління</h2>
+            <h2>
+              Мета і команда департаменту
+              <br />
+              інновацій та проєктного управління
+            </h2>
             </div>
 
             <div className="mission-grid">
             {missionCards.map((card) => (
-              <article key={card.title} className={`mission-card mission-card--${card.tone}`}>
-                <p className="meta-note">{card.title}</p>
-                <p>{card.text}</p>
+              <article
+                key={card.title}
+                className={`mission-card mission-card--${card.tone}${"items" in card ? " mission-card--split" : ""}`}
+              >
+                <p className={`meta-note${"items" in card ? " mission-card__title" : ""}`}>{card.title}</p>
+                {"items" in card ? (
+                  <ul className="mission-card__list">
+                    {card.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>{card.text}</p>
+                )}
               </article>
             ))}
             </div>
@@ -639,36 +787,62 @@ const Index = () => {
           <div className="slide-heading">
             <h2>Як студенти потрапляють у команду</h2>
             <p>
-              Аврора активно співпрацює з університетами, проводить лекції, відкриті зустрічі, освітні
+              Аврора активно співпрацює з університетами, проводить відкриті зустрічі, освітні
               програми, практики та стажування.
             </p>
             <p>
-              Частина студентів знайомиться з командою через школи та хакатони, частина приходить через
-              рекомендації викладачів, а хтось заходить у взаємодію після публічних анонсів програм і подій.
+              Частина студентів знайомиться з командою через школи та хакатони, частина заходить у
+              взаємодію після публічних анонсів програм і подій, рекомендації.
             </p>
           </div>
 
-          <div className="quote-stack quote-stack--horizontal">
-            {involvementQuotes.map((quote) => (
-              <article key={quote} className="quote-card">
-                <blockquote className="quote-block">
-                  <span className="quote-block__icon" aria-hidden="true">
-                    <Quote size={18} />
-                  </span>
-                  <span>{quote}</span>
-                </blockquote>
-              </article>
-            ))}
+          <div className="quote-stack quote-stack--split">
+            <div className="quote-stack quote-stack__column">
+              {involvementQuotes.slice(0, 2).map((quote) => (
+                <article key={quote} className="quote-card">
+                  <blockquote className="quote-block">
+                    <span className="quote-block__icon" aria-hidden="true">
+                      <Quote size={18} />
+                    </span>
+                    <span>{quote}</span>
+                  </blockquote>
+                </article>
+              ))}
+            </div>
+
+            <article className="quote-card">
+              <blockquote className="quote-block">
+                <span className="quote-block__icon" aria-hidden="true">
+                  <Quote size={18} />
+                </span>
+                <span>{involvementQuotes[2]}</span>
+              </blockquote>
+            </article>
+
+            <article className="quote-card">
+              <blockquote className="quote-block">
+                <span className="quote-block__icon" aria-hidden="true">
+                  <Quote size={18} />
+                </span>
+                <span>{involvementQuotes[3]}</span>
+              </blockquote>
+            </article>
           </div>
 
           <div className="involvement-grid">
             {involvementPaths.map((item) => (
               <article key={item.title} className="showcase-card">
                 <div className="showcase-card__image">
-                  <img src={item.image} alt={item.title} />
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    style={{
+                      objectPosition: item.imagePosition ?? "center center",
+                      transform: item.imageScale ? `scale(${item.imageScale})` : undefined,
+                    }}
+                  />
                 </div>
                 <div className="showcase-card__copy">
-                  <p className="meta-note">{item.source}</p>
                   <h3>{item.title}</h3>
                   <p>{item.text}</p>
                   <a href={item.href} target="_blank" rel="noreferrer">
@@ -678,6 +852,12 @@ const Index = () => {
                 </div>
               </article>
             ))}
+          </div>
+
+          <div className="involvement-gallery">
+            <img src={involvementKmbs} alt="Студенти на форумі KMBS з командою Аврора" />
+            <img src={involvementRobotics1} alt="Студенти з командою Аврора" />
+            <img src={involvementRobotics2} alt="Студенти-стажери Аврора" />
           </div>
         </section>
 
@@ -720,8 +900,25 @@ const Index = () => {
                   ))}
                 </div>
 
-                <div className="student-cluster__footer">
-                  <span>{group.university}</span>
+                <div
+                  className={
+                    group.students.some((student) => "universityNote" in student)
+                      ? `student-cluster__footer student-cluster__footer--${group.students.length}`
+                      : "student-cluster__footer"
+                  }
+                >
+                  <span className="student-cluster__footer-main">{group.university}</span>
+                  {[
+                    ...new Set(
+                      group.students
+                        .filter((student) => "universityNote" in student)
+                        .map((student) => student.universityNote as string),
+                    ),
+                  ].map((note) => (
+                    <span key={note} className="student-profile__university">
+                      {note}
+                    </span>
+                  ))}
                 </div>
               </article>
             ))}
@@ -740,7 +937,6 @@ const Index = () => {
                     <img src={project.image} alt={project.title} />
                   </div>
                   <div className="project-card__copy">
-                    <p className="meta-note">Проєкт {index + 1}</p>
                     <h3>{project.title}</h3>
                     <p>{project.text}</p>
                     <div className="metric-box">
@@ -761,7 +957,6 @@ const Index = () => {
                     <img src={project.image} alt={project.title} />
                   </div>
                   <div className="project-card__copy">
-                    <p className="meta-note">Проєкт {featuredProjects.length + index + 1}</p>
                     <h3>{project.title}</h3>
                     <p>{project.text}</p>
                     <div className="metric-box">
@@ -805,7 +1000,9 @@ const Index = () => {
 
                   <div className="student-story__quotes">
                     <div className="story-quote">
-                      <p className="quote-card__label">До яких проєктів долучався</p>
+                      <p className="quote-card__label">
+                        {"projectsLabel" in story ? story.projectsLabel : "До яких проєктів долучався"}
+                      </p>
                       <blockquote className="quote-block">
                         <span className="quote-block__icon" aria-hidden="true">
                           <Quote size={18} />
@@ -847,7 +1044,9 @@ const Index = () => {
 
                   <div className="student-story__quotes">
                     <div className="story-quote">
-                      <p className="quote-card__label">До яких проєктів долучався</p>
+                      <p className="quote-card__label">
+                        {"projectsLabel" in story ? story.projectsLabel : "До яких проєктів долучався"}
+                      </p>
                       <blockquote className="quote-block">
                         <span className="quote-block__icon" aria-hidden="true">
                           <Quote size={18} />
@@ -889,7 +1088,9 @@ const Index = () => {
 
                   <div className="student-story__quotes">
                     <div className="story-quote">
-                      <p className="quote-card__label">До яких проєктів долучався</p>
+                      <p className="quote-card__label">
+                        {"projectsLabel" in story ? story.projectsLabel : "До яких проєктів долучався"}
+                      </p>
                       <blockquote className="quote-block">
                         <span className="quote-block__icon" aria-hidden="true">
                           <Quote size={18} />
@@ -925,6 +1126,54 @@ const Index = () => {
           </div>
         </section>
 
+        <section className="slide slide--student-advantage" data-step-section="true">
+          <div className="student-advantage">
+            <div className="slide-heading">
+              <h2>Чому студенти зараз — це перевага</h2>
+              <p>Світ змінився.</p>
+            </div>
+
+            <div className="student-advantage__grid">
+              <article className="student-advantage__card student-advantage__card--highlight">
+                <div className="student-advantage__eyebrow">
+                  <Sparkles size={18} />
+                  <span>Технології дали можливість</span>
+                </div>
+                <p className="student-advantage__lead">створювати продукти значно швидше</p>
+              </article>
+
+              <article className="student-advantage__card">
+                <div className="student-advantage__eyebrow">
+                  <BadgeCheck size={18} />
+                  <span>І тут студенти мають козир</span>
+                </div>
+                <ul className="student-advantage__list">
+                  <li>швидко адаптуються</li>
+                  <li>не бояться AI</li>
+                  <li>мислять інакше</li>
+                </ul>
+              </article>
+            </div>
+
+            <blockquote className="student-advantage__quote">
+              <span>“У всіх руки розв’язались, але у студентів — це суперсила”</span>
+            </blockquote>
+
+            <article className="student-advantage__card student-advantage__card--summary">
+              <div className="student-advantage__eyebrow">
+                <Rocket size={18} />
+                <span>Коротко</span>
+              </div>
+              <p className="student-advantage__summary-title">Студенти можуть:</p>
+              <div className="student-advantage__chips">
+                <span>швидко</span>
+                <span>якісно</span>
+                <span>з реальним впливом</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
         <section className="slide slide--benefits" id="benefits" data-step-section="true">
           <div className="slide-heading">
             <h2>Чому працювати в Аврорі класно</h2>
@@ -955,85 +1204,170 @@ const Index = () => {
 
         <section className="slide slide--join" data-step-section="true">
           <div className="join-grid">
-            <div className="join-copy">
-              <h2>Шукаємо не просто виконавців, а людей зі свіжим мисленням</h2>
-              <p>
-                Департамент інновацій та проєктного управління шукає людей, яким цікаво впливати на
-                реальні бізнес-рішення вже під час навчання.
-              </p>
-              <p>
-                Якщо тобі цікаві AI, data science, computer vision, проєктний менеджмент і продуктові
-                задачі з реальним бізнес-ефектом, ця команда може стати сильним стартом.
-              </p>
+            <div className="slide-heading join-heading">
+              <h2>Нові можливості</h2>
             </div>
 
-            <div className="join-points">
-              <div>
-                <MapPinned size={18} />
-                <span>Реальні бізнес-задачі</span>
-              </div>
-              <div>
-                <BriefcaseBusiness size={18} />
-                <span>Повноцінне занурення в команду</span>
-              </div>
-              <div>
-                <Rocket size={18} />
-                <span>Швидкий ріст через практику</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="slide slide--invite" id="invite" data-step-section="true">
-          <div className="invite-panel">
-            <div>
-              <div className="section-label section-label--light">Контакти</div>
-              <h2>Якщо цікаво, давай знайомитися</h2>
-              <p>Якщо тобі цікаво долучитися до команди, зв'язатися можна напряму.</p>
-            </div>
-
-            <div className="invite-actions">
-              <div className="invite-contact-card">
-                <div className="invite-contact-card__meta">
-                  <Mail size={18} />
-                  <span>Пошта</span>
+            <article className="join-card">
+              <div className="join-card__copy">
+                <p className="join-card__lead">В найближчий час ми додаємо:</p>
+                <div className="join-card__chips">
+                  <div className="join-card__chip">
+                    <Rocket size={18} />
+                    <span>фізичні продукти</span>
+                  </div>
+                  <div className="join-card__chip">
+                    <Sparkles size={18} />
+                    <span>hardware + software</span>
+                  </div>
                 </div>
-                <a className="invite-contact-card__value" href="mailto:a.mytrofanova@avrora.ua">
-                  a.mytrofanova@avrora.ua
-                </a>
-                <button className="button button--primary" type="button" onClick={handleCopyEmail}>
-                  {isEmailCopied ? "Скопійовано" : "Скопіювати"}
-                </button>
-              </div>
-              <div className="invite-contact-card">
-                <div className="invite-contact-card__meta">
-                  <Phone size={18} />
-                  <span>Телефон</span>
+
+                <p className="join-card__lead">Підключаємо:</p>
+                <div className="join-card__chips">
+                  <div className="join-card__chip">
+                    <Users size={18} />
+                    <span>команди з робототехніки</span>
+                  </div>
+                  <div className="join-card__chip">
+                    <GraduationCap size={18} />
+                    <span>університетські команди</span>
+                  </div>
                 </div>
-                <a className="invite-contact-card__value" href="tel:+380970006104">
-                  +380 97 000 61 04
-                </a>
+
+                <p className="join-card__note">
+                  Студенти можуть працювати не тільки з кодом, а й з реальними пристроями.
+                </p>
               </div>
+            </article>
+
+            <article className="join-card">
+              <div className="join-card__copy">
+                <p className="join-card__lead">Внутрішні продукти готові запускати вне компанії.</p>
+                <p className="join-card__text">Студенти можуть працювати над продуктами, які:</p>
+                <div className="join-card__chips">
+                  <div className="join-card__chip">
+                    <BriefcaseBusiness size={18} />
+                    <span>продаються</span>
+                  </div>
+                  <div className="join-card__chip">
+                    <TrendingUp size={18} />
+                    <span>масштабуються</span>
+                  </div>
+                  <div className="join-card__chip">
+                    <MapPinned size={18} />
+                    <span>виходять за межі компанії</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section className="slide slide--pathway" data-step-section="true" data-step-adjust="-28">
+          <div className="pathway-copy">
+            <div className="slide-heading">
+              <h2>Як потрапити до нас в команду? - Aurora Students</h2>
+              <p>Шанс отримати реальний досвід роботи у великій компанії.</p>
+            </div>
+
+            <div className="pathway-intro-row">
+              <p className="pathway-story__lead">
+                Ти студентка або випускник? Тоді саме час приєднатися до Aurora Students.
+              </p>
+
+              <div className="pathway-rewards__title pathway-rewards__title--aside">
+                Найуспішніші учасники отримають:
+              </div>
+            </div>
+
+            <div className="pathway-flow">
+              <div className="pathway-chips">
+                {pathwaySteps.map(({ icon: Icon, text }) => (
+                  <article key={text} className="pathway-chip">
+                    <Icon size={18} />
+                    <span>{text}</span>
+                  </article>
+                ))}
+              </div>
+
+              <div className="pathway-rewards pathway-rewards--aside">
+                <div className="pathway-rewards__list">
+                  {pathwayRewards.map(({ icon: Icon, label, text }) => (
+                    <article key={text} className="pathway-reward">
+                      <span>
+                        <strong>{label}</strong> {text}
+                      </span>
+                      <Icon size={18} />
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="pathway-panels">
+              <article className="pathway-panel">
+                <div className="pathway-panel__header">Що ти отримаєш?</div>
+                <ul className="pathway-panel__list">
+                  {pathwayBenefits.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+
+              <article className="pathway-panel">
+                <div className="pathway-panel__header">Це для тебе, якщо ти:</div>
+                <ul className="pathway-panel__list">
+                  {pathwayAudience.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </article>
+
+              <article className="pathway-panel pathway-panel--qr">
+                <div className="pathway-panel__header">Як потрапити:</div>
+                <div className="pathway-qr__frame pathway-qr__frame--full">
+                  <img
+                    src={auroraStudentsQrPoster}
+                    alt="Як потрапити до Aurora Students"
+                    className="pathway-qr__code pathway-qr__code--full"
+                  />
+                </div>
+              </article>
             </div>
           </div>
         </section>
 
-        <section className="slide slide--sources" id="sources" data-step-section="true">
-          <div className="slide-heading">
-            <div className="section-label">Джерела</div>
-            <h2>Відкриті матеріали, на які спирається сторінка</h2>
-          </div>
-
-          <div className="sources-list">
-            {sources.map((source) => (
-              <a key={source.href} href={source.href} target="_blank" rel="noreferrer">
-                <span>{source.label}</span>
-                <ExternalLink size={16} />
-              </a>
-            ))}
-          </div>
-        </section>
       </main>
+
+      {/* Непомітна точка в лівому нижньому куті — клік розкриває/ховає блок «Знайомство».
+          Для сторонніх майже невидима; активна — підсвічується червоним. */}
+      <button
+        type="button"
+        onClick={toggleIntro}
+        aria-label="Перемкнути блок знайомства"
+        title={showIntro ? "Сховати блок знайомства" : "Показати блок знайомства"}
+        style={{
+          position: "fixed",
+          left: 8,
+          bottom: 8,
+          width: 16,
+          height: 16,
+          padding: 0,
+          border: "none",
+          borderRadius: "50%",
+          background: showIntro ? "#E2001A" : "#181818",
+          opacity: showIntro ? 0.55 : 0.06,
+          cursor: "pointer",
+          zIndex: 9999,
+          transition: "opacity .2s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.opacity = "0.5";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.opacity = showIntro ? "0.55" : "0.06";
+        }}
+      />
     </div>
   );
 };
