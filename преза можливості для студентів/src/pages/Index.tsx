@@ -32,7 +32,7 @@ import stanislavVoronin from "@/assets/students/stanislav-voronin.png";
 import ivanPopov from "@/assets/students/ivan-popov.jpg";
 import sofiiaPhoto from "@/assets/students/sofiia.png";
 import leanFestTeam from "@/assets/lean-fest-team.jpg";
-import mlWeek2025 from "@/assets/students-paths/ml-week-2025.jpeg";
+import mlWeek2025 from "@/assets/students-paths/ml-week-2025-crop.jpg";
 import involvementKmbs from "@/assets/students-paths/kmbs-forum.jpg";
 import involvementRobotics1 from "@/assets/students-paths/aurora-robotics-1.png";
 import involvementRobotics2 from "@/assets/students-paths/aurora-robotics-2.png";
@@ -149,8 +149,7 @@ const involvementPaths = [
     title: "Хакатони та AI-школи",
     text: "Знайомство з командою часто починається з Data Science хакатонів, зимових і літніх шкіл з AI та ML. Саме там видно ініціативність, рівень підготовки й те, як людина мислить у реальних задачах.",
     image: mlWeek2025,
-    imagePosition: "center 72%",
-    imageScale: 1.14,
+    imagePosition: "center center",
     href: "https://pma.fpm.kpi.ua/uk/news/ml-week-2025-summary",
     source: "Хакатони та AI-школи",
   },
