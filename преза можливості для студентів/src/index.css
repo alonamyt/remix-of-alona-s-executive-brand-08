@@ -1138,6 +1138,32 @@ blockquote {
   color: #8a6a00;
 }
 
+/* Список «Що вже робить самостійно» — пункти з кружечком і абзацами */
+.story-list {
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.story-list li {
+  position: relative;
+  padding-left: 18px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.story-list li::before {
+  content: "•";
+  position: absolute;
+  left: 2px;
+  top: 0;
+  color: #8a6a00;
+  font-weight: 700;
+}
+
 /* Галерея фото в кінці блоку «Як студенти потрапляють у команду» */
 .involvement-gallery {
   display: grid;

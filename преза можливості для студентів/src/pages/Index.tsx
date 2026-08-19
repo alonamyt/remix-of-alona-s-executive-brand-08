@@ -199,7 +199,7 @@ const studentGroups = [
       },
       {
         name: "Ілля",
-        year: "1 курс магістратури (5 курс)",
+        year: "5 курс (магістратура)",
         track: "Проєктний менеджмент",
         universityNote: "Київський національний економічний університет (КНЕУ)",
         image: illiaKoshelev,
@@ -357,8 +357,14 @@ const studentProjectStories = [
     imagePosition: "center center",
     projects:
       "Впровадження LEO PPM (система управління проєктами, програмами та портфелями).",
-    ownership:
-      "Модернізація додатку StoreLocation (операційна система для менеджерів з розвитку), розробка системи управління Точками Зростання зі стажування лідерів 2026, розробка системи генерації шаблонних документів DOCO, автоматизація процесів звірки табелів та ЗП у відділі рекрутингу, розробка операційного додатку для відділу постачання, оптимізація процесу відкриття ТТ.",
+    ownership: [
+      "Модернізація додатку StoreLocation (операційна система для менеджерів з розвитку)",
+      "Розробка системи управління Точками Зростання зі стажування лідерів 2026",
+      "Розробка системи генерації шаблонних документів DOCO",
+      "Автоматизація процесів звірки табелів та ЗП у відділі рекрутингу",
+      "Розробка операційного додатку для відділу постачання",
+      "Оптимізація процесу відкриття ТТ",
+    ],
   },
 ];
 
@@ -1040,7 +1046,15 @@ const Index = () => {
                         <span className="quote-block__icon" aria-hidden="true">
                           <Quote size={18} />
                         </span>
-                        <span>{story.ownership}</span>
+                        {Array.isArray(story.ownership) ? (
+                          <ul className="story-list">
+                            {story.ownership.map((point) => (
+                              <li key={point}>{point}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <span>{story.ownership}</span>
+                        )}
                       </blockquote>
                     </div>
                   </div>
@@ -1084,7 +1098,15 @@ const Index = () => {
                         <span className="quote-block__icon" aria-hidden="true">
                           <Quote size={18} />
                         </span>
-                        <span>{story.ownership}</span>
+                        {Array.isArray(story.ownership) ? (
+                          <ul className="story-list">
+                            {story.ownership.map((point) => (
+                              <li key={point}>{point}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <span>{story.ownership}</span>
+                        )}
                       </blockquote>
                     </div>
                   </div>
@@ -1128,7 +1150,15 @@ const Index = () => {
                         <span className="quote-block__icon" aria-hidden="true">
                           <Quote size={18} />
                         </span>
-                        <span>{story.ownership}</span>
+                        {Array.isArray(story.ownership) ? (
+                          <ul className="story-list">
+                            {story.ownership.map((point) => (
+                              <li key={point}>{point}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <span>{story.ownership}</span>
+                        )}
                       </blockquote>
                     </div>
                   </div>
