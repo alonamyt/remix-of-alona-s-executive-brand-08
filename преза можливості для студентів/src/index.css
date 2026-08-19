@@ -1629,6 +1629,12 @@ blockquote {
   gap: 10px;
 }
 
+.pathway-single {
+  display: grid;
+  gap: 14px;
+  max-width: 760px;
+}
+
 .pathway-flow {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);

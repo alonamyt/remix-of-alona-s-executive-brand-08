@@ -479,21 +479,6 @@ const pathwayAudience = [
   "готовий показати себе через кейси, комунікацію та ініціативу",
 ];
 
-const pathwaySteps = [
-  {
-    icon: Send,
-    text: "Реєстрація: 13.04-27.05",
-  },
-  {
-    icon: Sparkles,
-    text: "Навчання та захист ідей: 06.07-28.07",
-  },
-  {
-    icon: BriefcaseBusiness,
-    text: "Шанс на офер",
-  },
-];
-
 const pathwayRewards = [
   {
     icon: Gift,
@@ -1335,27 +1320,14 @@ const Index = () => {
               <p>Шанс отримати реальний досвід роботи у великій компанії.</p>
             </div>
 
-            <div className="pathway-intro-row">
+            <div className="pathway-single">
               <p className="pathway-story__lead">
                 Ти студентка або випускник? Тоді саме час приєднатися до Aurora Students.
               </p>
 
-              <div className="pathway-rewards__title pathway-rewards__title--aside">
-                Найуспішніші учасники отримають:
-              </div>
-            </div>
+              <div className="pathway-rewards__title">Найуспішніші учасники отримають:</div>
 
-            <div className="pathway-flow">
-              <div className="pathway-chips">
-                {pathwaySteps.map(({ icon: Icon, text }) => (
-                  <article key={text} className="pathway-chip">
-                    <Icon size={18} />
-                    <span>{text}</span>
-                  </article>
-                ))}
-              </div>
-
-              <div className="pathway-rewards pathway-rewards--aside">
+              <div className="pathway-rewards">
                 <div className="pathway-rewards__list">
                   {pathwayRewards.map(({ icon: Icon, label, text }) => (
                     <article key={text} className="pathway-reward">
