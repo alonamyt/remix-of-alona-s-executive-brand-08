@@ -1998,6 +1998,19 @@ blockquote {
     grid-template-columns: 1fr;
   }
 
+  .slide--pathway .pathway-intro-row {
+    grid-template-columns: 1fr;
+  }
+
+  .slide--pathway .pathway-intro-row > .pathway-story__lead,
+  .slide--pathway .pathway-intro-row > .pathway-rewards__title--aside {
+    grid-column: auto;
+  }
+
+  .slide--pathway .slide-heading h2 {
+    white-space: normal;
+  }
+
   .intro-photo,
   .media-story__image {
     min-height: 260px;
