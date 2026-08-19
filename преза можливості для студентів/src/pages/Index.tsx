@@ -37,7 +37,7 @@ import mlWeek2025 from "@/assets/students-paths/ml-week-2025-crop.jpg";
 import involvementKmbs from "@/assets/students-paths/kmbs-forum.jpg";
 import involvementRobotics1 from "@/assets/students-paths/aurora-robotics-1.png";
 import involvementRobotics2 from "@/assets/students-paths/aurora-robotics-2.png";
-import departmentLogo from "@/assets/student-opportunities/department-logo.png";
+import departmentLogo from "@/assets/student-opportunities/aurora-logo.png";
 import alonaPortrait from "@/assets/student-opportunities/alona-portrait-short.png";
 import voinalovychPhoto from "@/assets/student-opportunities/voinalovych.jpg";
 import mytrofanovaTeamPhoto from "@/assets/student-opportunities/mytrofanova-team-updated.png";
@@ -200,7 +200,7 @@ const studentGroups = [
       {
         name: "Ілля",
         year: "5 курс (магістратура)",
-        track: "Проєктний менеджмент",
+        track: "Факультет економіки та управління",
         universityNote: "Київський національний економічний університет (КНЕУ)",
         image: illiaKoshelev,
         imagePosition: "center center",
@@ -626,7 +626,7 @@ const Index = () => {
     <div className="page">
       <header className="topbar">
         <div className="topbar__brand">
-          <img className="brand-logo" src={departmentLogo} alt="Лого департаменту R&D" />
+          <img className="brand-logo" src={departmentLogo} alt="Логотип Аврора" />
           <span>Можливості для студентів у команді Аврора</span>
         </div>
 
@@ -742,7 +742,7 @@ const Index = () => {
               <span>людей у команді департаменту</span>
             </div>
             <div>
-              <strong>10 студентів</strong>
+              <strong>9 студентів</strong>
               <span>залучати студентів почали 3 роки тому</span>
             </div>
             <div>
@@ -916,7 +916,18 @@ const Index = () => {
                       </div>
                       <div className="student-profile__body">
                         <h3>{student.name}</h3>
-                        <p className="student-profile__year">{student.year}</p>
+                        <p className="student-profile__year">
+                          {(() => {
+                            const m = student.year.match(/^(.*?)\s*(\(.+\))\s*$/);
+                            return m ? (
+                              <>
+                                {m[1]} <span className="year-note">{m[2]}</span>
+                              </>
+                            ) : (
+                              student.year
+                            );
+                          })()}
+                        </p>
                         <p>{student.track}</p>
                       </div>
                     </div>

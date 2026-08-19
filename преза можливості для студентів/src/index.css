@@ -1088,6 +1088,12 @@ blockquote {
   text-transform: uppercase;
 }
 
+.student-profile__year .year-note {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 700;
+}
+
 .student-profile__university {
   margin: 0 !important;
   color: var(--text) !important;
