@@ -1094,6 +1094,17 @@ blockquote {
   font-weight: 700;
 }
 
+/* Виш під кожним студентом — лише на мобільному (на десктопі його показує спільний підвал) */
+.student-profile__uni-mobile {
+  display: none;
+  margin: 6px 0 0 !important;
+  color: var(--text) !important;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.82rem !important;
+  line-height: 1.35 !important;
+}
+
 .student-profile__university {
   margin: 0 !important;
   color: var(--text) !important;
@@ -2008,9 +2019,12 @@ blockquote {
     grid-template-columns: 1fr;
   }
 
-  .student-cluster__footer .student-cluster__footer-main,
-  .student-cluster__footer .student-profile__university {
-    grid-column: auto !important;
+  .student-cluster__footer {
+    display: none;
+  }
+
+  .student-profile__uni-mobile {
+    display: block;
   }
 
   .stats-strip > div {
@@ -2078,6 +2092,11 @@ blockquote {
   .student-profile {
     flex-direction: column;
     align-items: center;
+  }
+
+  .mission-card--split {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
   }
 
   .student-story__person {

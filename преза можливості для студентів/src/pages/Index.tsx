@@ -612,7 +612,6 @@ const Index = () => {
       <header className="topbar">
         <div className="topbar__brand">
           <img className="brand-logo" src={departmentLogo} alt="Логотип Аврора" />
-          <span>Можливості для студентів у команді Аврора</span>
         </div>
 
         <nav className="topbar__nav">
@@ -914,6 +913,9 @@ const Index = () => {
                           })()}
                         </p>
                         <p>{student.track}</p>
+                        <p className="student-profile__uni-mobile">
+                          {"universityNote" in student ? student.universityNote : group.university}
+                        </p>
                       </div>
                     </div>
                   ))}
