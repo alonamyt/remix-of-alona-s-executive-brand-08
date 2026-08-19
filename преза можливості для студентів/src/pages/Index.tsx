@@ -31,6 +31,7 @@ import kyryloMedar from "@/assets/students/kyrylo-medar.png";
 import stanislavVoronin from "@/assets/students/stanislav-voronin.png";
 import ivanPopov from "@/assets/students/ivan-popov.jpg";
 import sofiiaPhoto from "@/assets/students/sofiia.png";
+import illiaKoshelev from "@/assets/students/illia-koshelev.jpg";
 import leanFestTeam from "@/assets/lean-fest-team.jpg";
 import mlWeek2025 from "@/assets/students-paths/ml-week-2025-crop.jpg";
 import involvementKmbs from "@/assets/students-paths/kmbs-forum.jpg";
@@ -196,6 +197,14 @@ const studentGroups = [
         image: kyryloMedar,
         imagePosition: "center 16%",
       },
+      {
+        name: "Ілля",
+        year: "1 курс магістратури (5 курс)",
+        track: "Проєктний менеджмент",
+        universityNote: "Київський національний економічний університет (КНЕУ)",
+        image: illiaKoshelev,
+        imagePosition: "center center",
+      },
     ],
   },
   {
@@ -342,6 +351,15 @@ const studentProjectStories = [
     ownership:
       "Веду обидва проєкти майже автономно: проєктую архітектуру, порівнюю LLM-моделі й обираю оптимальну під задачу, пишу промпти та код екстракції, налаштовую гібридний підхід OCR+LLM, щоб тримати вартість обробки низькою. Приймаю технічні рішення сама, а більші кроки — інтеграції, розгортання, зміни — в межах стандартного процесу погодження задач з керівником.",
   },
+  {
+    name: "Ілля",
+    image: illiaKoshelev,
+    imagePosition: "center center",
+    projects:
+      "Впровадження LEO PPM (система управління проєктами, програмами та портфелями).",
+    ownership:
+      "Модернізація додатку StoreLocation (операційна система для менеджерів з розвитку), розробка системи управління Точками Зростання зі стажування лідерів 2026, розробка системи генерації шаблонних документів DOCO, автоматизація процесів звірки табелів та ЗП у відділі рекрутингу, розробка операційного додатку для відділу постачання, оптимізація процесу відкриття ТТ.",
+  },
 ];
 
 const projects = [
@@ -399,7 +417,7 @@ const studentStoriesMiddle = studentProjectStories.filter((story) =>
   ["Кирило", "Анастасія"].includes(story.name),
 );
 const studentStoriesFinal = studentProjectStories.filter(
-  (story) => ["Станіслав", "Іван", "Софія"].includes(story.name),
+  (story) => ["Станіслав", "Іван", "Софія", "Ілля"].includes(story.name),
 );
 
 const benefits = [
@@ -906,7 +924,14 @@ const Index = () => {
                       : "student-cluster__footer"
                   }
                 >
-                  <span className="student-cluster__footer-main">{group.university}</span>
+                  <span
+                    className="student-cluster__footer-main"
+                    style={{
+                      gridColumn: `1 / span ${group.students.filter((s) => !("universityNote" in s)).length || 1}`,
+                    }}
+                  >
+                    {group.university}
+                  </span>
                   {[
                     ...new Set(
                       group.students

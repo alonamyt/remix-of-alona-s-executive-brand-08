@@ -1964,9 +1964,9 @@ blockquote {
     grid-template-columns: 1fr;
   }
 
-  .student-cluster__footer--4 .student-cluster__footer-main,
-  .student-cluster__footer--4 .student-profile__university {
-    grid-column: auto;
+  .student-cluster__footer .student-cluster__footer-main,
+  .student-cluster__footer .student-profile__university {
+    grid-column: auto !important;
   }
 
   .stats-strip > div {
