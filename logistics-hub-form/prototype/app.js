@@ -193,7 +193,11 @@ function parsePrice(raw){
   const perObject=!perSqm && /за об|об'?єкт|обєкт|весь|цілком|загалом/.test(s) || (!perSqm && num>=100000);
   const withVat=/з пдв|з ндс|вкл.*пдв|incl.*vat/.test(s);
   const noVat=/без пдв|без ндс|\+ ?пдв|excl.*vat/.test(s);
-  return { num, cur, perSqm, perObject, withVat: withVat?true:(noVat?false:null) };
+  // Період (для оренди): місяць vs рік. За замовчуванням для оренди — місяць.
+  let period=null;
+  if(/рік|річн|\/\s*р\b|на рік|щорічно|per year|annum/.test(s)) period='year';
+  else if(/міс|month|\/\s*м(?:іс)?\b|щомісяч/.test(s)) period='month';
+  return { num, cur, perSqm, perObject, withVat: withVat?true:(noVat?false:null), period };
 }
 function normalizePrice(){
   const raw=document.querySelector('input[name=priceRaw]').value;
@@ -230,6 +234,58 @@ function normalizePrice(){
   if(p.perObject) details.push('база: за об\'єкт (не за м²)');
   box.innerHTML = 'Розрахунок: ' + details.join(' · ');
   box.classList.toggle('warn', hasVat===null);
+
+  // ── КАНОНІЧНА МЕТРИКА ДЛЯ ІНТЕГРАЦІЇ (порівняння об'єктів на платформі) ──
+  // Оренда: грн без ПДВ / м² / місяць.  Продаж: грн без ПДВ за об'єкт.
+  // period: місяць=1, рік=/12 (щоб усе звести до місячної ставки).
+  const deal=(document.querySelector('select[name=deal]')||{}).value||'';
+  const isRent=/оренд/i.test(deal) || (!/продаж/i.test(deal) && p.period!=null);
+  const periodDiv = p.period==='year' ? 12 : 1; // рік → місяць
+  const compareBox=document.getElementById('compareBox');
+  const dataEl=document.querySelector('input[name=priceNormData]');
+  let canonical=null, canonicalUnit=null;
+
+  if(isRent && p.perSqm){
+    canonical = base/periodDiv;               // грн без ПДВ /м²/міс
+    canonicalUnit='UAH_exclVAT_per_sqm_per_month';
+  } else if(isRent && !p.perSqm){
+    // оренда за об'єкт (не за м²) — теж зводимо до місяця, але без /м²
+    canonical = base/periodDiv;
+    canonicalUnit='UAH_exclVAT_per_object_per_month';
+  } else if(/продаж/i.test(deal)){
+    canonical = base;                          // грн без ПДВ за об'єкт (або /м² якщо вказано)
+    canonicalUnit = p.perSqm ? 'UAH_exclVAT_per_sqm' : 'UAH_exclVAT_per_object';
+  } else {
+    canonical = base;
+    canonicalUnit = p.perSqm ? 'UAH_exclVAT_per_sqm' : 'UAH_exclVAT_per_object';
+  }
+
+  // Рядок-підказка для менеджера: єдина метрика, за якою платформа порівнює.
+  const unitText = {
+    'UAH_exclVAT_per_sqm_per_month':'грн без ПДВ /м²/міс',
+    'UAH_exclVAT_per_object_per_month':'грн без ПДВ /об\'єкт/міс',
+    'UAH_exclVAT_per_sqm':'грн без ПДВ /м²',
+    'UAH_exclVAT_per_object':'грн без ПДВ /об\'єкт'
+  }[canonicalUnit] || 'грн без ПДВ';
+  if(compareBox) compareBox.textContent = '📊 Для порівняння на платформі: '+fmt(canonical)+' '+unitText
+    + (p.period==='year'?' (перераховано з річної ставки)':'');
+
+  // Структурований пакет — саме він піде в платформу (машиночитний, а не текст).
+  if(dataEl){
+    dataEl.value = JSON.stringify({
+      raw: raw.trim(),
+      amount: p.num,
+      currency: p.cur,
+      rate: RATES[p.cur]||1,
+      vatIncluded: hasVat,           // true / false / null
+      basis: p.perSqm ? 'per_sqm' : 'per_object',
+      period: isRent ? (p.period||'month') : null,
+      amountUAHexclVAT: Math.round(base*100)/100,
+      amountUAHinclVAT: withV!=null ? Math.round(withV*100)/100 : null,
+      canonicalValue: Math.round(canonical*100)/100,
+      canonicalUnit
+    });
+  }
 }
 
 /* ---------- автогеолокація (заглушка Google Maps) ---------- */
@@ -1070,7 +1126,7 @@ function openAlertsStats(){
 /* Єдине джерело версії білда. Міняй ЛИШЕ тут при кожній правці app.js.
    Штамп проставляється в топбар з app.js — якщо на екрані стара версія,
    значить браузер/сервер віддає стару збірку (розсинхрон кешу/деплою). */
-const BUILD = 'v17';
+const BUILD = 'v18';
 function stampBuild(){ const el=document.getElementById('buildStamp'); if(el) el.textContent='build '+BUILD; }
 
 /* старт */

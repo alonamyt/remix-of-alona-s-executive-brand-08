@@ -252,6 +252,9 @@
           <label>Вартість (нормалізовано для порівняння)</label>
           <input name="priceNorm" placeholder="грн без ПДВ/м² (в дужках з ПДВ)">
           <div class="norm" id="normBox">Тут з'явиться пояснення розрахунку: курс, первинна валюта, ПДВ.</div>
+          <div class="help" id="compareBox" style="margin-top:4px"></div>
+          <!-- Машиночитне значення для інтеграції з платформою (JSON). Заповнюється автоматично, у форму не вводиться вручну. -->
+          <input type="hidden" name="priceNormData">
         </div>
         <div class="field" data-req>
           <label>Чи включено ПДВ у вартість <span class="req">*</span></label>
