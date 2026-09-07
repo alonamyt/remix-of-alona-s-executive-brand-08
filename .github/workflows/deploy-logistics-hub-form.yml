@@ -10,8 +10,10 @@ on:
   workflow_dispatch:
 
 concurrency:
+  # Не скасовуємо деплой на середині — черга, щоб кожен деплой завершувався атомарно
+  # і на проді ніколи не з'являлась напівзалита версія.
   group: deploy-logistics-hub-form
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
@@ -40,36 +42,75 @@ jobs:
           ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 'rm -rf /home/ubuntu/logistics-hub-form-deploy && mkdir -p /home/ubuntu/logistics-hub-form-deploy'
           scp -i ~/.ssh/oracle_deploy_key -r out ubuntu@158.178.151.156:/home/ubuntu/logistics-hub-form-deploy/dist
 
-      - name: Deploy on server
+      - name: Deploy on server (atomic, zero-downtime)
         run: |
-          ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 '
-            target=/var/www/logistics-hub-form &&
-            releases=/var/www/logistics-hub-form-releases &&
-            release="$releases/release-$(date +%Y%m%d-%H%M%S)" &&
-            backup=/var/www/logistics-hub-form-backup-$(date +%Y%m%d-%H%M%S) &&
-            legacy="$releases/legacy-$(date +%Y%m%d-%H%M%S)" &&
-            link_tmp=/var/www/.logistics-hub-form-link &&
-            sudo mkdir -p "$releases" &&
-            sudo mkdir -p "$release" &&
-            sudo cp -a /home/ubuntu/logistics-hub-form-deploy/dist/. "$release"/ &&
-            sudo find "$release" -type d -exec chmod 755 {} + &&
-            sudo find "$release" -type f -exec chmod 644 {} + &&
+          ssh -i ~/.ssh/oracle_deploy_key ubuntu@158.178.151.156 'bash -s' <<'REMOTE'
+            set -euo pipefail
+
+            target=/var/www/logistics-hub-form
+            releases=/var/www/logistics-hub-form-releases
+            stamp=$(date +%Y%m%d-%H%M%S)
+            release="$releases/release-$stamp"
+            src=/home/ubuntu/logistics-hub-form-deploy/dist
+
+            # 0) Санітарна перевірка: у завантаженому бандлі МАЄ бути index.html.
+            #    Якщо його нема (обірваний upload) — НЕ чіпаємо прод узагалі.
+            if [ ! -f "$src/index.html" ]; then
+              echo "ERROR: у бандлі немає index.html — деплой скасовано, прод не змінено." >&2
+              exit 1
+            fi
+
+            # 1) Готуємо НОВИЙ реліз повністю в окремому каталозі (прод ще живий на старому).
+            sudo mkdir -p "$releases"
+            sudo rm -rf "$release"
+            sudo mkdir -p "$release"
+            sudo cp -a "$src/." "$release"/
+            sudo find "$release" -type d -exec chmod 755 {} +
+            sudo find "$release" -type f -exec chmod 644 {} +
+
+            # 2) Валідуємо новий реліз ЩЕ ДО перемикання: index.html читається і не порожній.
+            if [ ! -s "$release/index.html" ]; then
+              echo "ERROR: index.html у новому релізі порожній — прод не змінено." >&2
+              sudo rm -rf "$release"
+              exit 1
+            fi
+
+            # 3) Бекап поточного релізу (для швидкого відкату).
             if [ -L "$target" ]; then
-              current_target=$(readlink -f "$target") &&
-              if [ -n "$current_target" ] && [ -d "$current_target" ]; then
-                sudo cp -a "$current_target" "$backup";
-              fi;
+              current=$(readlink -f "$target" || true)
+              if [ -n "${current:-}" ] && [ -d "$current" ]; then
+                sudo cp -a "$current" "/var/www/logistics-hub-form-backup-$stamp"
+              fi
             elif [ -d "$target" ]; then
-              sudo cp -a "$target" "$backup" &&
-              sudo mv "$target" "$legacy";
-            fi &&
-            sudo ln -sfn "$release" "$link_tmp" &&
-            sudo mv -Tf "$link_tmp" "$target" &&
-            sudo find "$releases" -maxdepth 1 -mindepth 1 -type d -name "release-*" | sort | head -n -5 | xargs -r sudo rm -rf &&
-            sudo mkdir -p "$target" &&
-            sudo systemctl reload nginx &&
-            curl -fsS http://127.0.0.1/logistics-hub-form/ >/dev/null
-          '
+              # Одноразова міграція зі звичайної теки на symlink-схему.
+              sudo cp -a "$target" "/var/www/logistics-hub-form-backup-$stamp"
+              sudo rm -rf "$target"
+            fi
+
+            # 4) АТОМАРНЕ перемикання: створюємо symlink поруч і mv-переміщаємо на місце
+            #    одним syscall (rename) — жодної миті без робочої версії.
+            link_tmp="/var/www/.logistics-hub-form-link-$stamp"
+            sudo ln -sfn "$release" "$link_tmp"
+            sudo mv -Tf "$link_tmp" "$target"
+
+            # 5) Reload nginx і фінальна перевірка. Якщо впала — відкат на бекап.
+            sudo systemctl reload nginx
+            if ! curl -fsS http://127.0.0.1/logistics-hub-form/ >/dev/null; then
+              echo "ERROR: новий реліз не віддає 200 — відкочуюсь на попередній." >&2
+              backup="/var/www/logistics-hub-form-backup-$stamp"
+              if [ -d "$backup" ]; then
+                sudo ln -sfn "$backup" "$link_tmp"
+                sudo mv -Tf "$link_tmp" "$target"
+                sudo systemctl reload nginx
+              fi
+              exit 1
+            fi
+
+            # 6) Прибирання: лишаємо 5 останніх релізів і 5 останніх бекапів.
+            sudo find "$releases" -maxdepth 1 -mindepth 1 -type d -name "release-*" | sort | head -n -5 | xargs -r sudo rm -rf
+            sudo find /var/www -maxdepth 1 -mindepth 1 -type d -name "logistics-hub-form-backup-*" | sort | head -n -5 | xargs -r sudo rm -rf
+            echo "Deploy OK: $release"
+          REMOTE
 
       - name: Verify production URL
         run: |
