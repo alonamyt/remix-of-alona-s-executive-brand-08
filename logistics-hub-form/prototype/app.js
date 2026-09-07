@@ -273,6 +273,7 @@ function geoCopyLink(){
 /* ---------- AI-помічник (евристики; у проді — LLM) ---------- */
 function addMsg(text, who){
   const l=document.getElementById('aiLog'); if(!l) return;
+  l.classList.remove('hidden'); // показуємо стрічку діалогу, щойно з'являється перше повідомлення
 
   // Дедуплікація: якщо остання бульбашка того ж автора має той самий базовий текст —
   // не додаємо нову, а дописуємо лічильник (2×), (3×)…
@@ -291,7 +292,7 @@ function addMsg(text, who){
   d.dataset.base=text;
   d.dataset.count='1';
   // Надійні inline-стилі (не залежать від кешованого CSS), щоб бульбашки завжди було видно.
-  d.style.cssText='padding:7px 12px;border-radius:12px;max-width:90%;font-size:13.5px;line-height:1.35;margin:0;box-shadow:0 1px 2px rgba(20,30,50,.08);white-space:pre-wrap;word-break:break-word;display:block';
+  d.style.cssText='padding:10px 14px;border-radius:12px;max-width:90%;font-size:13.5px;line-height:1.55;margin:0;box-shadow:0 1px 2px rgba(20,30,50,.08);white-space:pre-wrap;word-break:break-word;display:block;overflow:visible';
   if(who==='user'){
     d.style.alignSelf='flex-end';
     d.style.setProperty('background','#2563eb','important');
@@ -458,7 +459,11 @@ function extractFields(t){
   // 6) ПЛОЩІ в м²: збираємо всі, розрізняємо загальну площу будівлі vs площу забудови/проїздів.
   //    Числа біля слів "загальна площа" мають пріоритет для площі приміщення.
   const num=(s)=>parseFloat(String(s).replace(/\s/g,'').replace(',', '.'));
-  const m2All=[...low.matchAll(/([\d][\d\s]{1,8}(?:[.,]\d+)?)\s*(?:м²|м2|кв\.?\s*м|m2|m²)/g)]
+  // Одиниця площі — стійка до варіацій написання (пробіл і крапка після скорочень необов'язкові):
+  //   "6000кв", "6000 кв", "6000кв.", "6000 кв м", "6000 кв.м", "6000м2", "6000 м²",
+  //   "6000 м.кв", "6000 м кв", "6000 квадратів", "6000 квадратних метрів".
+  const AREA_UNIT = '(?:м²|м2|m2|m²|м\\.?\\s*кв\\.?|кв\\.?\\s*м(?:етр\\w*)?\\.?|кв(?:адратн\\w*)?\\.?)';
+  const m2All=[...low.matchAll(new RegExp('([\\d][\\d\\s]{1,8}(?:[.,]\\d+)?)\\s*'+AREA_UNIT+'(?![а-яіїєґA-Za-z\\d])','g'))]
     .map(m=>({v:num(m[1]), ctx: low.slice(Math.max(0,m.index-40), m.index)}))
     .filter(o=>o.v>=50 && o.v<1000000);
   if(m2All.length){
@@ -476,16 +481,28 @@ function extractFields(t){
     }
   }
 
-  // 7) ВИСОТА: "9,3 м", "максимальна висота 9,3", "висоти прольотів 9,3 / 6,1 / 5,1" -> беремо максимум.
-  const heights=[...low.matchAll(/(\d{1,2}(?:[.,]\d)?)\s*м(?![²2])/g)].map(m=>parseFloat(m[1].replace(',', '.'))).filter(n=>n>=3&&n<=30);
+  // 7) ВИСОТА: стійко до варіацій. Ловимо і "9,3 м", і без "м" ("до ферм 6,50 по центру 8,50").
+  //    Умова: у тексті має бути контекст висоти (висота/проліт/ферм/стеля).
+  //    Беремо всі числа 3–30, але ВИКЛЮЧАЄМО ті, за якими йде одиниця площі (кв/м²) або "га" —
+  //    щоб площа "6000кв" чи ділянка "5 га" не потрапили у висоту. Далі беремо максимум.
   const heightCtx=/висот|проліт|ферм|стел/.test(low);
-  if(heights.length && heightCtx){
-    const h=Math.max(...heights);
-    if(setField('input[name=height]', String(h))) done.push('висота (макс.) '+h+' м');
+  if(heightCtx){
+    const heights=[...low.matchAll(/(?<![\d.,])(\d{1,2}(?:[.,]\d{1,2})?)\s*(?:м(?![²2])|метр\w*)?(?![\d])/g)]
+      .filter(m=>{
+        const after=low.slice(m.index+m[0].length, m.index+m[0].length+6);
+        if(/^\s*(?:га|кв|м²|м2|м\.?\s*кв)/.test(after)) return false; // це площа/ділянка, не висота
+        return true;
+      })
+      .map(m=>parseFloat(m[1].replace(',', '.')))
+      .filter(n=>n>=3&&n<=30);
+    if(heights.length){
+      const h=Math.max(...heights);
+      if(setField('input[name=height]', String(h))) done.push('висота (макс.) '+h+' м');
+    }
   }
 
-  // 8) потужність: "до 15 кВт" / "50 кВт" -> селект діапазону
-  const kwM=low.match(/(\d+[.,]?\d*)\s*квт/);
+  // 8) потужність: "до 15 кВт" / "50 кВт" / "50квт" / "50 квт." -> селект діапазону (пробіл/крапка необов'язкові).
+  const kwM=low.match(/(\d+[.,]?\d*)\s*квт\.?/);
   if(kwM){ const kw=parseFloat(kwM[1].replace(',', '.')); if(setField('select[name=power]', powerToOption(kw))) done.push('електропотужність'); }
 
   // 9) угода: "оренда 49 років" / "оренда" / "продаж"
@@ -493,14 +510,15 @@ function extractFields(t){
   else if(/оренд/i.test(low)){ if(setField('select[name=deal]','Оренда')){ done.push('тип угоди'); onDealChange(); } }
   else if(/продаж|купівл/i.test(low)){ if(setField('select[name=deal]','Продаж')) done.push('тип угоди'); }
 
-  // 10) ціна: "996 тис. грн", "5 % НГО", "$6.5 млн", "250 грн/м²"
-  const priceM=t.match(/([$€]?\s*\d[\d\s.,]*\s*(?:млн|млрд|тис\.?)?\s*(?:грн|₴|usd|\$|eur|€|дол\w*|євро)(?:\s*\/?\s*(?:м²|м2|кв\.?\s*м|рік|міс|щорічно))?)/i);
+  // 10) ціна: "996 тис. грн", "5 % НГО", "$6.5 млн", "250 грн/м²", "5дол/м²", "250грн/кв" —
+  //     пробіли між числом, множником і валютою та крапки після скорочень необов'язкові.
+  const priceM=t.match(/([$€]?\s*\d[\d\s.,]*\s*(?:млн\.?|млрд\.?|тис\.?)?\s*(?:грн\.?|₴|usd|\$|eur|€|дол\w*\.?|євро)(?:\s*\/?\s*(?:м²|м2|кв\.?\s*м?|рік|міс\.?|щорічно))?)/i);
   if(priceM){ if(setField('input[name=priceRaw]', priceM[1].trim())) done.push('вартість'); }
 
   // 10b) оренда за ставкою/м²: невелика сума за м² → майже завжди оренда (для перевірки).
   const dealEl=document.querySelector('select[name=deal]');
   if(dealEl && !dealEl.value){
-    const perM2=low.match(/(\d[\d\s.,]*)\s*(грн|₴|usd|\$|eur|€|дол\w*|євро)?\s*\/?\s*(?:м²|м2|кв\.?\s*м)/);
+    const perM2=low.match(/(\d[\d\s.,]*)\s*(грн\.?|₴|usd|\$|eur|€|дол\w*\.?|євро)?\s*\/?\s*(?:м²|м2|кв\.?\s*м?)/);
     if(perM2){
       const val=parseFloat(perM2[1].replace(/\s/g,'').replace(',','.'));
       const foreign=/usd|\$|eur|€|дол|євро/.test(perM2[2]||'');
@@ -1034,7 +1052,7 @@ function openDamageMap(){
 /* Єдине джерело версії білда. Міняй ЛИШЕ тут при кожній правці app.js.
    Штамп проставляється в топбар з app.js — якщо на екрані стара версія,
    значить браузер/сервер віддає стару збірку (розсинхрон кешу/деплою). */
-const BUILD = 'v14';
+const BUILD = 'v15';
 function stampBuild(){ const el=document.getElementById('buildStamp'); if(el) el.textContent='build '+BUILD; }
 
 /* старт */

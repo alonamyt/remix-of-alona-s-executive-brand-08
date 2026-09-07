@@ -1,5 +1,4 @@
 <!doctype html>
-<!doctype html>
 <html lang="uk">
 <head>
 <meta charset="utf-8" />
@@ -37,8 +36,11 @@
   .ai-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
   .ai-badge{background:var(--accent);color:#fff;border-radius:8px;padding:3px 8px;font-size:12px;font-weight:700}
   .ai-body{padding:14px 16px}
-  .ai-log{max-height:220px;overflow:auto;display:flex;flex-direction:column;gap:6px;margin-bottom:10px;padding:2px}
-  .msg{padding:8px 12px;border-radius:12px;max-width:90%;font-size:13.5px;line-height:1.35;box-shadow:0 1px 2px rgba(20,30,50,.08)}
+  /* Вступна підказка — навмисно НЕ схожа на поле вводу: без обведення-рамки, приглушений текст. */
+  .ai-intro{margin:0 0 12px;padding:0 2px;color:var(--muted);font-size:13px;line-height:1.55;background:none;border:0}
+  .ai-log{max-height:220px;overflow:auto;display:flex;flex-direction:column;gap:8px;margin-bottom:10px;padding:2px}
+  .ai-log.hidden{display:none}
+  .msg{padding:10px 14px;border-radius:12px;max-width:90%;font-size:13.5px;line-height:1.55;box-shadow:0 1px 2px rgba(20,30,50,.08);overflow:visible}
   .ai-log .msg.user{align-self:flex-end;background:#2563eb !important;color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;border-bottom-right-radius:3px}
   .ai-log .msg.ai{align-self:flex-start;background:#e9edf4 !important;color:#111827 !important;-webkit-text-fill-color:#111827 !important;border:1px solid #cfd6e2;border-bottom-left-radius:3px}
   .ai-input{display:flex;gap:8px;align-items:flex-end}
@@ -149,9 +151,8 @@
       <strong>Опишіть об'єкт словами, голосом або скиньте файл — я заповню форму</strong>
     </div>
     <div class="ai-body">
-      <div class="ai-log" id="aiLog">
-        <div class="msg ai">Привіт! Напишіть або надиктуйте: місто, площу, висоту, ціну, під'їзд. Можна скинути PDF/фото/оголошення — розпізнаю і заповню поля. Обов'язкові поля підсвічу червоним, бажані — жовтим.</div>
-      </div>
+      <p class="ai-intro">💬 Напишіть або надиктуйте в поле нижче: місто, площу, висоту, ціну, під'їзд. Можна скинути PDF/фото/оголошення — розпізнаю і заповню поля. Обов'язкові поля підсвічу червоним, бажані — жовтим.</p>
+      <div class="ai-log hidden" id="aiLog"></div>
       <div class="ai-input">
         <textarea id="aiText" placeholder="Напр.: Луцьк, склад 1000 м², висота 6 м, 5 дол/м² з ПДВ, є рампа, під'їзд для фур вільний..."></textarea>
         <button class="icon-btn" title="Прикріпити файл" onclick="document.getElementById('aiFile').click()">📎</button>
