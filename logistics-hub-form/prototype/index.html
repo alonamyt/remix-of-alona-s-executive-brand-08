@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Logistics Hub · Форма — Пропозиція об'єкта</title>
+<style>
+  :root{
+    --bg:#f4f6fb; --card:#fff; --ink:#1b2432; --muted:#67728a; --line:#e4e8f0;
+    --brand:#e11d3a; --brand-dark:#c2162f; --accent:#2563eb;
+    --req:#ef4444; --req-bg:#fef2f2; --want:#f59e0b; --want-bg:#fffbeb;
+    --ok:#16a34a; --radius:14px; --shadow:0 1px 3px rgba(20,30,50,.06),0 8px 24px rgba(20,30,50,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI",Montserrat,system-ui,sans-serif}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 140px}
+  header.top{position:sticky;top:0;z-index:40;background:rgba(244,246,251,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
+  .logo{width:40px;height:40px;border-radius:10px;background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:800}
+  .title h1{font-size:18px;margin:0}
+  .title p{margin:0;color:var(--muted);font-size:12px}
+  .spacer{flex:1}
+  .btn{border:0;border-radius:10px;padding:10px 16px;font-weight:600;cursor:pointer;font-size:14px}
+  .btn-ghost{background:#eef1f7;color:var(--ink)}
+  .btn-primary{background:var(--brand);color:#fff}
+  .btn-primary:hover{background:var(--brand-dark)}
+  .btn-save{background:#111827;color:#fff}
+  .pill{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+
+  /* AI panel */
+  .ai{margin:18px 0;background:linear-gradient(135deg,#fff,#f7f9ff);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .ai-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+  .ai-badge{background:var(--accent);color:#fff;border-radius:8px;padding:3px 8px;font-size:12px;font-weight:700}
+  .ai-body{padding:14px 16px}
+  .ai-log{max-height:220px;overflow:auto;display:flex;flex-direction:column;gap:6px;margin-bottom:10px;padding:2px}
+  .msg{padding:9px 13px;border-radius:12px;max-width:88%;font-size:14px;line-height:1.4;box-shadow:0 1px 2px rgba(20,30,50,.08)}
+  .msg.user{align-self:flex-end;background:#2563eb !important;color:#fff !important;border-bottom-right-radius:3px}
+  .msg.ai{align-self:flex-start;background:#eef1f7 !important;color:#1b2432 !important;border:1px solid #d3dae6;border-bottom-left-radius:3px}
+  .ai-input{display:flex;gap:8px;align-items:flex-end}
+  .ai-input textarea{flex:1;resize:vertical;min-height:44px;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
+  .icon-btn{width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:18px}
+  .icon-btn.rec{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .ai-hint{color:var(--muted);font-size:12px;margin-top:8px}
+
+  .section{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);margin:16px 0;overflow:hidden}
+  .section>h2{margin:0;padding:14px 18px;font-size:15px;border-bottom:1px solid var(--line);background:#fafbfe}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;padding:16px 18px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field.full{grid-column:1/-1}
+  label{font-weight:600;font-size:13px}
+  label .req{color:var(--req)}
+  input,select,textarea{border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;background:#fff}
+  textarea{resize:vertical;min-height:70px}
+  .help{color:var(--muted);font-size:12px}
+  .field.miss-req input,.field.miss-req select,.field.miss-req textarea{background:var(--req-bg);border-color:var(--req)}
+  .field.miss-want input,.field.miss-want select,.field.miss-want textarea{background:var(--want-bg);border-color:var(--want)}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+  @media(max-width:720px){.checks{grid-template-columns:1fr}}
+  .checks label{font-weight:400;display:flex;gap:8px;align-items:flex-start}
+  .norm{background:#f0fdf4;border:1px dashed var(--ok);border-radius:10px;padding:8px 10px;font-size:12.5px;color:#166534}
+  .norm.warn{background:var(--want-bg);border-color:var(--want);color:#92400e}
+  .depend{border-left:3px solid var(--accent);padding-left:12px;margin-top:4px}
+  .hidden{display:none}
+
+  .footbar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 20px;z-index:40;box-shadow:0 -6px 20px rgba(20,30,50,.06)}
+  .footbar .inner{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px}
+  .progress{flex:1}
+  .bar{height:8px;background:#eef1f7;border-radius:99px;overflow:hidden}
+  .bar > i{display:block;height:100%;background:var(--accent);width:0}
+  .muted{color:var(--muted);font-size:12px}
+
+  /* ---------- мобільна адаптація ---------- */
+  @media(max-width:640px){
+    .wrap{padding:0 12px 160px}
+    .topbar{padding:10px 12px;gap:8px}
+    .title h1{font-size:16px}
+    .title p{display:none}
+    .pill{order:5;flex-basis:100%;justify-content:flex-start}
+    .btn{padding:9px 12px;font-size:13px}
+    .section>h2{font-size:14px;padding:12px 14px}
+    .grid{padding:14px;gap:12px}
+    .footbar{padding:10px 12px}
+    .footbar .inner{gap:8px}
+    .footbar .progress .muted{font-size:11px}
+    .msg{max-width:92%}
+    .ai-head strong{font-size:14px}
+  }
+  @media(max-width:400px){
+    .btn-ghost{display:none} /* «Скасувати» ховаємо на дуже вузьких */
+  }
+
+  /* список прикріплених файлів */
+  .file-list{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+  .file-row{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#f7f9fc;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:13px}
+  .file-row .fn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .file-row .fmeta{display:inline-flex;align-items:center;gap:8px;color:var(--muted);flex:none}
+  .file-row .rm{border:0;background:#fdecec;color:var(--brand);border-radius:8px;width:24px;height:24px;cursor:pointer;font-size:13px;line-height:1}
+  .file-row .rm:hover{background:#fbdada}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="topbar">
+    <div class="logo">LH</div>
+    <div class="title"><h1>Logistics Hub · Форма</h1><p>Пропозиція об'єкта · нова ідея</p></div>
+    <div class="spacer"></div>
+    <span class="pill"><span class="dot"></span><span id="saveState">Чернетка збережена</span></span>
+    <button class="btn btn-ghost" onclick="clearDraft()" title="Почати з чистої форми">Очистити</button>
+    <button class="btn btn-save" onclick="saveDraft(true)">Зберегти</button>
+    <button class="btn btn-primary" onclick="submitForm()">Відправити</button>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- AI помічник -->
+  <div class="ai">
+    <div class="ai-head">
+      <span class="ai-badge">AI-помічник</span>
+      <strong>Опишіть об'єкт словами, голосом або скиньте файл — я заповню форму</strong>
+    </div>
+    <div class="ai-body">
+      <div class="ai-log" id="aiLog">
+        <div class="msg ai">Привіт! Напишіть або надиктуйте: місто, площу, висоту, ціну, під'їзд. Можна скинути PDF/фото/оголошення — розпізнаю і заповню поля. Обов'язкові поля підсвічу червоним, бажані — жовтим.</div>
+      </div>
+      <div class="ai-input">
+        <textarea id="aiText" placeholder="Напр.: Луцьк, склад 1000 м², висота 6 м, 5 дол/м² з ПДВ, є рампа, під'їзд для фур вільний..."></textarea>
+        <button class="icon-btn" title="Прикріпити файл" onclick="document.getElementById('aiFile').click()">📎</button>
+        <button class="icon-btn" id="micBtn" title="Голосове введення" onclick="toggleRec()">🎤</button>
+        <button class="btn btn-primary" onclick="askAI()">Заповнити</button>
+      </div>
+      <input type="file" id="aiFile" class="hidden" multiple accept="image/*,application/pdf,.pdf,.doc,.docx,.xls,.xlsx" onchange="onAiFile(event)">
+      <div class="ai-hint">Демо-режим: розпізнавання працює на локальних евристиках. У проді підключаємо LLM (Azure OpenAI) + Whisper для голосу.</div>
+    </div>
+  </div>
+
+  <!-- Легенда підсвітки (один раз, збоку/зверху — без підписів під кожним полем) -->
+  <div class="legend">
+    <span class="lg lg-req">🔴 обов'язкове</span>
+    <span class="lg lg-want">🟡 бажано заповнити</span>
+    <span class="lg lg-info" id="legendCounts"></span>
+  </div>
+
+  <form id="proposal">
+    <!-- Секція A -->
+    <div class="section">
+      <h2>Об'єкт, розташування та відповідальні</h2>
+      <div class="grid">
+        <div class="field" data-req>
+          <label>Тип об'єкта <span class="req">*</span></label>
+          <select name="objectType" onchange="onTypeChange()">
+            <option value="">Оберіть</option>
+            <option>Складське приміщення</option>
+            <option>Земельна ділянка</option>
+          </select>
+        </div>
+        <div class="field" data-req>
+          <label>Ініціатор ідеї (хто подав) <span class="req">*</span></label>
+          <input name="initiator" placeholder="Ім'я та прізвище">
+        </div>
+        <div class="field" data-want>
+          <label>Джерело переходу / заявки</label>
+          <input name="source" placeholder="Напр.: QR-код, сайт, Facebook">
+        </div>
+        <div class="field" data-want>
+          <label>Відповідальний менеджер розвитку</label>
+          <input name="manager" placeholder="Призначається за областю або вручну">
+        </div>
+        <div class="field" data-req>
+          <label>Область розташування об'єкта <span class="req">*</span></label>
+          <select name="region" onchange="autoGeo()">
+            <option value="">Оберіть</option>
+          </select>
+        </div>
+        <div class="field" data-req>
+          <label>Населений пункт <span class="req">*</span></label>
+          <input name="city" placeholder="Напр.: Львів" oninput="autoGeo()">
+        </div>
+        <div class="field full" data-req>
+          <label>Адреса об'єкта <span class="req">*</span></label>
+          <input name="address" placeholder="Вулиця, номер будинку або опис місця" oninput="autoGeo()">
+        </div>
+        <div class="field full" data-req>
+          <label>Посилання на геолокацію Google Maps <span class="req">*</span></label>
+          <div class="geo-row">
+            <input name="geo" placeholder="https://maps.google.com/...">
+            <button type="button" id="geoView" class="geo-btn" onclick="geoOpen()" disabled>Переглянути</button>
+            <button type="button" id="geoCopy" class="geo-btn" onclick="geoCopyLink()" disabled>Копіювати</button>
+          </div>
+          <span class="help" id="geoHint">Заповнюється автоматично з області+міста+адреси. Можна відредагувати.</span>
+        </div>
+        <div class="field" data-want>
+          <label>Посилання на оголошення, якщо є</label>
+          <input name="listing" placeholder="https://...">
+        </div>
+        <div class="field" data-want>
+          <label>Контакт власника або ріелтора</label>
+          <input name="contact" placeholder="ПІБ і телефон">
+        </div>
+      </div>
+    </div>
+
+    <!-- Секція B -->
+    <div class="section">
+      <h2>Комерційні умови</h2>
+      <div class="grid">
+        <div class="field" data-req>
+          <label>Об'єкт пропонується <span class="req">*</span></label>
+          <select name="deal" onchange="onDealChange()">
+            <option value="">Оберіть</option>
+            <option>Оренда</option><option>Продаж</option>
+            <option>Оренда або продаж</option><option>Не уточнено</option>
+          </select>
+        </div>
+        <div class="field" data-req>
+          <label>Вартість <span class="req">*</span></label>
+          <input name="priceRaw" placeholder="Напр.: 7 USD/м² на місяць або 250 грн/м²" oninput="normalizePrice()">
+          <span class="help">Пишіть як зручно: 5$, 5 дол/м², 130 грн з ПДВ, 90 000 за об'єкт.</span>
+        </div>
+        <div class="field full">
+          <label>Вартість (нормалізовано для порівняння)</label>
+          <input name="priceNorm" placeholder="грн без ПДВ/м² (в дужках з ПДВ)">
+          <div class="norm" id="normBox">Тут з'явиться пояснення розрахунку: курс, первинна валюта, ПДВ.</div>
+        </div>
+        <div class="field" data-req>
+          <label>Чи включено ПДВ у вартість <span class="req">*</span></label>
+          <select name="vat" onchange="normalizePrice()">
+            <option value="">Оберіть</option>
+            <option>Так</option><option>Ні</option>
+            <option>Власник не є платником ПДВ</option><option>Не уточнено</option>
+          </select>
+        </div>
+        <div class="depend hidden" id="rentBlock" style="grid-column:1/-1">
+          <div class="grid" style="padding:0">
+            <div class="field" data-req><label>Мінімальний термін оренди, міс. <span class="req">*</span></label><input type="number" name="rentTerm" min="0"></div>
+            <div class="field" data-want><label>Штрафні санкції за дострокове розірвання</label><input name="rentPenalty"></div>
+          </div>
+        </div>
+        <div class="field" data-want>
+          <label>Чи є додаткові платежі, крім оренди</label>
+          <select name="extraPay" onchange="toggleDep('extraPayBox', this.value==='Є')">
+            <option value="">Оберіть</option><option>Немає</option><option>Є</option><option>Не уточнено</option>
+          </select>
+        </div>
+        <div class="field" data-want>
+          <label>Чи передбачена комісія рієлтора</label>
+          <select name="commission" onchange="toggleDep('commissionBox', this.value==='Так')">
+            <option value="">Оберіть</option><option>Ні</option><option>Так</option><option>Не уточнено</option>
+          </select>
+        </div>
+        <div class="field full depend hidden" id="extraPayBox"><label>Вид і сума додаткових платежів</label><input name="extraPayDetail"></div>
+        <div class="field full depend hidden" id="commissionBox"><label>Сума або відсоток комісії</label><input name="commissionDetail"></div>
+        <div class="field full"><label>Інші комерційні умови</label><textarea name="otherTerms" placeholder="Додаткові платежі, комісія рієлтора, дата доступності — лише якщо важливо"></textarea></div>
+      </div>
+    </div>
+
+    <!-- Динамічні секції: Склад / Земля -->
+    <div id="warehouseSections"></div>
+    <div id="landSections"></div>
+
+    <!-- Секція F -->
+    <div class="section">
+      <h2>Безпека та оточення</h2>
+      <div class="grid">
+        <div class="field full">
+          <label>Потенційно небезпечні об'єкти поруч</label>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 8px">
+            <button type="button" class="geo-btn" id="envBtn" onclick="analyzeEnvironment()" title="Проаналізувати оточення за адресою через OpenStreetMap">🛰️ Проаналізувати оточення</button>
+            <button type="button" class="geo-btn" id="ruBtn" onclick="openDamageMap()" title="Відкрити карту руйнувань на цій локації (довідково)">🗺️ Карта руйнувань</button>
+          </div>
+          <div class="norm hidden" id="envResult" style="margin-bottom:8px"></div>
+          <div class="checks" id="dangerChecks"></div>
+        </div>
+        <div class="field full"><label>Опис небезпечних об'єктів та орієнтовна відстань</label><textarea name="dangerDesc" placeholder="Орієнтир — радіус ~500 м. Що саме розташовано поруч і на якій відстані"></textarea></div>
+        <div class="field" data-req>
+          <label>Концентрація складських/логістичних об'єктів поруч <span class="req">*</span></label>
+          <select name="logisticsdensity"><option value="">Оберіть</option><option>Немає</option><option>Є поодинокі</option><option>Багато</option><option>Не уточнено</option></select>
+        </div>
+        <div class="field" data-want>
+          <label>Чи є поруч укриття?</label>
+          <select name="shelter" onchange="toggleDep('shelterDist', this.value==='Є поруч з об\\'єктом')">
+            <option value="">Оберіть</option>
+            <option>Є на території / в будівлі</option>
+            <option>Є поруч з об'єктом</option>
+            <option>Мобільне укриття</option>
+            <option>Відсутнє</option><option>Не уточнено</option>
+          </select>
+        </div>
+        <div class="field depend hidden" id="shelterDist"><label>Відстань до укриття</label><input name="shelterDistance"></div>
+        <div class="field full"><label>Відомі недоліки, обмеження або додатковий коментар</label><textarea name="notes"></textarea></div>
+      </div>
+    </div>
+
+    <!-- Секція G -->
+    <div class="section">
+      <h2>Фото, відео та документи</h2>
+      <div class="grid">
+        <div class="field full">
+          <label>Файли об'єкта</label>
+          <input type="file" id="mainFile" multiple accept="image/*,video/*,application/pdf,.doc,.docx" onchange="onMainFile(event)">
+          <span class="help">До 10 файлів по 50 МБ, загалом до 150 МБ: фото, відео, PDF, DOC або DOCX. У відео фіксуйте під'їзд, маневрування фур, ворота, територію, внутрішній стан, оточення.</span>
+          <div id="fileList" class="file-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:8px">
+      <button type="button" class="btn btn-ghost" onclick="if(confirm('Скасувати заповнення?'))location.reload()">Скасувати</button>
+      <button type="button" class="btn btn-save" onclick="saveDraft(true)">Зберегти</button>
+      <button type="button" class="btn btn-primary" onclick="submitForm()">Створити ідею</button>
+    </div>
+  </form>
+</div>
+
+<div class="footbar">
+  <div class="inner">
+    <button class="btn btn-save" onclick="saveDraft(true)">Зберегти</button>
+    <div class="progress">
+      <div class="bar"><i id="progFill"></i></div>
+      <div class="muted" id="progText">Заповнено 0% · <span id="reqLeft">обов'язкових залишилось —</span></div>
+    </div>
+    <button class="btn btn-primary" onclick="submitForm()">Відправити</button>
+  </div>
+</div>
+
+<script src="app.js?v=9"></script>
+</body>
+</html>
