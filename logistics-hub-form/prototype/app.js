@@ -258,11 +258,25 @@ function geoCopyLink(){
 /* ---------- AI-помічник (евристики; у проді — LLM) ---------- */
 function addMsg(text, who){
   const l=document.getElementById('aiLog'); if(!l) return;
+
+  // Дедуплікація: якщо остання бульбашка того ж автора має той самий базовий текст —
+  // не додаємо нову, а дописуємо лічильник (2×), (3×)…
+  const last=l.lastElementChild;
+  if(last && last.classList.contains(who) && last.dataset.base===text){
+    const n=(parseInt(last.dataset.count,10)||1)+1;
+    last.dataset.count=String(n);
+    last.textContent=text+'  ('+n+'×)';
+    l.scrollTop=l.scrollHeight;
+    return;
+  }
+
   const d=document.createElement('div');
   d.className='msg '+who;
   d.textContent=text;
+  d.dataset.base=text;
+  d.dataset.count='1';
   // Надійні inline-стилі (не залежать від кешованого CSS), щоб бульбашки завжди було видно.
-  d.style.cssText='padding:9px 13px;border-radius:12px;max-width:88%;font-size:14px;line-height:1.4;margin:0;box-shadow:0 1px 2px rgba(20,30,50,.08);white-space:pre-wrap;word-break:break-word';
+  d.style.cssText='padding:7px 12px;border-radius:12px;max-width:90%;font-size:13.5px;line-height:1.35;margin:0;box-shadow:0 1px 2px rgba(20,30,50,.08);white-space:pre-wrap;word-break:break-word;display:block';
   if(who==='user'){
     d.style.alignSelf='flex-end';
     d.style.setProperty('background','#2563eb','important');
@@ -270,9 +284,9 @@ function addMsg(text, who){
     d.style.borderBottomRightRadius='3px';
   } else {
     d.style.alignSelf='flex-start';
-    d.style.setProperty('background','#eef1f7','important');
-    d.style.setProperty('color','#1b2432','important');
-    d.style.border='1px solid #d9dfea';
+    d.style.setProperty('background','#e9edf4','important');
+    d.style.setProperty('color','#111827','important');
+    d.style.setProperty('border','1px solid #cfd6e2','important');
     d.style.borderBottomLeftRadius='3px';
   }
   l.appendChild(d);
