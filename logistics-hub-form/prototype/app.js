@@ -2,6 +2,21 @@
    Офлайн-логіка: списки, умовні поля, нормалізація вартості, підсвітка, автогео,
    AI-евристики, автозбереження. LLM/Whisper/Google Maps/інтеграція — заглушки. */
 
+/* ============================================================================
+   ІНТЕГРАЦІЯ З ПЛАТФОРМОЮ (для Іллі).
+   Форма зовнішня/публічна; платформа logistics-hub.rnd-dev.avrora.lan — у VPN.
+   Дані йдуть односторонньо: форма -> INBOX_ENDPOINT (приймач) -> (всередині VPN) платформа.
+
+   Щоб увімкнути реальну відправку — вкажи URL приймача нижче. Поки порожньо —
+   форма працює в демо-режимі (показує пакет, нічого не шле назовні).
+
+   Приймач має приймати multipart/form-data:
+     - поле "payload": JSON-рядок { fields: {...}, meta: {...} }
+     - поля "file_0", "file_1", ... : самі файли (фото/PDF/DOCX/XLSX/відео)
+   Мапінг ключів fields -> полів платформи див. docs/SPEC-fields.md.
+============================================================================ */
+const INBOX_ENDPOINT = ""; // напр. "https://rau-expo.rnd-avrora.com.ua/lh-inbox/submit"
+
 const REGIONS = [
   "Львівська","Волинська","Рівненська","Тернопільська","Івано-Франківська",
   "Закарпатська","Чернівецька","Хмельницька","Вінницька","Київська","Житомирська",
@@ -896,10 +911,13 @@ function restore(){
     const obj=JSON.parse(raw);
     if(obj.objectType){ document.querySelector('select[name=objectType]').value=obj.objectType; onTypeChange(); }
     Object.entries(obj).forEach(([k,v])=>{
+      if(k==='geo') return; // гео — похідне, не відновлюємо (щоб не тягнути старий лінк)
       const el=document.querySelector(`[name="${k}"]`);
       if(el && el.type!=='file' && !Array.isArray(v)){ el.value=v; }
     });
-    onDealChange(); normalizePrice(); geoButtons();
+    onDealChange(); normalizePrice();
+    const geo=document.querySelector('input[name=geo]'); if(geo) delete geo.dataset.touched;
+    autoGeo(); geoButtons();
   }catch(e){}
 }
 
@@ -1013,5 +1031,11 @@ function openDamageMap(){
   window.open('https://deepstatemap.live/#6/'+q, '_blank', 'noopener');
 }
 
+/* Єдине джерело версії білда. Міняй ЛИШЕ тут при кожній правці app.js.
+   Штамп проставляється в топбар з app.js — якщо на екрані стара версія,
+   значить браузер/сервер віддає стару збірку (розсинхрон кешу/деплою). */
+const BUILD = 'v14';
+function stampBuild(){ const el=document.getElementById('buildStamp'); if(el) el.textContent='build '+BUILD; }
+
 /* старт */
-fillRegions(); fillDangers(); initAuto(); restore(); refresh(); geoButtons(); renderFiles();
+stampBuild(); fillRegions(); fillDangers(); initAuto(); restore(); refresh(); geoButtons(); renderFiles();
