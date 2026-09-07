@@ -447,63 +447,83 @@ function extractFields(t){
     if(!found){ const firstWord=t.match(/^\s*\.?\s*([А-ЯІЇЄҐ][а-яіїєґ'-]{2,})/); if(firstWord && setField('input[name=city]', firstWord[1])) done.push('місто'); }
   }
 
-  // 5) ПЛОЩА ДІЛЯНКИ в гектарах: "7,04 га", "7 0431 м²" з контекстом "ділянка".
-  //    Беремо найбільше значення в га (часто є "разом").
-  const haAll=[...low.matchAll(/([\d]{1,3}(?:[.,]\d{1,4})?)\s*га\b/g)].map(m=>parseFloat(m[1].replace(',', '.'))).filter(n=>n>0&&n<100000);
-  if(haAll.length){
-    const ha=Math.max(...haAll);
-    if(setField('select[name=objectType]','Земельна ділянка')){ onTypeChange(); done.push('тип: земельна ділянка'); }
-    if(setField('input[name=landArea]', String(ha))) done.push('площа ділянки '+ha+' га');
-  }
-
-  // 6) ПЛОЩІ в м²: збираємо всі, розрізняємо загальну площу будівлі vs площу забудови/проїздів.
-  //    Числа біля слів "загальна площа" мають пріоритет для площі приміщення.
+  // 5–8) ЄДИНИЙ КЛАСИФІКАТОР ЧИСЕЛ.
+  //   Замість окремих регулярок «на кожне поле» робимо ОДИН прохід: знаходимо кожне число разом із
+  //   одиницею, що стоїть впритул ПІСЛЯ нього, і словом-контекстом ПЕРЕД ним. Далі кожне число
+  //   отримує роль за ПРІОРИТЕТОМ ОДИНИЦІ (гроші > гектари > площа > висота). Число з грошовою
+  //   одиницею НІКОЛИ не стає висотою чи площею. Так логіка стійка до формулювань, а не до прикладів.
   const num=(s)=>parseFloat(String(s).replace(/\s/g,'').replace(',', '.'));
-  // Одиниця площі — стійка до варіацій написання (пробіл і крапка після скорочень необов'язкові):
-  //   "6000кв", "6000 кв", "6000кв.", "6000 кв м", "6000 кв.м", "6000м2", "6000 м²",
-  //   "6000 м.кв", "6000 м кв", "6000 квадратів", "6000 квадратних метрів".
-  const AREA_UNIT = '(?:м²|м2|m2|m²|м\\.?\\s*кв\\.?|кв\\.?\\s*м(?:етр\\w*)?\\.?|кв(?:адратн\\w*)?\\.?)';
-  const m2All=[...low.matchAll(new RegExp('([\\d][\\d\\s]{1,8}(?:[.,]\\d+)?)\\s*'+AREA_UNIT+'(?![а-яіїєґA-Za-z\\d])','g'))]
-    .map(m=>({v:num(m[1]), ctx: low.slice(Math.max(0,m.index-40), m.index)}))
-    .filter(o=>o.v>=50 && o.v<1000000);
-  if(m2All.length){
-    // спершу шукаємо "загальна площа ... N м²"
-    let general = m2All.find(o=>/загальн|разом|усіх площ/.test(o.ctx));
-    // інакше — найбільше значення, але виключаємо "проїзди/майданчик/забудови"
-    const buildingCandidates = m2All.filter(o=>!/проїзд|майданчик|забудов|тверд/.test(o.ctx));
-    const pick = general || buildingCandidates.sort((a,b)=>b.v-a.v)[0] || m2All.sort((a,b)=>b.v-a.v)[0];
+  const fmtN=(n)=>String(n).replace('.', ',');
+
+  // Токен: число + «хвіст» одразу після нього (до ~12 символів) + контекст перед (до 24 символів).
+  const tokens=[...low.matchAll(/(\d[\d\s]{0,8}(?:[.,]\d+)?)/g)]
+    .map(m=>{
+      const raw=m[1];
+      const start=m.index, end=m.index+raw.length;
+      return { v:num(raw), before: low.slice(Math.max(0,start-24), start), after: low.slice(end, end+12) };
+    })
+    .filter(o=>Number.isFinite(o.v));
+
+  // Роль числа за одиницею одразу після нього. УВАГА: \b у JS ненадійний для кирилиці,
+  // тому межу після одиниці перевіряємо явно через (?![...літери/цифри]).
+  const NOT_WORD='(?![а-яіїєґA-Za-z0-9])';
+  const roleOf=(tok)=>{
+    const a=tok.after;
+    if(/^\s*(?:грн|₴|usd|\$|eur|€|дол|євро|млн|млрд|тис|%)/i.test(a)) return 'price';
+    if(new RegExp('^\\s*га'+NOT_WORD,'i').test(a)) return 'ha';
+    // площа: м², м2, м.кв, кв.м, кв, квадрат... — з опційною крапкою, без хибного \b
+    if(new RegExp('^\\s*(?:м²|м2|m2|m²|м\\.?\\s*кв\\.?|кв\\.?\\s*м(?:етр\\w*)?|кв(?:адратн\\w*)?)','i').test(a)) return 'area';
+    // висота: одиниця «м»/«метр», але НЕ м²/м2 і НЕ «м.кв»
+    if(/^\s*м\.?\s*кв/i.test(a)) return 'area';
+    if(/^\s*(?:м(?![²2])|метр\w*)/i.test(a)) return 'height-m';
+    return 'bare'; // гола цифра без одиниці — роль визначимо за контекстом
+  };
+  tokens.forEach(t=>{ t.role=roleOf(t); });
+
+  // ГЕКТАРИ → ділянка
+  const haVals=tokens.filter(t=>t.role==='ha').map(t=>t.v).filter(n=>n>0&&n<100000);
+  const isLand = haVals.length>0;
+  if(haVals.length){
+    const ha=Math.max(...haVals);
+    if(setField('select[name=objectType]','Земельна ділянка')){ onTypeChange(); done.push('тип: земельна ділянка'); }
+    if(setField('input[name=landArea]', String(ha))) done.push('площа ділянки '+fmtN(ha)+' га');
+  }
+
+  // ПЛОЩА (м²/кв) → пропонована площа (для складу). Пріоритет числу біля «загальна/разом».
+  const areaToks=tokens.filter(t=>t.role==='area' && t.v>=50 && t.v<1000000);
+  if(areaToks.length && !isLand){
+    const general = areaToks.find(t=>/загальн|разом|усіх площ/.test(t.before));
+    const buildingCandidates = areaToks.filter(t=>!/проїзд|майданчик|забудов|тверд/.test(t.before));
+    const pick = general || buildingCandidates.sort((a,b)=>b.v-a.v)[0] || areaToks.sort((a,b)=>b.v-a.v)[0];
     if(pick){
-      if(!haAll.length){ // якщо це не земля — це склад
-        if(setField('select[name=objectType]','Складське приміщення')){ onTypeChange(); done.push('тип: складське приміщення'); }
-      }
-      const target = haAll.length ? null : 'input[name=areaOffered]';
-      if(target && setField(target, String(Math.round(pick.v)))) done.push('загальна площа ~'+Math.round(pick.v)+' м²');
+      if(setField('select[name=objectType]','Складське приміщення')){ onTypeChange(); done.push('тип: складське приміщення'); }
+      if(setField('input[name=areaOffered]', String(Math.round(pick.v)))) done.push('площа ~'+Math.round(pick.v)+' м²');
     }
   }
 
-  // 7) ВИСОТА: стійко до варіацій. Ловимо і "9,3 м", і без "м" ("до ферм 6,50 по центру 8,50").
-  //    Умова: у тексті має бути контекст висоти (висота/проліт/ферм/стеля).
-  //    Беремо всі числа 3–30, але ВИКЛЮЧАЄМО ті, за якими йде одиниця площі (кв/м²) або "га" —
-  //    щоб площа "6000кв" чи ділянка "5 га" не потрапили у висоту. Далі беремо максимум.
-  const heightCtx=/висот|проліт|ферм|стел/.test(low);
-  if(heightCtx){
-    const heights=[...low.matchAll(/(?<![\d.,])(\d{1,2}(?:[.,]\d{1,2})?)\s*(?:м(?![²2])|метр\w*)?(?![\d])/g)]
-      .filter(m=>{
-        const after=low.slice(m.index+m[0].length, m.index+m[0].length+6);
-        if(/^\s*(?:га|кв|м²|м2|м\.?\s*кв)/.test(after)) return false; // це площа/ділянка, не висота
-        return true;
-      })
-      .map(m=>parseFloat(m[1].replace(',', '.')))
-      .filter(n=>n>=3&&n<=30);
-    if(heights.length){
-      const h=Math.max(...heights);
-      if(setField('input[name=height]', String(h))) done.push('висота (макс.) '+h+' м');
-    }
+  // ВИСОТА. Кандидати: числа 3–30, роль яких «height-m» (мають одиницю «м») АБО «bare»
+  //   і при цьому стоять біля слів висоти (висота/ферм/проліт/стеля/центр). Гроші/площа/гектари виключені за роллю.
+  const heightToks=tokens.filter(t=>{
+    if(!(t.v>=3 && t.v<=30)) return false;
+    if(t.role==='price' || t.role==='area' || t.role==='ha') return false;
+    if(t.role==='height-m') return true;                       // «6 м», «9,3 м»
+    return /висот|ферм|проліт|стел|центр/.test(t.before);      // гола цифра біля слова висоти
+  });
+  if(heightToks.length){
+    const uniq=[...new Set(heightToks.map(t=>t.v))].sort((a,b)=>a-b);
+    let val, note;
+    if(uniq.length>1){
+      const byCenter=/по центр/i.test(low);
+      val='мінімум '+fmtN(uniq[0])+(byCenter?', по центру ':', максимум ')+fmtN(uniq[uniq.length-1]);
+      note='висота: '+val;
+    } else { val=fmtN(uniq[0]); note='висота '+val+' м'; }
+    if(setField('input[name=height]', val)) done.push(note);
   }
 
-  // 8) потужність: "до 15 кВт" / "50 кВт" / "50квт" / "50 квт." -> селект діапазону (пробіл/крапка необов'язкові).
+  // ПОТУЖНІСТЬ: "50 кВт" / "50квт" / "50 квт."
   const kwM=low.match(/(\d+[.,]?\d*)\s*квт\.?/);
   if(kwM){ const kw=parseFloat(kwM[1].replace(',', '.')); if(setField('select[name=power]', powerToOption(kw))) done.push('електропотужність'); }
+  const haAll=haVals; // сумісність з подальшим кодом (п.11b тощо)
 
   // 9) угода: "оренда 49 років" / "оренда" / "продаж"
   if(/оренд/i.test(low) && /продаж|купівл/i.test(low)){ if(setField('select[name=deal]','Оренда або продаж')) done.push('тип угоди'); }
@@ -1040,19 +1060,17 @@ async function analyzeEnvironment(){
   }
 }
 
-/* Довідкова карта руйнувань на локації (зовнішнє безкоштовне посилання). */
-function openDamageMap(){
-  const city=document.querySelector('input[name=city]').value.trim();
-  const region=document.querySelector('select[name=region]').value.trim();
-  const q=encodeURIComponent([city,region,'Україна'].filter(Boolean).join(', '));
-  // deepstatemap — публічна карта; відкриваємо з пошуком локації
-  window.open('https://deepstatemap.live/#6/'+q, '_blank', 'noopener');
+/* Статистика повітряних тривог у регіоні (довідково, зовнішнє посилання).
+   На alerts.in.ua: клік по області → внизу іконка пісочного годинника ⏳ → праворуч «останні 7 днів»
+   → кількість і сумарна тривалість тривог. Відкриваємо мапу в новій вкладці. */
+function openAlertsStats(){
+  window.open('https://alerts.in.ua/', '_blank', 'noopener');
 }
 
 /* Єдине джерело версії білда. Міняй ЛИШЕ тут при кожній правці app.js.
    Штамп проставляється в топбар з app.js — якщо на екрані стара версія,
    значить браузер/сервер віддає стару збірку (розсинхрон кешу/деплою). */
-const BUILD = 'v15';
+const BUILD = 'v16';
 function stampBuild(){ const el=document.getElementById('buildStamp'); if(el) el.textContent='build '+BUILD; }
 
 /* старт */
