@@ -1,8 +1,12 @@
 <!doctype html>
+<!doctype html>
 <html lang="uk">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 <title>Logistics Hub · Форма — Пропозиція об'єкта</title>
 <style>
   :root{
@@ -111,6 +115,15 @@
   .file-tile .ft-meta{padding:6px 8px;display:flex;flex-direction:column;gap:1px}
   .file-tile .ft-name{font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .file-tile .ft-size{font-size:10.5px;color:var(--muted)}
+
+  /* легенда підсвітки (один раз) */
+  .legend{display:flex;gap:12px;flex-wrap:wrap;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 14px;margin:14px 0;font-size:12.5px}
+  .legend .lg{display:inline-flex;align-items:center;gap:5px;font-weight:600}
+  .legend .legend-sep{flex:1;min-width:8px}
+  .legend .lg-info{color:var(--muted);font-weight:500}
+  .legend .lg-info b{font-weight:800}
+  .legend .lg-req{color:var(--req)}
+  .legend .lg-want{color:#b45309}
 </style>
 </head>
 <body>
@@ -154,6 +167,7 @@
   <div class="legend">
     <span class="lg lg-req">🔴 обов'язкове</span>
     <span class="lg lg-want">🟡 бажано заповнити</span>
+    <span class="legend-sep"></span>
     <span class="lg lg-info" id="legendCounts"></span>
   </div>
 
@@ -339,35 +353,12 @@
   </div>
 </div>
 
-<script src="app.js?v=12"></script>
+<!-- Антикеш-підвантаження: браузер завжди бере свіжий app.js після деплою -->
 <script>
-  /* Запобіжник видимості чату: примусово стилізуємо AI-бульбашки навіть якщо
-     кешований app.js застарів. Стилі з !important через setProperty. */
   (function(){
-    function styleMsg(el){
-      if(!el.classList || !el.classList.contains('msg')) return;
-      el.style.setProperty('max-width','88%','important');
-      el.style.setProperty('padding','9px 13px','important');
-      el.style.setProperty('border-radius','12px','important');
-      el.style.setProperty('line-height','1.4','important');
-      el.style.setProperty('white-space','pre-wrap','important');
-      if(el.classList.contains('ai')){
-        el.style.setProperty('background','#eef1f7','important');
-        el.style.setProperty('color','#1b2432','important');
-        el.style.setProperty('border','1px solid #d3dae6','important');
-        el.style.setProperty('align-self','flex-start','important');
-      } else {
-        el.style.setProperty('background','#2563eb','important');
-        el.style.setProperty('color','#ffffff','important');
-        el.style.setProperty('align-self','flex-end','important');
-      }
-    }
-    var log=document.getElementById('aiLog');
-    if(!log) return;
-    log.querySelectorAll('.msg').forEach(styleMsg);
-    new MutationObserver(function(muts){
-      muts.forEach(function(m){ m.addedNodes && m.addedNodes.forEach && m.addedNodes.forEach(styleMsg); });
-    }).observe(log,{childList:true});
+    var s = document.createElement('script');
+    s.src = 'app.js?v=' + Date.now();
+    document.body.appendChild(s);
   })();
 </script>
 </body>

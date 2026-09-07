@@ -281,11 +281,13 @@ function addMsg(text, who){
     d.style.alignSelf='flex-end';
     d.style.setProperty('background','#2563eb','important');
     d.style.setProperty('color','#ffffff','important');
+    d.style.setProperty('-webkit-text-fill-color','#ffffff','important');
     d.style.borderBottomRightRadius='3px';
   } else {
     d.style.alignSelf='flex-start';
     d.style.setProperty('background','#e9edf4','important');
     d.style.setProperty('color','#111827','important');
+    d.style.setProperty('-webkit-text-fill-color','#111827','important');
     d.style.setProperty('border','1px solid #cfd6e2','important');
     d.style.borderBottomLeftRadius='3px';
   }
@@ -840,9 +842,9 @@ function refresh(){
   if(progText) progText.innerHTML=`Заповнено ${pct}% · <span>обов'язкових залишилось: ${reqLeft}</span>`;
   // Оновлюємо бічну легенду-лічильник (один раз, збоку — без підписів під кожним полем).
   const legend=document.getElementById('legendCounts');
-  if(legend) legend.innerHTML =
-    `<span class="lg lg-req">🔴 обов'язкових: ${reqLeft}</span>`+
-    `<span class="lg lg-want">🟡 бажаних: ${wantLeft}</span>`;
+  if(legend) legend.innerHTML = reqLeft||wantLeft
+    ? `Залишилось: <b class="lg-req">${reqLeft}</b> обов'язкових · <b class="lg-want">${wantLeft}</b> бажаних`
+    : `Усе заповнено ✅`;
   return { reqLeft, wantLeft };
 }
 
