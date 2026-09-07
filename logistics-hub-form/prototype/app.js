@@ -480,8 +480,39 @@ function extractFields(t){
   const priceM=t.match(/([$€]?\s*\d[\d\s.,]*\s*(?:млн|млрд|тис\.?)?\s*(?:грн|₴|usd|\$|eur|€|дол\w*|євро)(?:\s*\/?\s*(?:м²|м2|кв\.?\s*м|рік|міс|щорічно))?)/i);
   if(priceM){ if(setField('input[name=priceRaw]', priceM[1].trim())) done.push('вартість'); }
 
-  // 11) рампа
-  if(/\bрамп/i.test(low)){ if(setField('select[name=ramp]','Рампа є, інша висота')) done.push('рампа'); }
+  // 10b) оренда за ставкою/м²: невелика сума за м² → майже завжди оренда (для перевірки).
+  const dealEl=document.querySelector('select[name=deal]');
+  if(dealEl && !dealEl.value){
+    const perM2=low.match(/(\d[\d\s.,]*)\s*(грн|₴|usd|\$|eur|€|дол\w*|євро)?\s*\/?\s*(?:м²|м2|кв\.?\s*м)/);
+    if(perM2){
+      const val=parseFloat(perM2[1].replace(/\s/g,'').replace(',','.'));
+      const foreign=/usd|\$|eur|€|дол|євро/.test(perM2[2]||'');
+      if((foreign && val<=30) || (!foreign && val<=800)){
+        if(setField('select[name=deal]','Оренда')){ done.push('тип угоди (оренда — за ставкою/м², перевірте)'); onDealChange(); }
+      }
+    }
+  }
+
+  // 11) рампи: кількість і висоти. Приклад: "2 висотні рампи (під навісом), 1 в 0"
+  //     = 2 рампи: одна в рівень із землею (0), одна ~1 м.
+  if(/\bрамп/i.test(low)){
+    const inLevel=/\b1\s*(?:в|у|на)\s*0\b|в\s*рівень|врівень|нульов|\b0\s*м\b/i.test(low);
+    const hasHeight=/висотн/i.test(low) || /\b1[.,]?\d?\s*м\b/i.test(low);
+    let rampVal;
+    if(inLevel && hasHeight) rampVal='Рампа є, висота близько 1,2 м';
+    else if(inLevel) rampVal='Підлога в рівень із землею';
+    else rampVal='Рампа є, інша висота';
+    if(setField('select[name=ramp]', rampVal)){ done.push('рампа'); if(typeof onRampChange==='function') onRampChange(); }
+    const rm=t.match(/[^.\n]*рамп[^.\n]*/i);
+    if(rm){ const notes=document.querySelector('textarea[name=notes]'); if(notes){ const line='[Рампи — перевірте]: '+rm[0].replace(/\s+/g,' ').trim(); notes.value=notes.value.trim()?notes.value.trim()+'\n'+line:line; if(typeof markToVerify==='function') markToVerify(notes); } }
+  }
+
+  // 11b) загальна площа = площі пропозиції (для перевірки), якщо окремо не вказана.
+  const _off=document.querySelector('input[name=areaOffered]');
+  const _tot=document.querySelector('input[name=areaTotal]');
+  if(_off && _tot && _off.value.trim() && !_tot.value.trim() && !/загальн\w*\s+площ|усі[єї]ї?\s+будівл|всієї\s+будівл/i.test(low)){
+    if(setField('input[name=areaTotal]', _off.value.trim())) done.push('загальна площа = площі пропозиції (перевірте)');
+  }
 
   // 12) БАГАТА ДОВІДКА -> ключові рядки в коментар, щоб нічого не втратити.
   //     Витягуємо характерні рядки (форма володіння, цільове, обмеження, рік, фундамент, сейсміка тощо).
@@ -914,8 +945,8 @@ async function analyzeEnvironment(){
       return;
     }
     const lat=parseFloat(nd[0].lat), lon=parseFloat(nd[0].lon);
-    // 2) Overpass: небезпечні/значущі об'єкти в радіусі 800 м. Пробуємо кілька дзеркал.
-    const r=800;
+    // 2) Overpass: небезпечні/значущі об'єкти в радіусі 500 м у ВСІ сторони (around = коло).
+    const r=500;
     const query=`[out:json][timeout:25];(
       nwr["man_made"="works"](around:${r},${lat},${lon});
       nwr["amenity"="fuel"](around:${r},${lat},${lon});

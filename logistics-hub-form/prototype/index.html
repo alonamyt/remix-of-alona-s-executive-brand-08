@@ -34,9 +34,9 @@
   .ai-badge{background:var(--accent);color:#fff;border-radius:8px;padding:3px 8px;font-size:12px;font-weight:700}
   .ai-body{padding:14px 16px}
   .ai-log{max-height:220px;overflow:auto;display:flex;flex-direction:column;gap:6px;margin-bottom:10px;padding:2px}
-  .msg{padding:9px 13px;border-radius:12px;max-width:88%;font-size:14px;line-height:1.4;box-shadow:0 1px 2px rgba(20,30,50,.08)}
-  .msg.user{align-self:flex-end;background:#2563eb !important;color:#fff !important;border-bottom-right-radius:3px}
-  .msg.ai{align-self:flex-start;background:#eef1f7 !important;color:#1b2432 !important;border:1px solid #d3dae6;border-bottom-left-radius:3px}
+  .msg{padding:8px 12px;border-radius:12px;max-width:90%;font-size:13.5px;line-height:1.35;box-shadow:0 1px 2px rgba(20,30,50,.08)}
+  .ai-log .msg.user{align-self:flex-end;background:#2563eb !important;color:#ffffff !important;-webkit-text-fill-color:#ffffff !important;border-bottom-right-radius:3px}
+  .ai-log .msg.ai{align-self:flex-start;background:#e9edf4 !important;color:#111827 !important;-webkit-text-fill-color:#111827 !important;border:1px solid #cfd6e2;border-bottom-left-radius:3px}
   .ai-input{display:flex;gap:8px;align-items:flex-end}
   .ai-input textarea{flex:1;resize:vertical;min-height:44px;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
   .icon-btn{width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:18px}
@@ -119,7 +119,7 @@
     <div class="logo">LH</div>
     <div class="title"><h1>Logistics Hub · Форма</h1><p>Пропозиція об'єкта · нова ідея</p></div>
     <div class="spacer"></div>
-    <span class="pill" title="Версія збірки — щоб бачити, чи оновився код">build v9</span>
+    <span class="pill" title="Версія збірки — щоб бачити, чи оновився код">build v12</span>
     <span class="pill"><span class="dot"></span><span id="saveState">Чернетка збережена</span></span>
     <button class="btn btn-ghost" onclick="clearDraft()" title="Почати з чистої форми">Очистити</button>
     <button class="btn btn-save" onclick="saveDraft(true)">Зберегти</button>
