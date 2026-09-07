@@ -98,6 +98,19 @@
   .file-row .fmeta{display:inline-flex;align-items:center;gap:8px;color:var(--muted);flex:none}
   .file-row .rm{border:0;background:#fdecec;color:var(--brand);border-radius:8px;width:24px;height:24px;cursor:pointer;font-size:13px;line-height:1}
   .file-row .rm:hover{background:#fbdada}
+
+  /* плитки файлів з мініатюрами */
+  .file-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:10px}
+  .file-tile{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .file-tile .thumb{height:84px;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;flex-direction:column}
+  .file-tile .thumb.ph{font-size:26px;color:#94a3b8;gap:2px}
+  .file-tile .thumb.ph .ic-emoji{font-size:30px;line-height:1}
+  .file-tile .thumb.ph .ic-tag{font-size:10px;font-weight:700;letter-spacing:.04em;color:#64748b}
+  .file-tile .rm{position:absolute;top:5px;right:5px;border:0;background:rgba(0,0,0,.55);color:#fff;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:12px;line-height:1}
+  .file-tile .rm:hover{background:rgba(0,0,0,.75)}
+  .file-tile .ft-meta{padding:6px 8px;display:flex;flex-direction:column;gap:1px}
+  .file-tile .ft-name{font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .file-tile .ft-size{font-size:10.5px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -106,6 +119,7 @@
     <div class="logo">LH</div>
     <div class="title"><h1>Logistics Hub · Форма</h1><p>Пропозиція об'єкта · нова ідея</p></div>
     <div class="spacer"></div>
+    <span class="pill" title="Версія збірки — щоб бачити, чи оновився код">build v9</span>
     <span class="pill"><span class="dot"></span><span id="saveState">Чернетка збережена</span></span>
     <button class="btn btn-ghost" onclick="clearDraft()" title="Почати з чистої форми">Очистити</button>
     <button class="btn btn-save" onclick="saveDraft(true)">Зберегти</button>
@@ -325,6 +339,36 @@
   </div>
 </div>
 
-<script src="app.js?v=9"></script>
+<script src="app.js?v=11"></script>
+<script>
+  /* Запобіжник видимості чату: примусово стилізуємо AI-бульбашки навіть якщо
+     кешований app.js застарів. Стилі з !important через setProperty. */
+  (function(){
+    function styleMsg(el){
+      if(!el.classList || !el.classList.contains('msg')) return;
+      el.style.setProperty('max-width','88%','important');
+      el.style.setProperty('padding','9px 13px','important');
+      el.style.setProperty('border-radius','12px','important');
+      el.style.setProperty('line-height','1.4','important');
+      el.style.setProperty('white-space','pre-wrap','important');
+      if(el.classList.contains('ai')){
+        el.style.setProperty('background','#eef1f7','important');
+        el.style.setProperty('color','#1b2432','important');
+        el.style.setProperty('border','1px solid #d3dae6','important');
+        el.style.setProperty('align-self','flex-start','important');
+      } else {
+        el.style.setProperty('background','#2563eb','important');
+        el.style.setProperty('color','#ffffff','important');
+        el.style.setProperty('align-self','flex-end','important');
+      }
+    }
+    var log=document.getElementById('aiLog');
+    if(!log) return;
+    log.querySelectorAll('.msg').forEach(styleMsg);
+    new MutationObserver(function(muts){
+      muts.forEach(function(m){ m.addedNodes && m.addedNodes.forEach && m.addedNodes.forEach(styleMsg); });
+    }).observe(log,{childList:true});
+  })();
+</script>
 </body>
 </html>

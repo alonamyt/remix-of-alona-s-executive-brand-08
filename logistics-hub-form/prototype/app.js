@@ -265,13 +265,13 @@ function addMsg(text, who){
   d.style.cssText='padding:9px 13px;border-radius:12px;max-width:88%;font-size:14px;line-height:1.4;margin:0;box-shadow:0 1px 2px rgba(20,30,50,.08);white-space:pre-wrap;word-break:break-word';
   if(who==='user'){
     d.style.alignSelf='flex-end';
-    d.style.background='#2563eb';
-    d.style.color='#fff';
+    d.style.setProperty('background','#2563eb','important');
+    d.style.setProperty('color','#ffffff','important');
     d.style.borderBottomRightRadius='3px';
   } else {
     d.style.alignSelf='flex-start';
-    d.style.background='#eef1f7';
-    d.style.color='#1b2432';
+    d.style.setProperty('background','#eef1f7','important');
+    d.style.setProperty('color','#1b2432','important');
     d.style.border='1px solid #d9dfea';
     d.style.borderBottomLeftRadius='3px';
   }
@@ -514,14 +514,46 @@ function renderFiles(){
   const box=document.getElementById('fileList');
   if(!box) return;
   if(!attachments.length){ box.innerHTML='<span class="help">Ще нічого не прикріплено.</span>'; return; }
-  box.innerHTML = attachments.map(a=>`
-    <div class="file-row">
-      <span class="fn">${a.type.startsWith('image')?'🖼':a.type.includes('pdf')?'📄':a.type.startsWith('video')?'🎬':'📎'} ${a.name}</span>
-      <span class="fmeta">${humanSize(a.size)} <button type="button" class="rm" title="Прибрати" onclick="removeFile('${a.id}')">✕</button></span>
-    </div>`).join('') +
-    `<div class="help" style="margin-top:6px">Разом: ${attachments.length}/${MAX_FILES} файлів · ${humanSize(totalSize())} / 150 МБ</div>`;
+
+  const fileIcon=(a)=>{
+    const n=(a.name||'').toLowerCase();
+    if(a.type.includes('pdf')||n.endsWith('.pdf')) return {emoji:'📄', tag:'PDF', bg:'#fdecec'};
+    if(n.endsWith('.doc')||n.endsWith('.docx')) return {emoji:'📝', tag:'DOC', bg:'#eaf1fd'};
+    if(n.endsWith('.xls')||n.endsWith('.xlsx')) return {emoji:'📊', tag:'XLS', bg:'#eafaf0'};
+    if(a.type.startsWith('video')) return {emoji:'🎬', tag:'ВІДЕО', bg:'#f0ecfd'};
+    return {emoji:'📎', tag:'ФАЙЛ', bg:'#eef1f7'};
+  };
+
+  const tiles = attachments.map(a=>{
+    // мініатюра для фото
+    if(a.type.startsWith('image')){
+      if(!a.preview){ try{ a.preview=URL.createObjectURL(a.file); }catch{ a.preview=''; } }
+      const thumb = a.preview
+        ? `<div class="thumb" style="background-image:url('${a.preview}')"></div>`
+        : `<div class="thumb ph">🖼</div>`;
+      return `<div class="file-tile">
+        ${thumb}
+        <button type="button" class="rm" title="Прибрати" onclick="removeFile('${a.id}')">✕</button>
+        <div class="ft-meta"><span class="ft-name" title="${a.name}">${a.name}</span><span class="ft-size">${humanSize(a.size)}</span></div>
+      </div>`;
+    }
+    const ic=fileIcon(a);
+    return `<div class="file-tile">
+      <div class="thumb ph" style="background:${ic.bg}"><span class="ic-emoji">${ic.emoji}</span><span class="ic-tag">${ic.tag}</span></div>
+      <button type="button" class="rm" title="Прибрати" onclick="removeFile('${a.id}')">✕</button>
+      <div class="ft-meta"><span class="ft-name" title="${a.name}">${a.name}</span><span class="ft-size">${humanSize(a.size)}</span></div>
+    </div>`;
+  }).join('');
+
+  box.innerHTML = `<div class="file-tiles">${tiles}</div>` +
+    `<div class="help" style="margin-top:8px">Разом: ${attachments.length}/${MAX_FILES} файлів · ${humanSize(totalSize())} / 150 МБ</div>`;
 }
-function removeFile(id){ attachments=attachments.filter(a=>a.id!==id); renderFiles(); saveDraft(false); }
+function removeFile(id){
+  const a=attachments.find(x=>x.id===id);
+  if(a && a.preview){ try{ URL.revokeObjectURL(a.preview); }catch{} }
+  attachments=attachments.filter(a=>a.id!==id);
+  renderFiles(); saveDraft(false);
+}
 
 function addFiles(fileList, {ocr}={}){
   const incoming=[...fileList];
