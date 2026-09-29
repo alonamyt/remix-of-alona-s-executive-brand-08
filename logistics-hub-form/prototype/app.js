@@ -160,6 +160,9 @@ function onTypeChange(){
 
 /* ---------- умовні поля ---------- */
 function toggleDep(id, show){ const el=document.getElementById(id); if(el) el.classList.toggle('hidden', !show); }
+// Укриття «поруч з об'єктом» -> показати поле відстані. Винесено у функцію,
+// щоб апостроф у значенні не ламав inline-обробник (був баг з \\' у HTML-атрибуті).
+function onShelterChange(sel){ toggleDep('shelterDist', sel.value==='Є поруч з об\'єктом'); }
 function onDealChange(){
   const v=document.querySelector('select[name=deal]').value;
   toggleDep('rentBlock', v==='Оренда' || v==='Оренда або продаж');
@@ -1126,7 +1129,7 @@ function openAlertsStats(){
 /* Єдине джерело версії білда. Міняй ЛИШЕ тут при кожній правці app.js.
    Штамп проставляється в топбар з app.js — якщо на екрані стара версія,
    значить браузер/сервер віддає стару збірку (розсинхрон кешу/деплою). */
-const BUILD = 'v18';
+const BUILD = 'v19';
 function stampBuild(){ const el=document.getElementById('buildStamp'); if(el) el.textContent='build '+BUILD; }
 
 /* старт */
