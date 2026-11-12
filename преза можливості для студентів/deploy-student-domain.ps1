@@ -14,6 +14,7 @@ Push-Location $projectRoot
 try {
   $env:SITE_BASE = "/"
   $env:BUILD_OUT_DIR = "domain-dist"
+  $env:BROWSERSLIST_IGNORE_OLD_DATA = "1"
   npm.cmd run build
 
   if (Test-Path -LiteralPath $archivePath) {
