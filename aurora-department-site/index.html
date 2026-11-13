@@ -1,16 +1,1505 @@
 <!doctype html>
-<html lang="uk">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Avrora Department</title>
-    <meta
-      name="description"
-      content="Окремий сайт-візитка департаменту у стилі Aurora з проєктами, командою, історією та контактами."
-    />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-  </html>
+<html lang="uk" data-theme="day">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Департамент R&D «Аврора» — технології для розвитку бізнесу</title>
+<meta name="description" content="Власна R&D-команда всередині великої мережі мультимаркетів «Аврора». Готові рішення, AI-платформи, консалтинг, розробка під ключ і партнерство.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--yel:#FFDD00;--ink:#141414;--grey:#5b5b5b;--soft:#f5f7fb;--line:#e7ecf3;--bg:#fff;--card:#f5f7fb;--head:rgba(255,255,255,.92);--seg:#eef1f6;}
+  html[data-theme="night"]{--ink:#eef2fc;--grey:#aeb9d6;--soft:#15275a;--line:rgba(140,165,255,.16);--bg:#0a1a40;--card:#15275a;--head:rgba(10,26,64,.92);--seg:#1c3168;}
+  html[data-theme="night"] body{background-image:radial-gradient(95% 55% at 50% -8%,#1c3168 0%,rgba(10,26,64,0) 60%);background-attachment:fixed}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Montserrat,system-ui,Arial,sans-serif;color:var(--ink);background-color:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.4}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+  .partner .wrap{max-width:1340px}
+  .grid3.pt{gap:28px}
+  .grid3.pt .card{padding:34px 32px}
+  a{color:inherit;text-decoration:none}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;padding:10px 18px;border-radius:999px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .btn-yel{background:var(--yel);color:#141414}
+  .btn-yel:hover{filter:brightness(.96)}
+  .btn-ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5)}
+  .btn-ghost:hover{border-color:#fff}
+  html[data-theme="night"] .cta .btn-ghost{background:#15275a;border-color:rgba(140,165,255,.34);color:#fff}
+  html[data-theme="night"] .cta .btn-ghost:hover{border-color:rgba(140,165,255,.65)}
+  .btn-dark{background:#fff;color:#141414}
+  .btn-dark:hover{filter:brightness(.94)}
+  .btn-2{flex-direction:column;gap:1px;line-height:1.05;padding:11px 28px}
+  .btn-2 b{font-size:16px;font-weight:800}
+  .btn-2 small{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;opacity:.68}
+  .kicker{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--grey)}
+  .kicker::before{content:"";width:12px;height:12px;border-radius:50%;background:var(--yel)}
+  h2.sec{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.5px;margin:14px 0 34px}
+  /* header */
+  header{position:sticky;top:0;z-index:20;background:var(--head);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .bar{display:flex;align-items:center;gap:22px;padding:12px 24px;max-width:1200px;margin:0 auto}
+  .brand img{height:38px;width:auto;display:block}
+  .brand .logo-night{display:none}
+  html[data-theme="night"] .brand .logo-day{display:none}
+  html[data-theme="night"] .brand .logo-night{display:block}
+  .nav{display:flex;gap:26px;margin-left:8px}
+  .nav a{font-weight:600;font-size:15px;color:var(--grey)}
+  .nav a:hover{color:var(--ink)}
+  .controls{margin-left:auto;display:flex;align-items:center;gap:12px}
+  .seg{display:inline-flex;background:var(--seg);border-radius:999px;padding:3px}
+  .seg button{border:0;background:transparent;color:var(--grey);font-family:inherit;font-weight:700;font-size:13px;padding:7px 13px;border-radius:999px;cursor:pointer}
+  .seg button.active{background:var(--bg);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  html[data-theme="night"] .seg button.active{background:#2a3f78}
+  .seg-icons button{padding:6px 12px;display:inline-flex;align-items:center;justify-content:center}
+  .seg-icons svg{width:18px;height:18px;display:block}
+  /* hero */
+  .hero{padding:56px 0 30px}
+  .hero-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+  .hero h1{font-size:clamp(32px,5vw,58px);font-weight:800;letter-spacing:-1px;line-height:1.05;margin-top:14px}
+  .hero h1 .y{background:linear-gradient(transparent 62%,#ffdd00 62%);color:#141414}
+  html[data-theme="night"] .hero h1 .y{background:none;color:#ffdd00}
+  .hero p{margin-top:18px;font-size:clamp(16px,2vw,20px);color:var(--grey)}
+  .hero-media img{width:100%;max-width:520px;border-radius:20px;box-shadow:0 24px 60px rgba(20,20,30,.16);display:block;margin-left:auto}
+  /* stats */
+  .stats{padding:34px 0 8px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:28px 30px}
+  .stat .n{font-size:clamp(34px,4.4vw,52px);font-weight:800;letter-spacing:-1px;line-height:1}
+  .stat .n em{font-style:normal;color:var(--yel)}
+  .stat .t{font-weight:700;margin-top:8px;font-size:16px}
+  .stat .d{color:var(--grey);font-size:13.5px;margin-top:6px;line-height:1.45}
+  .stat .d a.stu{color:var(--grey);font-weight:500;cursor:pointer;text-decoration:none}
+  .stat .d a.stu b{color:var(--yel);font-weight:800;text-decoration:underline;text-underline-offset:2px}
+  html[data-theme="night"] .stat .d a.stu b{color:#ffdd00}
+  /* how */
+  .how{padding:64px 0}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .how .grid3{align-items:stretch}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px 28px;display:flex;flex-direction:column}
+  .cimg{width:100%;height:auto;border-radius:14px;display:block;margin-top:auto;padding-top:24px}
+  html[data-theme="day"] .dn-night{display:none}
+  html[data-theme="night"] .dn-day{display:none}
+  .card h3{font-size:24px;font-weight:800;margin:6px 0 10px}
+  .card>.lead{color:var(--grey);font-size:15px;margin-bottom:16px}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .card li{position:relative;padding-left:26px;font-size:14.5px;font-weight:500}
+  .card li::before{content:"";position:absolute;left:0;top:7px;width:12px;height:12px;border-radius:3px;background:var(--yel)}
+  .card .tag{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--grey);display:flex;align-items:center;gap:8px}
+  .card .tag::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--yel)}
+  .prodbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+  .prodbtns a{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--bg);border:1.5px solid var(--line);font-weight:700;font-size:14px;transition:.15s}
+  .prodbtns a::after{content:"→";color:#c9a800;font-weight:800}
+  .prodbtns a:hover{border-color:var(--yel);background:#fffdf0}
+  html[data-theme="night"] .prodbtns a:hover{background:#12224e}
+  /* products showcase */
+  .prodsec{padding:26px 0 6px}
+  .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .prod-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 22px 26px;display:flex;flex-direction:column}
+  .prod-card .pimg{width:100%;height:190px;object-fit:cover;border-radius:14px;margin-bottom:16px}
+  .prod-card h3{font-size:21px;font-weight:800;margin-bottom:8px}
+  .prod-card p{color:var(--grey);font-size:14.5px;flex:1;line-height:1.5}
+  .prod-card .more{margin-top:14px;font-weight:700;color:#c9a800;font-size:14.5px}
+  html[data-theme="night"] .prod-card .more{color:#ffdd00}
+  .prod-card .ptag{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--grey);margin-top:14px}
+  /* expanded panels (consulting / turnkey) */
+  .subsec{padding:30px 0}
+  .subsec .card h3{font-size:20px}
+  .subitem{position:relative;padding-left:26px;margin-bottom:14px}
+  .subitem:last-child{margin-bottom:0}
+  .subitem h5{font-size:16px;font-weight:800;margin-bottom:3px}
+  .subitem h5::before{content:"";position:absolute;left:0;top:5px;width:13px;height:13px;border-radius:3px;background:var(--yel)}
+  .subitem p{color:var(--grey);font-size:14px;line-height:1.45}
+  .panel-banner{width:100%;height:auto;max-height:440px;object-fit:contain;background:var(--soft);border-radius:18px;display:block;margin:0 0 26px;padding:10px}
+  .head-split{display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:center;margin-bottom:36px}
+  .head-copy .sec{margin:14px 0 0}
+  .head-copy .kicker{margin-bottom:0}
+  .head-media{margin:0}
+  .head-img{width:100%;max-width:400px;height:auto;border-radius:18px;display:block;margin-left:auto}
+  @media(max-width:900px){.head-split{grid-template-columns:1fr;gap:22px;margin-bottom:26px}}
+  /* partner */
+  .partner{padding:20px 0 20px}
+  .grid3.pt .card{background:var(--bg)}
+  .grid3.pt .card.hl{background:#fffdf0;border-color:#ffe86b}
+  html[data-theme="night"] .grid3.pt .card.hl{background:#12224e;border-color:rgba(255,221,0,.42)}
+  html[data-theme="night"] .cta{background:#081634}
+  html[data-theme="night"] .prodbtns a{background:rgba(255,255,255,.04)}
+  .pcard h4{font-size:20px;font-weight:800;margin-bottom:8px}
+  .pcard p{color:var(--grey);font-size:14.5px}
+  .who{margin-top:30px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px 30px}
+  .who-h{font-size:22px;font-weight:800;margin-bottom:20px}
+  .who-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px 34px}
+  .wi h5{font-size:17px;font-weight:800;position:relative;padding-left:26px;margin-bottom:5px}
+  .wi h5::before{content:"";position:absolute;left:0;top:5px;width:13px;height:13px;border-radius:3px;background:var(--yel)}
+  .wi p{color:var(--grey);font-size:14.5px;padding-left:26px;line-height:1.4}
+  /* community with galleries */
+  .commsec{padding:30px 0 64px}
+  .comm-grid{display:grid;grid-template-columns:1fr;gap:22px}
+  .comm-card{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr)}
+  .comm-media{padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--soft)}
+  .comm-main{width:100%;height:300px;object-fit:contain;border-radius:12px;background:var(--card);cursor:zoom-in;display:block}
+  .comm-media[data-gal="forbesu"] .comm-main{object-fit:cover;object-position:center 62%}
+  .comm-media[data-gal="pmday"] .comm-main{object-fit:cover;object-position:center 28%}
+  .comm-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .comm-thumb{position:relative;height:62px;border:0;padding:0;border-radius:9px;background-size:cover;background-position:center 22%;cursor:pointer;overflow:hidden}
+  .comm-thumb .more-count{position:absolute;inset:0;display:grid;place-items:center;background:rgba(10,20,40,.62);color:#fff;font-weight:800;font-size:15px}
+  .comm-body{padding:26px 30px;display:flex;flex-direction:column;gap:12px;justify-content:center}
+  .comm-body h4{font-size:22px;font-weight:800}
+  .comm-body p{color:var(--grey);font-size:14.5px;line-height:1.55}
+  .comm-body .meta{font-size:11.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--grey)}
+  .comm-body a.clink{font-weight:700;color:#c9a800;cursor:pointer;width:fit-content}
+  html[data-theme="night"] .comm-body a.clink{color:#ffdd00}
+  .press-wrap{margin-top:34px}
+  .press-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:18px}
+  .press-tile{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:.15s}
+  .press-tile:hover{border-color:var(--yel);transform:translateY(-2px)}
+  .press-tile img{width:100%;height:92px;object-fit:cover;object-position:center 22%;display:block}
+  .press-tile .pt-body{padding:9px 11px 11px;display:flex;flex-direction:column;gap:4px}
+  .press-tile .pt-src{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#c9a800}
+  html[data-theme="night"] .press-tile .pt-src{color:#ffdd00}
+  .press-tile .pt-title{font-size:12px;font-weight:700;line-height:1.3;color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .press-tile .pt-go{margin-top:2px;font-size:11px;font-weight:700;color:var(--grey)}
+  @media(max-width:600px){.press-grid{grid-template-columns:repeat(2,1fr)}}
+  html[data-theme="night"] .comm-body a.clink{color:#ffdd00}
+  .comm-body a.clink:hover{text-decoration:underline}
+  /* lightbox */
+  .lb{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;background:rgba(6,12,26,.9);backdrop-filter:blur(6px)}
+  .lb.open{display:flex}
+  .lb-img{max-width:90vw;max-height:84vh;object-fit:contain;border-radius:12px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+  .lb-close{position:absolute;top:20px;right:24px;width:46px;height:46px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:26px;cursor:pointer}
+  .lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:30px;cursor:pointer;display:grid;place-items:center}
+  .lb-nav:hover,.lb-close:hover{background:var(--yel);color:#141414}
+  .lb-prev{left:20px}.lb-next{right:20px}
+  .lb-count{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:#fff;font-weight:700;font-size:14px;letter-spacing:1px;background:rgba(0,0,0,.4);padding:6px 14px;border-radius:999px}
+  /* team line (stat) */
+  .stat .team-line{margin-top:8px;font-size:14.5px;font-weight:500;color:var(--grey);line-height:1.45}
+  .stat .team-line b{color:var(--ink);font-weight:700}
+  /* detail — full page (форумний) */
+  .detail-modal{position:fixed;inset:0;z-index:60;display:none;overflow-y:auto;overflow-x:hidden;background:var(--bg);color:var(--ink);-webkit-overflow-scrolling:touch}
+  .detail-modal.open{display:block}
+  .detail-sheet{max-width:1680px;margin:0 auto;min-height:100%;padding:26px clamp(18px,4.3vw,80px) 72px;box-sizing:border-box}
+  .detail-top{position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0 16px;margin-bottom:6px;background:linear-gradient(var(--bg) 72%,transparent)}
+  .detail-back{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:var(--grey);font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;padding:6px 2px}
+  .detail-back:hover{color:var(--ink)}
+  .detail-stepper{display:inline-flex;align-items:center;gap:12px}
+  .detail-stepper #dStep{font-size:14px;font-weight:700;color:var(--grey);min-width:46px;text-align:center}
+  .dstep{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-size:20px;font-weight:800;line-height:1;cursor:pointer;transition:.15s}
+  .dstep:hover{background:var(--yel);border-color:var(--yel);color:#141414}
+  .detail-head{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,56px);align-items:start;margin-bottom:34px}
+  .detail-intro{min-width:0}
+  .detail-title{font-size:clamp(30px,3.4vw,46px);font-weight:800;letter-spacing:-1px;line-height:1.05;margin:4px 0 14px}
+  .detail-lead{font-size:clamp(17px,1.5vw,20px);font-weight:600;color:var(--ink);line-height:1.45;margin:0 0 18px;max-width:40ch}
+  .value-row{display:flex;flex-direction:column;gap:10px;margin:0 0 20px}
+  .value-line{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.5;color:var(--grey);margin:0}
+  .value-tag{flex:none;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#141414;background:var(--yel);border-radius:999px;padding:4px 11px;margin-top:2px}
+  .value-tag-alt{background:transparent;color:var(--grey);border:1.5px solid var(--line)}
+  .pblock{margin-top:4px}
+  .pblock-title{font-size:12px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--grey);margin:0 0 10px}
+  .pain-list{list-style:none;display:flex;flex-direction:column;gap:9px;margin:0;padding:0}
+  .pain-list li{position:relative;padding-left:24px;font-size:15px;line-height:1.45;color:var(--ink)}
+  .pain-list li::before{content:"";position:absolute;left:0;top:7px;width:8px;height:8px;border-radius:2px;background:#FF0000}
+  /* gallery (шот з лейблом, стрілками, крапками) */
+  .detail-visual{min-width:0}
+  .detail-gallery{position:sticky;top:78px}
+  .shot-label{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--grey);margin-bottom:10px}
+  .shot-frame{position:relative;border-radius:18px;overflow:hidden;background:var(--card);border:1px solid var(--line)}
+  .shot-frame #dgMain{display:block;width:100%;height:clamp(240px,42vh,440px);object-fit:cover;cursor:zoom-in}
+  .shot-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:46px;height:46px;border-radius:50%;border:0;background:rgba(20,20,20,.55);color:#fff;font-size:24px;font-weight:800;line-height:1;cursor:pointer;display:grid;place-items:center;transition:.15s}
+  .shot-arrow:hover{background:var(--yel);color:#141414}
+  .shot-prev{left:12px}.shot-next{right:12px}
+  .shot-dots{display:flex;gap:8px;justify-content:center;margin-top:12px}
+  .shot-dots button{width:9px;height:9px;padding:0;border-radius:50%;border:0;background:var(--line);cursor:pointer;transition:.15s}
+  .shot-dots button.on{background:var(--yel);transform:scale(1.25)}
+  /* body */
+  .detail-body{max-width:none}
+  .product-figure{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,3.5vw,48px);align-items:center;background:#faf7ee;border:0;border-radius:18px;padding:18px 24px;margin-bottom:26px}
+  html[data-theme="night"] .product-figure{background:var(--card)}
+  .figure-main{display:flex;flex-direction:column;gap:4px}
+  .figure-badge{align-self:flex-start;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#141414;background:var(--yel);border-radius:999px;padding:4px 11px;margin-bottom:4px}
+  .figure-num{font-size:clamp(40px,4.4vw,60px);font-weight:800;letter-spacing:-2px;line-height:1;color:var(--ink)}
+  .figure-unit{font-size:clamp(34px,4.2vw,56px);font-weight:800;color:#F5C400;margin-left:8px;letter-spacing:-1px}
+  .figure-period{font-size:14px;font-weight:700;color:var(--grey)}
+  .figure-meta{flex:1;min-width:220px;display:flex;flex-direction:column;gap:6px}
+  .figure-caption{font-size:16px;font-weight:700;color:var(--ink);line-height:1.4}
+  .figure-sub{font-size:14.5px;color:var(--grey);line-height:1.5}
+  .figure-extra{font-size:14px;color:var(--ink);line-height:1.5;background:rgba(255,221,0,.16);border-radius:11px;padding:9px 14px;margin-top:4px}
+  .gains-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 22px;margin-bottom:24px}
+  .gain-col{min-width:0}
+  .detail-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin:0;padding:0}
+  .detail-list li{position:relative;padding:11px 15px 11px 44px;font-size:15px;line-height:1.45;color:var(--ink);background:var(--card);border-radius:14px}
+  .detail-list li::before{content:"";position:absolute;left:18px;top:15px;width:6px;height:11px;border:solid #F5C400;border-width:0 3px 3px 0;transform:rotate(45deg)}
+  .indirect-line{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;line-height:1.5;color:var(--grey);margin:0 0 14px}
+  .indirect-badge{flex:none;font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--grey);background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:4px 11px;margin-top:1px}
+  .how-line{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.5;color:var(--ink);margin:0 0 22px}
+  .how-tag{flex:none;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#141414;background:var(--yel);border-radius:999px;padding:4px 11px;margin-top:1px}
+  .detail-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:4px}
+  .btn-2{display:inline-flex;flex-direction:column;align-items:center;line-height:1.1;gap:1px}
+  .btn-2 small{font-weight:600;opacity:.75;font-size:11px}
+  @media(max-width:860px){
+    .detail-head{grid-template-columns:1fr;gap:24px}
+    .detail-visual{order:-1}
+    .detail-gallery{position:static}
+    .gains-grid{grid-template-columns:1fr;gap:12px}
+    .product-figure{grid-template-columns:1fr;gap:14px;align-items:start}
+    .shot-frame #dgMain{height:clamp(200px,38vh,320px)}
+  }
+  .detail-metrics{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .detail-metrics span{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+  /* survey (анкета) */
+  .survey{padding:24px 0 20px}
+  .survey[hidden]{display:none}
+  .survey-head{margin-bottom:14px}
+  .survey-lead{color:var(--grey);font-size:16px;margin-top:8px;max-width:64ch}
+  .survey-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 24px}
+  .survey-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-bottom:4px}
+  .field{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+  .field-label{font-weight:700;font-size:14px;color:var(--ink)}
+  .field-opt{color:var(--grey);font-weight:500;font-size:12px}
+  .field input,.field textarea{font-family:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:9px 12px;width:100%}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--yel)}
+  .field input.is-error{border-color:#e23b3b}
+  .field-group{border:0;padding:0;margin:0 0 11px}
+  .chip-choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .choice-chip{font-family:inherit;font-size:14px;font-weight:600;padding:9px 15px;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;transition:.15s}
+  .choice-chip:hover{border-color:var(--yel)}
+  .choice-chip.is-on{background:var(--yel);border-color:var(--yel);color:#141414}
+  .survey-error{color:#e23b3b;font-weight:600;font-size:14px;margin:10px 0 0}
+  .survey-actions{margin-top:14px}
+  .survey-done{text-align:center;padding:54px 30px}
+  .survey-done p{font-size:18px;font-weight:600}
+  .survey-done-mark{width:56px;height:56px;border-radius:50%;background:var(--yel);color:#141414;font-size:30px;font-weight:800;display:grid;place-items:center;margin:0 auto 16px}
+  @media(max-width:700px){.survey-grid{grid-template-columns:1fr}}
+  /* cta */
+  .cta{background:#1c1c1e;color:#fff;text-align:center;padding:74px 0}
+  .cta h2{font-size:clamp(30px,4.6vw,52px);font-weight:800;line-height:1.12;letter-spacing:-.5px;max-width:900px;margin:0 auto}
+  .cta h2 .y{color:var(--yel)}
+  .cta .sub{color:#c8c8cc;margin-top:18px;font-size:clamp(15px,2vw,19px)}
+  .cta .row{margin-top:34px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  /* ТВ-версія */
+  .tv-root{display:none}
+  body.tv{overflow:hidden}
+  body.tv header,body.tv main,body.tv footer,body.tv .lb,body.tv .detail-modal,body.tv .survey{display:none!important}
+  body.tv .tv-root{display:block;position:fixed;inset:0;background:var(--bg);color:var(--ink);z-index:100;overflow:hidden}
+  .tv-logo{position:absolute;top:22px;left:40px;z-index:6}
+  .tv-logo img{height:28px;width:auto;opacity:.9}
+  .tv-slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:104px 84px 84px;opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;pointer-events:none;overflow:hidden}
+  .tv-slide.is-active{opacity:1;transform:none}
+  .tv-kicker{display:inline-flex;align-items:center;gap:12px;font-size:19px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--grey)}
+  .tv-kicker::before{content:"";width:15px;height:15px;border-radius:50%;background:var(--yel)}
+  .tv-h{font-size:clamp(40px,5vw,82px);font-weight:800;letter-spacing:-1.5px;line-height:1.03;margin:14px 0}
+  .tv-h .y{color:#141414;background:linear-gradient(transparent 60%,#ffdd00 60%)}
+  html[data-theme="night"] .tv-h .y{background:none;color:#ffdd00}
+  .tv-sub{font-size:clamp(20px,1.9vw,28px);color:var(--grey);max-width:30ch;line-height:1.4}
+  .tv-hero-slide,.tv-prod-slide{padding:104px 84px 84px;overflow:hidden}
+  .tv-bgphoto{position:absolute;top:0;right:0;width:74%;height:auto;max-height:100%;object-fit:contain;object-position:top right;z-index:0}
+  .tv-veil{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(100deg,var(--bg) 0%,var(--bg) 42%,transparent 72%),linear-gradient(0deg,var(--bg) 0%,transparent 22%)}
+  .tv-prod-slide .tv-veil{background:linear-gradient(100deg,var(--bg) 0%,var(--bg) 33%,transparent 63%),linear-gradient(0deg,var(--bg) 0%,transparent 20%)}
+  .tv-fg{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;gap:11px;max-width:56%}
+  .tv-hero-copy .tv-stats{grid-template-columns:repeat(2,1fr);margin-top:28px;max-width:none}
+  .tv-slide.tv-top{justify-content:flex-start}
+  .tv-top .tv-title{margin:6px 0 10px}
+  .tv-ov{justify-content:flex-start!important;padding-top:70px;padding-bottom:72px}
+  .tv-ov .tv-grid{gap:18px}
+  .tv-ov .tv-card{padding:14px}
+  .tv-ov .tv-card-img{height:clamp(200px,29vh,380px)}
+  .tv-ov .tv-card-t{font-size:25px;text-align:center;margin-top:10px}
+  .tv-stat-d{font-size:13px;color:var(--grey);margin-top:5px;line-height:1.35;opacity:.85;max-width:26ch}
+  .tv-card-img.contain{background:var(--soft)}
+  .tv-card-img.contain img{object-fit:contain}
+  .tv-product{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center;width:100%}
+  .tv-prod-left{display:flex;flex-direction:column;gap:16px;justify-content:center}
+  .tv-prod-title{font-size:clamp(30px,3vw,48px);font-weight:800;letter-spacing:-1px;line-height:1.04}
+  .tv-prod-lead{font-size:22px;color:var(--grey);line-height:1.45;max-width:30ch}
+  .tv-prod-right{display:flex;align-items:center;justify-content:center}
+  .tv-prod-right img{width:100%;max-height:72vh;object-fit:contain;border-radius:20px}
+  .tv-fg.tv-prod-left{gap:11px}
+  .tv-gains{list-style:none;display:flex;flex-direction:column;gap:13px;margin:0;padding:0}
+  .tv-gains li{position:relative;padding-left:28px;font-size:20px;line-height:1.4}
+  .tv-gains li::before{content:"";position:absolute;left:0;top:9px;width:13px;height:13px;border-radius:3px;background:var(--yel)}
+  .tv-metrics{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .tv-metrics span{font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 16px}
+  .tv-headline{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .tv-hl-big{font-size:clamp(40px,4.6vw,68px);font-weight:800;letter-spacing:-2px;line-height:1;color:#141414;background:linear-gradient(transparent 60%,#ffdd00 60%);padding:0 4px}
+  html[data-theme="night"] .tv-hl-big{background:none;color:#ffdd00}
+  .tv-hl-unit{font-size:26px;font-weight:800;color:var(--ink)}
+  .tv-hl-per{font-size:18px;font-weight:700;color:var(--grey)}
+  .tv-hl-cap{font-size:16px;color:var(--grey);margin-top:2px;max-width:40ch}
+  .tv-prod-tag{font-size:clamp(16px,1.4vw,20px);font-weight:600;color:var(--ink);line-height:1.35;max-width:38ch}
+  .tv-vc{display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4;color:var(--grey);max-width:44ch}
+  .value-tag{flex:none;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#141414;background:var(--yel);border-radius:999px;padding:4px 11px;margin-top:2px}
+  .value-tag-alt{background:transparent;color:var(--grey);border:1.5px solid var(--line)}
+  .tv-prod-right-col{flex-direction:column;gap:18px}
+  .tv-prod-right-col img{height:44vh;object-fit:contain;flex:none}
+  .tv-client-wrap{width:100%}
+  .tv-client-h{font-size:15px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--grey);margin-bottom:8px}
+  .tv-gains-sm li{font-size:17px}
+  .tv-title{font-size:clamp(32px,3.6vw,58px);font-weight:800;letter-spacing:-1px;margin:8px 0 30px}
+  .tv-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;margin-top:44px;position:relative}
+  .tv-stat-n{font-size:clamp(36px,3.6vw,58px);font-weight:800;line-height:1;letter-spacing:-1px}
+  .tv-stat-n em{font-style:normal;color:var(--yel)}
+  .tv-stat-l{font-size:16px;color:var(--grey);margin-top:8px;font-weight:600;line-height:1.3}
+  .tv-grid{display:grid;gap:22px}
+  .tv-grid.c2{grid-template-columns:repeat(2,1fr)}
+  .tv-grid.c3{grid-template-columns:repeat(3,1fr)}
+  .tv-grid.c4{grid-template-columns:repeat(4,1fr)}
+  .tv-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 24px;display:flex;flex-direction:column;gap:12px}
+  .tv-card-img{width:100%;height:210px;border-radius:14px;overflow:hidden;flex:none}
+  .tv-card-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .tv-card-t{font-size:25px;font-weight:800;line-height:1.1}
+  .tv-card-s{font-size:16px;color:var(--grey);line-height:1.5}
+  .tv-card ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin:0;padding:0}
+  .tv-card li{position:relative;padding-left:24px;font-size:17px;line-height:1.4}
+  .tv-card li::before{content:"";position:absolute;left:0;top:8px;width:12px;height:12px;border-radius:3px;background:var(--yel)}
+  .tv-cap{padding:20px 22px 20px;gap:9px}
+  .tv-cap-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--grey)}
+  .tv-cap-eyebrow::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--yel)}
+  .tv-cap-lead{font-size:16px;font-weight:600;color:var(--grey);margin:-2px 0 2px;line-height:1.35}
+  .tv-cap li{font-size:16px}
+  .tv-cap .tv-card-img{margin-top:auto;height:150px}
+  .tv-progress{position:absolute;left:0;right:0;bottom:36px;display:flex;justify-content:center;gap:10px;z-index:6}
+  .tv-pdot{width:46px;height:6px;border-radius:999px;background:var(--line);overflow:hidden;position:relative}
+  .tv-pdot.is-done{background:var(--yel)}
+  .tv-pdot.is-cur i{position:absolute;inset:0;background:var(--yel);transform-origin:left;transform:scaleX(0);animation:tvfill linear forwards}
+  @keyframes tvfill{to{transform:scaleX(1)}}
+  .tv-hint{position:absolute;bottom:32px;right:44px;font-size:13px;letter-spacing:1px;color:var(--grey);z-index:6}
+  /* footer */
+  footer{padding:30px 0;text-align:center;color:var(--grey);font-size:14px;background:var(--bg)}
+  footer b{color:var(--ink)}
+  footer a:hover{color:var(--ink);text-decoration:underline}
+  .views{margin-top:12px;display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--grey)}
+  .vdot{width:9px;height:9px;border-radius:50%;background:var(--yel)}
+  @media(max-width:980px){.nav{display:none}}
+  @media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr)}.grid3{grid-template-columns:1fr}.prod-grid{grid-template-columns:1fr}.comm-card{grid-template-columns:1fr}.who-grid{grid-template-columns:repeat(2,1fr)}.hero-wrap{grid-template-columns:1fr;gap:26px}.hero-media img{max-width:560px;margin:0 auto}}
+  @media(max-width:560px){.grid4{grid-template-columns:1fr 1fr;gap:22px}.who-grid{grid-template-columns:1fr}.controls{gap:8px}.bar{gap:12px;flex-wrap:wrap}.comm-main{height:220px}}
+</style>
+</head>
+<body id="top">
+
+<div id="tvRoot" class="tv-root"></div>
+
+<header>
+  <div class="bar">
+    <a class="brand" href="#top" aria-label="Аврора"><img class="logo-day" src="rnd/logo.png" alt="АВРОРА МУЛЬТИМАРКЕТ"><img class="logo-night" src="rnd/logo-night.png" alt="АВРОРА МУЛЬТИМАРКЕТ"></a>
+    <nav class="nav">
+      <a href="#showcase" data-i="nav3">Рішення</a>
+      <a href="#consulting" data-i="nav4">Консалтинг</a>
+      <a href="#partner" data-i="nav2">Співпраця</a>
+      <a href="#community" data-i="nav5">Публічність</a>
+      <a href="#contact" data-i="nav6">Контакти</a>
+    </nav>
+    <div class="controls">
+      <div class="seg seg-icons" id="themeSeg">
+        <button data-th="day" aria-label="Денна тема" title="Денна тема"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+        <button data-th="night" aria-label="Нічна тема" title="Нічна тема"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg></button>
+      </div>
+      <div class="seg" id="langSeg">
+        <button data-l="ua">UA</button>
+        <button data-l="en">EN</button>
+      </div>
+      <a class="btn btn-yel" href="mailto:rnd@avrora.ua" data-i="write">Написати нам</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero"><div class="wrap hero-wrap">
+    <div class="hero-txt">
+      <span class="kicker" data-i="heroKick">Департамент R&amp;D</span>
+      <h1 data-i="heroH1">Технології для <span class="y">розвитку бізнесу</span></h1>
+      <p data-i="heroP">Власна R&amp;D-команда всередині великої мережі мультимаркетів «Аврора». Створюємо, перевіряємо й масштабуємо рішення на реальному операційному полігоні — наразі робимо їх доступними для вашого бізнесу.</p>
+    </div>
+    <div class="hero-media"><img class="dn-day" src="rnd/hero.jpg" alt="Avrora R&amp;D"><img class="dn-night" src="rnd/hero-night.jpg" alt="Avrora R&amp;D"></div>
+  </div></section>
+
+  <section class="stats"><div class="wrap">
+    <div class="grid4">
+      <div class="stat"><div class="n" data-i="s1n">7<em> років</em></div><div class="t" data-i="s1t">департаменту R&amp;D</div><div class="d" data-i="s1d">власна R&amp;D-команда всередині великого ритейлу</div></div>
+      <div class="stat"><div class="n">35</div><div class="team-line"><b data-i="s2t">у команді:</b> <span data-i="s2d">розробка · аналітика · проєктний і процесний офіси</span></div><div class="d"><a class="stu" href="https://www.student.rnd-avrora.com.ua/" target="_blank" rel="noopener"><span data-i="s2extra">з них 10 студентів</span> · <b data-i="s2extraL">можливості для студентів</b></a></div></div>
+      <div class="stat"><div class="n">1900</div><div class="t" data-i="s3t">магазинів — операційний полігон</div><div class="d" data-i="s3d">швидкий ріст: 1000 у 2023 → 1900 у 2026</div></div>
+      <div class="stat"><div class="n">16 000</div><div class="t" data-i="s4t">співробітників працюють з нашими рішеннями</div><div class="d" data-i="s4d">масштаб впровадження всередині мережі</div></div>
+      <div class="stat"><div class="n">&gt;1<em> млн</em></div><div class="t" data-i="s5t">покупців щодня — масштаб, на якому працюють рішення</div><div class="d" data-i="s5d">кожна розробка одразу зустрічає реальних людей</div></div>
+      <div class="stat"><div class="n">&gt;30</div><div class="t" data-i="s6t">імплементованих рішень</div></div>
+      <div class="stat"><div class="n">&gt;15</div><div class="t" data-i="s7t">власних R&amp;D-продуктів</div></div>
+      <div class="stat"><div class="n">1100</div><div class="t" data-i="s8t">описаних процесів компанії в каталозі</div></div>
+    </div>
+  </div></section>
+
+  <section class="how" id="how"><div class="wrap">
+    <span class="kicker" data-i="howKick">Як ми працюємо</span>
+    <h2 class="sec" data-i="howH">Три формати роботи</h2>
+    <div class="grid3">
+      <div class="card">
+        <div class="tag" data-i="tagProducts">Продукти</div>
+        <h3 data-i="c1h">Готові рішення</h3>
+        <p class="lead" data-i="c1l">Рішення, перевірені на власній мережі мультимаркетів, що швидко зростає.</p>
+        <div class="prodbtns">
+          <a href="#showcase">Traffic Counter</a>
+          <a href="#showcase" data-i="pGen">Контроль генераторів</a>
+          <a href="#showcase">LPR &amp; Access Control</a>
+          <a href="#showcase">Smart Parking</a>
+          <a href="#showcase">Аврора AI Platform</a>
+          <a href="#showcase">Smart Wiki</a>
+        </div>
+        <img class="cimg dn-day" src="rnd/box-day.jpg" alt="Готові рішення">
+        <img class="cimg dn-night" src="rnd/box-night.jpg" alt="Готові рішення">
+      </div>
+      <div class="card">
+        <div class="tag" data-i="tagExpertise">Експертиза</div>
+        <h3 data-i="c2h">Консалтинг</h3>
+        <p class="lead" data-i="c2l">Управління змінами, налаштування процесів і робота з даними.</p>
+        <ul>
+          <li data-i="c2b1">Проєктне управління: PMBOK, Agile, Scrum, Kanban</li>
+          <li data-i="c2b2">Бізнес-аналіз і процесний аудит AS-IS → TO-BE</li>
+          <li data-i="c2b3">PMO, портфельне управління, менторинг команд</li>
+          <li data-i="c2b4">Опис, моделювання (BPMN) та автоматизація процесів</li>
+        </ul>
+        <img class="cimg dn-day" src="rnd/cons-day.jpg" alt="Консалтинг">
+        <img class="cimg dn-night" src="rnd/cons-night.jpg" alt="Консалтинг">
+      </div>
+      <div class="card">
+        <div class="tag" data-i="tagEng">Інжиніринг</div>
+        <h3 data-i="c3h">Розробка під ключ</h3>
+        <p class="lead" data-i="c3l">Кастомні продукти з глибокою доменною експертизою рітейлу.</p>
+        <ul>
+          <li data-i="c3b1">Глибокий аналіз проблематики та формування візії продукту — швидка перевірка гіпотез — масштабування</li>
+          <li data-i="c3b2">Operations, BI-аналітика, AI/ML рішення</li>
+          <li data-i="c3b3">Побудова API, ESB та надійна інтеграція з існуючими системами</li>
+          <li data-i="c3b4">Архітектура й проєктування рішення під навантаження та супровід до робочого результату</li>
+        </ul>
+        <img class="cimg dn-day" src="rnd/dev-day.jpg" alt="Розробка під ключ">
+        <img class="cimg dn-night" src="rnd/dev-night.jpg" alt="Розробка під ключ">
+      </div>
+    </div>
+  </div></section>
+
+  <section class="prodsec" id="showcase"><div class="wrap">
+    <span class="kicker" data-i="shKick">Готові рішення</span>
+    <h2 class="sec" data-i="shH">Продукти, що вже працюють в «Аврорі»</h2>
+    <div class="prod-grid">
+      <div class="prod-card">
+        <img class="pimg dn-day" src="prod/traffic-day.png" alt="Traffic Counter"><img class="pimg dn-night" src="prod/traffic-night.png" alt="Traffic Counter">
+        <h3 data-i="pr1h">Traffic Counter</h3>
+        <p data-i="pr1p">Аналітика зовнішнього трафіку та конверсії у відвідування і покупки на базі відеоаналітики й ML.</p>
+        <a class="more" href="javascript:void(0)" onclick="openDetail('traffic-counter')" data-i="prMore">Детальніше →</a>
+      </div>
+      <div class="prod-card">
+        <img class="pimg dn-day" src="prod/generator-day.png" alt="Контроль генераторів"><img class="pimg dn-night" src="prod/generator-night.png" alt="Контроль генераторів">
+        <h3 data-i="pr2h">Контроль генераторів</h3>
+        <p data-i="pr2p">Моніторинг стану генераторів, облік мотогодин і планування ТО в реальному часі.</p>
+        <a class="more" href="javascript:void(0)" onclick="openDetail('generator-control')" data-i="prMore2">Детальніше →</a>
+      </div>
+      <div class="prod-card">
+        <img class="pimg dn-day" src="prod/lpr-day.png" alt="LPR & Access Control"><img class="pimg dn-night" src="prod/lpr-night.png" alt="LPR & Access Control">
+        <h3 data-i="pr3h">LPR &amp; Access Control</h3>
+        <p data-i="pr3p">Розпізнавання номерів, автоматичний допуск і керування КПП та логістичними потоками.</p>
+        <a class="more" href="javascript:void(0)" onclick="openDetail('lpr-access-control')" data-i="prMore3">Детальніше →</a>
+      </div>
+      <div class="prod-card">
+        <img class="pimg dn-day" src="prod/parking-day.jpg" alt="Smart Parking"><img class="pimg dn-night" src="prod/parking-night.png" alt="Smart Parking">
+        <h3 data-i="pr4h">Smart Parking</h3>
+        <p data-i="pr4p">Контроль парковок та аналітика завантаженості території.</p>
+        <a class="more" href="javascript:void(0)" onclick="openDetail('smart-parking')" data-i="prMore4">Детальніше →</a>
+      </div>
+      <div class="prod-card" id="face-tracking">
+        <img class="pimg dn-day" src="prod/facetrack-day.jpg" alt="Face Tracking"><img class="pimg dn-night" src="prod/facetrack-x1.jpg" alt="Face Tracking">
+        <h3 data-i="pr5h">Розумний контроль входу до будівлі</h3>
+        <p data-i="pr5p">Face Tracking: розпізнавання облич на проходах IN / OUT і live-підрахунок людей у кожній зоні об'єкта.</p>
+        <a class="more" href="javascript:void(0)" onclick="openDetail('face-tracking')" data-i="prMore5">Детальніше →</a>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="subsec" id="consulting"><div class="wrap">
+    <span class="kicker" data-i="conKick">Експертиза</span>
+    <h2 class="sec" data-i="conH">Консалтинг: від стратегії до автоматизації процесів</h2>
+    <div class="grid3">
+      <div class="card">
+        <div class="tag" data-i="con1tag">Навчання</div>
+        <h3 data-i="con1h">Розвиток компетенцій</h3>
+        <div class="subitem"><h5 data-i="con1a">Проєктне управління</h5><p data-i="con1ap">Методології PMBOK, Agile, Scrum, Kanban.</p></div>
+        <div class="subitem"><h5 data-i="con1b">Бізнес-аналіз</h5><p data-i="con1bp">Виявлення вимог, документування, робота зі стейкхолдерами.</p></div>
+        <div class="subitem"><h5 data-i="con1c">Процесний аналіз</h5><p data-i="con1cp">Аудит стану (AS-IS) та проєктування (TO-BE).</p></div>
+        <img class="cimg dn-day" src="panels/training-day.png" alt="Навчання"><img class="cimg dn-night" src="panels/training-night.png" alt="Навчання">
+      </div>
+      <div class="card">
+        <div class="tag" data-i="con2tag">Консалтинг</div>
+        <h3 data-i="con2h">Стратегія та тактика</h3>
+        <div class="subitem"><h5 data-i="con2a">Стратегічний рівень</h5><p data-i="con2ap">Побудова офісів управління проєктами (PMO), портфельне управління.</p></div>
+        <div class="subitem"><h5 data-i="con2b">Тактичний рівень</h5><p data-i="con2bp">Супровід проєктних команд, менторинг керівників.</p></div>
+        <div class="subitem"><h5 data-i="con2c">Впровадження змін</h5><p data-i="con2cp">Change Management і підтримка переходу до нових підходів.</p></div>
+        <img class="cimg dn-day" src="panels/consult-day.png" alt="Консалтинг"><img class="cimg dn-night" src="panels/consult-night.png" alt="Консалтинг">
+      </div>
+      <div class="card">
+        <div class="tag" data-i="con3tag">Процеси</div>
+        <h3 data-i="con3h">Оптимізація та автоматизація</h3>
+        <div class="subitem"><h5 data-i="con3a">Опис процесів</h5><p data-i="con3ap">Створення регламентів та карт процесів.</p></div>
+        <div class="subitem"><h5 data-i="con3b">Моделювання BPMN</h5><p data-i="con3bp">Візуалізація логіки виконання робіт для прозорості.</p></div>
+        <div class="subitem"><h5 data-i="con3c">Автоматизація</h5><p data-i="con3cp">Перехід від ручної праці до цифрових інструментів.</p></div>
+        <img class="cimg dn-day" src="panels/process-day.png" alt="Процеси"><img class="cimg dn-night" src="panels/process-night.png" alt="Процеси">
+      </div>
+    </div>
+  </div></section>
+
+  <section class="subsec" id="turnkey"><div class="wrap">
+    <div class="head-split">
+      <div class="head-copy">
+        <span class="kicker" data-i="devKick">Інжиніринг</span>
+        <h2 class="sec" data-i="devH">Розробка під ключ: від ідеї до робочого продукту</h2>
+      </div>
+      <div class="head-media">
+        <img class="head-img dn-day" src="panels/dev-day.png" alt="Розробка під ключ">
+        <img class="head-img dn-night" src="panels/dev-night.png" alt="Розробка під ключ">
+      </div>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <div class="tag" data-i="dev1tag">Індивідуальна розробка</div>
+        <h3 data-i="dev1h">Від ідеї до продукту</h3>
+        <div class="subitem"><h5 data-i="dev1a">Discovery Phase</h5><p data-i="dev1ap">Глибокий аналіз проблематики та формування візії продукту.</p></div>
+        <div class="subitem"><h5 data-i="dev1b">MVP &amp; Scaling</h5><p data-i="dev1bp">Швидка перевірка гіпотез (PoC) → масштабування рішення.</p></div>
+      </div>
+      <div class="card">
+        <div class="tag" data-i="dev2tag">Доменна експертиза</div>
+        <h3 data-i="dev2h">Рітейл зсередини</h3>
+        <div class="subitem"><h5 data-i="dev2a">Operations</h5><p data-i="dev2ap">Магазини, склади, РЦ, логістика «останньої милі».</p></div>
+        <div class="subitem"><h5 data-i="dev2b">Tech &amp; Data</h5><p data-i="dev2bp">E-commerce, ціноутворення, BI-аналітика та AI/ML рішення.</p></div>
+      </div>
+      <div class="card">
+        <div class="tag" data-i="dev3tag">Інтеграції та якість</div>
+        <h3 data-i="dev3h">Надійність і супровід</h3>
+        <div class="subitem"><h5 data-i="dev3a">Architecture</h5><p data-i="dev3ap">Побудова API, ESB та надійна інтеграція з існуючими системами.</p></div>
+        <div class="subitem"><h5 data-i="dev3b">Супровід до результату</h5><p data-i="dev3bp">Проєктування рішення під навантаження та супровід до робочого результату.</p></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="partner" id="partner"><div class="wrap">
+    <span class="kicker" data-i="pKick">Партнерство</span>
+    <h2 class="sec" data-i="pH">Ми відкриті до співпраці</h2>
+    <div class="grid3 pt">
+      <div class="card pcard"><h4 data-i="p1h">Адаптація готового рішення</h4><p data-i="p1p">Беремо нашу перевірену розробку й налаштовуємо під ваш бізнес-кейс і IT-контур.</p></div>
+      <div class="card pcard"><h4 data-i="p2h">Пілот</h4><p data-i="p2p">Перевіряємо вашу гіпотезу в реальному операційному середовищі й разом оцінюємо бізнес-ефект.</p></div>
+      <div class="card pcard"><h4 data-i="p3h">Спільна розробка</h4><p data-i="p3p">Ваша галузева експертиза плюс наша R&amp;D-команда й досвід впровадження — народжується новий продукт.</p></div>
+      <div class="card pcard"><h4 data-i="p4h">R&amp;D-проєкт під задачу</h4><p data-i="p4p">Досліджуємо, проєктуємо й реалізуємо рішення під ваш запит — від discovery до запуску.</p></div>
+      <div class="card pcard"><h4 data-i="p5h">Комерціалізація</h4><p data-i="p5p">Якщо продукт має потенціал ширшого ринку, розвиваємо його разом і ділимо результат.</p></div>
+      <div class="card pcard hl"><h4 data-i="p6h">Ваше рішення — на нашу мережу</h4><p data-i="p6p">Маєте готовий продукт? «Аврора» стає замовником і полігоном: 1900 магазинів і 16 000 користувачів.</p></div>
+    </div>
+    <div class="who">
+      <h3 class="who-h" data-i="whoH">Кому це актуально</h3>
+      <div class="who-grid">
+        <div class="wi"><h5 data-i="w1h">Ритейл і мережі</h5><p data-i="w1p">автоматизація, аналітика й масштабування процесів</p></div>
+        <div class="wi"><h5 data-i="w2h">Виробники та дистриб'ютори</h5><p data-i="w2p">робота з продажами, залишками, попитом і даними</p></div>
+        <div class="wi"><h5 data-i="w3h">Технологічні компанії</h5><p data-i="w3p">галузевий партнер для пілоту й виходу на ринок</p></div>
+        <div class="wi"><h5 data-i="w4h">Стартапи</h5><p data-i="w4p">доступ до мережі 1900 магазинів як полігону</p></div>
+        <div class="wi"><h5 data-i="w5h">Інвестори</h5><p data-i="w5p">продукти з реальної операційної практики, не з лабораторії</p></div>
+        <div class="wi"><h5 data-i="w6h">Корпорації</h5><p data-i="w6p">спільні рішення на перетині технологій і рітейлу</p></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="commsec" id="community"><div class="wrap">
+    <span class="kicker" data-i="commKick">Публічність та спільнота</span>
+    <h2 class="sec" data-i="commH">Експертиза, яку видно не лише всередині компанії</h2>
+    <div class="comm-grid">
+      <div class="comm-card">
+        <div class="comm-media" data-gal="forbesu"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm12m">Forbes University · серпень 2026</span>
+          <h4 data-i="cm12h">Forbes University 2026</h4>
+          <p data-i="cm12p">На Forbes University говорили про співпрацю «Аврори» з ВНЗ, можливості студентів у R&amp;D і програму Aurora Students. Понад 300 лідерів бізнесу й освіти, AI-трансформація та розвиток талантів.</p>
+          <a class="clink" href="https://robota.avrora.ua/avrora-dlia-studentiv-ta-molodi" target="_blank" rel="noopener" data-i="cm12l">Детальніше →</a>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="lviv"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm5m">Lviv AI Day · 27.06.2026</span>
+          <h4 data-i="cm5h">Lviv AI Day 2026</h4>
+          <p data-i="cm5p">Панельна дискусія «AI revolutionizing everything. Are you ready?» — команда «Аврора» серед спікерів про практичне впровадження ШІ в реальному бізнесі.</p>
+          <a class="clink" href="https://aiconf.com.ua/lviv" target="_blank" rel="noopener" data-i="cm5l">Перейти на Lviv AI Day →</a>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="forum"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm10m">Форум підприємців · 26–27.06.2026</span>
+          <h4 data-i="cm10h">Форум підприємців 2026</h4>
+          <p data-i="cm10p">Говорили про співпрацю бізнесу з R&amp;D «Аврори» — формати партнерства й спільної розробки.</p>
+          <a class="clink" href="https://www.forum.rnd-avrora.com.ua/" target="_blank" rel="noopener" data-i="cm10l">Перейти на форум →</a>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="rauexpo"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm9m">RAU Expo · 10–11.06.2026</span>
+          <h4 data-i="cm9h">RAU Expo 2026</h4>
+          <p data-i="cm9p">Розповідали про технології, що розвивають бізнес, і показали власні 4 R&amp;D-продукти «Аврори».</p>
+          <a class="clink" href="https://www.rau-expo.rnd-avrora.com.ua/avrora-rau-expo/" target="_blank" rel="noopener" data-i="cm9l">Дивитися стенд →</a>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="pmday"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm13m">Spring Kyiv Project Management Day · травень 2026</span>
+          <h4 data-i="cm13h">Spring Kyiv PM Day 2026</h4>
+          <p data-i="cm13p">Євгенія Кучеренко, керівниця проєктно-процесного офісу, з доповіддю «42 причини, чому проєктам потрібні процеси» — про перехід від хаотичних запитів і ручного управління до прозорих масштабованих процесів і єдину воронку R&amp;D-ідей.</p>
+          <a class="clink" href="https://robota.avrora.ua/jevgeniia-kucerenko-vistupila-na-spring-kyiv-project-management-day-2026" target="_blank" rel="noopener" data-i="cm13l">Детальніше →</a>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="kma"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm6m">НаУКМА · kmbs · можливості для студентів</span>
+          <h4 data-i="cm6h">Києво-Могилянська академія</h4>
+          <p data-i="cm6p">Альона Митрофанова та Олександр Войналович розповіли студентам про можливості в R&amp;D «Аврора» — реальні продуктові й дослідницькі задачі, а не навчальні симуляції.</p>
+          <a class="clink" href="https://www.student.rnd-avrora.com.ua/" target="_blank" rel="noopener" data-i="cm6l">Можливості для студентів →</a>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="ukrtelecom"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm7m">Аврора R&amp;D · 10.04.2026</span>
+          <h4 data-i="cm7h">Укртелеком у гостях</h4>
+          <p data-i="cm7p">Команда «Укртелеком» завітала до процесно-проєктного офісу «Аврора»: обмін досвідом з управління проєктами й процесами та цифрової трансформації.</p>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="leanfest"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm8m">Aurora Lean Fest · 2026</span>
+          <h4 data-i="cm8h">Aurora Lean Fest 2026</h4>
+          <p data-i="cm8p">Щорічна подія про культуру постійних покращень (Lean): команда R&amp;D і колеги діляться практиками ощадливого виробництва та ефективних процесів.</p>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="forbes"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm1m">Forbes Ukraine · 27.11.2025 · Олександр Войналович</span>
+          <h4 data-i="cm1h">Forbes AI Summit, Львів</h4>
+          <p data-i="cm1p">Команда Аврора показала, що AI для нас уже не майбутнє, а сьогодення: GenAI та Computer Vision працюють у магазинах і бек-офісі, аналітика трафіку пришвидшує рішення, автоматизація зменшує рутину.</p>
+          <a class="clink" href="https://forbes.ua/innovations/shvidki-innovatsii-tse-batl-yak-vprovaditi-shi-bez-sprotivu-pratsivnikiv-i-zvidki-brati-idei-dlya-rozrobok-dosvid-avrora-nova-i-ukrsibbanku-16122025-34864" target="_blank" rel="noopener" data-i="cm1l">Перейти на Forbes →</a>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="rau"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm3m">RAU · 11.09.2025 · Kyiv Hall</span>
+          <h4 data-i="cm3h">RAU Workshop</h4>
+          <p data-i="cm3p">Платформа Retail Association of Ukraine, 11 вересня 2025, Kyiv Hall. Панель про цифрову трансформацію фізичних магазинів і практичні зміни в офлайн-ритейлі.</p>
+          <a class="clink" href="https://rau.ua/news/rau-workshop-2/" target="_blank" rel="noopener" data-i="cm3l">Перейти на RAU →</a>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="retail"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm2m">Retail Expo 2025 · Олександр Войналович</span>
+          <h4 data-i="cm2h">Retail Expo 2025</h4>
+          <p data-i="cm2p">Говорили про те, як «Аврора» змінює ритейл завдяки технологіям і людяності: інтеграція AI у щоденну роботу, асистенти для клієнтів і співробітників, аналітика трафіку.</p>
+          <a class="clink" href="https://retailexpo.com.ua/program?9d67-da8cfce0=60de0dbb-5884-4d56-bfc6-98e2fadfab72" target="_blank" rel="noopener" data-i="cm2l">Перейти на Retail Expo →</a>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="students"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm4m">Аврора R&amp;D · реальна практика</span>
+          <h4 data-i="cm4h">Студенти в команді R&amp;D</h4>
+          <p data-i="cm4p">У команді Аврора R&amp;D працюють студенти в межах програми — не в навчальних симуляціях, а над реальними продуктовими й дослідницькими задачами.</p>
+          <a class="clink" href="https://www.facebook.com/voinalovych.o/posts/25173397178933144/" target="_blank" rel="noopener" data-i="cm4l">Історія програми →</a>
+        </div>
+      </div>
+      <div class="comm-card">
+        <div class="comm-media" data-gal="leanfest24"></div>
+        <div class="comm-body">
+          <span class="meta" data-i="cm11m">Aurora Lean Fest · 2024</span>
+          <h4 data-i="cm11h">Aurora Lean Fest 2024</h4>
+          <p data-i="cm11p">Щорічна подія про культуру постійних покращень (Lean): команда R&amp;D і колеги діляться практиками ощадливого виробництва та ефективних процесів.</p>
+        </div>
+      </div>
+    </div>
+    <div class="press-wrap">
+      <span class="kicker" data-i="pressKick">Преса про нас</span>
+      <div class="press-grid">
+        <a class="press-tile" href="https://interfax.com.ua/news/economic/1158770.html" target="_blank" rel="noopener">
+          <img src="community/press-interfax.jpg" alt="">
+          <div class="pt-body"><span class="pt-src">Interfax-Україна · 13.04.2026</span><span class="pt-title">«Аврора» запустила власну платформу моніторингу роботи генераторів (Avrora G.C.S.)</span><span class="pt-go" data-i="pressGo">Читати →</span></div>
+        </a>
+        <a class="press-tile" href="https://speka.ua/news/si-dopomagaje-raxuvati-pokupciv-avrora-stvorila-vlasnu-sistemu-dlya-analizu-trafiku-v-magazinax-pnnlr7" target="_blank" rel="noopener">
+          <img src="community/press-speka.jpg" alt="">
+          <div class="pt-body"><span class="pt-src">Speka</span><span class="pt-title">ШІ допомагає рахувати покупців: «Аврора» створила власну систему аналізу трафіку</span><span class="pt-go" data-i="pressGo">Читати →</span></div>
+        </a>
+        <a class="press-tile" href="https://rau.ua/novyni/novini-partneriv/avrora-rozshirjuie-r-d-komandu/" target="_blank" rel="noopener">
+          <img src="community/press-rau-rd.jpg" alt="">
+          <div class="pt-body"><span class="pt-src">RAU · 22.08.2025</span><span class="pt-title">«Аврора» розширює R&amp;D команду: залучає студентів до реальних проєктів</span><span class="pt-go" data-i="pressGo">Читати →</span></div>
+        </a>
+        <a class="press-tile" href="https://dev.ua/news/avrora-rozshyriuie-rd-komandu-iak-kompaniia-zaluchaie-studentiv-do-realnykh-proiektiv-1755690275" target="_blank" rel="noopener">
+          <img src="community/press-devua.jpg" alt="">
+          <div class="pt-body"><span class="pt-src">dev.ua · 08.2025</span><span class="pt-title">«Аврора» розширює R&amp;D команду: як компанія залучає студентів до реальних проєктів</span><span class="pt-go" data-i="pressGo">Читати →</span></div>
+        </a>
+        <a class="press-tile" href="https://hmarochos.kiev.ua/2025/09/04/studenty-litnoyi-shkoly-aurora-students-rozpochaly-stazhuvannya-v-merezhi-avrora/" target="_blank" rel="noopener">
+          <img src="community/press-hmarochos.jpg" alt="">
+          <div class="pt-body"><span class="pt-src">Хмарочос · 04.09.2025</span><span class="pt-title">Студенти літньої школи AURORA STUDENTS розпочали стажування в мережі «Аврора»</span><span class="pt-go" data-i="pressGo">Читати →</span></div>
+        </a>
+        <a class="press-tile" href="https://happymonday.ua/yak-avrora-zaluchaye-studentiv" target="_blank" rel="noopener">
+          <img src="community/press-hm1.jpg" alt="">
+          <div class="pt-body"><span class="pt-src">Happy Monday · 08.09.2025</span><span class="pt-title">Молодь у R&amp;D: як «Аврора» залучає студентів до інноваційних проєктів</span><span class="pt-go" data-i="pressGo">Читати →</span></div>
+        </a>
+        <a class="press-tile" href="https://happymonday.ua/aurora-students-2025" target="_blank" rel="noopener">
+          <img src="community/press-hm2.jpg" alt="">
+          <div class="pt-body"><span class="pt-src">Happy Monday</span><span class="pt-title">«Аврора» запрошує студентів до літньої школи AURORA STUDENTS</span><span class="pt-go" data-i="pressGo">Читати →</span></div>
+        </a>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="survey" id="survey" hidden><div class="wrap">
+    <div class="survey-head">
+      <p class="eyebrow" data-i="svEyebrow">Анкета</p>
+      <h2 class="sec" data-i="svTitle">З якої задачі почнемо співпрацю?</h2>
+      <p class="survey-lead" data-i="svLead">Кілька запитань, щоб зрозуміти ваш контекст і запропонувати формат співпраці.</p>
+    </div>
+    <form class="survey-card survey-form" id="surveyForm" novalidate>
+      <div class="survey-grid">
+        <label class="field"><span class="field-label" data-i="svName">Ім'я</span><input id="f_name" autocomplete="given-name"></label>
+        <label class="field"><span class="field-label" data-i="svSurname">Прізвище <span class="field-opt">(за бажанням)</span></span><input id="f_surname" autocomplete="family-name"></label>
+        <label class="field"><span class="field-label" data-i="svCompany">Компанія</span><input id="f_company" autocomplete="organization"></label>
+        <label class="field"><span class="field-label" data-i="svRole">Ваша роль / посада <span class="field-opt">(за бажанням)</span></span><input id="f_role" autocomplete="organization-title"></label>
+        <label class="field"><span class="field-label" data-i="svPhone">Номер телефону</span><input id="f_phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+38 (0__) ___-__-__"></label>
+        <label class="field"><span class="field-label" data-i="svEmail">Пошта</span><input id="f_email" type="email" autocomplete="email"></label>
+      </div>
+      <fieldset class="field-group"><legend class="field-label" data-i="svContact">Як зручніше зв'язатися?</legend><div class="chip-choices" id="chips-contact"></div></fieldset>
+      <fieldset class="field-group"><legend class="field-label"><span data-i="svInterested">Які з готових рішень зацікавили?</span> <span class="field-opt" data-i="svHintMany">(можна обрати кілька)</span></legend><div class="chip-choices" id="chips-solutions"></div></fieldset>
+      <fieldset class="field-group"><legend class="field-label"><span data-i="svCoop">Який формат співпраці вам цікавий?</span> <span class="field-opt" data-i="svHintMany">(можна обрати кілька)</span></legend><div class="chip-choices" id="chips-coop"></div></fieldset>
+      <label class="field"><span class="field-label" data-i="svCantFind">Що з рішень/продуктів не можете знайти?</span><textarea id="f_cantFind" rows="2"></textarea></label>
+      <label class="field"><span class="field-label" data-i="svNeedNow">Який процес зараз найбільше гальмує ваше масштабування?</span><textarea id="f_needNow" rows="2"></textarea></label>
+      <label class="field"><span class="field-label" data-i="svPlanYear">Які задачі плануєте розглядати протягом року?</span><textarea id="f_planYear" rows="2"></textarea></label>
+      <p class="survey-error" id="surveyError" style="display:none"></p>
+      <div class="survey-actions"><button type="submit" class="btn btn-yel" id="surveySubmit" data-i="svSubmit">Надіслати</button></div>
+    </form>
+    <div class="survey-card survey-done" id="surveyDone" style="display:none"><div class="survey-done-mark" aria-hidden="true">✓</div><p data-i="svDone">Дякуємо! Ми зв'яжемося з вами найближчим часом.</p></div>
+  </div></section>
+
+  <section class="cta" id="contact"><div class="wrap">
+    <h2 data-i="ctaH">Перетворюємо технології на <span class="y">конкурентну перевагу</span>.</h2>
+    <p class="sub" data-i="ctaSub">Адаптуємо чи створимо рішення для вас або разом з вами.</p>
+    <div class="row">
+      <a class="btn btn-yel btn-2" href="javascript:void(0)" onclick="showSurvey()" data-i="ctaForm"><b>Зв'язатися з командою</b><small>Анкета</small></a>
+      <a class="btn btn-ghost" href="#showcase" data-i="ctaSol">Переглянути продукти</a>
+      <a class="btn btn-yel btn-2" href="mailto:rnd@avrora.ua" data-i="ctaWrite"><b>Написати нам</b><small>rnd@avrora.ua</small></a>
+    </div>
+  </div></section>
+</main>
+
+<div id="lb" class="lb" role="dialog" aria-modal="true">
+  <button class="lb-close" aria-label="Закрити" onclick="closeLB()">×</button>
+  <button class="lb-nav lb-prev" aria-label="Попереднє" onclick="lbNav(-1)">‹</button>
+  <img id="lbImg" class="lb-img" alt="">
+  <button class="lb-nav lb-next" aria-label="Наступне" onclick="lbNav(1)">›</button>
+  <div id="lbCount" class="lb-count"></div>
+</div>
+
+<div id="detail" class="detail-modal" role="dialog" aria-modal="true">
+  <div class="detail-sheet">
+    <div class="detail-top">
+      <button class="detail-back" onclick="closeDetail()">‹ <span id="dBack">Повернутись до продуктів</span></button>
+      <div class="detail-stepper"><button class="dstep" onclick="detailNav(-1)" aria-label="Попередній">‹</button><span id="dStep"></span><button class="dstep" onclick="detailNav(1)" aria-label="Наступний">›</button></div>
+    </div>
+    <div class="detail-head">
+      <div class="detail-intro" id="dIntro"></div>
+      <div class="detail-visual"><div class="detail-gallery" id="dGallery"></div></div>
+    </div>
+    <div class="detail-body" id="dBody2"></div>
+  </div>
+</div>
+
+<footer><div class="wrap">
+  <div data-i="foot">© 2026 <b>Avrora R&amp;D</b> · Департамент R&amp;D мережі мультимаркетів «Аврора» · <a href="mailto:rnd@avrora.ua"><b>rnd@avrora.ua</b></a> · <a href="https://avrora.ua" target="_blank" rel="noopener">avrora.ua</a></div>
+  <div class="views"><span class="vdot"></span><span data-i="views">Переглядів сайту</span> · <b id="vc">—</b></div>
+</div></footer>
+
+<script>
+const GAL={
+  forbes:["community/forbes.jpg"],
+  retail:["community/retail-1.jpg","community/retail-2.jpg","community/retail-3.jpg","community/retail-4.jpg","community/retail-5.jpg","community/retail-6.jpg","community/retail-7.jpg","community/retail-8.jpg","community/retail-9.jpg"],
+  rau:["community/rau-1.jpg","community/rau-2.jpg","community/rau-3.jpg","community/rau-4.jpg"],
+  students:["community/students.jpg"],
+  lviv:["community/lviv-1.jpg","community/lviv-2.jpg"],
+  kma:["community/kma-3.jpg","community/kma-5.jpg","community/kma-4.jpg","community/kma-1.jpg","community/kma-2.jpg"],
+  ukrtelecom:["community/ukrtelecom-1.jpg"],
+  leanfest:["community/leanfest-2.jpg","community/leanfest-3.jpg","community/leanfest-4.jpg"],
+  leanfest24:["community/leanfest-1.jpg"],
+  rauexpo:["community/rauexpo-1.jpg","community/rauexpo-2.jpg","community/rauexpo-3.jpg","community/rauexpo-4.jpg","community/rauexpo-5.jpg","community/rauexpo-6.jpg","community/rauexpo-7.jpg","community/rauexpo-8.jpg","community/rauexpo-9.jpg","community/rauexpo-10.jpg","community/rauexpo-11.jpg","community/rauexpo-12.jpg","community/rauexpo-13.jpg","community/rauexpo-14.jpg","community/rauexpo-15.jpg"],
+  forum:["community/forum-1.jpg","community/forum-2.jpg","community/forum-3.jpg","community/forum-4.jpg","community/forum-5.jpg","community/forum-6.jpg","community/forum-7.jpg","community/forum-8.jpg","community/forum-9.jpg","community/forum-10.jpg","community/forum-11.jpg","community/forum-12.jpg","community/forum-13.jpg"],
+  forbesu:["community/forbesu-1.jpg","community/forbesu-2.jpg","community/forbesu-3.jpg","community/forbesu-4.jpg","community/forbesu-5.jpg","community/forbesu-6.jpg"],
+  pmday:["community/pmday-2.jpg","community/pmday-3.jpg","community/pmday-1.jpg"]
+};
+const AIDETAIL={
+  ua:{
+    "aurora-ai":{eyebrow:"AI-платформа",title:"Аврора AI Platform",lead:"Єдиний майданчик, де народжуються, налаштовуються й масштабуються AI-асистенти, агенти та інструменти Аврори.",body:"Раніше кожна AI-ідея означала окремий проєкт, своє середовище й місяці на інфраструктуру. Тепер команди беруть готовий майданчик і запускають рішення за дні. AI перестає бути набором розрізнених експериментів і стає керованою системою, однаковою для всіх підрозділів.",bullets:["Довгий старт кожного AI-проєкту → готове середовище й запуск за дні","Розрізнені інструменти в різних командах → єдиний контур для асистентів, агентів і тулів","Дублювання розробки → нижча вартість завдяки уніфікації та повторному використанню","AI поза контролем → централізоване керування у всіх підрозділах"],metrics:["Єдина екосистема","Асистенти · агенти · інструменти","Запуск за дні"]},
+    "smart-wiki":{eyebrow:"GenAI-асистент знань",title:"Smart Wiki",lead:"GenAI-асистент, який миттєво підказує працівникам складу й магазину, як діяти — з інструкціями, схемами й фото.",body:"Замість того щоб шукати відповідь у папках, чатах чи в колеги, працівник просто питає — і одразу отримує покрокову інструкцію з картинками під конкретну ситуацію. Новачок швидше входить у роботу, досвідчені менше відволікаються на типові питання, а помилок через людський фактор стає менше.",bullets:["Довгий пошук інформації → миттєва відповідь на запит","Помилки через людський фактор → покрокові інструкції зі схемами й фото","Повільний онбординг новачків → швидкий вхід у роботу","Досвідчені перевантажені питаннями → розвантаження команди"],metrics:["GenAI-асистент","Інструкції · схеми · фото","Швидкий онбординг"]}
+  },
+  en:{
+    "aurora-ai":{eyebrow:"AI platform",title:"Avrora AI Platform",lead:"A single hub where Avrora's AI assistants, agents and tools are born, configured and scaled.",body:"Before, every AI idea meant a separate project, its own environment and months of infrastructure. Now teams take a ready platform and ship solutions in days. AI stops being a set of scattered experiments and becomes a managed system, the same across every department.",bullets:["Slow start for every AI project → a ready environment, launch in days","Scattered tools across teams → one layer for assistants, agents and tools","Duplicated development → lower cost through standardization and reuse","AI out of control → centralized management across all departments"],metrics:["One ecosystem","Assistants · agents · tools","Launch in days"]},
+    "smart-wiki":{eyebrow:"GenAI knowledge assistant",title:"Smart Wiki",lead:"A GenAI assistant that instantly tells warehouse and store staff what to do — with instructions, diagrams and photos.",body:"Instead of digging through folders, chats or asking a colleague, an employee just asks — and immediately gets a step-by-step instruction with pictures for the exact situation. Newcomers ramp up faster, experienced staff are interrupted less, and human-factor errors go down.",bullets:["Long information search → instant answer to a query","Human-factor errors → step-by-step instructions with diagrams and photos","Slow onboarding → fast ramp-up for newcomers","Experienced staff overloaded → team relief"],metrics:["GenAI assistant","Instructions · diagrams · photos","Fast onboarding"]}
+  }
+};
+const T={
+  ua:{
+    nav1:"Формат роботи",nav2:"Співпраця",nav3:"Рішення",nav4:"Консалтинг",nav5:"Публічність",nav6:"Контакти",thDay:"Денна",thNight:"Нічна",write:"Написати нам",
+    heroKick:"Департамент R&D",heroH1:'Технології для <span class="y">розвитку бізнесу</span>',
+    heroP:"Власна R&D-команда всередині великої мережі мультимаркетів «Аврора». Створюємо, перевіряємо й масштабуємо рішення на реальному операційному полігоні — наразі робимо їх доступними для вашого бізнесу.",
+    s1n:'7<em> років</em>',s1t:"департаменту R&D",s1d:"власна R&D-команда всередині великого ритейлу",
+    s2t:"у команді:",s2d:"розробка · аналітика · проєктний і процесний офіси",s2extra:"з них 10 студентів",s2extraL:"можливості для студентів",
+    s3t:"магазинів — операційний полігон",s3d:"швидкий ріст: 1000 у 2023 → 1900 у 2026",
+    s4t:"співробітників працюють з нашими рішеннями",s4d:"масштаб впровадження всередині мережі",
+    s5t:"покупців щодня — масштаб, на якому працюють рішення",s5d:"кожна розробка одразу зустрічає реальних людей",
+    s6t:"імплементованих рішень",s7t:"власних R&D-продуктів",s8t:"описаних процесів компанії в каталозі",
+    howKick:"Як ми працюємо",howH:"Три формати роботи",tagProducts:"Продукти",tagExpertise:"Експертиза",tagEng:"Інжиніринг",
+    c1h:"Готові рішення",c1l:"Рішення, перевірені на власній мережі мультимаркетів, що швидко зростає.",pGen:"Контроль генераторів",
+    c2h:"Консалтинг",c2l:"Управління змінами, налаштування процесів і робота з даними.",
+    c2b1:"Проєктне управління: PMBOK, Agile, Scrum, Kanban",c2b2:"Бізнес-аналіз і процесний аудит AS-IS → TO-BE",c2b3:"PMO, портфельне управління, менторинг команд",c2b4:"Опис, моделювання (BPMN) та автоматизація процесів",
+    c3h:"Розробка під ключ",c3l:"Кастомні продукти з глибокою доменною експертизою рітейлу.",
+    c3b1:"Глибокий аналіз проблематики та формування візії продукту — швидка перевірка гіпотез — масштабування",c3b2:"Operations, BI-аналітика, AI/ML рішення",c3b3:"Побудова API, ESB та надійна інтеграція з існуючими системами",c3b4:"Архітектура й проєктування рішення під навантаження та супровід до робочого результату",
+    shKick:"Готові рішення",shH:"Продукти, що вже працюють в «Аврорі»",
+    pr1h:"Traffic Counter",pr1p:"Аналітика зовнішнього трафіку та конверсії у відвідування і покупки на базі відеоаналітики й ML.",prMore:"Детальніше →",
+    pr2h:"Контроль генераторів",pr2p:"Моніторинг стану генераторів, облік мотогодин і планування ТО в реальному часі.",prMore2:"Детальніше →",
+    pr3h:"LPR & Access Control",pr3p:"Розпізнавання номерів, автоматичний допуск і керування КПП та логістичними потоками.",prMore3:"Детальніше →",
+    pr4h:"Smart Parking",pr4p:"Контроль парковок та аналітика завантаженості території.",prMore4:"Детальніше →",
+    pr5h:"Розумний контроль входу до будівлі",pr5p:"Face Tracking: розпізнавання облич на проходах IN / OUT і live-підрахунок людей у кожній зоні об'єкта.",prMore5:"Детальніше →",
+    conKick:"Експертиза",conH:"Консалтинг: від стратегії до автоматизації процесів",
+    con1tag:"Навчання",con1h:"Розвиток компетенцій",con1a:"Проєктне управління",con1ap:"Методології PMBOK, Agile, Scrum, Kanban.",con1b:"Бізнес-аналіз",con1bp:"Виявлення вимог, документування, робота зі стейкхолдерами.",con1c:"Процесний аналіз",con1cp:"Аудит стану (AS-IS) та проєктування (TO-BE).",
+    con2tag:"Консалтинг",con2h:"Стратегія та тактика",con2a:"Стратегічний рівень",con2ap:"Побудова офісів управління проєктами (PMO), портфельне управління.",con2b:"Тактичний рівень",con2bp:"Супровід проєктних команд, менторинг керівників.",con2c:"Впровадження змін",con2cp:"Change Management і підтримка переходу до нових підходів.",
+    con3tag:"Процеси",con3h:"Оптимізація та автоматизація",con3a:"Опис процесів",con3ap:"Створення регламентів та карт процесів.",con3b:"Моделювання BPMN",con3bp:"Візуалізація логіки виконання робіт для прозорості.",con3c:"Автоматизація",con3cp:"Перехід від ручної праці до цифрових інструментів.",
+    devKick:"Інжиніринг",devH:"Розробка під ключ: від ідеї до робочого продукту",
+    dev1tag:"Індивідуальна розробка",dev1h:"Від ідеї до продукту",dev1a:"Discovery Phase",dev1ap:"Глибокий аналіз проблематики та формування візії продукту.",dev1b:"MVP & Scaling",dev1bp:"Швидка перевірка гіпотез (PoC) → масштабування рішення.",
+    dev2tag:"Доменна експертиза",dev2h:"Рітейл зсередини",dev2a:"Operations",dev2ap:"Магазини, склади, РЦ, логістика «останньої милі».",dev2b:"Tech & Data",dev2bp:"E-commerce, ціноутворення, BI-аналітика та AI/ML рішення.",
+    dev3tag:"Інтеграції та якість",dev3h:"Надійність і супровід",dev3a:"Architecture",dev3ap:"Побудова API, ESB та надійна інтеграція з існуючими системами.",dev3b:"Супровід до результату",dev3bp:"Проєктування рішення під навантаження та супровід до робочого результату.",
+    pKick:"Партнерство",pH:"Ми відкриті до співпраці",
+    p1h:"Адаптація готового рішення",p1p:"Беремо нашу перевірену розробку й налаштовуємо під ваш бізнес-кейс і IT-контур.",
+    p2h:"Пілот",p2p:"Перевіряємо вашу гіпотезу в реальному операційному середовищі й разом оцінюємо бізнес-ефект.",
+    p3h:"Спільна розробка",p3p:"Ваша галузева експертиза плюс наша R&D-команда й досвід впровадження — народжується новий продукт.",
+    p4h:"R&D-проєкт під задачу",p4p:"Досліджуємо, проєктуємо й реалізуємо рішення під ваш запит — від discovery до запуску.",
+    p5h:"Комерціалізація",p5p:"Якщо продукт має потенціал ширшого ринку, розвиваємо його разом і ділимо результат.",
+    p6h:"Ваше рішення — на нашу мережу",p6p:"Маєте готовий продукт? «Аврора» стає замовником і полігоном: 1900 магазинів і 16 000 користувачів.",
+    whoH:"Кому це актуально",
+    w1h:"Ритейл і мережі",w1p:"автоматизація, аналітика й масштабування процесів",w2h:"Виробники та дистриб'ютори",w2p:"робота з продажами, залишками, попитом і даними",w3h:"Технологічні компанії",w3p:"галузевий партнер для пілоту й виходу на ринок",w4h:"Стартапи",w4p:"доступ до мережі 1900 магазинів як полігону",w5h:"Інвестори",w5p:"продукти з реальної операційної практики, не з лабораторії",w6h:"Корпорації",w6p:"спільні рішення на перетині технологій і рітейлу",
+    commKick:"Публічність та спільнота",commH:"Експертиза, яку видно не лише всередині компанії",
+    cm1h:"Forbes AI Summit, Львів",cm1p:"Команда Аврора показала, що AI для нас уже не майбутнє, а сьогодення: GenAI та Computer Vision працюють у магазинах і бек-офісі, аналітика трафіку пришвидшує рішення, автоматизація зменшує рутину.",cm1m:"Forbes Ukraine · 27.11.2025 · Олександр Войналович",cm1l:"Перейти на Forbes →",
+    cm2h:"Retail Expo 2025",cm2p:"Говорили про те, як «Аврора» змінює ритейл завдяки технологіям і людяності: інтеграція AI у щоденну роботу, асистенти для клієнтів і співробітників, аналітика трафіку.",cm2m:"Retail Expo 2025 · Олександр Войналович",cm2l:"Перейти на Retail Expo →",
+    cm3h:"RAU Workshop",cm3p:"Платформа Retail Association of Ukraine, 11 вересня 2025, Kyiv Hall. Панель про цифрову трансформацію фізичних магазинів і практичні зміни в офлайн-ритейлі.",cm3m:"RAU · 11.09.2025 · Kyiv Hall",cm3l:"Перейти на RAU →",
+    cm4h:"Студенти в команді R&D",cm4p:"У команді Аврора R&D працюють студенти в межах програми — не в навчальних симуляціях, а над реальними продуктовими й дослідницькими задачами.",cm4m:"Аврора R&D · реальна практика",cm4l:"Історія програми →",
+    cm5h:"Lviv AI Day 2026",cm5p:"Олександр Войналович у панельній дискусії «AI revolutionizing everything. Are you ready?» — про практичне впровадження ШІ в реальному бізнесі.",cm5m:"Lviv AI Day · 27.06.2026 · Олександр Войналович",cm5l:"Перейти на Lviv AI Day →",
+    cm6h:"Києво-Могилянська академія",cm6p:"Альона Митрофанова та Олександр Войналович розповіли студентам про можливості в R&D «Аврора» — реальні продуктові й дослідницькі задачі, а не навчальні симуляції.",cm6m:"НаУКМА · kmbs · можливості для студентів",cm6l:"Можливості для студентів →",
+    cm7h:"Укртелеком у гостях",cm7p:"Команда «Укртелеком» завітала до процесно-проєктного офісу «Аврора»: обмін досвідом з управління проєктами й процесами та цифрової трансформації.",cm7m:"Аврора R&D · 10.04.2026",
+    cm8h:"Aurora Lean Fest 2026",cm8p:"Щорічна подія про культуру постійних покращень (Lean): команда R&D і колеги діляться практиками ощадливого виробництва та ефективних процесів.",cm8m:"Aurora Lean Fest · 2026",
+    cm11h:"Aurora Lean Fest 2024",cm11p:"Щорічна подія про культуру постійних покращень (Lean): команда R&D і колеги діляться практиками ощадливого виробництва та ефективних процесів.",cm11m:"Aurora Lean Fest · 2024",
+    cm12h:"Forbes University 2026",cm12p:"На Forbes University говорили про співпрацю «Аврори» з ВНЗ, можливості студентів у R&D і програму Aurora Students. Понад 300 лідерів бізнесу й освіти, AI-трансформація та розвиток талантів.",cm12m:"Forbes University · серпень 2026",cm12l:"Детальніше →",
+    cm13h:"Spring Kyiv PM Day 2026",cm13p:"Євгенія Кучеренко, керівниця проєктно-процесного офісу, з доповіддю «42 причини, чому проєктам потрібні процеси» — про перехід від хаотичних запитів і ручного управління до прозорих масштабованих процесів і єдину воронку R&D-ідей.",cm13m:"Spring Kyiv Project Management Day · травень 2026",cm13l:"Детальніше →",
+    cm9h:"RAU Expo 2026",cm9p:"Розповідали про технології, що розвивають бізнес, і показали власні 4 R&D-продукти «Аврори».",cm9m:"RAU Expo · 10–11.06.2026",cm9l:"Дивитися стенд →",
+    cm10h:"Форум підприємців 2026",cm10p:"Говорили про співпрацю бізнесу з R&D «Аврори» — формати партнерства й спільної розробки.",cm10m:"Форум підприємців · 26–27.06.2026",cm10l:"Перейти на форум →",
+    pressKick:"Преса про нас",pressGo:"Читати →",
+    svEyebrow:"Анкета",svTitle:"З якої задачі почнемо співпрацю?",svLead:"Кілька запитань, щоб зрозуміти ваш контекст і запропонувати формат співпраці.",svName:"Ім'я",svSurname:'Прізвище <span class="field-opt">(за бажанням)</span>',svCompany:"Компанія",svRole:'Ваша роль / посада <span class="field-opt">(за бажанням)</span>',svPhone:"Номер телефону",svEmail:"Пошта",svContact:"Як зручніше зв'язатися?",svInterested:"Які з готових рішень зацікавили?",svHintMany:"(можна обрати кілька)",svCoop:"Який формат співпраці вам цікавий?",svCantFind:"Що з рішень/продуктів не можете знайти?",svNeedNow:"Який процес зараз найбільше гальмує ваше масштабування?",svPlanYear:"Які задачі плануєте розглядати протягом року?",svSubmit:"Надіслати",svDone:"Дякуємо! Ми зв'яжемося з вами найближчим часом.",
+    ctaH:'Перетворюємо технології на <span class="y">конкурентну перевагу</span>.',ctaSub:"Адаптуємо чи створимо рішення для вас або разом з вами.",ctaForm:"<b>Зв'язатися з командою</b><small>Анкета</small>",ctaSol:"Переглянути продукти",ctaWrite:"<b>Написати нам</b><small>rnd@avrora.ua</small>",views:"Переглядів сайту",
+    foot:'© 2026 <b>Avrora R&D</b> · Департамент R&D мережі мультимаркетів «Аврора» · <a href="mailto:rnd@avrora.ua"><b>rnd@avrora.ua</b></a> · <a href="https://avrora.ua" target="_blank" rel="noopener">avrora.ua</a>'
+  },
+  en:{
+    nav1:"How we work",nav2:"Partnership",nav3:"Solutions",nav4:"Consulting",nav5:"Public presence",nav6:"Contacts",thDay:"Day",thNight:"Night",write:"Contact us",
+    heroKick:"R&D Department",heroH1:'Technology for <span class="y">business growth</span>',
+    heroP:"An in-house R&D team inside the large Avrora multimarket network. We build, validate and scale solutions on a real operational testbed — and now make them available to your business.",
+    s1n:'7<em> years</em>',s1t:"of the R&D department",s1d:"an in-house R&D team inside a large retailer",
+    s2t:"on the team:",s2d:"development · analytics · project & process offices",s2extra:"including 10 students",s2extraL:"student opportunities",
+    s3t:"stores — operational testbed",s3d:"fast growth: 1000 in 2023 → 1900 in 2026",
+    s4t:"employees use our solutions",s4d:"scale of adoption inside the network",
+    s5t:"shoppers daily — the scale our solutions run at",s5d:"every build meets real people at once",
+    s6t:"implemented solutions",s7t:"own R&D products",s8t:"company processes catalogued",
+    howKick:"How we work",howH:"Three ways we work",tagProducts:"Products",tagExpertise:"Expertise",tagEng:"Engineering",
+    c1h:"Ready solutions",c1l:"Solutions proven on our own fast-growing multimarket network.",pGen:"Generator Control",
+    c2h:"Consulting",c2l:"Change management, process design and working with data.",
+    c2b1:"Project management: PMBOK, Agile, Scrum, Kanban",c2b2:"Business analysis and process audit AS-IS → TO-BE",c2b3:"PMO, portfolio management, team mentoring",c2b4:"Description, modeling (BPMN) and process automation",
+    c3h:"Turnkey development",c3l:"Custom products with deep retail domain expertise.",
+    c3b1:"Deep problem analysis and product vision — fast hypothesis testing — scaling",c3b2:"Operations, BI analytics, AI/ML solutions",c3b3:"API, ESB and reliable integration with existing systems",c3b4:"Architecture and solution design for load, supported to a working result",
+    shKick:"Ready solutions",shH:"Products already working inside Avrora",
+    pr1h:"Traffic Counter",pr1p:"External traffic and conversion analytics into visits and purchases, based on video analytics and ML.",prMore:"Learn more →",
+    pr2h:"Generator Control",pr2p:"Generator status monitoring, engine-hour tracking and maintenance planning in real time.",prMore2:"Learn more →",
+    pr3h:"LPR & Access Control",pr3p:"License plate recognition, automated entry and control of checkpoints and logistics flows.",prMore3:"Learn more →",
+    pr4h:"Smart Parking",pr4p:"Parking control and occupancy analytics for the territory.",prMore4:"Learn more →",
+    pr5h:"Smart building entry control",pr5p:"Face Tracking: facial recognition at IN / OUT passages and live headcount in every zone of the site.",prMore5:"Learn more →",
+    conKick:"Expertise",conH:"Consulting: from strategy to process automation",
+    con1tag:"Capability",con1h:"Development",con1a:"Project management",con1ap:"PMBOK, Agile, Scrum, and Kanban methodologies.",con1b:"Business analysis",con1bp:"Requirements discovery, documentation, and stakeholder work.",con1c:"Process analysis",con1cp:"AS-IS assessment and TO-BE design.",
+    con2tag:"Consulting",con2h:"Strategy & tactics",con2a:"Strategic level",con2ap:"PMO setup and portfolio management.",con2b:"Tactical level",con2bp:"Support for project teams and leadership mentoring.",con2c:"Change rollout",con2cp:"Change management and transition support.",
+    con3tag:"Processes",con3h:"Optimization & automation",con3a:"Process mapping",con3ap:"Creation of regulations and process maps.",con3b:"BPMN modeling",con3bp:"Visualizing work logic for clarity and alignment.",con3c:"Automation",con3cp:"Moving from manual work to digital instruments.",
+    devKick:"Engineering",devH:"Turnkey development: from idea to a working product",
+    dev1tag:"Custom development",dev1h:"From idea to product",dev1a:"Discovery phase",dev1ap:"Deep problem analysis and product vision definition.",dev1b:"MVP & Scaling",dev1bp:"Fast hypothesis testing (PoC) → solution scaling.",
+    dev2tag:"Retail domain",dev2h:"Retail from within",dev2a:"Operations",dev2ap:"Stores, warehouses, distribution centers, and last-mile logistics.",dev2b:"Tech & Data",dev2bp:"E-commerce, pricing, BI analytics, and AI/ML solutions.",
+    dev3tag:"Integration & quality",dev3h:"Reliability and support",dev3a:"Architecture",dev3ap:"API, ESB and reliable integration with existing systems.",dev3b:"Delivery support",dev3bp:"Solution design for load, supported to a working result.",
+    pKick:"Partnership",pH:"We're open to collaboration",
+    p1h:"Adapting a ready solution",p1p:"We take our proven product and tailor it to your business case and IT landscape.",
+    p2h:"Pilot",p2p:"We test your hypothesis in a real operational environment and assess the business effect together.",
+    p3h:"Co-development",p3p:"Your industry expertise plus our R&D team and rollout experience — a new product is born.",
+    p4h:"R&D project on demand",p4p:"We research, design and deliver a solution for your request — from discovery to launch.",
+    p5h:"Commercialization",p5p:"If a product has broader market potential, we grow it together and share the result.",
+    p6h:"Your solution — on our network",p6p:"Have a ready product? Avrora becomes a customer and testbed: 1900 stores and 16,000 users.",
+    whoH:"Who it's for",
+    w1h:"Retail & networks",w1p:"automation, analytics and process scaling",w2h:"Producers & distributors",w2p:"working with sales, stock and demand data",w3h:"Tech companies",w3p:"an industry partner for a pilot and market entry",w4h:"Startups",w4p:"access to a 1900-store network as a testbed",w5h:"Investors",w5p:"products from real operational practice, not a lab",w6h:"Corporations",w6p:"joint solutions at the intersection of tech and retail",
+    commKick:"Public presence and community",commH:"Expertise visible beyond the company itself",
+    cm1h:"Forbes AI Summit, Lviv",cm1p:"Avrora showed that AI is not a future concept for us but part of today: GenAI and Computer Vision work across stores and back office, traffic analytics speeds up decisions, automation reduces routine.",cm1m:"Forbes Ukraine · 27.11.2025 · Oleksandr Voinalovych",cm1l:"Open Forbes →",
+    cm2h:"Retail Expo 2025",cm2p:"We spoke about how Avrora is reshaping retail through technology and human-centered service: AI in daily work, assistants for customers and employees, traffic analytics.",cm2m:"Retail Expo 2025 · Oleksandr Voinalovych",cm2l:"Open Retail Expo →",
+    cm3h:"RAU Workshop",cm3p:"Retail Association of Ukraine platform, September 11, 2025, Kyiv Hall. A panel on the digital transformation of physical stores and operational retail change.",cm3m:"RAU · 11.09.2025 · Kyiv Hall",cm3l:"Open RAU →",
+    cm4h:"Students in the R&D team",cm4p:"Students work in the Avrora R&D team through a program — not in training simulations but on real product and research tasks.",cm4m:"Avrora R&D · real practice",cm4l:"Program story →",
+    cm5h:"Lviv AI Day 2026",cm5p:"Oleksandr Voinalovych on the panel discussion “AI revolutionizing everything. Are you ready?” — on practical AI adoption in real business.",cm5m:"Lviv AI Day · 27.06.2026 · Oleksandr Voinalovych",cm5l:"Open Lviv AI Day →",
+    cm6h:"Kyiv-Mohyla Academy",cm6p:"Alona Mytrofanova and Oleksandr Voinalovych told students about opportunities in Avrora R&D — real product and research tasks, not training simulations.",cm6m:"NaUKMA · kmbs · student opportunities",cm6l:"Student opportunities →",
+    cm7h:"Ukrtelecom visit",cm7p:"The Ukrtelecom team visited Avrora's process & project office: sharing experience in project and process management and digital transformation.",cm7m:"Avrora R&D · 10.04.2026",
+    cm8h:"Aurora Lean Fest 2026",cm8p:"An annual event on the culture of continuous improvement (Lean): the R&D team and colleagues share lean-manufacturing practices and efficient processes.",cm8m:"Aurora Lean Fest · 2026",
+    cm11h:"Aurora Lean Fest 2024",cm11p:"An annual event on the culture of continuous improvement (Lean): the R&D team and colleagues share lean-manufacturing practices and efficient processes.",cm11m:"Aurora Lean Fest · 2024",
+    cm12h:"Forbes University 2026",cm12p:"At Forbes University we talked about Avrora's cooperation with universities, student opportunities in R&D and the Aurora Students program. Over 300 business and education leaders, AI transformation and talent development.",cm12m:"Forbes University · August 2026",cm12l:"Learn more →",
+    cm13h:"Spring Kyiv PM Day 2026",cm13p:"Yevheniia Kucherenko, head of the project & process office, presented “42 reasons why projects need processes” — moving from chaotic requests and manual management to transparent, scalable processes and a unified R&D idea funnel.",cm13m:"Spring Kyiv Project Management Day · May 2026",cm13l:"Learn more →",
+    cm9h:"RAU Expo 2026",cm9p:"We talked about technologies that grow business and showcased Avrora's own 4 R&D products.",cm9m:"RAU Expo · 10–11.06.2026",cm9l:"See the stand →",
+    cm10h:"Entrepreneurs' Forum 2026",cm10p:"We discussed business cooperation with Avrora R&D — partnership and co-development formats.",cm10m:"Entrepreneurs' Forum · 26–27.06.2026",cm10l:"Open the forum →",
+    pressKick:"Press about us",pressGo:"Read →",
+    svEyebrow:"Survey",svTitle:"Which challenge should we start with?",svLead:"A few questions to understand your context and propose a partnership format.",svName:"Name",svSurname:'Surname <span class="field-opt">(optional)</span>',svCompany:"Company",svRole:'Your role / position <span class="field-opt">(optional)</span>',svPhone:"Phone number",svEmail:"Email",svContact:"Preferred way to reach you",svInterested:"Which ready-made solutions interested you?",svHintMany:"(choose several)",svCoop:"Which partnership format interests you?",svCantFind:"What solutions/products are you missing?",svNeedNow:"Which process is slowing your scaling the most right now?",svPlanYear:"Which challenges do you plan to consider within the year?",svSubmit:"Submit",svDone:"Thank you! We'll get in touch shortly.",
+    ctaH:'We turn technology into a <span class="y">competitive advantage</span>.',ctaSub:"We'll adapt or build a solution for you — or together with you.",ctaForm:"<b>Contact the team</b><small>Survey</small>",ctaSol:"View products",ctaWrite:"<b>Contact us</b><small>rnd@avrora.ua</small>",views:"Site views",
+    foot:'© 2026 <b>Avrora R&D</b> · R&D department of the Avrora multimarket network · <a href="mailto:rnd@avrora.ua"><b>rnd@avrora.ua</b></a> · <a href="https://avrora.ua" target="_blank" rel="noopener">avrora.ua</a>'
+  }
+};
+const root=document.documentElement;
+function applyLang(l){root.lang=l;localStorage.setItem("rnd-lang",l);const d=T[l];document.querySelectorAll("[data-i]").forEach(e=>{if(d[e.dataset.i]!=null)e.innerHTML=d[e.dataset.i]});document.querySelectorAll("#langSeg button").forEach(b=>b.classList.toggle("active",b.dataset.l===l));renderChips(l);}
+// ===== Анкета (ліди → той самий Excel, вкладка «Leads сайт») =====
+const SV_ENDPOINT="https://script.google.com/macros/s/AKfycbwf5PqDxLyeAt6QBnYHoxmqctwh3T1IUA4YqX5D05xOMOR5nqzc4LF2ELfu9s-tJswCLA/exec";
+const SURVEY_OPTS={
+  ua:{contact:["Дзвінок","Telegram","Viber","WhatsApp","Пошта"],
+      solutions:["Traffic Counter","Контроль генераторів","LPR & Access Control","Smart Parking","Аврора AI Platform","Smart Wiki","Інше"],
+      coop:["Адаптація готового рішення","Спільна розробка під наш біль","Комерціалізація","Стратегічне партнерство","Консалтинг і процеси","Запропонувати своє рішення для «Аврора»"]},
+  en:{contact:["Call","Telegram","Viber","WhatsApp","Email"],
+      solutions:["Traffic Counter","Generator Control","LPR & Access Control","Smart Parking","Avrora AI Platform","Smart Wiki","Other"],
+      coop:["Adapting a ready solution","Co-development for our pain","Commercialization","Strategic partnership","Consulting & processes","Pitch your own solution to Avrora"]}
+};
+const SURVEY_MSG={ua:{errName:"Вкажіть, будь ласка, ім'я.",errContact:"Вкажіть телефон або пошту — хоча б один контакт.",errPhone:"Перевірте номер: введіть усі цифри у форматі +38 (0XX) XXX-XX-XX.",sending:"Надсилаємо…",submit:"Надіслати"},en:{errName:"Please enter your name.",errContact:"Please provide a phone or email — at least one contact.",errPhone:"Check the number: enter all digits in the +38 (0XX) XXX-XX-XX format.",sending:"Sending…",submit:"Submit"}};
+function fmtPhone(v){let d=v.replace(/\D/g,"");if(d.startsWith("380"))d=d.slice(2);else if(d.startsWith("38"))d=d.slice(2);else if(d==="3")d="";if(d&&!d.startsWith("0"))d="0"+d;d=d.slice(0,10);let o="+38";if(d.length>=1)o+=" ("+d.slice(0,3);if(d.length>3)o+=") "+d.slice(3,6);if(d.length>6)o+="-"+d.slice(6,8);if(d.length>8)o+="-"+d.slice(8,10);return o;}
+const phoneComplete=v=>/^380\d{9}$/.test(v.replace(/\D/g,""));
+function renderChips(l){const o=SURVEY_OPTS[l]||SURVEY_OPTS.ua;[["chips-contact",o.contact],["chips-solutions",o.solutions],["chips-coop",o.coop]].forEach(pair=>{const c=document.getElementById(pair[0]);if(!c)return;const sel=[...c.querySelectorAll(".choice-chip.is-on")].map(b=>+b.dataset.idx);c.innerHTML=pair[1].map((opt,i)=>'<button type="button" class="choice-chip'+(sel.includes(i)?" is-on":"")+'" data-idx="'+i+'">'+opt+'</button>').join("");});}
+function showSurvey(){const s=document.getElementById("survey");if(!s)return;s.hidden=false;s.scrollIntoView({behavior:"smooth",block:"start"});}
+document.addEventListener("click",e=>{const chip=e.target.closest&&e.target.closest(".choice-chip");if(chip&&chip.closest("#survey"))chip.classList.toggle("is-on");});
+document.addEventListener("input",e=>{if(e.target&&e.target.id==="f_phone")e.target.value=fmtPhone(e.target.value);});
+document.addEventListener("focusin",e=>{if(e.target&&e.target.id==="f_phone"&&!e.target.value.replace(/\D/g,""))e.target.value="+38 ";});
+document.addEventListener("submit",async e=>{
+  if(!e.target||e.target.id!=="surveyForm")return; e.preventDefault();
+  const l=root.lang==="en"?"en":"ua"; const M=SURVEY_MSG[l]; const err=document.getElementById("surveyError");
+  const val=id=>(document.getElementById(id).value||"").trim();
+  const name=val("f_name"), phoneRaw=document.getElementById("f_phone").value, email=val("f_email");
+  const showErr=m=>{err.textContent=m;err.style.display="block";};
+  if(!name){showErr(M.errName);return;}
+  const phoneDigits=phoneRaw.replace(/\D/g,"");
+  if(phoneDigits.length<=2 && !email){showErr(M.errContact);return;}
+  if(phoneDigits.length>2 && !phoneComplete(phoneRaw)){showErr(M.errPhone);return;}
+  err.style.display="none";
+  const chipsVals=id=>[...document.getElementById(id).querySelectorAll(".choice-chip.is-on")].map(b=>b.textContent);
+  const btn=document.getElementById("surveySubmit"); btn.textContent=M.sending; btn.disabled=true;
+  const payload={name,surname:val("f_surname"),company:val("f_company"),role:val("f_role"),phone:phoneDigits,email,contactPrefs:chipsVals("chips-contact").join(", "),solutions:chipsVals("chips-solutions").join(", "),cooperation:chipsVals("chips-coop").join(", "),cantFind:val("f_cantFind"),needNow:val("f_needNow"),planYear:val("f_planYear"),language:l,event:"dept-site",eventLabel:"Сайт департаменту R&D",source:(new URLSearchParams(location.search).get('src')||(location.hash==='#survey'?'qr/anchor':'')),submittedAt:new Date().toISOString(),page:location.href};
+  try{const prev=JSON.parse(localStorage.getItem("avrora-dept-leads")||"[]");prev.push(payload);localStorage.setItem("avrora-dept-leads",JSON.stringify(prev));}catch(_){}
+  try{await fetch(SV_ENDPOINT,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});}catch(_){}
+  document.getElementById("surveyForm").style.display="none";document.getElementById("surveyDone").style.display="block";
+});
+function applyTheme(t){root.setAttribute("data-theme",t);localStorage.setItem("rnd-theme",t);document.querySelectorAll("#themeSeg button").forEach(b=>b.classList.toggle("active",b.dataset.th===t));}
+document.querySelectorAll("#langSeg button").forEach(b=>b.onclick=()=>applyLang(b.dataset.l));
+document.querySelectorAll("#themeSeg button").forEach(b=>b.onclick=()=>applyTheme(b.dataset.th));
+// build community galleries: main photo + up to 4 thumbs (last = "+N"), open lightbox
+function buildGalleries(){
+  document.querySelectorAll(".comm-media[data-gal]").forEach(m=>{
+    const key=m.dataset.gal, imgs=GAL[key]||[]; if(!imgs.length) return;
+    m.innerHTML="";
+    const main=document.createElement("img"); main.className="comm-main"; main.src=imgs[0]; main.alt=key; main.loading="lazy"; main.onclick=()=>openLB(key,0); m.appendChild(main);
+    if(imgs.length>1){
+      const strip=document.createElement("div"); strip.className="comm-thumbs"; const SHOW=4;
+      const slots=Math.min(imgs.length,SHOW);
+      for(let i=0;i<slots;i++){
+        const isLast=i===SHOW-1 && imgs.length>SHOW;
+        const t=document.createElement("button"); t.className="comm-thumb"; t.style.backgroundImage="url('"+imgs[i]+"')"; const idx=i; t.onclick=()=>openLB(key,idx);
+        if(isLast){const more=document.createElement("span");more.className="more-count";more.textContent="+"+(imgs.length-SHOW+1);t.appendChild(more);}
+        strip.appendChild(t);
+      }
+      m.appendChild(strip);
+    }
+  });
+}
+let lbKey=null,lbIdx=0;
+function renderLB(){const imgs=GAL[lbKey]||[];document.getElementById("lbImg").src=imgs[lbIdx]||"";document.getElementById("lbCount").textContent=(lbIdx+1)+" / "+imgs.length;document.getElementById("lbCount").style.display=imgs.length>1?"block":"none";document.querySelector(".lb-prev").style.display=document.querySelector(".lb-next").style.display=imgs.length>1?"grid":"none";}
+function openLB(key,idx){lbKey=key;lbIdx=idx;renderLB();document.getElementById("lb").classList.add("open");}
+function closeLB(){document.getElementById("lb").classList.remove("open");}
+function lbNav(d){const imgs=GAL[lbKey]||[];if(!imgs.length)return;lbIdx=(lbIdx+d+imgs.length)%imgs.length;renderLB();}
+const PRODFULL={
+  "ua": {
+    "traffic-counter": {
+      "tagline": "Скільки людей пройшло повз — і скільки зайшло. Тепер ви це бачите й керуєте конверсією на фактах, а не наосліп.",
+      "valueBusiness": "Чек показує лише тих, хто вже купив. Traffic Counter показує всіх, хто був поруч, і яку частку точка реально конвертує — новий шар retail-аналітики й єдиний стандарт, щоб чесно порівняти будь-які дві ТТ. Рішення по локаціях, фасадах, вітринах і маркетингу — на фактичному трафіку.",
+      "valueClient": "Магазин підлаштовується під реальний потік: зручніший вхід у пік, менше черг і релевантніший маркетинг замість шуму.",
+      "pains": [
+        "Платите за локацію наосліп: є чеки постфактум, немає даних про зовнішній потік",
+        "Сильну локацію зі слабкою конверсією бачите як слабку — потенціал точки не оцінити",
+        "Не знаєте, чи спрацював маркетинг: промо повторюєте без доказів ефекту",
+        "Залежите від ручних і аутсорс-замірів — дорого, рідко, суб'єктивно",
+        "Немає чим порівняти ТТ: кожна точка живе у власній системі координат"
+      ],
+      "businessGains": [
+        "Бачите всю воронку: трафік → вхід → чек і де саме втрачаєте клієнта",
+        "Порівнюєте локації, фасади й вітрини за єдиним об'єктивним стандартом",
+        "Перевіряєте кожну кампанію приростом реального трафіку, а не відчуттям",
+        "Припиняєте фінансувати промо, що не дає потоку",
+        "Ставите зміни, персонал і викладку під фактичні години пік",
+        "Рахуєте людей анонімно (privacy-by-design): без облич і без персональних даних"
+      ],
+      "clientGains": [
+        "Магазин підлаштований під реальний потік — зручніший вхід у пік",
+        "Маркетинг влучає в потребу, а не дратує шумом",
+        "Менше черг і тісноти там, де відвідувачів найбільше"
+      ],
+      "headline": {
+        "big": "18",
+        "unit": "млн",
+        "period": "грн / рік",
+        "sub": "1 000 грн/день × 30 днів × 50 ТТ × 12 міс = 18 млн грн/рік",
+        "caption": "прямий ефект на мережі 50 ТТ · на 100 ТТ → 36 млн"
+      },
+      "extra": "+ маркетинг-бюджет: економія на неефективних кампаніях — сотні тис.–млн грн/рік (рахується окремо по кожній кампанії)",
+      "how": "Анонімний сенсор на вході рахує зовнішній потік і вхід без розпізнавання осіб; дані зводяться з касовою/BI-системою, конверсія — автоматично, дашборд по кожній ТТ. On-prem або хмара.",
+      "indirect": "Більший за прямий і рахується на ваших даних: вища конверсія мережі, менше спаленого маркетинг-бюджету, вивільнення людей від ручних замірів."
+    },
+    "smart-parking": {
+      "tagline": "Двір перестає бути чорною скринькою: завантаженість, черга й рух транспорту видно в реальному часі.",
+      "valueBusiness": "Двір генерує приховані витрати щодня: транспорт стоїть, рампи перевантажені, координація — на дзвінках і Excel. Smart Parking робить рух у дворі видимим і керованим — ви усуваєте простої до того, як вони стануть чергою, і повертаєте час транспорту в роботу.",
+      "valueClient": "Для водіїв і постачальників двір перестає бути місцем очікування: швидший в'їзд, зрозуміла черга, приймання й відвантаження за планом.",
+      "pains": [
+        "Двір — «чорна скринька»: не видно завантаженості й де зараз затор",
+        "Простої транспорту: машини й водії чекають, час горить, графік сповзає",
+        "Хаотичний рух і черги на рампах — перевантаження в пік",
+        "Ручна координація: дзвінки, Excel, папір, людський фактор",
+        "Рішення про двір — наосліп, без аналітики завантаженості"
+      ],
+      "businessGains": [
+        "Бачите завантаженість, чергу й рух транспорту в реальному часі на одному екрані",
+        "Плануєте рампи й слоти приймання/відвантаження замість ручної координації",
+        "Скорочуєте простої транспорту — повернутий час = пряма економія",
+        "Розвантажуєте персонал від координації дзвінками й таблицями",
+        "Стабілізуєте постачання — за планом, а не «хто докричався»",
+        "Ухвалюєте рішення на даних: завантаженість двору по днях і годинах"
+      ],
+      "clientGains": [
+        "Швидший проїзд — менше очікування на в'їзді й під рампою",
+        "Зрозуміла черга — постачальник бачить свій порядок",
+        "Передбачуване приймання — менше зірваних слотів і повторних приїздів"
+      ],
+      "headline": {
+        "big": "7,3",
+        "unit": "млн",
+        "period": "грн / рік",
+        "sub": "40 год простою/день × 500 грн/год × 365 днів = 7,3 млн грн/рік",
+        "caption": "спільний логістичний ефект Smart Parking + LPR & Access (не рахується двічі)"
+      },
+      "how": "Відеоаналітика й сенсори місць моніторять завантаженість двору, планувальник рамп і алерти на затори; інтеграція з WMS/TMS, у парі з LPR & Access. On-prem або хмара.",
+      "indirect": "Більший і рахується на ваших даних: вивільнення персоналу, менше зірваних поставок і штрафів перевізників, вища пропускна здатність у пік без розширення інфраструктури."
+    },
+    "lpr-access-control": {
+      "tagline": "КПП перестає бути вузьким місцем: під'їхав — номер зчитано — шлагбаум відкрито, а кожен в'їзд лягає в єдину хронологію сам.",
+      "valueBusiness": "Транспорт рухається через КПП без ручної координації: система розпізнає номер на під'їзді, звіряє зі списком, відкриває доступ і веде хронологію автоматично. Прозора історія кожного в'їзду — для аудиту, контролю постачальників і планування рамп замість Excel.",
+      "valueClient": "Водій проїжджає без дзвінків диспетчеру, очікування на шлагбаумі та виходу з кабіни — приймання швидше й передбачуваніше.",
+      "pains": [
+        "Контроль на КПП — на охоронці з блокнотом і дзвінках: повільно і з помилками",
+        "Історія в'їздів розкидана по паперах та Excel — аудит як археологія",
+        "Перевірка сповільнюється під дощем і в мороз, людський фактор додає помилок",
+        "Постачальники неконтрольовані: коли прибув, скільки був, чи заїхав без дозволу",
+        "Транспорт простоює в чергах перед в'їздом через ручну координацію"
+      ],
+      "businessGains": [
+        "Відкриває в'їзд/виїзд автоматично — номер розпізнається на під'їзді",
+        "Веде повну історію в'їздів — хто, коли, на скільки, без паперів",
+        "Фіксує фактичний час прибуття постачальників, а не «зі слів водія»",
+        "Допускає лише дозволений транспорт і алертить про незапланований в'їзд",
+        "Знімає з персоналу КПП ручні перевірки — менше навантаження й помилок",
+        "Маршрутизує транспорт до потрібної рампи — без хаосу на дворі РЦ"
+      ],
+      "clientGains": [
+        "Проїжджає швидше — без очікування на шлагбаумі та ручної звірки",
+        "Передбачуване приймання/відвантаження та стабільніший графік",
+        "Не треба виходити з кабіни й доводити, що тебе чекають"
+      ],
+      "headline": {
+        "big": "7,3",
+        "unit": "млн",
+        "period": "грн / рік",
+        "sub": "40 год простою/день × 500 грн/год × 365 днів = 7,3 млн грн/рік",
+        "caption": "спільний логістичний ефект із Smart Parking (єдиний контур, не дублюється)"
+      },
+      "how": "Камера зчитує номер на під'їзді, система звіряє зі списком і графіком, відкриває дозволений транспорт або алертить, фіксує в'їзд у хронології з маршрутизацією до рампи; інтеграція зі шлагбаумами та TMS/WMS, privacy-by-design.",
+      "indirect": "Вивільнення персоналу КПП, дисципліна постачальників за фактичними строками, готова історія для розслідувань і захист від несанкціонованого в'їзду."
+    },
+    "generator-control": {
+      "tagline": "Перебій у мережі більше не зачиняє магазин: весь парк генераторів — під контролем з одного екрана.",
+      "valueBusiness": "ТТ без резервного живлення під час відключення — це закриті каси, недоступний товар і прямі втрати обороту. Generator Control тримає весь парк під контролем з одного дашборда: стан, мотогодини й ризики видно до того, як вони стануть аварією, без залежності від дорогої зовнішньої аналітики.",
+      "valueClient": "Магазин працює навіть під час відключень у районі: каси, оплата й холодильні вітрини в строю, коли конкурент поряд уже зачинений.",
+      "pains": [
+        "Генератор не запустився, а новий їде 2–3 тижні — втрати обороту кратно більші за економію на сервісі",
+        "Стан кожного генератора перевіряють «ногами», без єдиної картини по мережі",
+        "Висока абонплата за зовнішній моніторинг і залежність від чужої аналітики",
+        "Пропущені мотогодини → ТО не вчасно → раптові поломки в найгірший момент",
+        "Немає централізованої аналітики: десятки генераторів некеровані"
+      ],
+      "businessGains": [
+        "Запобігає простою ТТ: алерт про ризик приходить до зупинки магазину",
+        "Зводить весь парк на один екран — стан, мотогодини й ТО в реальному часі",
+        "Переводить ТО на планове за мотогодинами замість ремонту після поломки",
+        "Знімає залежність від зовнішньої аналітики — власна система замість абонплати",
+        "Показує слабкі генератори й вузькі місця парку наперед",
+        "Тримає однакову керованість і на 10, і на 100 ТТ"
+      ],
+      "clientGains": [
+        "Магазин відкритий і обслуговує навіть під час відключень у районі",
+        "Працюють каси, оплата й холодильні вітрини — товар доступний і свіжий",
+        "Стабільний сервіс там, де конкурент уже зачинився"
+      ],
+      "headline": {
+        "big": "2,4",
+        "unit": "млн",
+        "period": "грн / рік",
+        "sub": "абонплата 230 тис → 30 тис грн/міс; економія 200 тис × 12 = 2,4 млн грн/рік",
+        "caption": "пряма економія на сервісі · головне — відвернені втрати від простою ТТ"
+      },
+      "how": "Телеметрія з генераторів (стан, мотогодини, паливо, запуск/зупинка) → централізований дашборд по кожній ТТ, алерти в реальному часі та планувальник ТО. On-prem або хмара.",
+      "indirect": "Головна вартість — не абонплата, а запобігання простою: втрати = денний оборот × дні без живлення × маржа; по одній ТТ це кратно більше за всю річну економію на сервісі."
+    },
+    "face-tracking": {
+      "tagline": "Хто зараз на обʼєкті, де саме і з якого часу — у реальному часі. Face Tracking замінює паперові журнали й пропуски точним обліком за обличчям.",
+      "valueBusiness": "Камери на проходах фіксують кожен вхід і вихід, AI визначає особу, а дашборд показує, скільки людей зараз у кожному місті, обʼєкті, будівлі та на поверсі — відомих і невідомих окремо.",
+      "valueClient": "Персонал проходить повз камеру без карток, черг і ручних відміток, а під час тривоги відомо, хто всередині укриття.",
+      "pains": [
+        "Паперові журнали й пропуски не показують, хто реально зараз на обʼєкті",
+        "Під час тривоги неможливо швидко порахувати людей в укритті чи цеху",
+        "Картку чи пропуск можна передати іншому — особа не підтверджена",
+        "Сторонні на території лишаються непоміченими, доки не станеться інцидент",
+        "Облік по десятках обʼєктів збирається вручну й постфактум"
+      ],
+      "businessGains": [
+        "Точна кількість людей у кожній зоні — у будь-який момент",
+        "Підтвердження особи за обличчям, без карток і зчитувачів",
+        "Виявлення сторонніх: кожен невідомий отримує профіль та історію появ",
+        "Журнал IN / OUT з фото — розбір інцидентів за хвилини",
+        "Ролі доступу та повний аудит дій адміністраторів",
+        "Однакова керованість на 1, 10 чи 100 обʼєктах"
+      ],
+      "clientGains": [
+        "Прохід без карток і пропусків — достатньо обличчя",
+        "Безпека в укритті: відомо, хто всередині під час тривоги",
+        "Біометрія зберігається на серверах компанії, а не в сторонніх сервісах"
+      ],
+      "headline": {
+        "big": "2 395",
+        "unit": "подій",
+        "period": "за добу",
+        "sub": "На одному обʼєкті, фіксуються автоматично",
+        "caption": "24/7 облік без участі оператора — перевірено на власній мережі"
+      },
+      "extra": "Пороги розпізнавання: 95% для відомих, 90% для невідомих. Історія та архів фото — 30 днів.",
+      "how": "Камери IN / OUT → AI-розпізнавання облич → платформа присутності → дашборд і звіти. On-Premise: фото й біометричні вектори не виходять за периметр. Сумісність — камери Hikvision (faceCapture).",
+      "indirect": "Недопущені інциденти зі сторонніми, контроль кількості людей в укритті під час тривоги, обʼєктивний облік робочого часу та масштабування на мережу без нових постів охорони."
+    }
+  },
+  "en": {
+    "traffic-counter": {
+      "tagline": "How many people walked past — and how many came in. Now you see it and manage conversion on facts, not guesswork.",
+      "valueBusiness": "A receipt only shows who already bought. Traffic Counter shows everyone who was nearby and the share your store actually converts — a new layer of retail analytics and a single standard to fairly compare any two stores. Decisions on locations, façades, windows and marketing — on real traffic.",
+      "valueClient": "The store adapts to real footfall: an easier entrance at peak, fewer queues and marketing that's relevant, not noise.",
+      "pains": [
+        "You pay for a location blindly: receipts after the fact, no data on external footfall",
+        "A strong location with weak conversion looks weak — you can't judge its potential",
+        "You don't know if marketing worked: you repeat promos with no proof of effect",
+        "You depend on manual and outsourced counts — costly, rare, subjective",
+        "Nothing to compare stores with: each lives in its own coordinate system"
+      ],
+      "businessGains": [
+        "See the full funnel: traffic → entry → receipt, and exactly where you lose the customer",
+        "Compare locations, façades and windows by one objective standard",
+        "Validate every campaign by real traffic uplift, not a feeling",
+        "Stop funding promos that bring no footfall",
+        "Set shifts, staff and merchandising to actual peak hours",
+        "Count people anonymously (privacy-by-design): no faces, no personal data"
+      ],
+      "clientGains": [
+        "The store is tuned to real footfall — an easier entrance at peak",
+        "Marketing hits the need instead of adding noise",
+        "Fewer queues and crowding where visitors are densest"
+      ],
+      "headline": {
+        "big": "18",
+        "unit": "M",
+        "period": "UAH / year",
+        "sub": "UAH 1,000/day × 30 days × 50 stores × 12 mo = 18M UAH/year",
+        "caption": "direct effect on a 50-store network · 100 stores → 36M"
+      },
+      "extra": "+ marketing budget: savings on ineffective campaigns — hundreds of thousands to millions UAH/year (calculated per campaign)",
+      "how": "An anonymous entrance sensor counts external footfall and entries without face recognition; data is matched with your POS/BI, conversion is computed automatically, a dashboard per store. On-prem or cloud.",
+      "indirect": "Larger than the direct effect and calculated on your data: higher network conversion, less burned marketing budget, people freed from manual counting."
+    },
+    "smart-parking": {
+      "tagline": "The yard stops being a black box: occupancy, queue and vehicle movement in real time.",
+      "valueBusiness": "The yard generates hidden costs every day: trucks idle, ramps overload, coordination runs on calls and Excel. Smart Parking makes yard movement visible and manageable — you remove idle time before it becomes a queue and return vehicle time to work.",
+      "valueClient": "For drivers and suppliers the yard stops being a waiting room: faster entry, a clear queue, loading and unloading on schedule.",
+      "pains": [
+        "The yard is a black box: no view of occupancy or where the jam is",
+        "Vehicle idle time: trucks and drivers wait, time burns, the schedule slips",
+        "Chaotic movement and ramp queues — overload at peak",
+        "Manual coordination: calls, Excel, paper, human factor",
+        "Yard decisions are made blindly, with no occupancy analytics"
+      ],
+      "businessGains": [
+        "See occupancy, queue and vehicle movement in real time on one screen",
+        "Plan ramps and loading/unloading slots instead of manual coordination",
+        "Cut vehicle idle time — returned time = direct savings",
+        "Free staff from coordinating by calls and spreadsheets",
+        "Stabilize supply — by plan, not by 'who shouted loudest'",
+        "Decide on data: yard occupancy by day and hour, where the bottlenecks are"
+      ],
+      "clientGains": [
+        "Faster passage — less waiting at the entrance and the ramp",
+        "A clear queue — the supplier sees their order",
+        "Predictable receiving — fewer missed slots and repeat trips"
+      ],
+      "headline": {
+        "big": "7.3",
+        "unit": "M",
+        "period": "UAH / year",
+        "sub": "40 idle h/day × 500 UAH/h × 365 days = 7.3M UAH/year",
+        "caption": "shared logistics effect of Smart Parking + LPR & Access (not double-counted)"
+      },
+      "how": "Video analytics and bay sensors monitor yard occupancy, a ramp planner and jam alerts; integration with WMS/TMS, paired with LPR & Access. On-prem or cloud.",
+      "indirect": "Larger and calculated on your data: staff freed up, fewer failed deliveries and carrier penalties, higher peak throughput without expanding infrastructure."
+    },
+    "lpr-access-control": {
+      "tagline": "The checkpoint stops being a bottleneck: drive up — plate read — barrier open, and every entry logs itself into one timeline.",
+      "valueBusiness": "Vehicles move through the checkpoint without manual coordination: the system reads the plate on approach, checks it against the list, opens access and keeps the timeline automatically. You get a transparent history of every entry — for audit, supplier control and ramp planning instead of Excel.",
+      "valueClient": "The driver passes without calling the dispatcher, waiting at the barrier or leaving the cab — receiving becomes faster and more predictable.",
+      "pains": [
+        "Checkpoint control relies on a guard with a notebook and phone calls — slow and error-prone",
+        "Entry history is scattered across paper and Excel — audit becomes archaeology",
+        "Checks slow down in rain and frost; the human factor adds errors",
+        "Suppliers are uncontrolled: when they arrived, how long they stayed, whether they entered without permission",
+        "Vehicles idle in queues before entry due to manual coordination"
+      ],
+      "businessGains": [
+        "Opens entry/exit automatically — the plate is recognized on approach",
+        "Keeps a full entry history — who, when, how long, paper-free",
+        "Records suppliers' actual arrival time, not 'as the driver says'",
+        "Admits only authorized vehicles and alerts on unplanned entry",
+        "Removes manual checks from checkpoint staff — less load and fewer errors",
+        "Routes vehicles to the right ramp — no chaos in the DC yard"
+      ],
+      "clientGains": [
+        "Passes faster — no waiting at the barrier or manual checks",
+        "Predictable receiving/dispatch and a more stable schedule",
+        "No need to leave the cab and prove you're expected"
+      ],
+      "headline": {
+        "big": "7.3",
+        "unit": "M",
+        "period": "UAH / year",
+        "sub": "40 idle h/day × 500 UAH/h × 365 days = 7.3M UAH/year",
+        "caption": "shared logistics effect with Smart Parking (one transport loop, not double-counted)"
+      },
+      "how": "A camera reads the plate on approach, the system checks it against the list and schedule, opens authorized vehicles or alerts, logs the entry with routing to the ramp; integration with barriers and TMS/WMS, privacy-by-design.",
+      "indirect": "Freed checkpoint staff, supplier discipline on actual times, a ready history for investigations and protection against unauthorized entry."
+    },
+    "generator-control": {
+      "tagline": "A grid outage no longer closes the store: the entire generator fleet — under control from one screen.",
+      "valueBusiness": "A store without backup power during an outage means closed checkouts, unavailable goods and direct revenue loss. Generator Control keeps the whole fleet under control from one dashboard: status, engine hours and risks are visible before they become a failure, with no dependence on expensive external analytics.",
+      "valueClient": "The store works even during a local outage: checkout, payments and refrigerated displays stay up while the competitor next door is already closed.",
+      "pains": [
+        "A generator fails to start and a new one takes 2–3 weeks — lost revenue dwarfs any service savings",
+        "Each generator is checked 'on foot', with no single network-wide picture",
+        "High subscription for external monitoring and dependence on someone else's analytics",
+        "Missed engine hours → late maintenance → sudden failures at the worst moment",
+        "No centralized analytics: dozens of generators unmanaged"
+      ],
+      "businessGains": [
+        "Prevents store downtime: a risk alert arrives before the store stops",
+        "Brings the whole fleet onto one screen — status, engine hours and maintenance in real time",
+        "Shifts maintenance to scheduled by engine hours instead of repair after failure",
+        "Removes dependence on external analytics — your own system instead of a subscription",
+        "Shows weak generators and fleet bottlenecks in advance",
+        "Keeps the same control at 10 stores and at 100"
+      ],
+      "clientGains": [
+        "The store stays open and serving even during a local outage",
+        "Checkout, payments and refrigerated displays work — goods available and fresh",
+        "Stable service where the competitor has already closed"
+      ],
+      "headline": {
+        "big": "2.4",
+        "unit": "M",
+        "period": "UAH / year",
+        "sub": "subscription UAH 230k → 30k/mo; savings 200k × 12 = 2.4M UAH/year",
+        "caption": "direct savings on service · the key is prevented store-downtime losses"
+      },
+      "how": "Telemetry from generators (status, engine hours, fuel, start/stop) → a centralized dashboard per store, real-time alerts and a maintenance planner. On-prem or cloud.",
+      "indirect": "The main value isn't the subscription but preventing downtime: loss = daily turnover × days without power × margin; per store this is many times the annual service savings."
+    },
+    "face-tracking": {
+      "tagline": "Who is on site right now, exactly where and since when — in real time. Face Tracking replaces paper logs and passes with accurate facial headcount.",
+      "valueBusiness": "Cameras at the passages capture every entry and exit, AI identifies the person, and the dashboard shows how many people are now in each city, site, building and floor — known and unknown separately.",
+      "valueClient": "Staff walk past the camera with no cards, queues or manual check-ins, and during an alert you know who is inside the shelter.",
+      "pains": [
+        "Paper logs and passes do not show who is actually on site right now",
+        "During an alert you cannot quickly count people in the shelter or shop floor",
+        "A card or pass can be handed to someone else — identity is not confirmed",
+        "Outsiders on the territory stay unnoticed until an incident happens",
+        "Attendance across dozens of sites is collected manually and after the fact"
+      ],
+      "businessGains": [
+        "Exact number of people in every zone — at any moment",
+        "Identity confirmed by face, no cards or readers",
+        "Intruder detection: every unknown gets a profile and appearance history",
+        "IN / OUT log with photos — incident review in minutes",
+        "Access roles and a full audit of admin actions",
+        "The same control at 1, 10 or 100 sites"
+      ],
+      "clientGains": [
+        "Passage without cards or passes — a face is enough",
+        "Shelter safety: you know who is inside during an alert",
+        "Biometrics stored on the company servers, not in third-party services"
+      ],
+      "headline": {
+        "big": "2,395",
+        "unit": "events",
+        "period": "per day",
+        "sub": "On a single site, logged automatically",
+        "caption": "24/7 tracking with no operator — verified on our own network"
+      },
+      "extra": "Recognition thresholds: 95% for known staff, 90% for unknowns. History and photo archive — 30 days.",
+      "how": "IN / OUT cameras → AI facial recognition → presence platform → dashboard and reports. On-Premise: photos and biometric vectors never leave the perimeter. Compatible with Hikvision cameras (faceCapture).",
+      "indirect": "Prevented incidents with outsiders, headcount control in the shelter during an alert, objective attendance and working-time records, and scaling across the network without new security posts."
+    }
+  }
+};
+function detailFor(id){
+  var L=root.lang;
+  var tk=(TVPRODLIST.find(function(p){return p.id===id;})||{}).titleKey;
+  var title=tk?(T[L]||T.ua)[tk]:id;
+  var c=(PRODFULL[L]||PRODFULL.ua)[id];
+  if(c){var o={};for(var k in c)o[k]=c[k];o.title=title;return o;}
+  var ai=(AIDETAIL[L]||AIDETAIL.ua)[id];
+  if(ai)return {title:ai.title||title,tagline:ai.lead,valueBusiness:ai.body,valueClient:"",pains:[],businessGains:ai.bullets||[],clientGains:[],headline:null,tags:ai.metrics||[]};
+  return null;
+}
+function dgRender(){var imgs=GAL._detail||[];var i=window.dgIdx||0;var m=document.getElementById("dgMain");if(m)m.src=imgs[i]||"";var dots=document.getElementById("dgDots");if(dots)[].forEach.call(dots.children,function(b,k){b.classList.toggle("on",k===i);});}
+function dgGo(i){var imgs=GAL._detail||[];if(!imgs.length)return;window.dgIdx=(i+imgs.length)%imgs.length;dgRender();dgStop();dgStart();}
+function dgPrev(){dgGo((window.dgIdx||0)-1);}
+function dgNext(){dgGo((window.dgIdx||0)+1);}
+function dgZoom(){if(GAL._detail&&GAL._detail.length)openLB("_detail",window.dgIdx||0);}
+function dgStop(){if(window.dgTimer){clearInterval(window.dgTimer);window.dgTimer=null;}}
+function dgStart(){dgStop();var imgs=GAL._detail||[];if(imgs.length<2)return;window.dgTimer=setInterval(function(){if(!document.getElementById("detail").classList.contains("open")){dgStop();return;}window.dgIdx=((window.dgIdx||0)+1)%imgs.length;dgRender();},3500);}
+function detailNav(dir){var ids=TVPRODLIST.map(function(p){return p.id;});var i=ids.indexOf(window.dCur);if(i<0)i=0;openDetail(ids[(i+dir+ids.length)%ids.length]);var sh=document.querySelector("#detail .detail-sheet");if(sh)sh.scrollTop=0;}
+function openDetail(id){var d=detailFor(id);if(!d)return;var L=root.lang;window.dCur=id;window.dgIdx=0;
+  var ids=TVPRODLIST.map(function(p){return p.id;});var idx=ids.indexOf(id);
+  document.getElementById("dStep").textContent=(idx+1)+" / "+ids.length;
+  document.getElementById("dBack").textContent=(L==='en'?("Back to "+ids.length+" products"):("Повернутись до "+ids.length+" продуктів"));
+  var li=(TVPRODLIST.find(function(p){return p.id===id;})||{});var imgs=[];if(li.d)imgs.push(li.d);if(EXTRA[id])imgs=imgs.concat(EXTRA[id]);GAL._detail=imgs;
+  var g=document.getElementById("dGallery");
+  if(imgs.length){
+    var arrows=imgs.length>1?'<button class="shot-arrow shot-prev" onclick="dgPrev()" aria-label="Попереднє фото">\u2039</button><button class="shot-arrow shot-next" onclick="dgNext()" aria-label="Наступне фото">\u203A</button>':'';
+    var dots=imgs.length>1?'<div class="shot-dots" id="dgDots">'+imgs.map(function(_,i){return '<button onclick="dgGo('+i+')" aria-label="фото '+(i+1)+'"></button>';}).join('')+'</div>':'';
+    var lbl=(id==='face-tracking')?'Face Tracking':((L==='en'?'Platform ':'Платформа ')+(d.title||''));
+    g.innerHTML='<div class="shot-label">'+lbl+'</div><div class="shot-frame">'+arrows+'<img id="dgMain" src="'+imgs[0]+'" alt="" onclick="dgZoom()"></div>'+dots;
+    g.style.display="";
+  } else { g.style.display="none"; g.innerHTML=""; }
+  var intro='<h2 class="detail-title">'+(d.title||'')+'</h2>';
+  if(d.tagline)intro+='<p class="detail-lead">'+d.tagline+'</p>';
+  if(d.valueBusiness||d.valueClient){intro+='<div class="value-row">';if(d.valueBusiness)intro+='<p class="value-line"><span class="value-tag">'+(L==='en'?'Business':'Бізнесу')+'</span>'+d.valueBusiness+'</p>';if(d.valueClient)intro+='<p class="value-line"><span class="value-tag">'+(L==='en'?'Client':'Клієнту')+'</span>'+d.valueClient+'</p>';intro+='</div>';}
+  if(d.pains&&d.pains.length)intro+='<div class="pblock"><p class="pblock-title">'+(L==='en'?'The problem today':'Проблема сьогодні')+'</p><ul class="pain-list">'+d.pains.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul></div>';
+  document.getElementById("dIntro").innerHTML=intro;
+  var body='';
+  if(d.headline){var hd=d.headline;body+='<div class="product-figure"><div class="figure-main"><span class="figure-badge">'+(L==='en'?'Direct effect':'Прямий ефект')+'</span><div class="figure-num">'+hd.big+(hd.unit?'<span class="figure-unit">'+hd.unit+'</span>':'')+'</div><div class="figure-period">'+(hd.period||'')+'</div></div><div class="figure-meta">'+(hd.caption?'<div class="figure-caption">'+hd.caption+'</div>':'')+(hd.sub?'<div class="figure-sub">'+hd.sub+'</div>':'')+(d.extra?'<div class="figure-extra">'+d.extra+'</div>':'')+'</div></div>';}
+  if((d.businessGains&&d.businessGains.length)||(d.clientGains&&d.clientGains.length)){body+='<div class="gains-grid">';if(d.businessGains&&d.businessGains.length)body+='<div class="gain-col"><p class="pblock-title">'+(L==='en'?'What it gives the business':'Що це дає бізнесу')+'</p><ul class="detail-list">'+d.businessGains.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';if(d.clientGains&&d.clientGains.length)body+='<div class="gain-col"><p class="pblock-title">'+(L==='en'?'What it gives the client':'Що це дає клієнту')+'</p><ul class="detail-list">'+d.clientGains.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';body+='</div>';}
+  if(d.indirect)body+='<p class="indirect-line"><span class="indirect-badge">'+(L==='en'?'Estimated, on your data':'Оціночно, за вашими даними')+'</span>'+d.indirect+'</p>';
+  if(d.how)body+='<p class="how-line"><span class="how-tag">'+(L==='en'?'How it works':'Як працює')+'</span>'+d.how+'</p>';
+  if(d.tags&&d.tags.length)body+='<div class="detail-metrics">'+d.tags.map(function(m){return '<span>'+m+'</span>';}).join('')+'</div>';
+  body+='<div class="detail-actions"><a class="btn btn-yel btn-2" href="javascript:void(0)" onclick="closeDetail();showSurvey()"><b>'+(L==='en'?'Estimate the effect':'Розрахувати ефект')+'</b><small>'+(L==='en'?'form':'анкета')+'</small></a></div>';
+  document.getElementById("dBody2").innerHTML=body;
+  document.getElementById("detail").classList.add("open");dgRender();dgStart();}
+function closeDetail(){document.getElementById("detail").classList.remove("open");dgStop();}
+document.getElementById("detail").addEventListener("click",e=>{if(e.target.id==="detail")closeDetail();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.getElementById("detail").classList.contains("open"))closeDetail();});
+document.getElementById("lb").addEventListener("click",e=>{if(e.target.id==="lb")closeLB();});
+document.addEventListener("keydown",e=>{if(!document.getElementById("lb").classList.contains("open"))return;if(e.key==="Escape")closeLB();if(e.key==="ArrowLeft")lbNav(-1);if(e.key==="ArrowRight")lbNav(1);});
+// ===== Навігація по блоках (стрілки / пульт) як по слайдах =====
+function mainSections(){return [...document.querySelectorAll('main > section')].filter(s=>s.offsetParent!==null);}
+document.addEventListener('keydown',e=>{
+  if(document.body.classList.contains('tv'))return;
+  if(document.getElementById('lb').classList.contains('open')||document.getElementById('detail').classList.contains('open'))return;
+  const tag=(e.target.tagName||'').toLowerCase(); if(['input','textarea','select','button','a'].includes(tag))return;
+  const nextK=['ArrowDown','ArrowRight','PageDown'],prevK=['ArrowUp','ArrowLeft','PageUp'];
+  if(e.key==='Home'){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});return;}
+  if(!nextK.includes(e.key)&&!prevK.includes(e.key))return;
+  const secs=mainSections(); if(!secs.length)return; e.preventDefault();
+  const y=window.scrollY+12; let cur=0; secs.forEach((s,i)=>{if(s.offsetTop<=y)cur=i;});
+  const nx=nextK.includes(e.key)?Math.min(cur+1,secs.length-1):Math.max(cur-1,0);
+  secs[nx].scrollIntoView({behavior:'smooth',block:'start'});
+});
+// ===== ТВ-версія (?mode=tv) — повноекранні слайди з автопрокруткою =====
+const TV_STATVAL={ua:["7 років","35","1900","16 000",">1 млн",">30",">15","1100"],en:["7 years","35","1900","16 000",">1 M",">30",">15","1100"]};
+const TV_PRODUCTS=[{k:'pr1',d:'prod/traffic-day.png',n:'prod/traffic-night.png'},{k:'pr2',d:'prod/generator-day.png',n:'prod/generator-night.png'},{k:'pr3',d:'prod/lpr-day.png',n:'prod/lpr-night.png'},{k:'pr4',d:'prod/parking-day.jpg',n:'prod/parking-night.png'},{k:'pr5',d:'prod/facetrack-day.jpg',n:'prod/facetrack-x1.jpg'}];
+const TVPRODLIST=[{id:'traffic-counter',titleKey:'pr1h',d:'prod/traffic-day.png',n:'prod/traffic-night.png'},{id:'generator-control',titleKey:'pr2h',d:'prod/generator-day.png',n:'prod/generator-night.png'},{id:'lpr-access-control',titleKey:'pr3h',d:'prod/lpr-day.png',n:'prod/lpr-night.png'},{id:'smart-parking',titleKey:'pr4h',d:'prod/parking-day.jpg',n:'prod/parking-night.png'},{id:'face-tracking',titleKey:'pr5h',d:'prod/facetrack-day.jpg',n:'prod/facetrack-x1.jpg'}];
+const TVPROD4={
+  ua:{
+    'traffic-counter':{eyebrow:'Retail-аналітика',tagline:'Скільки людей пройшло повз — і скільки зайшло. Тепер ви це бачите й керуєте конверсією на фактах, а не наосліп.',vb:'Чек показує лише тих, хто вже купив. Traffic Counter показує всіх, хто був поруч, і яку частку точка реально конвертує — новий шар retail-аналітики й єдиний стандарт порівняти будь-які дві ТТ.',vc:'Магазин підлаштовується під реальний потік: зручніший вхід у пік, менше черг і релевантніший маркетинг замість шуму.',bg:['Бачите всю воронку: трафік → вхід → чек і де саме втрачаєте клієнта','Порівнюєте локації, фасади й вітрини за єдиним стандартом','Перевіряєте кожну кампанію приростом реального трафіку','Припиняєте фінансувати промо, що не дає потоку','Ставите зміни, персонал і викладку під фактичні години пік','Рахуєте людей анонімно (privacy-by-design): без облич і ПД'],cg:['Магазин підлаштований під реальний потік — зручніший вхід у пік','Маркетинг влучає в потребу, а не дратує шумом','Менше черг і тісноти там, де відвідувачів найбільше'],h:{big:'18',unit:'млн',period:'грн / рік',cap:'прямий ефект на мережі 50 ТТ · на 100 ТТ → 36 млн'}},
+    'generator-control':{eyebrow:'Енергостійкість',tagline:'Перебій у мережі більше не зачиняє магазин: весь парк генераторів — під контролем з одного екрана.',vb:'ТТ без резервного живлення під час відключення — це закриті каси, недоступний товар і прямі втрати обороту. Generator Control тримає весь парк під контролем: стан, мотогодини й ризики видно до того, як вони стануть аварією.',vc:'Магазин працює навіть під час відключень у районі: каси, оплата й холодильні вітрини в строю, коли конкурент поряд уже зачинений.',bg:['Запобігає простою ТТ: алерт про ризик приходить до зупинки магазину','Зводить весь парк на один екран — стан, мотогодини й ТО','Переводить ТО на планове за мотогодинами замість ремонту після поломки','Знімає залежність від зовнішньої аналітики — власна система замість абонплати','Показує слабкі генератори й вузькі місця парку наперед','Тримає однакову керованість і на 10, і на 100 ТТ'],cg:['Магазин відкритий і обслуговує навіть під час відключень у районі','Працюють каси, оплата й холодильні вітрини — товар доступний і свіжий','Стабільний сервіс там, де конкурент уже зачинився'],h:{big:'2,4',unit:'млн',period:'грн / рік',cap:'пряма економія на сервісі · головне — відвернені втрати від простою ТТ'}},
+    'lpr-access-control':{eyebrow:'КПП і доступ',tagline:'КПП перестає бути вузьким місцем: під’їхав — номер зчитано — шлагбаум відкрито, а кожен в’їзд лягає в єдину хронологію сам.',vb:'Транспорт рухається через КПП без ручної координації: система розпізнає номер на під’їзді, звіряє зі списком, відкриває доступ і веде хронологію автоматично.',vc:'Водій проїжджає без дзвінків диспетчеру, очікування на шлагбаумі та виходу з кабіни — приймання швидше й передбачуваніше.',bg:['Відкриває в’їзд/виїзд автоматично — номер розпізнається на під’їзді','Веде повну історію в’їздів — хто, коли, на скільки, без паперів','Фіксує фактичний час прибуття постачальників','Допускає лише дозволений транспорт і алертить про незапланований в’їзд','Знімає з персоналу КПП ручні перевірки — менше помилок','Маршрутизує транспорт до потрібної рампи — без хаосу на дворі РЦ'],cg:['Проїжджає швидше — без очікування на шлагбаумі та ручної звірки','Передбачуване приймання/відвантаження та стабільніший графік','Не треба виходити з кабіни й доводити, що тебе чекають'],h:{big:'7,3',unit:'млн',period:'грн / рік',cap:'спільний логістичний ефект із Smart Parking (не дублюється)'}},
+    'smart-parking':{eyebrow:'Двір і паркування',tagline:'Двір перестає бути чорною скринькою: завантаженість, черга й рух транспорту видно в реальному часі.',vb:'Двір генерує приховані витрати щодня: транспорт стоїть, рампи перевантажені, координація — на дзвінках і Excel. Smart Parking робить рух у дворі видимим і керованим.',vc:'Для водіїв і постачальників двір перестає бути місцем очікування: швидший в’їзд, зрозуміла черга, приймання й відвантаження за планом.',bg:['Бачите завантаженість, чергу й рух транспорту в реальному часі','Плануєте рампи й слоти приймання/відвантаження','Скорочуєте простої транспорту — повернутий час = пряма економія','Розвантажуєте персонал від координації дзвінками й таблицями','Стабілізуєте постачання — за планом, а не «хто докричався»','Ухвалюєте рішення на даних: завантаженість двору по днях і годинах'],cg:['Швидший проїзд — менше очікування на в’їзді й під рампою','Зрозуміла черга — постачальник бачить свій порядок','Передбачуване приймання — менше зірваних слотів'],h:{big:'7,3',unit:'млн',period:'грн / рік',cap:'спільний логістичний ефект Smart Parking + LPR (не рахується двічі)'}},
+    'face-tracking':{eyebrow:'Контроль входу',tagline:'Хто зараз у будівлі, де саме і з якого часу — у реальному часі. Face Tracking замінює паперові журнали й пропуски точним обліком за обличчям.',vb:'Камери на проходах фіксують кожен вхід і вихід, AI визначає особу, а дашборд показує, скільки людей зараз у кожному місті, обʼєкті, будівлі та на поверсі — відомих і невідомих окремо.',vc:'Персонал проходить повз камеру без карток, черг і ручних відміток, а під час тривоги відомо, хто всередині укриття.',bg:['Точна кількість людей у кожній зоні — у будь-який момент','Підтвердження особи за обличчям, без карток і зчитувачів','Виявлення сторонніх: кожен невідомий отримує профіль та історію появ','Журнал IN / OUT з фото — розбір інцидентів за хвилини','Ролі доступу та повний аудит дій адміністраторів','Однакова керованість на 1, 10 чи 100 обʼєктах'],cg:['Прохід без карток і пропусків — достатньо обличчя','Безпека в укритті: відомо, хто всередині під час тривоги','Біометрія зберігається на серверах компанії, а не в сторонніх сервісах'],h:{big:'2 395',unit:'подій',period:'/ добу',cap:'фіксуються автоматично на одному обʼєкті — перевірено на власній мережі'}}
+  },
+  en:{
+    'traffic-counter':{eyebrow:'Retail analytics',tagline:'How many walked past — and how many came in. Now you see it and manage conversion on facts, not guesswork.',vb:'A receipt only shows who already bought. Traffic Counter shows everyone who was nearby and the share your store actually converts — a new layer of retail analytics.',vc:'The store adapts to real footfall: an easier entrance at peak, fewer queues and marketing that is relevant, not noise.',bg:['See the full funnel: traffic → entry → receipt, and where you lose the customer','Compare locations, façades and windows by one standard','Validate every campaign by real traffic uplift','Stop funding promos that bring no footfall','Set shifts, staff and merchandising to actual peak hours','Count people anonymously (privacy-by-design): no faces, no data'],cg:['The store is tuned to real footfall — easier entrance at peak','Marketing hits the need instead of adding noise','Fewer queues where visitors are densest'],h:{big:'18',unit:'M',period:'UAH / yr',cap:'direct effect on a 50-store network · 100 stores → 36M'}},
+    'generator-control':{eyebrow:'Energy resilience',tagline:'A grid outage no longer closes the store: the entire generator fleet — under control from one screen.',vb:'A store without backup power during an outage means closed checkouts and direct revenue loss. Generator Control keeps the whole fleet under control: status, engine hours and risks visible before they become a failure.',vc:'The store works even during a local outage: checkout, payments and refrigerated displays stay up while the competitor next door is already closed.',bg:['Prevents store downtime: a risk alert arrives before the store stops','Brings the whole fleet onto one screen — status, engine hours, maintenance','Shifts maintenance to scheduled by engine hours','Removes dependence on external analytics — your own system','Shows weak generators and bottlenecks in advance','Keeps the same control at 10 stores and at 100'],cg:['The store stays open even during a local outage','Checkout, payments and displays work — goods available and fresh','Stable service where the competitor has already closed'],h:{big:'2.4',unit:'M',period:'UAH / yr',cap:'direct service savings · the key is prevented store-downtime losses'}},
+    'lpr-access-control':{eyebrow:'Checkpoint & access',tagline:'The checkpoint stops being a bottleneck: drive up — plate read — barrier open, and every entry logs itself.',vb:'Vehicles move through the checkpoint without manual coordination: the system reads the plate on approach, checks the list, opens access and keeps the timeline automatically.',vc:'The driver passes without calling the dispatcher, waiting at the barrier or leaving the cab — receiving becomes faster and more predictable.',bg:['Opens entry/exit automatically — the plate is recognized on approach','Keeps a full entry history — who, when, how long, paper-free','Records suppliers actual arrival time','Admits only authorized vehicles and alerts on unplanned entry','Removes manual checks from checkpoint staff','Routes vehicles to the right ramp — no chaos in the DC yard'],cg:['Passes faster — no waiting at the barrier','Predictable receiving/dispatch and a stable schedule','No need to leave the cab and prove you are expected'],h:{big:'7.3',unit:'M',period:'UAH / yr',cap:'shared logistics effect with Smart Parking (not double-counted)'}},
+    'smart-parking':{eyebrow:'Yard & parking',tagline:'The yard stops being a black box: occupancy, queue and vehicle movement in real time.',vb:'The yard generates hidden costs every day: trucks idle, ramps overload, coordination runs on calls and Excel. Smart Parking makes yard movement visible and manageable.',vc:'For drivers and suppliers the yard stops being a waiting room: faster entry, a clear queue, loading and unloading on schedule.',bg:['See occupancy, queue and vehicle movement in real time','Plan ramps and loading/unloading slots','Cut vehicle idle time — returned time = direct savings','Free staff from coordinating by calls and spreadsheets','Stabilize supply — by plan, not by who shouted loudest','Decide on data: yard occupancy by day and hour'],cg:['Faster passage — less waiting at entrance and ramp','A clear queue — the supplier sees their order','Predictable receiving — fewer missed slots'],h:{big:'7.3',unit:'M',period:'UAH / yr',cap:'shared logistics effect Smart Parking + LPR (not double-counted)'}},
+    'face-tracking':{eyebrow:'Entry control',tagline:'Who is in the building right now, exactly where and since when — in real time. Face Tracking replaces paper logs and passes with accurate facial headcount.',vb:'Cameras at the passages capture every entry and exit, AI identifies the person, and the dashboard shows how many people are now in each city, site, building and floor — known and unknown separately.',vc:'Staff walk past the camera with no cards, queues or manual check-ins, and during an alert you know who is inside the shelter.',bg:['Exact number of people in every zone — at any moment','Identity confirmed by face, no cards or readers','Intruder detection: every unknown gets a profile and appearance history','IN / OUT log with photos — incident review in minutes','Access roles and a full audit of admin actions','The same control at 1, 10 or 100 sites'],cg:['Passage without cards or passes — a face is enough','Shelter safety: you know who is inside during an alert','Biometrics stored on the company servers, not in third-party services'],h:{big:'2,395',unit:'events',period:'/ day',cap:'logged automatically on a single site — verified on our own network'}}
+  }
+};
+function tvProdInfo(l,id){if(id==='aurora-ai'||id==='smart-wiki'){var a=(AIDETAIL[l]||AIDETAIL.ua)[id];return {eyebrow:a.eyebrow,tagline:a.lead,vb:a.body,vc:'',bg:a.bullets,cg:[],h:null};}return (TVPROD4[l]||TVPROD4.ua)[id];}
+function tvSlides(l,theme){
+  const d=T[l],isN=theme==='night',sv=TV_STATVAL[l];
+  const sk=['s1t','s2t','s3t','s4t','s5t','s6t','s7t','s8t'];
+  const sd=['s1d','s2d','s3d','s4d','s5d','','',''];
+  const stat=(a,b)=>sk.slice(a,b).map((k,i)=>{var dd=sd[a+i]?'<div class="tv-stat-d">'+d[sd[a+i]]+'</div>':'';return '<div class="tv-stat"><div class="tv-stat-n">'+sv[a+i]+'</div><div class="tv-stat-l">'+d[k]+'</div>'+dd+'</div>';}).join('');
+  const prods=TV_PRODUCTS.map(p=>'<div class="tv-card"><div class="tv-card-img contain"><img src="'+p.d+'" alt=""></div><div class="tv-card-t">'+d[p.k+'h']+'</div></div>').join('');
+  const cap=k=>isN?'panels/'+k+'-night.png':'panels/'+k+'-day.png';
+  const li=arr=>arr.map(x=>'<li>'+x+'</li>').join('');
+  const partners=[1,2,3,4,5,6].map(i=>'<div class="tv-card"><div class="tv-card-t" style="font-size:23px">'+d['p'+i+'h']+'</div><div class="tv-card-s">'+d['p'+i+'p']+'</div></div>').join('');
+  const comm=[['cm1','community/forbes.jpg'],['cm2','community/retail-1.jpg'],['cm3','community/rau-1.jpg'],['cm4','community/students.jpg']].map(a=>'<div class="tv-card"><div class="tv-card-img" style="height:180px"><img src="'+a[1]+'" alt=""></div><div class="tv-card-t" style="font-size:20px">'+d[a[0]+'h']+'</div><div class="tv-card-s" style="font-size:14px">'+d[a[0]+'m']+'</div></div>').join('');
+  var prodSlides=[];
+  TVPRODLIST.forEach(function(p){var c=tvProdInfo(l,p.id);var img=isN?p.n:p.d;var title=d[p.titleKey];
+    var hb=c.h?'<div class="tv-headline"><span class="tv-hl-big">'+c.h.big+'</span><span class="tv-hl-unit">'+c.h.unit+'</span><span class="tv-hl-per">'+c.h.period+'</span></div><div class="tv-hl-cap">'+c.h.cap+'</div>':'';
+    var vb=c.vb?'<p class="tv-vc"><span class="value-tag">'+(l==='ua'?'Бізнесу':'Business')+'</span>'+c.vb+'</p>':'';
+    var vc=c.vc?'<p class="tv-vc"><span class="value-tag value-tag-alt">'+(l==='ua'?'Клієнту':'Client')+'</span>'+c.vc+'</p>':'';
+    prodSlides.push('<div class="tv-slide tv-prod-slide"><img class="tv-bgphoto" src="'+p.d+'" alt=""><div class="tv-veil"></div><div class="tv-fg tv-prod-left"><span class="tv-kicker">'+c.eyebrow+'</span><h2 class="tv-prod-title">'+title+'</h2>'+hb+'<p class="tv-prod-tag">'+c.tagline+'</p>'+vb+vc+'</div></div>');
+    var cg=(c.cg&&c.cg.length)?'<div class="tv-client-wrap"><div class="tv-client-h">'+(l==='ua'?'Що це дає клієнту':'What it gives the client')+'</div><ul class="tv-gains tv-gains-sm">'+li(c.cg)+'</ul></div>':'';
+    var exs=EXTRA[p.id]||[];
+    var rimg=exs.length?'<img class="tv-prod-cycle" data-id="'+p.id+'" data-idx="0" src="'+exs[0]+'" alt="">':'';
+    prodSlides.push('<div class="tv-slide"><div class="tv-product'+(exs.length?'':' tv-product-noimg')+'"><div class="tv-prod-left"><span class="tv-kicker">'+title+'</span><h2 class="tv-prod-title" style="font-size:clamp(26px,2.6vw,42px)">'+(l==='ua'?'Що це дає бізнесу':'What it gives the business')+'</h2><ul class="tv-gains">'+li(c.bg)+'</ul></div><div class="tv-prod-right tv-prod-right-col">'+rimg+cg+'</div></div></div>');
+  });
+  var heroSlide='<div class="tv-slide tv-hero-slide"><img class="tv-bgphoto" src="rnd/hero.jpg" alt=""><div class="tv-veil"></div><div class="tv-fg tv-hero-copy"><span class="tv-kicker">'+d.heroKick+'</span><h1 class="tv-h">'+d.heroH1+'</h1><p class="tv-sub">'+d.heroP+'</p></div></div>';
+  var numbersSlide='<div class="tv-slide tv-top"><span class="tv-kicker">'+(l==='ua'?'Департамент у цифрах':'Department in numbers')+'</span><h2 class="tv-title">'+(l==='ua'?'Масштаб, який відчуває вся компанія':'A scale the whole company feels')+'</h2><div class="tv-grid c4 tv-stats-grid">'+stat(0,8)+'</div></div>';
+  var overviewSlide='<div class="tv-slide tv-top tv-ov"><span class="tv-kicker" style="margin-left:150px">'+d.shKick+'</span><div class="tv-grid c3" style="margin-top:16px">'+prods+'</div></div>';
+  var capCard=function(eye,h,lead,bl,im){return '<div class="tv-card tv-cap"><span class="tv-cap-eyebrow">'+eye+'</span><div class="tv-card-t">'+h+'</div><div class="tv-cap-lead">'+lead+'</div><ul>'+li(bl)+'</ul><div class="tv-card-img" style="height:150px"><img src="'+im+'" alt=""></div></div>';};
+  var capSlide='<div class="tv-slide tv-top"><span class="tv-kicker">'+d.howKick+'</span><h2 class="tv-title">'+(l==='ua'?'Консалтинг і розробка під ключ':'Consulting & turnkey development')+'</h2><div class="tv-grid c2">'+capCard(l==='ua'?'Експертиза':'Expertise',d.c2h,d.c2l,[d.c2b1,d.c2b2,d.c2b3,d.c2b4],cap('consult'))+capCard(l==='ua'?'Інжиніринг':'Engineering',d.c3h,d.c3l,[d.c3b1,d.c3b2,d.c3b3,d.c3b4],cap('dev'))+'</div></div>';
+  var partnerSlide='<div class="tv-slide tv-top"><span class="tv-kicker">'+d.pKick+'</span><h2 class="tv-title">'+d.pH+'</h2><div class="tv-grid c3">'+partners+'</div></div>';
+  var commSlide='<div class="tv-slide tv-top"><span class="tv-kicker">'+d.commKick+'</span><h2 class="tv-title">'+d.commH+'</h2><div class="tv-grid c4">'+comm+'</div></div>';
+  var ctaSlide='<div class="tv-slide" style="justify-content:center;align-items:flex-start"><h1 class="tv-h">'+d.ctaH+'</h1><p class="tv-sub" style="max-width:44ch">'+d.ctaSub+'</p><p style="margin-top:26px;font-size:24px;font-weight:800;color:var(--yel)">rnd@avrora.ua</p></div>';
+  return [heroSlide,numbersSlide,overviewSlide].concat(prodSlides).concat([capSlide,partnerSlide,ctaSlide]);
+}
+const EXTRA={'traffic-counter':['prod/traffic-x1.png','prod/traffic-x2.png','prod/traffic-x3.png','prod/traffic-x4.png','prod/traffic-x5.png'],'generator-control':['prod/generator-x1.png','prod/generator-planto.jpg'],'lpr-access-control':['prod/lpr-x1.png','prod/lpr-x2.png'],'smart-parking':[],'face-tracking':['prod/facetrack-x1.jpg','prod/facetrack-x2.jpg','prod/facetrack-x3.jpg','prod/facetrack-x4.jpg']};
+let tvIdx=0,tvTimer=null,tvEls=[];const TV_DUR=24000;
+function tvGo(n){if(!tvEls.length)return;tvIdx=(n+tvEls.length)%tvEls.length;tvEls.forEach((s,i)=>s.classList.toggle('is-active',i===tvIdx));document.querySelectorAll('#tvRoot .tv-pdot').forEach((dt,i)=>{dt.classList.toggle('is-done',i<tvIdx);dt.classList.toggle('is-cur',i===tvIdx);dt.innerHTML=i===tvIdx?'<i style="animation-duration:'+TV_DUR+'ms"></i>':'';});clearTimeout(tvTimer);tvTimer=setTimeout(function(){tvGo(tvIdx+1);},TV_DUR);}
+function buildTv(){const p=new URLSearchParams(location.search);const l=p.get('lang')==='en'?'en':'ua';const th=p.get('theme')==='night'?'night':'day';root.setAttribute('data-theme',th);root.lang=l;const slides=tvSlides(l,th);const dots=slides.map(function(){return '<span class="tv-pdot"></span>';}).join('');document.getElementById('tvRoot').innerHTML='<div class="tv-logo"><img src="'+(th==='night'?'rnd/logo-night.png':'rnd/logo.png')+'" alt="Avrora"></div>'+slides.join('')+'<div class="tv-progress">'+dots+'</div><div class="tv-hint">← / → · пульт</div>';document.body.classList.add('tv');tvEls=[...document.querySelectorAll('#tvRoot .tv-slide')];tvGo(0);setInterval(function(){var im=document.querySelector('#tvRoot .tv-slide.is-active .tv-prod-cycle');if(!im)return;var arr=EXTRA[im.dataset.id];if(!arr||arr.length<2)return;var i=(parseInt(im.dataset.idx||'0',10)+1)%arr.length;im.dataset.idx=i;im.src=arr[i];},4500);document.addEventListener('keydown',function(e){if(!document.body.classList.contains('tv'))return;if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();tvGo(tvIdx+1);}if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();tvGo(tvIdx-1);}});}
+applyTheme(localStorage.getItem("rnd-theme")||"day");
+applyLang(localStorage.getItem("rnd-lang")||"ua");
+buildGalleries();
+if(new URLSearchParams(location.search).get('mode')==='tv')buildTv();
+// авто-відкриття анкети для QR / прямого лінка: ...#survey або ?anketa=1
+(function(){var p=new URLSearchParams(location.search);if(location.hash==='#survey'||p.get('anketa')){setTimeout(showSurvey,350);}})();
+// лічильник «під капотом» як у корені (abacus) — окремий ключ лише для сайту департаменту
+fetch("https://abacus.jasoncameron.dev/hit/aurora-department-site/visits").then(r=>r.json()).then(d=>{if(d&&typeof d.value==="number")document.getElementById("vc").textContent=d.value.toLocaleString("uk-UA")}).catch(()=>{});
+</script>
+</body>
+</html>
