@@ -88,8 +88,9 @@ jobs:
       - name: Verify production URL
         run: |
           for attempt in 1 2 3 4 5; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" http://158.178.151.156/aurora-department-site/) &&
-            echo "attempt $attempt -> $code" &&
-            test "$code" = "200"
-            sleep 2
+            code=$(curl -s -o /dev/null -w "%{http_code}" https://partnership.rnd-avrora.com.ua/)
+            echo "attempt $attempt -> $code"
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 3
           done
+          echo "production URL did not return 200"; exit 1
