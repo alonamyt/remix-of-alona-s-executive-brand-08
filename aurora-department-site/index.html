@@ -93,7 +93,8 @@
   .prodsec{padding:26px 0 6px}
   .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
   .prod-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 22px 26px;display:flex;flex-direction:column}
-  .prod-card .pimg{width:100%;height:190px;object-fit:cover;border-radius:14px;margin-bottom:16px}
+  .prod-card .pimg{width:100%;height:215px;object-fit:cover;object-position:center;border-radius:14px;margin-bottom:16px}
+  .prod-card .pimg-top{object-position:center top}
   .prod-card h3{font-size:21px;font-weight:800;margin-bottom:8px}
   .prod-card p{color:var(--grey);font-size:14.5px;flex:1;line-height:1.5}
   .prod-card .more{margin-top:14px;font-weight:700;color:#c9a800;font-size:14.5px}
@@ -147,6 +148,10 @@
   .comm-body a.clink{font-weight:700;color:#c9a800;cursor:pointer;width:fit-content}
   html[data-theme="night"] .comm-body a.clink{color:#ffdd00}
   .press-wrap{margin-top:34px}
+  .press-toggle{display:inline-flex;align-items:center;gap:10px;background:transparent;border:0;cursor:pointer;font-family:inherit;padding:4px 0}
+  .press-caret{font-size:13px;color:var(--grey);transition:transform .2s}
+  .press-wrap:not(.collapsed) .press-caret{transform:rotate(180deg)}
+  .press-wrap.collapsed .press-grid{display:none}
   .press-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:18px}
   .press-tile{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:.15s}
   .press-tile:hover{border-color:var(--yel);transform:translateY(-2px)}
@@ -200,7 +205,7 @@
   .detail-gallery{position:sticky;top:78px}
   .shot-label{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--grey);margin-bottom:10px}
   .shot-frame{position:relative;border-radius:18px;overflow:hidden;background:var(--card);border:1px solid var(--line)}
-  .shot-frame #dgMain{display:block;width:100%;height:clamp(240px,42vh,440px);object-fit:cover;cursor:zoom-in}
+  .shot-frame #dgMain{display:block;width:100%;height:clamp(300px,50vh,560px);object-fit:contain;background:var(--card);cursor:zoom-in}
   .shot-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:46px;height:46px;border-radius:50%;border:0;background:rgba(20,20,20,.55);color:#fff;font-size:24px;font-weight:800;line-height:1;cursor:pointer;display:grid;place-items:center;transition:.15s}
   .shot-arrow:hover{background:var(--yel);color:#141414}
   .shot-prev{left:12px}.shot-next{right:12px}
@@ -220,6 +225,7 @@
   .figure-caption{font-size:16px;font-weight:700;color:var(--ink);line-height:1.4}
   .figure-sub{font-size:14.5px;color:var(--grey);line-height:1.5}
   .figure-extra{font-size:14px;color:var(--ink);line-height:1.5;background:rgba(255,221,0,.16);border-radius:11px;padding:9px 14px;margin-top:4px}
+  .figure-note{font-size:11.5px;font-style:italic;color:var(--grey);line-height:1.5;margin:-14px 0 24px}
   .gains-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 22px;margin-bottom:24px}
   .gain-col{min-width:0}
   .detail-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin:0;padding:0}
@@ -430,12 +436,11 @@
         <h3 data-i="c1h">Готові рішення</h3>
         <p class="lead" data-i="c1l">Рішення, перевірені на власній мережі мультимаркетів, що швидко зростає.</p>
         <div class="prodbtns">
-          <a href="#showcase">Traffic Counter</a>
-          <a href="#showcase" data-i="pGen">Контроль генераторів</a>
-          <a href="#showcase">LPR &amp; Access Control</a>
-          <a href="#showcase">Smart Parking</a>
-          <a href="#showcase">Аврора AI Platform</a>
-          <a href="#showcase">Smart Wiki</a>
+          <a href="javascript:void(0)" onclick="openDetail('traffic-counter')">Traffic Counter</a>
+          <a href="javascript:void(0)" onclick="openDetail('generator-control')" data-i="pGen">Контроль генераторів</a>
+          <a href="javascript:void(0)" onclick="openDetail('lpr-access-control')">LPR &amp; Access Control</a>
+          <a href="javascript:void(0)" onclick="openDetail('smart-parking')">Smart Parking</a>
+          <a href="javascript:void(0)" onclick="openDetail('face-tracking')" data-i="pr5h">Розумний контроль входу до будівлі</a>
         </div>
         <img class="cimg dn-day" src="rnd/box-day.jpg" alt="Готові рішення">
         <img class="cimg dn-night" src="rnd/box-night.jpg" alt="Готові рішення">
@@ -498,7 +503,7 @@
         <a class="more" href="javascript:void(0)" onclick="openDetail('smart-parking')" data-i="prMore4">Детальніше →</a>
       </div>
       <div class="prod-card" id="face-tracking">
-        <img class="pimg dn-day" src="prod/facetrack-day.jpg" alt="Face Tracking"><img class="pimg dn-night" src="prod/facetrack-x1.jpg" alt="Face Tracking">
+        <img class="pimg pimg-top dn-day" src="prod/facetrack-day.jpg" alt="Face Tracking"><img class="pimg pimg-top dn-night" src="prod/facetrack-x1.jpg" alt="Face Tracking">
         <h3 data-i="pr5h">Розумний контроль входу до будівлі</h3>
         <p data-i="pr5p">Face Tracking: розпізнавання облич на проходах IN / OUT і live-підрахунок людей у кожній зоні об'єкта.</p>
         <a class="more" href="javascript:void(0)" onclick="openDetail('face-tracking')" data-i="prMore5">Детальніше →</a>
@@ -713,8 +718,11 @@
         </div>
       </div>
     </div>
-    <div class="press-wrap">
-      <span class="kicker" data-i="pressKick">Преса про нас</span>
+    <div class="press-wrap collapsed">
+      <button class="press-toggle" type="button" aria-expanded="false" onclick="var w=this.closest('.press-wrap');var o=w.classList.toggle('collapsed');this.setAttribute('aria-expanded',(!o).toString())">
+        <span class="kicker" data-i="pressKick">Преса про нас</span>
+        <span class="press-caret" aria-hidden="true">▾</span>
+      </button>
       <div class="press-grid">
         <a class="press-tile" href="https://interfax.com.ua/news/economic/1158770.html" target="_blank" rel="noopener">
           <img src="community/press-interfax.jpg" alt="">
@@ -963,10 +971,10 @@ function applyLang(l){root.lang=l;localStorage.setItem("rnd-lang",l);const d=T[l
 const SV_ENDPOINT="https://script.google.com/macros/s/AKfycbwf5PqDxLyeAt6QBnYHoxmqctwh3T1IUA4YqX5D05xOMOR5nqzc4LF2ELfu9s-tJswCLA/exec";
 const SURVEY_OPTS={
   ua:{contact:["Дзвінок","Telegram","Viber","WhatsApp","Пошта"],
-      solutions:["Traffic Counter","Контроль генераторів","LPR & Access Control","Smart Parking","Аврора AI Platform","Smart Wiki","Інше"],
+      solutions:["Traffic Counter","Контроль генераторів","LPR & Access Control","Smart Parking","Розумний контроль входу до будівлі","Інше"],
       coop:["Адаптація готового рішення","Спільна розробка під наш біль","Комерціалізація","Стратегічне партнерство","Консалтинг і процеси","Запропонувати своє рішення для «Аврора»"]},
   en:{contact:["Call","Telegram","Viber","WhatsApp","Email"],
-      solutions:["Traffic Counter","Generator Control","LPR & Access Control","Smart Parking","Avrora AI Platform","Smart Wiki","Other"],
+      solutions:["Traffic Counter","Generator Control","LPR & Access Control","Smart Parking","Smart building entry control","Other"],
       coop:["Adapting a ready solution","Co-development for our pain","Commercialization","Strategic partnership","Consulting & processes","Pitch your own solution to Avrora"]}
 };
 const SURVEY_MSG={ua:{errName:"Вкажіть, будь ласка, ім'я.",errContact:"Вкажіть телефон або пошту — хоча б один контакт.",errPhone:"Перевірте номер: введіть усі цифри у форматі +38 (0XX) XXX-XX-XX.",sending:"Надсилаємо…",submit:"Надіслати"},en:{errName:"Please enter your name.",errContact:"Please provide a phone or email — at least one contact.",errPhone:"Check the number: enter all digits in the +38 (0XX) XXX-XX-XX format.",sending:"Sending…",submit:"Submit"}};
@@ -1409,12 +1417,11 @@ function openDetail(id){var d=detailFor(id);if(!d)return;var L=root.lang;window.
   if(d.pains&&d.pains.length)intro+='<div class="pblock"><p class="pblock-title">'+(L==='en'?'The problem today':'Проблема сьогодні')+'</p><ul class="pain-list">'+d.pains.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul></div>';
   document.getElementById("dIntro").innerHTML=intro;
   var body='';
-  if(d.headline){var hd=d.headline;body+='<div class="product-figure"><div class="figure-main"><span class="figure-badge">'+(L==='en'?'Direct effect':'Прямий ефект')+'</span><div class="figure-num">'+hd.big+(hd.unit?'<span class="figure-unit">'+hd.unit+'</span>':'')+'</div><div class="figure-period">'+(hd.period||'')+'</div></div><div class="figure-meta">'+(hd.caption?'<div class="figure-caption">'+hd.caption+'</div>':'')+(hd.sub?'<div class="figure-sub">'+hd.sub+'</div>':'')+(d.extra?'<div class="figure-extra">'+d.extra+'</div>':'')+'</div></div>';}
+  if(d.headline){var hd=d.headline;body+='<div class="product-figure"><div class="figure-main"><span class="figure-badge">'+(L==='en'?'Direct effect':'Прямий ефект')+'</span><div class="figure-num">'+hd.big+(hd.unit?'<span class="figure-unit">'+hd.unit+'</span>':'')+'</div><div class="figure-period">'+(hd.period||'')+'</div></div><div class="figure-meta">'+(hd.caption?'<div class="figure-caption">'+hd.caption+'</div>':'')+(hd.sub?'<div class="figure-sub">'+hd.sub+'</div>':'')+(d.extra?'<div class="figure-extra">'+d.extra+'</div>':'')+'</div></div>';if(id!=='face-tracking')body+='<p class="figure-note">'+(L==='en'?'Illustrative calculation by a model methodology — the actual effect depends on your network parameters.':'Приклад розрахунку за модельною методикою — фактичний ефект залежить від параметрів вашої мережі.')+'</p>';}
   if((d.businessGains&&d.businessGains.length)||(d.clientGains&&d.clientGains.length)){body+='<div class="gains-grid">';if(d.businessGains&&d.businessGains.length)body+='<div class="gain-col"><p class="pblock-title">'+(L==='en'?'What it gives the business':'Що це дає бізнесу')+'</p><ul class="detail-list">'+d.businessGains.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';if(d.clientGains&&d.clientGains.length)body+='<div class="gain-col"><p class="pblock-title">'+(L==='en'?'What it gives the client':'Що це дає клієнту')+'</p><ul class="detail-list">'+d.clientGains.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';body+='</div>';}
   if(d.indirect)body+='<p class="indirect-line"><span class="indirect-badge">'+(L==='en'?'Estimated, on your data':'Оціночно, за вашими даними')+'</span>'+d.indirect+'</p>';
   if(d.how)body+='<p class="how-line"><span class="how-tag">'+(L==='en'?'How it works':'Як працює')+'</span>'+d.how+'</p>';
   if(d.tags&&d.tags.length)body+='<div class="detail-metrics">'+d.tags.map(function(m){return '<span>'+m+'</span>';}).join('')+'</div>';
-  body+='<div class="detail-actions"><a class="btn btn-yel btn-2" href="javascript:void(0)" onclick="closeDetail();showSurvey()"><b>'+(L==='en'?'Estimate the effect':'Розрахувати ефект')+'</b><small>'+(L==='en'?'form':'анкета')+'</small></a></div>';
   document.getElementById("dBody2").innerHTML=body;
   document.getElementById("detail").classList.add("open");dgRender();dgStart();}
 function closeDetail(){document.getElementById("detail").classList.remove("open");dgStop();}
@@ -1488,7 +1495,7 @@ function tvSlides(l,theme){
   var ctaSlide='<div class="tv-slide" style="justify-content:center;align-items:flex-start"><h1 class="tv-h">'+d.ctaH+'</h1><p class="tv-sub" style="max-width:44ch">'+d.ctaSub+'</p><p style="margin-top:26px;font-size:24px;font-weight:800;color:var(--yel)">rnd@avrora.ua</p></div>';
   return [heroSlide,numbersSlide,overviewSlide].concat(prodSlides).concat([capSlide,partnerSlide,ctaSlide]);
 }
-const EXTRA={'traffic-counter':['prod/traffic-x1.png','prod/traffic-x2.png','prod/traffic-x3.png','prod/traffic-x4.png','prod/traffic-x5.png'],'generator-control':['prod/generator-x1.png','prod/generator-planto.jpg'],'lpr-access-control':['prod/lpr-x1.png','prod/lpr-x2.png'],'smart-parking':[],'face-tracking':['prod/facetrack-x1.jpg','prod/facetrack-x2.jpg','prod/facetrack-x3.jpg','prod/facetrack-x4.jpg']};
+const EXTRA={'traffic-counter':['prod/traffic-x1.png','prod/traffic-x2.png','prod/traffic-x3.png','prod/traffic-x4.png','prod/traffic-x5.png'],'generator-control':['prod/generator-x1.png','prod/generator-planto.jpg'],'lpr-access-control':['prod/lpr-x1.png','prod/lpr-x2.png'],'smart-parking':['prod/parking-night.png'],'face-tracking':['prod/facetrack-x1.jpg','prod/facetrack-x2.jpg','prod/facetrack-x3.jpg','prod/facetrack-x4.jpg']};
 let tvIdx=0,tvTimer=null,tvEls=[];const TV_DUR=24000;
 function tvGo(n){if(!tvEls.length)return;tvIdx=(n+tvEls.length)%tvEls.length;tvEls.forEach((s,i)=>s.classList.toggle('is-active',i===tvIdx));document.querySelectorAll('#tvRoot .tv-pdot').forEach((dt,i)=>{dt.classList.toggle('is-done',i<tvIdx);dt.classList.toggle('is-cur',i===tvIdx);dt.innerHTML=i===tvIdx?'<i style="animation-duration:'+TV_DUR+'ms"></i>':'';});clearTimeout(tvTimer);tvTimer=setTimeout(function(){tvGo(tvIdx+1);},TV_DUR);}
 function buildTv(){const p=new URLSearchParams(location.search);const l=p.get('lang')==='en'?'en':'ua';const th=p.get('theme')==='night'?'night':'day';root.setAttribute('data-theme',th);root.lang=l;const slides=tvSlides(l,th);const dots=slides.map(function(){return '<span class="tv-pdot"></span>';}).join('');document.getElementById('tvRoot').innerHTML='<div class="tv-logo"><img src="'+(th==='night'?'rnd/logo-night.png':'rnd/logo.png')+'" alt="Avrora"></div>'+slides.join('')+'<div class="tv-progress">'+dots+'</div><div class="tv-hint">← / → · пульт</div>';document.body.classList.add('tv');tvEls=[...document.querySelectorAll('#tvRoot .tv-slide')];tvGo(0);setInterval(function(){var im=document.querySelector('#tvRoot .tv-slide.is-active .tv-prod-cycle');if(!im)return;var arr=EXTRA[im.dataset.id];if(!arr||arr.length<2)return;var i=(parseInt(im.dataset.idx||'0',10)+1)%arr.length;im.dataset.idx=i;im.src=arr[i];},4500);document.addEventListener('keydown',function(e){if(!document.body.classList.contains('tv'))return;if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();tvGo(tvIdx+1);}if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();tvGo(tvIdx-1);}});}
