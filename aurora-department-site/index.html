@@ -204,8 +204,8 @@
   .detail-visual{min-width:0}
   .detail-gallery{position:sticky;top:78px}
   .shot-label{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--grey);margin-bottom:10px}
-  .shot-frame{position:relative;border-radius:18px;overflow:hidden;background:var(--card);border:1px solid var(--line)}
-  .shot-frame #dgMain{display:block;width:100%;height:clamp(300px,50vh,560px);object-fit:contain;background:var(--card);cursor:zoom-in}
+  .shot-frame{position:relative;border-radius:18px;overflow:hidden;background:var(--card);border:1px solid var(--line);aspect-ratio:16/10}
+  .shot-frame #dgMain{display:block;width:100%;height:100%;object-fit:cover;background:var(--card);cursor:zoom-in}
   .shot-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:46px;height:46px;border-radius:50%;border:0;background:rgba(20,20,20,.55);color:#fff;font-size:24px;font-weight:800;line-height:1;cursor:pointer;display:grid;place-items:center;transition:.15s}
   .shot-arrow:hover{background:var(--yel);color:#141414}
   .shot-prev{left:12px}.shot-next{right:12px}
@@ -244,7 +244,6 @@
     .detail-gallery{position:static}
     .gains-grid{grid-template-columns:1fr;gap:12px}
     .product-figure{grid-template-columns:1fr;gap:14px;align-items:start}
-    .shot-frame #dgMain{height:clamp(200px,38vh,320px)}
   }
   .detail-metrics{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
   .detail-metrics span{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px}
@@ -1495,7 +1494,7 @@ function tvSlides(l,theme){
   var ctaSlide='<div class="tv-slide" style="justify-content:center;align-items:flex-start"><h1 class="tv-h">'+d.ctaH+'</h1><p class="tv-sub" style="max-width:44ch">'+d.ctaSub+'</p><p style="margin-top:26px;font-size:24px;font-weight:800;color:var(--yel)">rnd@avrora.ua</p></div>';
   return [heroSlide,numbersSlide,overviewSlide].concat(prodSlides).concat([capSlide,partnerSlide,ctaSlide]);
 }
-const EXTRA={'traffic-counter':['prod/traffic-x1.png','prod/traffic-x2.png','prod/traffic-x3.png','prod/traffic-x4.png','prod/traffic-x5.png'],'generator-control':['prod/generator-x1.png','prod/generator-planto.jpg'],'lpr-access-control':['prod/lpr-x1.png','prod/lpr-x2.png'],'smart-parking':['prod/parking-night.png'],'face-tracking':['prod/facetrack-x1.jpg','prod/facetrack-x2.jpg','prod/facetrack-x3.jpg','prod/facetrack-x4.jpg']};
+const EXTRA={'traffic-counter':['prod/traffic-x1.png','prod/traffic-x2.png','prod/traffic-x3.png','prod/traffic-x4.png'],'generator-control':['prod/generator-x1.png','prod/generator-planto.jpg'],'lpr-access-control':['prod/lpr-x1.png','prod/lpr-x2.png'],'smart-parking':['prod/parking-x1.png','prod/parking-x2.png','prod/parking-x3.png','prod/parking-x4.png','prod/parking-x5.png'],'face-tracking':['prod/facetrack-x1.jpg','prod/facetrack-x2.jpg','prod/facetrack-x3.jpg','prod/facetrack-x4.jpg']};
 let tvIdx=0,tvTimer=null,tvEls=[];const TV_DUR=24000;
 function tvGo(n){if(!tvEls.length)return;tvIdx=(n+tvEls.length)%tvEls.length;tvEls.forEach((s,i)=>s.classList.toggle('is-active',i===tvIdx));document.querySelectorAll('#tvRoot .tv-pdot').forEach((dt,i)=>{dt.classList.toggle('is-done',i<tvIdx);dt.classList.toggle('is-cur',i===tvIdx);dt.innerHTML=i===tvIdx?'<i style="animation-duration:'+TV_DUR+'ms"></i>':'';});clearTimeout(tvTimer);tvTimer=setTimeout(function(){tvGo(tvIdx+1);},TV_DUR);}
 function buildTv(){const p=new URLSearchParams(location.search);const l=p.get('lang')==='en'?'en':'ua';const th=p.get('theme')==='night'?'night':'day';root.setAttribute('data-theme',th);root.lang=l;const slides=tvSlides(l,th);const dots=slides.map(function(){return '<span class="tv-pdot"></span>';}).join('');document.getElementById('tvRoot').innerHTML='<div class="tv-logo"><img src="'+(th==='night'?'rnd/logo-night.png':'rnd/logo.png')+'" alt="Avrora"></div>'+slides.join('')+'<div class="tv-progress">'+dots+'</div><div class="tv-hint">← / → · пульт</div>';document.body.classList.add('tv');tvEls=[...document.querySelectorAll('#tvRoot .tv-slide')];tvGo(0);setInterval(function(){var im=document.querySelector('#tvRoot .tv-slide.is-active .tv-prod-cycle');if(!im)return;var arr=EXTRA[im.dataset.id];if(!arr||arr.length<2)return;var i=(parseInt(im.dataset.idx||'0',10)+1)%arr.length;im.dataset.idx=i;im.src=arr[i];},4500);document.addEventListener('keydown',function(e){if(!document.body.classList.contains('tv'))return;if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();tvGo(tvIdx+1);}if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();tvGo(tvIdx-1);}});}
