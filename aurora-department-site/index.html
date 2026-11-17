@@ -1212,9 +1212,9 @@ const PRODFULL={
         "sub": "На одному обʼєкті, фіксуються автоматично",
         "caption": "24/7 облік без участі оператора — перевірено на власній мережі"
       },
-      "extra": "Пороги розпізнавання: 95% для відомих, 90% для невідомих. Історія та архів фото — 30 днів.",
+      "extra": "Пороги розпізнавання налаштовуються. Глибина історії та архіву фото налаштовується гнучко — від 1 міс. до понад 6 міс.",
       "how": "Камери IN / OUT → AI-розпізнавання облич → платформа присутності → дашборд і звіти. On-Premise: фото й біометричні вектори не виходять за периметр. Сумісність — камери Hikvision (faceCapture).",
-      "indirect": "Недопущені інциденти зі сторонніми, контроль кількості людей в укритті під час тривоги, обʼєктивний облік робочого часу та масштабування на мережу без нових постів охорони."
+      "indirect": "Головна цінність тут — безпека, а не гроші. Ви бачите реальну картину по підприємству й реагуєте швидше: під час тривоги відомо, хто в укритті, а сторонні не лишаються непоміченими — від цього може залежати чиєсь життя. Плюс обʼєктивний облік часу й масштабування на мережу без нових постів охорони."
     }
   },
   "en": {
@@ -1429,9 +1429,9 @@ function openDetail(id){var d=detailFor(id);if(!d)return;var L=root.lang;window.
   if(d.pains&&d.pains.length)intro+='<div class="pblock"><p class="pblock-title">'+(L==='en'?'The problem today':'Проблема сьогодні')+'</p><ul class="pain-list">'+d.pains.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul></div>';
   document.getElementById("dIntro").innerHTML=intro;
   var body='';
-  if(d.headline){var hd=d.headline;body+='<div class="product-figure"><div class="figure-main"><span class="figure-badge">'+(L==='en'?'Direct effect':'Прямий ефект')+'</span><div class="figure-num">'+hd.big+(hd.unit?'<span class="figure-unit">'+hd.unit+'</span>':'')+'</div><div class="figure-period">'+(hd.period||'')+'</div></div><div class="figure-meta">'+(hd.caption?'<div class="figure-caption">'+hd.caption+'</div>':'')+(hd.sub?'<div class="figure-sub">'+hd.sub+'</div>':'')+(d.extra?'<div class="figure-extra">'+d.extra+'</div>':'')+'</div></div>';if(id!=='face-tracking')body+='<p class="figure-note">'+(L==='en'?'Illustrative calculation by a model methodology — the actual effect depends on your network parameters.':'Приклад розрахунку за модельною методикою — фактичний ефект залежить від параметрів вашої мережі.')+'</p>';}
+  if(d.headline){var hd=d.headline;body+='<div class="product-figure"><div class="figure-main"><span class="figure-badge">'+(id==='face-tracking'?(L==='en'?'Works 24/7':'Працює 24/7'):(L==='en'?'Direct effect':'Прямий ефект'))+'</span><div class="figure-num">'+hd.big+(hd.unit?'<span class="figure-unit">'+hd.unit+'</span>':'')+'</div><div class="figure-period">'+(hd.period||'')+'</div></div><div class="figure-meta">'+(hd.caption?'<div class="figure-caption">'+hd.caption+'</div>':'')+(hd.sub?'<div class="figure-sub">'+hd.sub+'</div>':'')+(d.extra?'<div class="figure-extra">'+d.extra+'</div>':'')+'</div></div>';if(id!=='face-tracking')body+='<p class="figure-note">'+(L==='en'?'Illustrative calculation by a model methodology — the actual effect depends on your network parameters.':'Приклад розрахунку за модельною методикою — фактичний ефект залежить від параметрів вашої мережі.')+'</p>';}
   if((d.businessGains&&d.businessGains.length)||(d.clientGains&&d.clientGains.length)){body+='<div class="gains-grid">';if(d.businessGains&&d.businessGains.length)body+='<div class="gain-col"><p class="pblock-title">'+(L==='en'?'What it gives the business':'Що це дає бізнесу')+'</p><ul class="detail-list">'+d.businessGains.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';if(d.clientGains&&d.clientGains.length)body+='<div class="gain-col"><p class="pblock-title">'+(L==='en'?'What it gives the client':'Що це дає клієнту')+'</p><ul class="detail-list">'+d.clientGains.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></div>';body+='</div>';}
-  if(d.indirect)body+='<p class="indirect-line"><span class="indirect-badge">'+(L==='en'?'Estimated, on your data':'Оціночно, за вашими даними')+'</span>'+d.indirect+'</p>';
+  if(d.indirect)body+='<p class="indirect-line"><span class="indirect-badge">'+(id==='face-tracking'?(L==='en'?'Security effect':'Безпековий ефект'):(L==='en'?'Estimated, on your data':'Оціночно, за вашими даними'))+'</span>'+d.indirect+'</p>';
   if(d.how)body+='<p class="how-line"><span class="how-tag">'+(L==='en'?'How it works':'Як працює')+'</span>'+d.how+'</p>';
   if(d.tags&&d.tags.length)body+='<div class="detail-metrics">'+d.tags.map(function(m){return '<span>'+m+'</span>';}).join('')+'</div>';
   document.getElementById("dBody2").innerHTML=body;
